@@ -1,0 +1,56 @@
+name: syncup-dev
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: syncup-dev-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: syncup
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+      POSTGRES_DB: syncup
+    ports:
+      - "127.0.0.1:54331:5432"
+    volumes:
+      - syncup_dev_pgdata:/var/lib/postgresql/data
+      - ./database/migrations:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U syncup -d syncup"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  rustfs:
+    image: rustfs/rustfs:1.0.0
+    container_name: syncup-dev-rustfs
+    restart: unless-stopped
+    environment:
+      RUSTFS_VOLUMES: /data
+      RUSTFS_ADDRESS: 0.0.0.0:9000
+      RUSTFS_CONSOLE_ADDRESS: 0.0.0.0:9001
+      RUSTFS_CONSOLE_ENABLE: "true"
+      RUSTFS_ACCESS_KEY: ${S3_ACCESS_KEY:?Set S3_ACCESS_KEY in .env}
+      RUSTFS_SECRET_KEY: ${S3_SECRET_KEY:?Set S3_SECRET_KEY in .env}
+      RUSTFS_CORS_ALLOWED_ORIGINS: ${WEB_ORIGIN:-http://localhost:5173}
+      RUSTFS_CONSOLE_CORS_ALLOWED_ORIGINS: http://localhost:9001
+    ports:
+      - "127.0.0.1:9000:9000"
+      - "127.0.0.1:9001:9001"
+    volumes:
+      - syncup_dev_objects:/data
+
+  livekit:
+    image: livekit/livekit-server:v1.13.7
+    container_name: syncup-dev-livekit
+    restart: unless-stopped
+    command: ["--dev", "--bind", "0.0.0.0", "--node-ip", "127.0.0.1"]
+    ports:
+      - "127.0.0.1:7880:7880"
+      - "127.0.0.1:7881:7881"
+      - "127.0.0.1:7882:7882/udp"
+
+volumes:
+  syncup_dev_pgdata:
+    name: syncup_dev_pgdata
+  syncup_dev_objects:
+    name: syncup_dev_objects

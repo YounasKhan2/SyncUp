@@ -1,0 +1,134 @@
+import { Client } from 'pg'
+import type { Response } from 'express'
+import { Router } from 'express'
+import { z } from 'zod'
+import { requireAuth, type AuthenticatedRequest } from '../auth/middleware.js'
+import { pool } from '../../db.js'
+
+type ChatHint = { chatId: string; serverSeq: number }
+type Subscriber = { userId: string; response: Response }
+
+const subscribersByChat = new Map<string, Set<Subscriber>>()
+let stopping = false
+
+function publish(response: Response, event: ChatHint) {
+  response.write(`event: message.created\ndata: ${JSON.stringify(event)}\n\n`)
+}
+
+async function dispatch(hint: ChatHint) {
+  const subscribers = subscribersByChat.get(hint.chatId)
+  if (!subscribers?.size) return
+
+  try {
+    const members = await pool.query<{ user_id: string }>(
+      `SELECT cm.user_id FROM chat_members cm
+       WHERE cm.chat_id = $1 AND cm.left_at IS NULL
+         AND NOT EXISTS (
+           SELECT 1 FROM message_requests mr
+           WHERE mr.chat_id = cm.chat_id AND mr.to_user = cm.user_id
+             AND mr.state IN ('pending', 'ignored')
+         )`,
+      [hint.chatId],
+    )
+    const allowed = new Set(members.rows.map((member) => member.user_id))
+    for (const subscriber of subscribers) {
+      if (allowed.has(subscriber.userId)) publish(subscriber.response, hint)
+      else {
+        subscribers.delete(subscriber)
+        subscriber.response.end()
+      }
+    }
+    if (subscribers.size === 0) subscribersByChat.delete(hint.chatId)
+  } catch (error) {
+    console.error('Unable to authorize realtime chat hint', error)
+  }
+}
+
+export async function startRealtimeListener() {
+  let retryMs = 500
+  while (!stopping) {
+    const listener = new Client({ connectionString: process.env.DATABASE_URL })
+    try {
+      await listener.connect()
+      await listener.query('LISTEN syncup_chat_messages')
+      retryMs = 500
+      listener.on('notification', (notification) => {
+        if (notification.channel !== 'syncup_chat_messages' || !notification.payload) return
+        try {
+          const parsed = JSON.parse(notification.payload) as { chatId?: unknown; serverSeq?: unknown }
+          if (typeof parsed.chatId !== 'string' || typeof parsed.serverSeq !== 'number') return
+          void dispatch({ chatId: parsed.chatId, serverSeq: parsed.serverSeq })
+        } catch (error) {
+          console.error('Invalid realtime message hint', error)
+        }
+      })
+      await new Promise<void>((resolve) => {
+        listener.once('error', (error) => {
+          console.error('PostgreSQL realtime listener disconnected', error)
+          resolve()
+        })
+        listener.once('end', resolve)
+      })
+    } catch (error) {
+      if (!stopping) console.error('Unable to start PostgreSQL realtime listener', error)
+    } finally {
+      await listener.end().catch(() => undefined)
+    }
+    if (!stopping) {
+      await new Promise((resolve) => setTimeout(resolve, retryMs))
+      retryMs = Math.min(15_000, retryMs * 2)
+    }
+  }
+}
+
+export function stopRealtimeListener() {
+  stopping = true
+}
+
+export const realtimeRouter = Router()
+realtimeRouter.use(requireAuth)
+realtimeRouter.get('/events', async (request: AuthenticatedRequest, response, next) => {
+  const chatId = z.uuid().safeParse(request.query.chat_id)
+  if (!chatId.success) {
+    response.status(400).json({ error: { code: 'validation', message: 'A chat_id is required for realtime updates.' } })
+    return
+  }
+  try {
+    const access = await pool.query(
+      `SELECT 1 FROM chat_members cm
+       WHERE cm.chat_id = $1 AND cm.user_id = $2 AND cm.left_at IS NULL
+         AND NOT EXISTS (
+           SELECT 1 FROM message_requests mr
+           WHERE mr.chat_id = cm.chat_id AND mr.to_user = $2
+             AND mr.state IN ('pending', 'ignored')
+         )`,
+      [chatId.data, request.auth!.userId],
+    )
+    if (access.rowCount === 0) {
+      response.status(404).json({ error: { code: 'not_found', message: 'Chat not found.' } })
+      return
+    }
+
+    response.status(200)
+    response.set({
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache, no-transform',
+      Connection: 'keep-alive',
+      'X-Accel-Buffering': 'no',
+    })
+    response.flushHeaders()
+    response.write('event: ready\ndata: {}\n\n')
+    const subscriber: Subscriber = { userId: request.auth!.userId, response }
+    const subscribers = subscribersByChat.get(chatId.data) ?? new Set<Subscriber>()
+    subscribers.add(subscriber)
+    subscribersByChat.set(chatId.data, subscribers)
+    const heartbeat = setInterval(() => response.write(': keep-alive\n\n'), 20_000)
+    request.on('close', () => {
+      clearInterval(heartbeat)
+      subscribers.delete(subscriber)
+      if (subscribers.size === 0) subscribersByChat.delete(chatId.data)
+    })
+  } catch (error) {
+    next(error)
+  }
+})
