@@ -63,7 +63,6 @@ export function MessageAttachment({ attachment, pending = false, onOpen }: {
       })
     return () => {
       cancelled = true
-      controller.abort()
       if (objectUrl) URL.revokeObjectURL(objectUrl)
     }
   }, [attachment, attempt, isMediaV2, isVisualMedia, pending, visible])
