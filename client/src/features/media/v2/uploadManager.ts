@@ -31,6 +31,10 @@ export type MediaV2UploadSnapshot = {
   progress: number
   internalState: MediaV2JobState
   lastError: string | null
+  mediaKind: MediaV2UploadJob['mediaKind']
+  filename: string
+  contentType: string
+  sizeBytes: number
 }
 
 export type MediaV2Transport = {
@@ -65,6 +69,10 @@ function snapshot(job: MediaV2UploadJob): MediaV2UploadSnapshot {
     progress: progress(job),
     internalState: job.state,
     lastError: job.state === 'failed_recoverable' ? 'Couldn’t send. Try again.' : null,
+    mediaKind: job.mediaKind,
+    filename: job.filename,
+    contentType: job.contentType,
+    sizeBytes: job.plaintextSize,
   }
 }
 

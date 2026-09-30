@@ -2,7 +2,6 @@ import type { FormEvent } from 'react'
 import { Paperclip, Send, X } from 'lucide-react'
 import { VoicePreview, VoiceRecorder, type VoiceDraft } from './VoiceRecorder'
 import type { DisplayMessage, StagedAttachment } from '../../shared/types'
-import type { MediaV2UploadSnapshot } from '../media/v2/uploadManager'
 import type { VideoMode } from '../media/v2/videoPreparation'
 
 export type PendingVideoChoice = { file: File; mode: VideoMode }
@@ -17,7 +16,6 @@ type MessageComposerProps = {
   submitting: boolean
   chatTitle: string
   videoChoice: PendingVideoChoice | null
-  videoSends: MediaV2UploadSnapshot[]
   voiceDraft: VoiceDraft | null
   onSubmit: (event: FormEvent<HTMLFormElement>) => void
   onDraftChange: (draft: string) => void
@@ -27,24 +25,13 @@ type MessageComposerProps = {
   onUpload: (file: File) => void
   onChooseVideoMode: (mode: VideoMode) => void
   onCancelVideoChoice: () => void
-  onRetryVideo: (jobId: string) => void
-  onCancelVideo: (jobId: string) => void
   onVoiceReady: (draft: VoiceDraft) => void
   onDeleteVoice: () => void
   onSendVoice: () => void
 }
 
-function friendlyVideoStatus(item: MediaV2UploadSnapshot) {
-  if (item.status === 'sent') return 'Sent'
-  if (item.status === 'failed') return 'Couldn’t send'
-  if (item.internalState === 'preparing' || item.internalState === 'optimizing' || item.internalState === 'queued') return 'Preparing…'
-  if (item.internalState === 'paused_offline') return 'Waiting for connection…'
-  if (item.internalState === 'paused_user') return 'Paused'
-  return `Sending ${item.progress}%`
-}
-
 export function MessageComposer(props: MessageComposerProps) {
-  const { draft, replyTo, editing, replyAuthor, attachments, uploading, submitting, chatTitle, videoChoice, videoSends } = props
+  const { draft, replyTo, editing, replyAuthor, attachments, uploading, submitting, chatTitle, videoChoice } = props
   return (
     <form className="message-composer" onSubmit={props.onSubmit}>
       {replyTo && <div className="composer-reply"><span>{editing ? 'Editing message' : `Replying to ${replyAuthor}: ${replyTo.text}`}</span><button type="button" onClick={props.onClearReply} aria-label={editing ? 'Cancel editing' : 'Cancel reply'}><X size={13} /></button></div>}
@@ -60,14 +47,6 @@ export function MessageComposer(props: MessageComposerProps) {
         <small>{videoChoice.mode === 'standard' ? 'Smaller size · faster to send' : videoChoice.mode === 'hd' ? 'Better quality · recommended' : 'Full original quality · largest size'}</small>
       </div>}
 
-      {videoSends.length > 0 && <div className="video-send-progress">
-        {videoSends.map((item) => <div className="video-send-progress-row" key={item.jobId}>
-          <span>{friendlyVideoStatus(item)}</span>
-          {item.status === 'failed'
-            ? <><button type="button" onClick={() => props.onRetryVideo(item.jobId)}>Retry</button><button type="button" onClick={() => props.onCancelVideo(item.jobId)}>Remove</button></>
-            : item.status !== 'sent' && <button type="button" onClick={() => props.onCancelVideo(item.jobId)}>Cancel</button>}
-        </div>)}
-      </div>}
 
       {attachments.length > 0 && <div className="staged-attachments">
         {attachments.map((attachment) => <span key={attachment.id}>{attachment.filename}<button type="button" onClick={() => props.onRemoveAttachment(attachment.id)} aria-label={`Remove ${attachment.filename}`}><X size={12} /></button></span>)}
