@@ -509,3 +509,11 @@
   .media-viewer-pan img { max-width: 100vw; max-height: calc(100svh - 120px); }
 }
 @media (prefers-reduced-motion: reduce) { .attachment-image-skeleton, .media-viewer-loading span { animation: none; } }
+
+/* P0-MEDIA-02: encrypted video messaging */
+.attachment-video-button { position: relative; display: block; width: min(340px, 100%); overflow: hidden; padding: 0; border: 0; border-radius: 8px; color: #fff; background: #111b16; cursor: pointer; }
+.attachment-video-button video { display: block; width: 100%; max-height: 250px; aspect-ratio: 16 / 9; background: #111b16; object-fit: contain; pointer-events: none; }
+.attachment-video-play { position: absolute; inset: 50% auto auto 50%; display: grid; width: 42px; height: 42px; place-items: center; border-radius: 50%; background: rgba(9,18,13,.72); transform: translate(-50%,-50%); }
+.attachment-video-button small { position: absolute; right: 7px; bottom: 7px; display: flex; align-items: center; gap: 4px; padding: 4px 6px; border-radius: 5px; background: rgba(9,18,13,.72); font-size: 8px; }
+.media-viewer-video { width: min(92vw, 1200px); max-height: calc(100svh - 160px); background: #000; outline: none; }
+@media (max-width: 760px) { .media-viewer-video { width: 100vw; max-height: calc(100svh - 120px); } }

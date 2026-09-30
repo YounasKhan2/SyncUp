@@ -60,12 +60,12 @@ export function MessageComposer({
       />
       <div className="composer-toolbar">
         {!editing && <label className="attach-file-button" aria-label="Attach an encrypted file">
-          <input type="file" accept="image/jpeg,image/png,image/webp,image/gif,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/zip,text/plain" disabled={uploading || attachments.length >= 10} onChange={(event) => {
+          <input type="file" accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/zip,text/plain" disabled={uploading || attachments.length >= 10} onChange={(event) => {
             const file = event.currentTarget.files?.[0]
             if (file) onUpload(file)
             event.currentTarget.value = ''
           }} />
-          {uploading ? 'Encrypting…' : <><Paperclip size={12} aria-hidden="true" /> File</>}
+          {uploading ? 'Encrypting…' : <><Paperclip size={12} aria-hidden="true" /> Media / file</>}
         </label>}
         <span className="encryption-indicator"><LockKeyhole size={11} aria-hidden="true" /> End-to-end encrypted</span>
         <span className="composer-hint">Enter to send · Shift+Enter for a new line</span>

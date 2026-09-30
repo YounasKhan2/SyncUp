@@ -32,7 +32,7 @@ export function MessageList({ messages, calls, members, currentUserId, loading, 
 
   const mediaItems = useMemo<MediaViewerItem[]>(() => messages.flatMap((message) =>
     (message.deleted_at ? [] : message.attachments ?? [])
-      .filter((attachment) => attachment.content_type.startsWith('image/') && !message.pending)
+      .filter((attachment) => (attachment.content_type.startsWith('image/') || attachment.content_type.startsWith('video/')) && !message.pending)
       .map((attachment) => ({
         attachment,
         senderName: members.find((member) => member.id === message.sender_id)?.displayName ?? (message.sender_id === currentUserId ? 'You' : 'Member'),
@@ -59,7 +59,7 @@ export function MessageList({ messages, calls, members, currentUserId, loading, 
                 <div className="message-bubble">
                   {parent && <div className="reply-quote">{membersById.get(parent.sender_id)?.displayName}: {parent.deleted_at ? 'Message deleted' : parent.text}</div>}
                   <p>{message.deleted_at ? 'This message was deleted.' : message.pending ? 'Sending encrypted message…' : message.text}</p>
-                  {!message.deleted_at && message.attachments?.map((attachment) => <MessageAttachment key={attachment.id} attachment={attachment} pending={message.pending} onOpen={attachment.content_type.startsWith('image/') && !message.pending ? () => setViewerAttachmentId(attachment.id) : undefined} />)}
+                  {!message.deleted_at && message.attachments?.map((attachment) => <MessageAttachment key={attachment.id} attachment={attachment} pending={message.pending} onOpen={(attachment.content_type.startsWith('image/') || attachment.content_type.startsWith('video/')) && !message.pending ? () => setViewerAttachmentId(attachment.id) : undefined} />)}
                   {message.edited_at && !message.deleted_at && <span className="message-edited">edited</span>}
                   <span className="message-time">{message.pending ? (message.failed ? 'Waiting to reconnect' : 'Pending') : new Date(message.created_at).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}</span>
                 </div>

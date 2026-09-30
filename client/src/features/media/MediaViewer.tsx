@@ -18,6 +18,7 @@ export function MediaViewer({ items, activeId, onClose, onChange }: {
 }) {
   const activeIndex = Math.max(0, items.findIndex((item) => item.attachment.id === activeId))
   const active = items[activeIndex]
+  const isVideo = active?.attachment.content_type.startsWith('video/') ?? false
   const [url, setUrl] = useState('')
   const [error, setError] = useState('')
   const [zoom, setZoom] = useState(1)
@@ -40,7 +41,7 @@ export function MediaViewer({ items, activeId, onClose, onChange }: {
         setUrl(objectUrl)
       })
       .catch((loadError: unknown) => {
-        if (!cancelled) setError(loadError instanceof Error ? loadError.message : 'Unable to open this image.')
+        if (!cancelled) setError(loadError instanceof Error ? loadError.message : 'Unable to open this media.')
       })
     return () => {
       cancelled = true
@@ -53,12 +54,12 @@ export function MediaViewer({ items, activeId, onClose, onChange }: {
       if (event.key === 'Escape') onClose()
       if (event.key === 'ArrowLeft' && previous) onChange(previous.attachment.id)
       if (event.key === 'ArrowRight' && next) onChange(next.attachment.id)
-      if (event.key === '+' || event.key === '=') setZoom((value) => Math.min(4, value + .25))
-      if (event.key === '-') setZoom((value) => Math.max(1, value - .25))
+      if (!isVideo && (event.key === '+' || event.key === '=')) setZoom((value) => Math.min(4, value + .25))
+      if (!isVideo && event.key === '-') setZoom((value) => Math.max(1, value - .25))
     }
     window.addEventListener('keydown', handleKey)
     return () => window.removeEventListener('keydown', handleKey)
-  }, [next, onChange, onClose, previous])
+  }, [isVideo, next, onChange, onClose, previous])
 
   if (!active) return null
 
@@ -67,21 +68,19 @@ export function MediaViewer({ items, activeId, onClose, onChange }: {
       <header className="media-viewer-header">
         <button type="button" onClick={onClose} aria-label="Close media viewer"><X size={20} /></button>
         <div><strong>{active.senderName}</strong><small>{new Date(active.createdAt).toLocaleString()}</small></div>
-        <button type="button" onClick={() => void downloadAttachment(active.attachment)} aria-label="Download image"><Download size={18} /></button>
+        <button type="button" onClick={() => void downloadAttachment(active.attachment)} aria-label="Download media"><Download size={18} /></button>
       </header>
       <div className="media-viewer-stage" onClick={(event) => { if (event.target === event.currentTarget) onClose() }}>
-        {previous && <button className="media-viewer-nav media-viewer-prev" type="button" onClick={() => onChange(previous.attachment.id)} aria-label="Previous image"><ChevronLeft size={30} /></button>}
+        {previous && <button className="media-viewer-nav media-viewer-prev" type="button" onClick={() => onChange(previous.attachment.id)} aria-label="Previous media"><ChevronLeft size={30} /></button>}
         {url
-          ? <div className="media-viewer-pan"><img src={url} alt={active.attachment.filename} style={{ transform: `scale(${zoom})` }} /></div>
+          ? <div className="media-viewer-pan">{isVideo ? <video className="media-viewer-video" src={url} controls autoPlay playsInline preload="metadata" /> : <img src={url} alt={active.attachment.filename} style={{ transform: `scale(${zoom})` }} />}</div>
           : error
             ? <div className="media-viewer-error"><p>{error}</p><button type="button" onClick={() => setRetry((value) => value + 1)}>Retry</button></div>
             : <div className="media-viewer-loading" role="status"><span />Decrypting image…</div>}
-        {next && <button className="media-viewer-nav media-viewer-next" type="button" onClick={() => onChange(next.attachment.id)} aria-label="Next image"><ChevronRight size={30} /></button>}
+        {next && <button className="media-viewer-nav media-viewer-next" type="button" onClick={() => onChange(next.attachment.id)} aria-label="Next media"><ChevronRight size={30} /></button>}
       </div>
       <footer className="media-viewer-footer">
-        <button type="button" onClick={() => setZoom((value) => Math.max(1, value - .25))} disabled={zoom <= 1} aria-label="Zoom out"><Minus size={16} /></button>
-        <span>{Math.round(zoom * 100)}%</span>
-        <button type="button" onClick={() => setZoom((value) => Math.min(4, value + .25))} disabled={zoom >= 4} aria-label="Zoom in"><Plus size={16} /></button>
+        {!isVideo && <><button type="button" onClick={() => setZoom((value) => Math.max(1, value - .25))} disabled={zoom <= 1} aria-label="Zoom out"><Minus size={16} /></button><span>{Math.round(zoom * 100)}%</span><button type="button" onClick={() => setZoom((value) => Math.min(4, value + .25))} disabled={zoom >= 4} aria-label="Zoom in"><Plus size={16} /></button></>}
         <div className="media-viewer-strip">
           {items.slice(Math.max(0, activeIndex - 4), activeIndex + 5).map((item) => (
             <button key={item.attachment.id} type="button" className={item.attachment.id === activeId ? 'active' : ''} onClick={() => onChange(item.attachment.id)} aria-label={item.attachment.filename}>
