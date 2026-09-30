@@ -64,7 +64,9 @@ const intentSchema = z.object({
 }).superRefine((value, context) => {
   const supported = value.mediaKind === 'video' ? videoTypes.has(value.contentType) : voiceTypes.has(value.contentType)
   if (!supported) context.addIssue({ code: 'custom', message: 'Unsupported media content type.', path: ['contentType'] })
-  const sourceLimit = value.mediaKind === 'video' ? maxVideoSourceBytes : maxVoiceSourceBytes
+  const sourceLimit = value.mediaKind === 'voice'
+    ? maxVoiceSourceBytes
+    : value.mediaMode === 'original' ? maxOriginalSourceBytes : maxStandardHdSourceBytes
   if (value.plaintextSize > sourceLimit) context.addIssue({ code: 'custom', message: 'Media exceeds the v2 source limit.', path: ['plaintextSize'] })
   if (value.mediaKind === 'voice' && value.mediaMode) context.addIssue({ code: 'custom', message: 'Voice notes do not use a media mode.', path: ['mediaMode'] })
   if (value.mediaKind === 'video' && !value.mediaMode) context.addIssue({ code: 'custom', message: 'Video media mode is required.', path: ['mediaMode'] })

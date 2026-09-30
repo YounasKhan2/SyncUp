@@ -64,7 +64,7 @@ function snapshot(job: MediaV2UploadJob): MediaV2UploadSnapshot {
     status: publicStatus(job.state),
     progress: progress(job),
     internalState: job.state,
-    lastError: job.lastError,
+    lastError: job.state === 'failed_recoverable' ? 'Couldn’t send. Try again.' : null,
   }
 }
 
