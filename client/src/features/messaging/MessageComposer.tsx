@@ -9,9 +9,11 @@ type MessageComposerProps = {
   replyAuthor: string
   attachments: StagedAttachment[]
   uploading: boolean
+  submitting: boolean
   chatTitle: string
   onSubmit: (event: FormEvent<HTMLFormElement>) => void
   onDraftChange: (draft: string) => void
+  onTypingChange: (draft: string) => void
   onClearReply: () => void
   onRemoveAttachment: (attachmentId: string) => void
   onUpload: (file: File) => void
@@ -24,9 +26,11 @@ export function MessageComposer({
   replyAuthor,
   attachments,
   uploading,
+  submitting,
   chatTitle,
   onSubmit,
   onDraftChange,
+  onTypingChange,
   onClearReply,
   onRemoveAttachment,
   onUpload,
@@ -42,7 +46,11 @@ export function MessageComposer({
         placeholder={`Message ${chatTitle}`}
         value={draft}
         maxLength={32000}
-        onChange={(event) => onDraftChange(event.target.value)}
+        onChange={(event) => {
+          onDraftChange(event.target.value)
+          onTypingChange(event.target.value)
+        }}
+        onBlur={() => onTypingChange('')}
         onKeyDown={(event) => {
           if (event.key === 'Enter' && !event.shiftKey) {
             event.preventDefault()
@@ -61,7 +69,7 @@ export function MessageComposer({
         </label>}
         <span className="encryption-indicator"><LockKeyhole size={11} aria-hidden="true" /> End-to-end encrypted</span>
         <span className="composer-hint">Enter to send · Shift+Enter for a new line</span>
-        <button type="submit" disabled={!draft.trim() && attachments.length === 0} aria-label="Send message"><Send size={14} aria-hidden="true" /></button>
+        <button type="submit" disabled={uploading || submitting || (!draft.trim() && attachments.length === 0)} aria-label="Send message"><Send size={14} aria-hidden="true" /></button>
       </div>
     </form>
   )

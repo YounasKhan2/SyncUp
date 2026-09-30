@@ -10,6 +10,7 @@ type InboxPaneProps = {
   requests: IncomingRequest[]
   error: string
   chats: Chat[]
+  drafts: Record<string, string>
   activeChatId: string | null
   online: boolean
   onSelectChat: (chatId: string) => void
@@ -18,6 +19,7 @@ type InboxPaneProps = {
   onSelectFilter: (filter: 'all' | 'unread') => void
   onShowRequests: () => void
   onNewConversation: () => void
+  onOpenSearch: () => void
 }
 
 export function InboxPane({
@@ -28,6 +30,7 @@ export function InboxPane({
   requests,
   error,
   chats,
+  drafts,
   activeChatId,
   online,
   onSelectChat,
@@ -36,6 +39,7 @@ export function InboxPane({
   onSelectFilter,
   onShowRequests,
   onNewConversation,
+  onOpenSearch,
 }: InboxPaneProps) {
   const visibleChats = chats.filter((chat) => filter === 'all' || Number(chat.unread_count) > 0)
 
@@ -43,7 +47,7 @@ export function InboxPane({
     <aside className="inbox-pane">
       <div className="pane-heading"><h1>{showCalls ? 'Calls' : 'Chats'}</h1>{!showCalls && <button className="icon-button add-button" type="button" aria-label="New conversation" onClick={onNewConversation}><Plus size={15} aria-hidden="true" /></button>}</div>
       {!showCalls && <>
-        <div className="search-box"><Search size={13} aria-hidden="true" /><span>Find people by username</span></div>
+        <button className="search-box" type="button" onClick={onOpenSearch}><Search size={13} aria-hidden="true" /><span>Search people and chats</span><kbd>Ctrl K</kbd></button>
         <div className="inbox-filters" aria-label="Conversation filters">
           <button type="button" className={filter === 'all' && !showRequests ? 'filter-active' : ''} onClick={() => onSelectFilter('all')}>All</button>
           <button type="button" className={filter === 'unread' && !showRequests ? 'filter-active' : ''} onClick={() => onSelectFilter('unread')}>Unread</button>
@@ -74,9 +78,9 @@ export function InboxPane({
         ) : (
           <>
             <p className="list-section-label">DIRECT MESSAGES</p>
-            {visibleChats.filter((chat) => chat.kind === 'direct').map((chat) => <ChatRow key={chat.id} chat={chat} selected={activeChatId === chat.id} onSelect={onSelectChat} />)}
+            {visibleChats.filter((chat) => chat.kind === 'direct').map((chat) => <ChatRow key={chat.id} chat={chat} draft={drafts[chat.id]} selected={activeChatId === chat.id} onSelect={onSelectChat} />)}
             <p className="list-section-label group-label">GROUPS</p>
-            {visibleChats.filter((chat) => chat.kind === 'group').map((chat) => <ChatRow key={chat.id} chat={chat} selected={activeChatId === chat.id} onSelect={onSelectChat} />)}
+            {visibleChats.filter((chat) => chat.kind === 'group').map((chat) => <ChatRow key={chat.id} chat={chat} draft={drafts[chat.id]} selected={activeChatId === chat.id} onSelect={onSelectChat} />)}
           </>
         )}
       </div>

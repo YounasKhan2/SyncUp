@@ -1,0 +1,19 @@
+{
+    "projectId": "6abcafcb003218a34a55",
+    "buckets": [
+        {
+            "$id": "syncup-encrypted-attachments",
+            "$permissions": [],
+            "fileSecurity": true,
+            "name": "SyncUp Encrypted Attachments",
+            "enabled": true,
+            "maximumFileSize": 26214416,
+            "allowedFileExtensions": [
+                "bin"
+            ],
+            "compression": "none",
+            "encryption": true,
+            "antivirus": false
+        }
+    ]
+}

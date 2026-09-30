@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { api } from '../../shared/api'
 import { decryptMessage, lockKeyBundle } from '../auth/crypto/crypto'
-import { listPendingMessages, removePendingMessage, savePendingMessage } from '../messaging/outbox'
+import { listAllDrafts, listPendingMessages, removePendingMessage, savePendingMessage } from '../messaging/outbox'
 import type { PendingMessage } from '../messaging/outbox'
 import type { ActiveCall, CallRecord, Chat, IncomingRequest, User } from '../../shared/types'
 import { AccountPanel } from '../account/AccountPanel'
 import { NewConversation } from '../messaging/NewConversation'
 import { RequestsPanel } from '../messaging/RequestsPanel'
+import { SearchDialog } from '../messaging/SearchDialog'
 import { Conversation } from '../messaging/Conversation'
 import { CallWindow } from '../calls/CallWindow'
 import { InboxPane } from './InboxPane'
@@ -23,8 +24,11 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
   const [incomingCall, setIncomingCall] = useState<(CallRecord & { caller_name: string; caller_username: string }) | null>(null)
   const [activeCall, setActiveCall] = useState<ActiveCall | null>(null)
   const [newConversation, setNewConversation] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
+  const [initialUsername, setInitialUsername] = useState('')
   const [activeChatId, setActiveChatId] = useState<string | null>(null)
   const [pending, setPending] = useState<PendingMessage[]>([])
+  const [drafts, setDrafts] = useState<Record<string, string>>({})
   const [online, setOnline] = useState(navigator.onLine)
   const [error, setError] = useState('')
   const flushing = useRef(false)
@@ -35,9 +39,10 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
   }, [])
 
   const refreshInbox = useCallback(async () => {
-    const [inbox, requestList] = await Promise.all([
+    const [inbox, requestList, draftMap] = await Promise.all([
       api<{ chats: Chat[] }>('/api/inbox'),
       api<{ requests: IncomingRequest[] }>('/api/requests'),
+      listAllDrafts().catch(() => ({} as Record<string, string>)),
     ])
     const readableChats = await Promise.all(inbox.chats.map(async (chat) => {
       if (!chat.last_body_ciphertext || !chat.last_body_nonce) return { ...chat, preview: '' }
@@ -54,6 +59,7 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
     }))
     setChats(readableChats as Chat[])
     setRequests(requestList.requests)
+    setDrafts(draftMap)
     setError('')
   }, [])
 
@@ -164,6 +170,17 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
     }
   }, [refreshInbox])
 
+  useEffect(() => {
+    const openSearch = (event: KeyboardEvent) => {
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
+        event.preventDefault()
+        setSearchOpen(true)
+      }
+    }
+    window.addEventListener('keydown', openSearch)
+    return () => window.removeEventListener('keydown', openSearch)
+  }, [])
+
   async function acceptRequest(item: IncomingRequest) {
     try {
       await api(`/api/requests/${item.id}/accept`, { method: 'POST' })
@@ -262,6 +279,7 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
         requests={requests}
         error={error}
         chats={chats}
+        drafts={drafts}
         activeChatId={activeChatId}
         online={online}
         onSelectChat={setActiveChatId}
@@ -270,6 +288,7 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
         onSelectFilter={(value) => { setFilter(value); setShowRequests(false) }}
         onShowRequests={() => { setShowRequests(true); setFilter('all') }}
         onNewConversation={() => setNewConversation(true)}
+        onOpenSearch={() => setSearchOpen(true)}
       />
       <Conversation
         key={activeChatId ?? 'welcome'}
@@ -283,11 +302,26 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
       />
       <footer className="workspace-footer"><button type="button" onClick={signOut}>Sign out</button><span>Chats · End-to-end encrypted</span></footer>
       {accountOpen && <AccountPanel user={currentUser} onClose={() => setAccountOpen(false)} onSaved={setCurrentUser} />}
-      {newConversation && <NewConversation user={currentUser} onClose={() => setNewConversation(false)} onCreated={(chatId) => {
+      {newConversation && <NewConversation user={currentUser} initialUsername={initialUsername} onClose={() => { setNewConversation(false); setInitialUsername('') }} onCreated={(chatId) => {
         setNewConversation(false)
+        setInitialUsername('')
         setActiveChatId(chatId)
         void refreshInbox()
       }} />}
+      {searchOpen && <SearchDialog
+        onClose={() => setSearchOpen(false)}
+        onSelectChat={(chatId) => {
+          setSearchOpen(false)
+          setShowCalls(false)
+          setShowRequests(false)
+          setActiveChatId(chatId)
+        }}
+        onSelectPerson={(username) => {
+          setSearchOpen(false)
+          setInitialUsername(username)
+          setNewConversation(true)
+        }}
+      />}
       {showRequests && <RequestsPanel requests={requests} onAccept={(item) => void acceptRequest(item)} onIgnore={(item) => void ignoreRequest(item)} onClose={() => setShowRequests(false)} />}
       {incomingCall && !activeCall && <section className="incoming-call-banner" aria-label="Incoming call">
         <span className="avatar">{incomingCall.caller_name.slice(0, 1).toUpperCase()}</span>

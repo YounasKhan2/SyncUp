@@ -223,6 +223,28 @@ async function post(identity, path, body) {
   })
 }
 
+async function waitForEvent(reader, eventName) {
+  let buffer = ''
+  let timeoutHandle
+  const timeout = new Promise((_, reject) => {
+    timeoutHandle = setTimeout(() => reject(new Error(`Timed out waiting for ${eventName} event.`)), 5000)
+  })
+  const event = (async () => {
+    while (true) {
+      const { value, done } = await reader.read()
+      if (done) throw new Error(`Realtime stream ended before ${eventName} event.`)
+      buffer += new TextDecoder().decode(value, { stream: true })
+      const match = buffer.match(new RegExp(`event: ${eventName}\\ndata: ([^\\r\\n]+)`))
+      if (match) return JSON.parse(match[1])
+    }
+  })()
+  try {
+    return await Promise.race([event, timeout])
+  } finally {
+    clearTimeout(timeoutHandle)
+  }
+}
+
 test('encrypted requests, authorized chats, ordered idempotent delivery, and groups', async (context) => {
   try {
     const health = await fetch(new URL('/api/health', apiBase))
@@ -272,6 +294,15 @@ test('encrypted requests, authorized chats, ordered idempotent delivery, and gro
   assert.equal(response.status, 200)
   response = await apiRequest(ava, '/api/contacts')
   assert.equal((await response.json()).contacts.length, 1)
+  response = await apiRequest(ava, `/api/search?q=${encodeURIComponent(nadia.displayName)}`)
+  assert.equal(response.status, 200, await response.clone().text())
+  const searchResults = await response.json()
+  assert.ok(searchResults.people.some((person) => person.id === nadia.id))
+  assert.ok(searchResults.chats.some((item) => item.id === messageRequest.chatId))
+  assert.match(searchResults.privacy, /only on this device/u)
+  assert.equal(JSON.stringify(searchResults).includes('Hello, Nadia'), false)
+  response = await fetch(new URL(`/api/search?q=${encodeURIComponent(nadia.username)}`, apiBase))
+  assert.equal(response.status, 401)
   response = await apiRequest(nadia, '/api/inbox')
   assert.equal((await response.json()).chats.length, 1)
 
@@ -290,6 +321,27 @@ test('encrypted requests, authorized chats, ordered idempotent delivery, and gro
   const eventReader = eventResponse.body.getReader()
   const readyEvent = await eventReader.read()
   assert.match(new TextDecoder().decode(readyEvent.value), /event: ready/)
+  const presenceController = new AbortController()
+  const presenceResponse = await fetch(new URL(`/api/events?chat_id=${messageRequest.chatId}`, apiBase), {
+    headers: { cookie: ava.header() },
+    signal: presenceController.signal,
+  })
+  assert.equal(presenceResponse.status, 200)
+  const presenceReader = presenceResponse.body.getReader()
+  const presenceReady = await presenceReader.read()
+  assert.match(new TextDecoder().decode(presenceReady.value), /event: ready/)
+  response = await post(nadia, `/api/chats/${messageRequest.chatId}/typing`, { active: true })
+  assert.equal(response.status, 204)
+  assert.deepEqual(await waitForEvent(presenceReader, 'typing'), {
+    userId: nadia.id,
+    displayName: nadia.displayName,
+    active: true,
+  })
+  response = await post(chris, `/api/chats/${messageRequest.chatId}/typing`, { active: true })
+  assert.equal(response.status, 404)
+  await post(nadia, `/api/chats/${messageRequest.chatId}/typing`, { active: false })
+  presenceController.abort()
+  await presenceReader.cancel().catch(() => undefined)
   const hintPromise = (async () => {
     let buffer = ''
     while (true) {
@@ -312,18 +364,24 @@ test('encrypted requests, authorized chats, ordered idempotent delivery, and gro
   })
   assert.equal(response.status, 201, await response.clone().text())
   const uploadIntent = await response.json()
-  const objectUpload = await fetch(uploadIntent.uploadUrl, {
+  const objectUpload = await apiRequest(ava, `/api/uploads/${uploadIntent.attachmentId}/content`, {
     method: 'PUT',
-    headers: { 'content-type': uploadIntent.uploadContentType },
+    headers: { 'content-type': 'application/octet-stream' },
     body: encryptedFile.ciphertext,
   })
-  assert.equal(objectUpload.status, 200, await objectUpload.text())
+  assert.equal(objectUpload.status, 204, await objectUpload.text())
   response = await post(ava, `/api/uploads/${uploadIntent.attachmentId}/complete`, {})
   assert.equal(response.status, 204)
   response = await apiRequest(chris, `/api/uploads/${uploadIntent.attachmentId}`)
   assert.equal(response.status, 404)
 
   const encrypted = await encryptMessage('Message two should exist once.', chat.members)
+  const duplicateAttachments = await post(ava, `${chatPath}/messages`, {
+    ...encrypted,
+    attachmentIds: [uploadIntent.attachmentId, uploadIntent.attachmentId],
+    idempotencyKey: randomUUID(),
+  })
+  assert.equal(duplicateAttachments.status, 400)
   const idempotencyKey = randomUUID()
   const payload = { ...encrypted, attachmentIds: [uploadIntent.attachmentId], idempotencyKey }
   response = await post(ava, `${chatPath}/messages`, payload)
@@ -363,7 +421,7 @@ test('encrypted requests, authorized chats, ordered idempotent delivery, and gro
   response = await apiRequest(nadia, `/api/uploads/${uploadIntent.attachmentId}`)
   assert.equal(response.status, 200, await response.clone().text())
   const download = (await response.json()).attachment
-  const encryptedDownload = await fetch(download.downloadUrl)
+  const encryptedDownload = await apiRequest(nadia, download.downloadUrl)
   assert.equal(encryptedDownload.status, 200)
   const encryptedBytes = await encryptedDownload.arrayBuffer()
   assert.notEqual(Buffer.from(encryptedBytes).toString('utf8'), 'Encrypted client file content.')
@@ -395,6 +453,33 @@ test('encrypted requests, authorized chats, ordered idempotent delivery, and gro
   const group = await response.json()
   response = await apiRequest(ava, `/api/chats/${group.chatId}`)
   assert.equal((await response.json()).chat.members.length, 2)
+  const chrisFirstContact = await encryptMessage('Let’s connect before adding you to a group.', [ava, chris])
+  response = await post(ava, '/api/requests', {
+    username: chris.username,
+    message: { ...chrisFirstContact, idempotencyKey: randomUUID() },
+  })
+  assert.equal(response.status, 201, await response.clone().text())
+  const chrisRequest = await response.json()
+  response = await post(chris, `/api/requests/${chrisRequest.requestId}/accept`, {})
+  assert.equal(response.status, 200)
+  response = await post(ava, `/api/chats/${group.chatId}/members`, { username: chris.username })
+  assert.equal(response.status, 201, await response.clone().text())
+  response = await apiRequest(chris, `/api/chats/${group.chatId}`)
+  assert.equal((await response.json()).chat.members.length, 3)
+  response = await post(ava, `/api/chats/${group.chatId}/members`, { username: chris.username })
+  assert.equal(response.status, 409)
+  response = await post(chris, `/api/chats/${group.chatId}/leave`, {})
+  assert.equal(response.status, 204)
+  response = await apiRequest(chris, `/api/chats/${group.chatId}`)
+  assert.equal(response.status, 404)
+  response = await post(ava, `/api/chats/${group.chatId}/leave`, {})
+  assert.equal(response.status, 204)
+  response = await apiRequest(ava, `/api/chats/${group.chatId}`)
+  assert.equal(response.status, 404)
+  response = await apiRequest(nadia, `/api/chats/${group.chatId}`)
+  const remainingGroup = (await response.json()).chat
+  assert.equal(remainingGroup.members.length, 1)
+  assert.equal(remainingGroup.members[0].role, 'owner')
 
   const more = await Promise.all([
     encryptMessage('Concurrent message A', chat.members),
@@ -405,6 +490,21 @@ test('encrypted requests, authorized chats, ordered idempotent delivery, and gro
     idempotencyKey: randomUUID(),
   })))
   for (const result of sent) assert.equal(result.status, 201, await result.clone().text())
+  response = await apiRequest(ava, `${chatPath}/messages?limit=2`)
+  const latestPage = await response.json()
+  assert.deepEqual(latestPage.messages.map((message) => Number(message.server_seq)), [3, 4])
+  assert.equal(latestPage.hasMore, true)
+  response = await apiRequest(ava, `${chatPath}/messages?before_seq=4&limit=2`)
+  const earlierPage = await response.json()
+  assert.equal(response.status, 200, JSON.stringify(earlierPage))
+  assert.deepEqual(earlierPage.messages.map((message) => Number(message.server_seq)), [2, 3])
+  assert.equal(earlierPage.hasMore, true)
+  response = await apiRequest(ava, `${chatPath}/messages?before_seq=2&limit=2`)
+  const oldestPage = await response.json()
+  assert.deepEqual(oldestPage.messages.map((message) => Number(message.server_seq)), [1])
+  assert.equal(oldestPage.hasMore, false)
+  response = await apiRequest(ava, `${chatPath}/messages?before_seq=4&after_seq=1`)
+  assert.equal(response.status, 400)
   response = await apiRequest(nadia, `${chatPath}/messages?after_seq=2&limit=10`)
   messages = (await response.json()).messages
   assert.deepEqual(messages.map((message) => Number(message.server_seq)), [3, 4])
@@ -547,7 +647,11 @@ test('encrypted requests, authorized chats, ordered idempotent delivery, and gro
   console.info('PASS user/message reports and direct-message blocking')
   console.info('PASS server authorization, transactional sequence assignment, and idempotent replay')
   console.info('PASS authorized realtime delivery of sequence-only hints')
+  console.info('PASS authenticated typing updates and unauthorized activity rejection')
+  console.info('PASS permission-checked people/chat search without server-side message plaintext')
+  console.info('PASS group invites, member departures, and owner succession')
   console.info('PASS read cursor, reaction toggle path, and mutual-contact group creation')
+  console.info('PASS backward chat-history pagination for scrollback')
   console.info('PASS encrypted object-storage upload, recipient download, and decryption')
   console.info('PASS authorized 1:1 call lifecycle, LiveKit tokens, and call history')
 })

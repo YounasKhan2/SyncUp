@@ -8,7 +8,10 @@ export const encryptedMessageSchema = z.object({
   bodyCiphertext: encodedBytes.max(20_000),
   bodyNonce: z.string().regex(/^[A-Za-z0-9_-]{16}$/),
   keyEnvelopes: envelopesSchema,
-  attachmentIds: z.array(z.uuid()).max(10).default([]),
+  attachmentIds: z.array(z.uuid()).max(10).refine(
+    (ids) => new Set(ids).size === ids.length,
+    'Attachment IDs must be unique.',
+  ).default([]),
   idempotencyKey: z.uuid(),
   replyToId: z.uuid().optional(),
 })
@@ -24,4 +27,3 @@ export function matchingEnvelopes(envelopes: Record<string, string>, members: Me
     && expected.length === supplied.length
     && expected.every((userId, index) => userId === supplied[index])
 }
-

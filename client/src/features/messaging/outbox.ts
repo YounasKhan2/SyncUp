@@ -83,6 +83,21 @@ export async function loadDraft(chatId: string): Promise<string> {
   })
 }
 
+export async function listAllDrafts(): Promise<Record<string, string>> {
+  const db = await database()
+  return new Promise((resolve, reject) => {
+    const request = db.transaction('drafts', 'readonly').objectStore('drafts').getAll()
+    request.onsuccess = () => {
+      const map: Record<string, string> = {}
+      for (const row of request.result as { chatId: string; text: string }[]) {
+        if (row.text) map[row.chatId] = row.text
+      }
+      resolve(map)
+    }
+    request.onerror = () => reject(request.error ?? new Error('Unable to load drafts.'))
+  })
+}
+
 export async function saveDraft(chatId: string, text: string) {
   const db = await database()
   return new Promise<void>((resolve, reject) => {

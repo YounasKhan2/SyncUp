@@ -5,6 +5,7 @@ import { pool } from '../../../db.js'
 import type { AuthenticatedRequest } from '../../auth/types.js'
 import { groupLimiter } from '../limits.js'
 import type { MemberKey } from '../validation.js'
+import { publishChatEvent } from '../../realtime/routes.js'
 
 export const chatRoutes = Router()
 
@@ -128,6 +129,153 @@ chatRoutes.post('/chats/groups', groupLimiter, async (request: AuthenticatedRequ
     )
     await client.query('COMMIT')
     response.status(201).json({ chatId })
+  } catch (error) {
+    await client.query('ROLLBACK')
+    next(error)
+  } finally {
+    client.release()
+  }
+})
+
+chatRoutes.post('/chats/:id/members', groupLimiter, async (request: AuthenticatedRequest, response, next) => {
+  const chatId = z.uuid().safeParse(request.params.id)
+  const input = z.object({
+    username: z.string().trim().min(3).max(24).regex(/^[a-zA-Z0-9_]+$/),
+  }).safeParse(request.body)
+  if (!chatId.success || !input.success) {
+    response.status(400).json({ error: { code: 'validation', message: 'Choose a valid group and username.' } })
+    return
+  }
+
+  const client = await pool.connect()
+  try {
+    await client.query('BEGIN')
+    const group = await client.query<{ kind: string }>(
+      `SELECT c.kind
+       FROM chats c
+       JOIN chat_members me ON me.chat_id = c.id AND me.user_id = $2 AND me.left_at IS NULL
+       WHERE c.id = $1
+       FOR UPDATE OF c, me`,
+      [chatId.data, request.auth!.userId],
+    )
+    if (!group.rows[0]) {
+      await client.query('ROLLBACK')
+      response.status(404).json({ error: { code: 'not_found', message: 'Group not found.' } })
+      return
+    }
+    if (group.rows[0].kind !== 'group') {
+      await client.query('ROLLBACK')
+      response.status(400).json({ error: { code: 'validation', message: 'Members can only be invited to groups.' } })
+      return
+    }
+    const count = await client.query<{ member_count: number }>(
+      'SELECT count(*)::int AS member_count FROM chat_members WHERE chat_id = $1 AND left_at IS NULL',
+      [chatId.data],
+    )
+    if (count.rows[0].member_count >= 32) {
+      await client.query('ROLLBACK')
+      response.status(409).json({ error: { code: 'conflict', message: 'This encrypted group already has 32 members.' } })
+      return
+    }
+    const target = await client.query<{ id: string; username: string }>(
+      `SELECT u.id, u.username FROM users u
+       WHERE u.username = lower($1) AND u.id <> $2 AND u.deleted_at IS NULL
+         AND u.encryption_public_key IS NOT NULL
+         AND NOT EXISTS (
+           SELECT 1 FROM contacts blocked WHERE blocked.state = 'blocked'
+             AND ((blocked.user_id = u.id AND blocked.contact_id = $2)
+               OR (blocked.user_id = $2 AND blocked.contact_id = u.id))
+         )
+         AND EXISTS (
+           SELECT 1 FROM contacts a JOIN contacts b
+             ON b.user_id = a.contact_id AND b.contact_id = a.user_id
+           WHERE a.user_id = $2 AND a.contact_id = u.id
+             AND a.state = 'accepted' AND b.state = 'accepted'
+         )`,
+      [input.data.username, request.auth!.userId],
+    )
+    if (!target.rows[0]) {
+      await client.query('ROLLBACK')
+      response.status(404).json({ error: { code: 'not_found', message: 'Invite a discoverable mutual contact.' } })
+      return
+    }
+    const added = await client.query(
+      `INSERT INTO chat_members (chat_id, user_id, role)
+       VALUES ($1, $2, 'member')
+       ON CONFLICT (chat_id, user_id) WHERE left_at IS NULL DO NOTHING
+       RETURNING user_id`,
+      [chatId.data, target.rows[0].id],
+    )
+    if (added.rowCount === 0) {
+      await client.query('ROLLBACK')
+      response.status(409).json({ error: { code: 'conflict', message: 'That person is already in this group.' } })
+      return
+    }
+    await client.query('COMMIT')
+    await publishChatEvent(chatId.data, {
+      type: 'membership.changed',
+      data: { userId: target.rows[0].id, username: target.rows[0].username, action: 'joined' },
+    })
+    response.status(201).json({ userId: target.rows[0].id, username: target.rows[0].username })
+  } catch (error) {
+    await client.query('ROLLBACK')
+    next(error)
+  } finally {
+    client.release()
+  }
+})
+
+chatRoutes.post('/chats/:id/leave', async (request: AuthenticatedRequest, response, next) => {
+  const chatId = z.uuid().safeParse(request.params.id)
+  if (!chatId.success) {
+    response.status(404).json({ error: { code: 'not_found', message: 'Group not found.' } })
+    return
+  }
+  const client = await pool.connect()
+  try {
+    await client.query('BEGIN')
+    const group = await client.query<{ kind: string; role: string }>(
+      `SELECT c.kind, me.role FROM chats c
+       JOIN chat_members me ON me.chat_id = c.id AND me.user_id = $2 AND me.left_at IS NULL
+       WHERE c.id = $1 FOR UPDATE OF c`,
+      [chatId.data, request.auth!.userId],
+    )
+    if (!group.rows[0]) {
+      await client.query('ROLLBACK')
+      response.status(404).json({ error: { code: 'not_found', message: 'Group not found.' } })
+      return
+    }
+    if (group.rows[0].kind !== 'group') {
+      await client.query('ROLLBACK')
+      response.status(400).json({ error: { code: 'validation', message: 'You cannot leave a direct chat.' } })
+      return
+    }
+    const replacement = group.rows[0].role === 'owner'
+      ? await client.query<{ user_id: string }>(
+        `SELECT user_id FROM chat_members
+         WHERE chat_id = $1 AND user_id <> $2 AND left_at IS NULL
+         ORDER BY joined_at, user_id LIMIT 1`,
+        [chatId.data, request.auth!.userId],
+      )
+      : null
+    await client.query(
+      `UPDATE chat_members SET left_at = now()
+       WHERE chat_id = $1 AND user_id = $2 AND left_at IS NULL`,
+      [chatId.data, request.auth!.userId],
+    )
+    if (replacement?.rows[0]) {
+      await client.query(
+        `UPDATE chat_members SET role = 'owner'
+         WHERE chat_id = $1 AND user_id = $2 AND left_at IS NULL`,
+        [chatId.data, replacement.rows[0].user_id],
+      )
+    }
+    await client.query('COMMIT')
+    await publishChatEvent(chatId.data, {
+      type: 'membership.changed',
+      data: { userId: request.auth!.userId, action: 'left' },
+    })
+    response.status(204).end()
   } catch (error) {
     await client.query('ROLLBACK')
     next(error)

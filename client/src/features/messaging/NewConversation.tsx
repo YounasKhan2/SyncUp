@@ -4,13 +4,14 @@ import { ArrowRight, Check, Search, X } from 'lucide-react'
 import { api } from '../../shared/api'
 import type { ChatMember, DiscoveredUser, KeyBundle, User } from '../../shared/types'
 import { encryptMessage } from '../auth/crypto/crypto'
-export function NewConversation({ user, onClose, onCreated }: {
+export function NewConversation({ user, initialUsername = '', onClose, onCreated }: {
   user: User
+  initialUsername?: string
   onClose: () => void
   onCreated: (chatId: string) => void
 }) {
   const [mode, setMode] = useState<'direct' | 'group'>('direct')
-  const [username, setUsername] = useState('')
+  const [username, setUsername] = useState(initialUsername)
   const [usernameMatches, setUsernameMatches] = useState<DiscoveredUser[]>([])
   const [selectedUser, setSelectedUser] = useState<DiscoveredUser | null>(null)
   const [searchingUsers, setSearchingUsers] = useState(false)

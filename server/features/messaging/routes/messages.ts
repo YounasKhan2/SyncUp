@@ -14,8 +14,12 @@ messageRoutes.get('/chats/:id/messages', async (request: AuthenticatedRequest, r
   const afterSeq = request.query.after_seq === undefined
     ? { success: true as const, data: undefined }
     : z.coerce.number().int().min(0).safeParse(request.query.after_seq)
+  const beforeSeq = request.query.before_seq === undefined
+    ? { success: true as const, data: undefined }
+    : z.coerce.number().int().min(1).safeParse(request.query.before_seq)
   const limit = z.coerce.number().int().min(1).max(100).default(50).safeParse(request.query.limit)
-  if (!chatId.success || !afterSeq.success || !limit.success) {
+  if (!chatId.success || !afterSeq.success || !beforeSeq.success || !limit.success
+    || (afterSeq.data !== undefined && beforeSeq.data !== undefined)) {
     response.status(400).json({ error: { code: 'validation', message: 'Invalid chat history cursor.' } })
     return
   }
@@ -48,7 +52,9 @@ messageRoutes.get('/chats/:id/messages', async (request: AuthenticatedRequest, r
        LEFT JOIN message_reactions r ON r.message_id = m.id
        LEFT JOIN message_attachments ma ON ma.message_id = m.id
        LEFT JOIN attachments a ON a.id = ma.attachment_id AND a.status = 'ready'
-       WHERE m.chat_id = $1 AND ($3::bigint IS NULL OR m.server_seq > $3)
+       WHERE m.chat_id = $1
+         AND ($3::bigint IS NULL OR m.server_seq > $3)
+         AND ($5::bigint IS NULL OR m.server_seq < $5)
          AND EXISTS (
            SELECT 1 FROM chat_members cm WHERE cm.chat_id = m.chat_id
              AND cm.user_id = $2::uuid AND cm.left_at IS NULL
@@ -59,12 +65,17 @@ messageRoutes.get('/chats/:id/messages', async (request: AuthenticatedRequest, r
          )
          AND state.hidden_at IS NULL
        GROUP BY m.id, state.hidden_at, state.pinned_at
-       ORDER BY CASE WHEN $3::bigint IS NULL THEN m.server_seq END DESC,
-                CASE WHEN $3::bigint IS NOT NULL THEN m.server_seq END ASC
-       LIMIT $4`,
-      [chatId.data, request.auth!.userId, afterSeq.data ?? null, limit.data],
+       ORDER BY CASE WHEN $3::bigint IS NOT NULL THEN m.server_seq END ASC,
+                CASE WHEN $3::bigint IS NULL THEN m.server_seq END DESC
+       LIMIT $4 + 1`,
+      [chatId.data, request.auth!.userId, afterSeq.data ?? null, limit.data, beforeSeq.data ?? null],
     )
-    response.json({ messages: afterSeq.data === undefined ? result.rows.reverse() : result.rows })
+    const hasMore = result.rows.length > limit.data
+    const page = result.rows.slice(0, limit.data)
+    response.json({
+      messages: afterSeq.data !== undefined ? page : page.reverse(),
+      hasMore,
+    })
   } catch (error) {
     next(error)
   }

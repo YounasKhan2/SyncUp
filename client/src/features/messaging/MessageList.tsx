@@ -1,4 +1,5 @@
 import { Copy, Flag, Heart, Pin, Phone, ThumbsUp, Trash2, Video } from 'lucide-react'
+import type { RefObject } from 'react'
 import type { CallRecord, ChatMember, DisplayMessage } from '../../shared/types'
 import { MessageAttachment } from './MessageAttachment'
 
@@ -9,6 +10,10 @@ type MessageListProps = {
   currentUserId: string
   loading: boolean
   error: string
+  emptyMessage?: string
+  scrollContainerRef: RefObject<HTMLDivElement | null>
+  onScroll: () => void
+  loadingOlder: boolean
   onReply: (message: DisplayMessage) => void
   onReact: (message: DisplayMessage, emoji: string) => void
   onEdit: (message: DisplayMessage) => void
@@ -18,15 +23,16 @@ type MessageListProps = {
   onReport: (message: DisplayMessage) => void
 }
 
-export function MessageList({ messages, calls, members, currentUserId, loading, error, onReply, onReact, onEdit, onDelete, onPin, onCopy, onReport }: MessageListProps) {
+export function MessageList({ messages, calls, members, currentUserId, loading, error, emptyMessage, scrollContainerRef, onScroll, loadingOlder, onReply, onReact, onEdit, onDelete, onPin, onCopy, onReport }: MessageListProps) {
   const membersById = new Map(members.map((member) => [member.id, member]))
   const messagesById = new Map(messages.map((message) => [message.id, message]))
 
   return (
-    <div className="message-list" aria-live="polite">
+    <div className="message-list" aria-live="polite" ref={scrollContainerRef} onScroll={onScroll}>
+      {loadingOlder && <div className="older-messages-loading" role="status">Loading earlier messages…</div>}
       {loading && <div className="conversation-loading">Loading encrypted messages…</div>}
       {error && <div className="inline-error" role="alert">{error}</div>}
-      {!loading && messages.length === 0 && <div className="message-empty">This is the beginning of your encrypted conversation.</div>}
+      {!loading && messages.length === 0 && <div className="message-empty">{emptyMessage ?? 'This is the beginning of your encrypted conversation.'}</div>}
       {messages.map((message) => {
         const mine = message.sender_id === currentUserId
         const sender = membersById.get(message.sender_id)
