@@ -46,6 +46,7 @@ function parseContentRange(value: string | undefined) {
 }
 
 const intentSchema = z.object({
+  attachmentId: z.uuid(),
   chatId: z.uuid(),
   filename: z.string().trim().min(1).max(200).refine((value) => !/[\\/\u0000-\u001f]/u.test(value)),
   contentType: z.string().min(1).max(120),
@@ -108,7 +109,7 @@ mediaV2Router.post('/uploads/v2/intent', limiter, async (request: AuthenticatedR
       return
     }
 
-    const attachmentId = uuidv7()
+    const attachmentId = input.data.attachmentId
     const sessionId = uuidv7()
     const appwriteFileId = attachmentId
     const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000)
