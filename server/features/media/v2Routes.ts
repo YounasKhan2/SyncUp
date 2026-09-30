@@ -29,7 +29,7 @@ const limiter = rateLimit({
 
 const rangeLimiter = rateLimit({
   windowMs: 60_000,
-  limit: 120,
+  limit: 720,
   standardHeaders: 'draft-8',
   legacyHeaders: false,
   keyGenerator: (request) => (request as AuthenticatedRequest).auth?.userId ?? ipKeyGenerator(request.ip ?? ''),
@@ -382,6 +382,10 @@ mediaV2Router.delete('/uploads/v2/:attachmentId/session', limiter, async (reques
   const client = await pool.connect()
   try {
     await client.query('BEGIN')
+    const poster = await client.query<{ poster_attachment_id: string | null }>(
+      `SELECT poster_attachment_id FROM attachments WHERE id = $1 AND uploaded_by = $2 AND transport_version = 2`,
+      [attachmentId.data, request.auth!.userId],
+    )
     const cancelled = await client.query(
       `UPDATE media_upload_sessions
        SET state = 'cancelled', updated_at = now()
@@ -399,6 +403,15 @@ mediaV2Router.delete('/uploads/v2/:attachmentId/session', limiter, async (reques
        WHERE id = $1 AND uploaded_by = $2 AND transport_version = 2 AND status = 'pending'`,
       [attachmentId.data, request.auth!.userId],
     )
+    const posterAttachmentId = poster.rows[0]?.poster_attachment_id
+    if (posterAttachmentId) {
+      await client.query(
+        `DELETE FROM attachments
+         WHERE id = $1 AND uploaded_by = $2
+           AND NOT EXISTS (SELECT 1 FROM message_attachments WHERE attachment_id = $1)`,
+        [posterAttachmentId, request.auth!.userId],
+      )
+    }
     await client.query('COMMIT')
     response.status(204).end()
   } catch (error) {
