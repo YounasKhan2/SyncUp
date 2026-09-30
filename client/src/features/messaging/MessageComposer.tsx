@@ -1,5 +1,6 @@
 import type { FormEvent } from 'react'
 import { Paperclip, Send, X } from 'lucide-react'
+import { VoicePreview, VoiceRecorder, type VoiceDraft } from './VoiceRecorder'
 import type { DisplayMessage, StagedAttachment } from '../../shared/types'
 import type { MediaV2UploadSnapshot } from '../media/v2/uploadManager'
 import type { VideoMode } from '../media/v2/videoPreparation'
@@ -17,6 +18,7 @@ type MessageComposerProps = {
   chatTitle: string
   videoChoice: PendingVideoChoice | null
   videoSends: MediaV2UploadSnapshot[]
+  voiceDraft: VoiceDraft | null
   onSubmit: (event: FormEvent<HTMLFormElement>) => void
   onDraftChange: (draft: string) => void
   onTypingChange: (draft: string) => void
@@ -27,6 +29,9 @@ type MessageComposerProps = {
   onCancelVideoChoice: () => void
   onRetryVideo: (jobId: string) => void
   onCancelVideo: (jobId: string) => void
+  onVoiceReady: (draft: VoiceDraft) => void
+  onDeleteVoice: () => void
+  onSendVoice: () => void
 }
 
 function friendlyVideoStatus(item: MediaV2UploadSnapshot) {
@@ -73,6 +78,8 @@ export function MessageComposer(props: MessageComposerProps) {
         onBlur={() => props.onTypingChange('')}
         onKeyDown={(event) => { if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); event.currentTarget.form?.requestSubmit() } }} />
 
+      {props.voiceDraft && <VoicePreview draft={props.voiceDraft} onDelete={props.onDeleteVoice} onSend={props.onSendVoice} disabled={uploading || submitting} />}
+
       <div className="composer-toolbar">
         {!editing && <label className="attach-file-button" aria-label="Add media or file">
           <input type="file" accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/zip,text/plain"
@@ -80,6 +87,7 @@ export function MessageComposer(props: MessageComposerProps) {
             onChange={(event) => { const file = event.currentTarget.files?.[0]; if (file) props.onUpload(file); event.currentTarget.value = '' }} />
           {uploading ? 'Preparing…' : <><Paperclip size={12} /> Media / file</>}
         </label>}
+        {!editing && !props.voiceDraft && <VoiceRecorder disabled={uploading || submitting || Boolean(videoChoice)} onReady={props.onVoiceReady} />}
         <span className="composer-hint">Enter to send · Shift+Enter for a new line</span>
         <button type="submit" disabled={uploading || submitting || Boolean(videoChoice) || (!draft.trim() && attachments.length === 0)} aria-label="Send message"><Send size={14} /></button>
       </div>
