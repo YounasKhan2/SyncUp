@@ -44,7 +44,11 @@ messageRoutes.get('/chats/:id/messages', async (request: AuthenticatedRequest, r
                   'size_bytes', a.size_bytes,
                   'nonce', a.nonce,
                   'key_envelope', a.key_envelopes -> $2::text,
-                  'transport_version', a.transport_version
+                  'transport_version', a.transport_version,
+                  'duration_ms', a.duration_ms,
+                  'width', a.width,
+                  'height', a.height,
+                  'poster_attachment_id', a.poster_attachment_id
                 )) FILTER (WHERE a.id IS NOT NULL),
                 '[]'::jsonb
               ) AS attachments

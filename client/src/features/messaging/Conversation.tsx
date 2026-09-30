@@ -17,7 +17,6 @@ import { prepareVoiceV2 } from '../media/v2/prepareVoice'
 import type { VoiceDraft } from './VoiceRecorder'
 import { mediaV2UploadManager } from '../media/v2/runtime'
 import type { MediaV2UploadSnapshot } from '../media/v2/uploadManager'
-import type { PendingVideoChoice } from './MessageComposer'
 export function Conversation({ user, chatId, refreshInbox, online, pending, onQueued, onCallStarted }: {
   user: User
   chatId: string | null
@@ -43,7 +42,6 @@ export function Conversation({ user, chatId, refreshInbox, online, pending, onQu
   const [typingUsers, setTypingUsers] = useState<Record<string, string>>({})
   const [stagedAttachments, setStagedAttachments] = useState<StagedAttachment[]>([])
   const [uploading, setUploading] = useState(false)
-  const [videoChoice, setVideoChoice] = useState<PendingVideoChoice | null>(null)
   const [videoSends, setVideoSends] = useState<MediaV2UploadSnapshot[]>([])
   const [voiceDraft, setVoiceDraft] = useState<VoiceDraft | null>(null)
   const [submitting, setSubmitting] = useState(false)
@@ -62,6 +60,8 @@ export function Conversation({ user, chatId, refreshInbox, online, pending, onQu
   const submittingRef = useRef(false)
   const uploadingFileKeys = useRef(new Set<string>())
   const stagedFileKeys = useRef(new Map<string, string>())
+  const pendingVoiceJobs = useRef(new Set<string>())
+  const pendingVideoJobs = useRef(new Set<string>())
 
   const loadConversation = useCallback(async (id: string, initial: boolean) => {
     try {
@@ -261,18 +261,42 @@ export function Conversation({ user, chatId, refreshInbox, online, pending, onQu
       void import('../media/v2/jobStore').then(async ({ getMediaV2Job }) => {
         const job = await getMediaV2Job(item.jobId)
         if (!job?.keyEnvelope) return
-        setStagedAttachments((current) => current.some((attachment) => attachment.id === job.attachmentId) ? current : [...current, {
+        const attachment: StagedAttachment = {
           id: job.attachmentId,
           filename: job.filename,
           content_type: job.contentType,
           size_bytes: job.plaintextSize,
           nonce: null,
-          key_envelope: job.keyEnvelope!,
+          key_envelope: job.keyEnvelope,
           transport_version: 2,
-        }])
+          duration_ms: job.durationMs ?? null,
+          width: job.width ?? null,
+          height: job.height ?? null,
+          poster_attachment_id: job.posterAttachmentId ?? null,
+        }
+        const autoSend = job.mediaKind === 'voice' ? pendingVoiceJobs.current.delete(job.id) : pendingVideoJobs.current.delete(job.id)
+        if (autoSend) {
+          const encrypted = await encryptMessage('', chat?.members ?? [])
+          const pendingMessage: PendingMessage = {
+            chatId: job.chatId,
+            localId: crypto.randomUUID(),
+            idempotencyKey: crypto.randomUUID(),
+            ...encrypted,
+            attachmentIds: [attachment.id],
+            attachments: [attachment],
+            createdAt: new Date().toISOString(),
+            attempts: 0,
+            nextAttemptAt: 0,
+          }
+          await savePendingMessage(pendingMessage)
+          onQueued(pendingMessage)
+          window.dispatchEvent(new Event('syncup-outbox-wake'))
+          return
+        }
+        setStagedAttachments((current) => current.some((item) => item.id === job.attachmentId) ? current : [...current, attachment])
       })
     }
-  }), [chatId])
+  }), [chat, chatId, onQueued])
 
   const activePending = useMemo(
     () => pending.filter((message) => message.chatId === chatId),
@@ -289,7 +313,7 @@ export function Conversation({ user, chatId, refreshInbox, online, pending, onQu
     const image = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'].includes(file.type)
     const video = ['video/mp4', 'video/webm'].includes(file.type)
     if (video) {
-      setVideoChoice({ file, mode: 'hd' })
+      void sendVideo(file)
       return
     }
     const fileType = [
@@ -340,14 +364,14 @@ export function Conversation({ user, chatId, refreshInbox, online, pending, onQu
     }
   }
 
-  async function chooseVideoMode(mode: 'standard' | 'hd' | 'original') {
-    if (!videoChoice || !chat || !chatId) return
-    const file = videoChoice.file
-    setVideoChoice(null)
+  async function sendVideo(file: File) {
+    if (!chat || !chatId) return
     setUploading(true)
     setError('')
     try {
-      await prepareVideoV2(file, chatId, chat.members, user.id, mode)
+      const prepared = await prepareVideoV2(file, chatId, chat.members, user.id, 'hd')
+      pendingVideoJobs.current.add(prepared.job.id)
+      await mediaV2UploadManager.track(prepared.job)
     } catch (videoError) {
       setError(videoError instanceof Error && /limited to|Choose an MP4|non-empty video/.test(videoError.message) ? videoError.message : 'Couldn’t prepare this video. Try again.')
     } finally {
@@ -360,7 +384,9 @@ export function Conversation({ user, chatId, refreshInbox, online, pending, onQu
     setUploading(true)
     setError('')
     try {
-      await prepareVoiceV2(voiceDraft.file, voiceDraft.durationMs, chatId, chat.members, user.id)
+      const job = await prepareVoiceV2(voiceDraft.file, voiceDraft.durationMs, chatId, chat.members, user.id)
+      pendingVoiceJobs.current.add(job.id)
+      await mediaV2UploadManager.track(job)
       URL.revokeObjectURL(voiceDraft.url)
       setVoiceDraft(null)
     } catch (voiceError) {
@@ -609,6 +635,9 @@ export function Conversation({ user, chatId, refreshInbox, online, pending, onQu
         scrollContainerRef={messageListRef}
         onScroll={handleMessageListScroll}
         loadingOlder={loadingOlder}
+        mediaSends={videoSends}
+        onRetryMedia={(jobId) => void mediaV2UploadManager.resume(jobId)}
+        onCancelMedia={(jobId) => void mediaV2UploadManager.cancel(jobId)}
         calls={callHistory}
         members={chat?.members ?? []}
         currentUserId={user.id}
@@ -647,14 +676,8 @@ export function Conversation({ user, chatId, refreshInbox, online, pending, onQu
           stagedFileKeys.current.delete(id)
           setStagedAttachments((current) => current.filter((item) => item.id !== id))
         }}
-        videoChoice={videoChoice}
-        videoSends={videoSends}
         voiceDraft={voiceDraft}
         onUpload={(file) => void uploadFile(file)}
-        onChooseVideoMode={(mode) => void chooseVideoMode(mode)}
-        onCancelVideoChoice={() => setVideoChoice(null)}
-        onRetryVideo={(jobId) => void mediaV2UploadManager.resume(jobId)}
-        onCancelVideo={(jobId) => void mediaV2UploadManager.cancel(jobId)}
         onVoiceReady={setVoiceDraft}
         onDeleteVoice={() => { if (voiceDraft) URL.revokeObjectURL(voiceDraft.url); setVoiceDraft(null) }}
         onSendVoice={() => void sendVoiceNote()}

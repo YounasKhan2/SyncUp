@@ -4,6 +4,7 @@ import type { StagedAttachment } from '../../shared/types'
 import { formatFileSize } from '../../shared/utils/format'
 import { downloadAttachment, hydrateAttachment } from '../media/mediaHydrator'
 import { hydrateMediaV2 } from '../media/v2/mediaHydratorV2'
+import { getMediaV2JobByAttachment } from '../media/v2/jobStore'
 
 export function MessageAttachment({ attachment, pending = false, onOpen }: {
   attachment: StagedAttachment
@@ -16,8 +17,12 @@ export function MessageAttachment({ attachment, pending = false, onOpen }: {
   const [attempt, setAttempt] = useState(0)
   const [error, setError] = useState('')
   const [voiceUrl, setVoiceUrl] = useState('')
+  const [videoPosterUrl, setVideoPosterUrl] = useState('')
   const [voiceLoading, setVoiceLoading] = useState(false)
   const [voicePlaying, setVoicePlaying] = useState(false)
+  const [voiceReady, setVoiceReady] = useState(false)
+  const [voiceCurrent, setVoiceCurrent] = useState(0)
+  const [voiceDuration, setVoiceDuration] = useState(() => Math.max(0, (attachment.duration_ms ?? 0) / 1000))
   const audioRef = useRef<HTMLAudioElement>(null)
   const isImage = attachment.content_type.startsWith('image/')
   const isVideo = attachment.content_type.startsWith('video/')
@@ -62,17 +67,64 @@ export function MessageAttachment({ attachment, pending = false, onOpen }: {
     }
   }, [attachment, attempt, isMediaV2, isVisualMedia, pending, visible])
 
+  useEffect(() => {
+    if (!isMediaV2 || !isVideo || pending) return
+    let cancelled = false
+    let objectUrl = ''
+    void (async () => {
+      const job = await getMediaV2JobByAttachment(attachment.id)
+      if (cancelled) return
+      if (job?.posterDataUrl) {
+        setVideoPosterUrl(job.posterDataUrl)
+        return
+      }
+      if (!attachment.poster_attachment_id) return
+      const poster: StagedAttachment = {
+        id: attachment.poster_attachment_id,
+        filename: 'video-preview.jpg',
+        content_type: 'image/jpeg',
+        size_bytes: 1,
+        nonce: '',
+        key_envelope: '',
+        transport_version: 1,
+      }
+      const blob = await hydrateAttachment(poster)
+      if (cancelled) return
+      objectUrl = URL.createObjectURL(blob)
+      setVideoPosterUrl(objectUrl)
+    })().catch(() => undefined)
+    return () => { cancelled = true; if (objectUrl) URL.revokeObjectURL(objectUrl) }
+  }, [attachment.id, attachment.poster_attachment_id, isMediaV2, isVideo, pending])
+
+  useEffect(() => {
+    if (!isMediaV2 || !isVoice || pending || voiceUrl || voiceLoading) return
+    let cancelled = false
+    let objectUrl = ''
+    setVoiceLoading(true)
+    setError('')
+    hydrateMediaV2(attachment)
+      .then((file) => {
+        if (cancelled) return
+        objectUrl = URL.createObjectURL(file)
+        setVoiceUrl(objectUrl)
+        setVoiceReady(true)
+      })
+      .catch(() => { if (!cancelled) setError('Couldn’t load this voice note.') })
+      .finally(() => { if (!cancelled) setVoiceLoading(false) })
+    return () => { cancelled = true; if (objectUrl) URL.revokeObjectURL(objectUrl) }
+  }, [attachment, isMediaV2, isVoice, pending, voiceUrl])
+
+  function voiceClock(seconds: number) {
+    if (!Number.isFinite(seconds) || seconds < 0) return '0:00'
+    const whole = Math.floor(seconds)
+    return `${Math.floor(whole / 60)}:${String(whole % 60).padStart(2, '0')}`
+  }
+
   async function toggleVoice() {
-    if (pending) return
+    if (pending || !voiceReady || !voiceUrl) return
     setError('')
     try {
-      let url = voiceUrl
-      if (!url) {
-        setVoiceLoading(true)
-        const file = await hydrateMediaV2(attachment)
-        url = URL.createObjectURL(file)
-        setVoiceUrl(url)
-      }
+      const url = voiceUrl
       const audio = audioRef.current
       if (!audio) return
       if (audio.src !== url) audio.src = url
@@ -101,6 +153,7 @@ export function MessageAttachment({ attachment, pending = false, onOpen }: {
       )}
       {isMediaV2 && isVideo && !previewUrl && !error && (
         <button type="button" className="attachment-v2-video-ready" onClick={onOpen} aria-label={`Open ${attachment.filename}`}>
+          {videoPosterUrl && <img className="attachment-v2-poster" src={videoPosterUrl} alt="" />}
           <span className="attachment-video-play"><Play size={18} fill="currentColor" aria-hidden="true" /></span>
           <strong>{attachment.filename}</strong><small>{formatFileSize(attachment.size_bytes)}</small>
         </button>
@@ -116,13 +169,20 @@ export function MessageAttachment({ attachment, pending = false, onOpen }: {
           <RefreshCw size={13} aria-hidden="true" /><span>Retry {isVideo ? 'video' : 'image'}</span>
         </button>
       )}
-      {isMediaV2 && isVoice && <div className="voice-message"><button type="button" onClick={() => void toggleVoice()} disabled={pending || voiceLoading} aria-label={voicePlaying ? 'Pause voice note' : 'Play voice note'}>{voicePlaying ? <Pause size={14}/> : <Play size={14}/>}</button><audio ref={audioRef} onPlay={() => setVoicePlaying(true)} onPause={() => setVoicePlaying(false)} onEnded={() => setVoicePlaying(false)}/><div className="voice-message-wave">{Array.from({ length: 28 }, (_, index) => <i key={index} style={{ height: `${4 + ((index * 7) % 13)}px` }}/>)}</div><small>{voiceLoading ? 'Loading…' : 'Voice note'}</small></div>}
+      {isMediaV2 && isVoice && <div className="voice-message">
+        <button type="button" onClick={() => void toggleVoice()} disabled={pending || voiceLoading || !voiceReady} aria-label={voicePlaying ? 'Pause voice note' : 'Play voice note'}>{voicePlaying ? <Pause size={14}/> : <Play size={14} fill="currentColor"/>}</button>
+        <audio ref={audioRef} src={voiceUrl || undefined} preload="metadata" onLoadedMetadata={(event) => { if (Number.isFinite(event.currentTarget.duration)) setVoiceDuration(event.currentTarget.duration) }} onTimeUpdate={(event) => setVoiceCurrent(event.currentTarget.currentTime)} onPlay={() => setVoicePlaying(true)} onPause={() => setVoicePlaying(false)} onEnded={() => { setVoicePlaying(false); setVoiceCurrent(0) }}/>
+        <div className="voice-message-body">
+          <input className="voice-scrubber" type="range" min="0" max={Math.max(voiceDuration, 0)} step=".05" value={Math.max(0, Math.min(voiceCurrent, voiceDuration || 0))} disabled={!voiceReady} aria-label="Voice note position" onChange={(event) => { const audio = audioRef.current; if (audio) { audio.currentTime = Number(event.currentTarget.value); setVoiceCurrent(audio.currentTime) } }} />
+          <div className="voice-message-meta"><small>{voiceLoading ? 'Loading…' : error ? 'Couldn’t load voice note' : voiceClock(voiceCurrent)}</small><small>{voiceDuration > 0 ? voiceClock(voiceDuration) : ''}</small></div>
+        </div>
+      </div>}
       {!isVisualMedia && !isVoice && (
         <button type="button" className="attachment-file-button" onClick={() => void downloadAttachment(attachment).catch((downloadError: unknown) => setError(downloadError instanceof Error ? downloadError.message : 'Unable to download this file.'))} disabled={pending}>
           <Download size={14} aria-hidden="true" /><FileText size={14} aria-hidden="true" /><span><strong>{attachment.filename}</strong><small>{formatFileSize(attachment.size_bytes)}</small></span>
         </button>
       )}
-      {error && !isVisualMedia && <small className="attachment-error" role="alert">{error}</small>}
+      {error && !isVisualMedia && !isVoice && <small className="attachment-error" role="alert">{error}</small>}
     </div>
   )
 }

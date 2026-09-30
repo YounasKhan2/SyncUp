@@ -9,7 +9,8 @@ import { requireAuth, type AuthenticatedRequest } from '../auth/middleware.js'
 const MIB = 1024 * 1024
 const GIB = 1024 * MIB
 const V2_CHUNK_SIZE = 5 * MIB
-const maxVideoSourceBytes = 2 * GIB
+const maxStandardHdSourceBytes = GIB
+const maxOriginalSourceBytes = 2 * GIB
 const maxVoiceSourceBytes = 256 * MIB
 const maxCiphertextBytes = 2 * GIB + 64 * MIB
 const videoTypes = new Set(['video/mp4', 'video/webm'])
@@ -64,7 +65,9 @@ const intentSchema = z.object({
 }).superRefine((value, context) => {
   const supported = value.mediaKind === 'video' ? videoTypes.has(value.contentType) : voiceTypes.has(value.contentType)
   if (!supported) context.addIssue({ code: 'custom', message: 'Unsupported media content type.', path: ['contentType'] })
-  const sourceLimit = value.mediaKind === 'video' ? maxVideoSourceBytes : maxVoiceSourceBytes
+  const sourceLimit = value.mediaKind === 'voice'
+    ? maxVoiceSourceBytes
+    : value.mediaMode === 'original' ? maxOriginalSourceBytes : maxStandardHdSourceBytes
   if (value.plaintextSize > sourceLimit) context.addIssue({ code: 'custom', message: 'Media exceeds the v2 source limit.', path: ['plaintextSize'] })
   if (value.mediaKind === 'voice' && value.mediaMode) context.addIssue({ code: 'custom', message: 'Voice notes do not use a media mode.', path: ['mediaMode'] })
   if (value.mediaKind === 'video' && !value.mediaMode) context.addIssue({ code: 'custom', message: 'Video media mode is required.', path: ['mediaMode'] })
@@ -416,7 +419,7 @@ mediaV2Router.get('/uploads/v2/:attachmentId', limiter, async (request: Authenti
   try {
     const result = await pool.query(
       `SELECT a.id, a.filename, a.content_type, a.plaintext_size, a.ciphertext_size, a.chunk_size,
-              a.chunk_count, a.media_kind, a.duration_ms, a.width, a.height,
+              a.chunk_count, a.media_kind, a.duration_ms, a.width, a.height, a.poster_attachment_id,
               a.key_envelopes -> $2::text AS key_envelope
        FROM attachments a
        JOIN message_attachments ma ON ma.attachment_id = a.id
@@ -446,6 +449,7 @@ mediaV2Router.get('/uploads/v2/:attachmentId', limiter, async (request: Authenti
       durationMs: attachment.duration_ms === null ? null : Number(attachment.duration_ms),
       width: attachment.width === null ? null : Number(attachment.width),
       height: attachment.height === null ? null : Number(attachment.height),
+      posterAttachmentId: attachment.poster_attachment_id ?? null,
       keyEnvelope: attachment.key_envelope,
       downloadUrl: `/api/uploads/v2/${attachment.id}/content`,
     } })

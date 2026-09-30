@@ -57,6 +57,7 @@ uploadsRouter.post('/uploads/intent', uploadIntentLimiter, async (request: Authe
     sizeBytes: z.number().int().positive(),
     nonce: nonceSchema,
     keyEnvelopes: envelopesSchema.refine((value) => Object.keys(value).length >= 2 && Object.keys(value).length <= 32),
+    parentVideoId: z.uuid().optional(),
   }).safeParse(request.body)
   if (!input.success) {
     response.status(400).json({ error: { code: 'validation', message: 'Choose a supported file and valid encrypted key envelopes.' } })
@@ -97,6 +98,21 @@ uploadsRouter.post('/uploads/intent', uploadIntentLimiter, async (request: Authe
       response.status(404).json({ error: { code: 'not_found', message: 'Chat not found.' } })
       return
     }
+    if (input.data.parentVideoId) {
+      if (!image) {
+        response.status(400).json({ error: { code: 'validation', message: 'Video preview must be an image.' } })
+        return
+      }
+      const parent = await pool.query(
+        `SELECT id FROM attachments WHERE id = $1 AND chat_id = $2 AND uploaded_by = $3
+         AND transport_version = 2 AND media_kind = 'video' AND status = 'pending'`,
+        [input.data.parentVideoId, input.data.chatId, request.auth!.userId],
+      )
+      if (!parent.rows[0]) {
+        response.status(404).json({ error: { code: 'not_found', message: 'Video not found.' } })
+        return
+      }
+    }
     const id = uuidv7()
     const objectKey = `appwrite:${id}`
     await pool.query(
@@ -115,6 +131,12 @@ uploadsRouter.post('/uploads/intent', uploadIntentLimiter, async (request: Authe
         JSON.stringify(input.data.keyEnvelopes),
       ],
     )
+    if (input.data.parentVideoId) {
+      await pool.query(
+        'UPDATE attachments SET poster_attachment_id = $1 WHERE id = $2 AND uploaded_by = $3',
+        [id, input.data.parentVideoId, request.auth!.userId],
+      )
+    }
     response.status(201).json({ attachmentId: id })
   } catch (error) {
     next(error)
@@ -225,10 +247,14 @@ uploadsRouter.get('/uploads/:id', attachmentMetadataLimiter, async (request: Aut
       `SELECT a.id, a.object_key, a.filename, a.content_type, a.size_bytes, a.nonce,
               a.key_envelopes -> $2::text AS key_envelope
        FROM attachments a
-       JOIN message_attachments ma ON ma.attachment_id = a.id
-       JOIN messages m ON m.id = ma.message_id AND m.chat_id = a.chat_id
+       LEFT JOIN message_attachments ma ON ma.attachment_id = a.id
+       LEFT JOIN attachments parent ON parent.poster_attachment_id = a.id
+       LEFT JOIN message_attachments pma ON pma.attachment_id = parent.id
+       JOIN messages m ON m.chat_id = a.chat_id
+         AND (m.id = ma.message_id OR m.id = pma.message_id)
        JOIN chat_members cm ON cm.chat_id = a.chat_id AND cm.user_id = $2 AND cm.left_at IS NULL
        WHERE a.id = $1 AND a.status = 'ready'
+         AND (ma.message_id IS NOT NULL OR (pma.message_id IS NOT NULL AND parent.status = 'ready'))
          AND NOT EXISTS (
            SELECT 1 FROM message_requests mr WHERE mr.chat_id = a.chat_id
              AND mr.to_user = $2 AND mr.state IN ('pending', 'ignored')
@@ -278,10 +304,14 @@ uploadsRouter.get('/uploads/:id/content', attachmentDownloadLimiter, async (requ
   try {
     const access = await pool.query(
       `SELECT a.object_key FROM attachments a
-       JOIN message_attachments ma ON ma.attachment_id = a.id
-       JOIN messages m ON m.id = ma.message_id AND m.chat_id = a.chat_id
+       LEFT JOIN message_attachments ma ON ma.attachment_id = a.id
+       LEFT JOIN attachments parent ON parent.poster_attachment_id = a.id
+       LEFT JOIN message_attachments pma ON pma.attachment_id = parent.id
+       JOIN messages m ON m.chat_id = a.chat_id
+         AND (m.id = ma.message_id OR m.id = pma.message_id)
        JOIN chat_members cm ON cm.chat_id = a.chat_id AND cm.user_id = $2 AND cm.left_at IS NULL
        WHERE a.id = $1 AND a.status = 'ready' AND a.object_key = $3
+         AND (ma.message_id IS NOT NULL OR (pma.message_id IS NOT NULL AND parent.status = 'ready'))
          AND NOT EXISTS (
            SELECT 1 FROM message_requests mr WHERE mr.chat_id = a.chat_id
              AND mr.to_user = $2 AND mr.state IN ('pending', 'ignored')

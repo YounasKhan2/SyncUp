@@ -44,7 +44,7 @@ export function mediaV2Aad(context: MediaV2RecordContext) {
 export async function importMediaV2Key(rawKey: ArrayBuffer | Uint8Array, usages: KeyUsage[] = ['encrypt', 'decrypt']) {
   const bytes = rawKey instanceof Uint8Array ? rawKey : new Uint8Array(rawKey)
   if (bytes.byteLength !== 32) throw new Error('Media-v2 requires a 256-bit key.')
-  return crypto.subtle.importKey('raw', bytes, { name: 'AES-GCM' }, false, usages)
+  return crypto.subtle.importKey('raw', bytes.slice().buffer, { name: 'AES-GCM' }, false, usages)
 }
 
 export function encodeMediaV2Record(context: MediaV2RecordContext, iv: Uint8Array, ciphertext: ArrayBuffer) {
@@ -125,7 +125,7 @@ export async function decryptMediaV2Record(
   }
   const context: MediaV2RecordContext = { attachmentId, ...decoded.context }
   return crypto.subtle.decrypt(
-    { name: 'AES-GCM', iv: decoded.iv, additionalData: mediaV2Aad(context), tagLength: 128 },
+    { name: 'AES-GCM', iv: decoded.iv.slice(), additionalData: mediaV2Aad(context), tagLength: 128 },
     key,
     decoded.ciphertext,
   )

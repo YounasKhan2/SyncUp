@@ -75,8 +75,13 @@ export type EncryptedChatMessage = {
     filename: string
     content_type: string
     size_bytes: number
-    nonce: string
+    nonce: string | null
     key_envelope: string
+    transport_version?: number
+    duration_ms?: number | null
+    width?: number | null
+    height?: number | null
+    poster_attachment_id?: string | null
   }[]
 }
 
@@ -109,6 +114,10 @@ export type StagedAttachment = {
   nonce: string | null
   key_envelope: string
   transport_version?: number
+  duration_ms?: number | null
+  width?: number | null
+  height?: number | null
+  poster_attachment_id?: string | null
 }
 
 export type IncomingRequest = {

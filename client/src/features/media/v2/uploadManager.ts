@@ -31,6 +31,11 @@ export type MediaV2UploadSnapshot = {
   progress: number
   internalState: MediaV2JobState
   lastError: string | null
+  mediaKind: MediaV2UploadJob['mediaKind']
+  filename: string
+  contentType: string
+  sizeBytes: number
+  posterUrl: string | null
 }
 
 export type MediaV2Transport = {
@@ -64,7 +69,12 @@ function snapshot(job: MediaV2UploadJob): MediaV2UploadSnapshot {
     status: publicStatus(job.state),
     progress: progress(job),
     internalState: job.state,
-    lastError: job.lastError,
+    lastError: job.state === 'failed_recoverable' ? 'Couldn’t send. Try again.' : null,
+    mediaKind: job.mediaKind,
+    filename: job.filename,
+    contentType: job.contentType,
+    sizeBytes: job.plaintextSize,
+    posterUrl: job.posterDataUrl ?? null,
   }
 }
 
@@ -89,7 +99,11 @@ export class MediaV2UploadManager {
   private readonly running = new Map<string, AbortController>()
   private initialized = false
 
-  constructor(private readonly transport: MediaV2Transport) {}
+  private readonly transport: MediaV2Transport
+
+  constructor(transport: MediaV2Transport) {
+    this.transport = transport
+  }
 
   async initialize() {
     if (this.initialized) return
@@ -104,7 +118,7 @@ export class MediaV2UploadManager {
   subscribe(listener: Listener) {
     this.listeners.add(listener)
     listener(this.getSnapshots())
-    return () => this.listeners.delete(listener)
+    return () => { this.listeners.delete(listener) }
   }
 
   getSnapshots() {

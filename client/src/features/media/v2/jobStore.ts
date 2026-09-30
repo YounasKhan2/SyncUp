@@ -25,6 +25,11 @@ export type MediaV2UploadJob = {
   mediaKind: MediaV2Kind
   filename: string
   contentType: string
+  durationMs?: number | null
+  width?: number | null
+  height?: number | null
+  posterDataUrl?: string | null
+  posterAttachmentId?: string | null
   plaintextSize: number
   ciphertextSize: number
   chunkSize: number

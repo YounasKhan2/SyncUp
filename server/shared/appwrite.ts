@@ -40,7 +40,9 @@ export async function uploadAppwriteRange(input: {
   const config = configuration()
   const form = new FormData()
   form.append('fileId', input.fileId)
-  form.append('file', new Blob([input.bytes]), input.filename)
+  const bytes = new Uint8Array(input.bytes.byteLength)
+  bytes.set(input.bytes)
+  form.append('file', new Blob([bytes.buffer]), input.filename)
 
   const headers: Record<string, string> = {
     'X-Appwrite-Project': config.projectId,
