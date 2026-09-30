@@ -179,6 +179,20 @@ export async function encryptAttachment(file: File, members: PublicMember[]) {
   return { ciphertext, nonce: toBase64Url(nonce), keyEnvelopes }
 }
 
+export async function unwrapMediaKey(keyEnvelope: string) {
+  if (!unlockedPrivateKey) throw new Error('Unlock your account to open media.')
+  const rawKey = new Uint8Array(await crypto.subtle.decrypt(
+    { name: 'RSA-OAEP' },
+    unlockedPrivateKey,
+    fromBase64Url(keyEnvelope),
+  ))
+  if (rawKey.byteLength !== 32) {
+    rawKey.fill(0)
+    throw new Error('Unable to open this media.')
+  }
+  return rawKey
+}
+
 export async function decryptAttachment(ciphertext: ArrayBuffer, nonce: string, keyEnvelope: string) {
   if (!unlockedPrivateKey) throw new Error('Unlock your encryption key to open attachments.')
   const rawContentKey = new Uint8Array(await crypto.subtle.decrypt(

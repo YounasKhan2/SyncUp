@@ -61,3 +61,25 @@ export async function uploadAppwriteRange(input: {
   }
   return response.json() as Promise<{ $id: string; sizeOriginal: number; chunksTotal: number; chunksUploaded: number }>
 }
+
+
+export async function downloadAppwriteRange(input: { fileId: string; start: number; end: number }) {
+  const config = configuration()
+  const response = await fetch(
+    `${config.endpoint}/storage/buckets/${encodeURIComponent(config.bucketId)}/files/${encodeURIComponent(input.fileId)}/download`,
+    {
+      headers: {
+        'X-Appwrite-Project': config.projectId,
+        'X-Appwrite-Key': config.apiKey,
+        Range: `bytes=${input.start}-${input.end}`,
+      },
+    },
+  )
+  if (response.status !== 206) {
+    throw new Error(`Media download failed with status ${response.status}.`)
+  }
+  const bytes = Buffer.from(await response.arrayBuffer())
+  const expected = input.end - input.start + 1
+  if (bytes.byteLength !== expected) throw new Error('Media download range size did not match the request.')
+  return bytes
+}

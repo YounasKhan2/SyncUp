@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight, Download, Minus, Plus, X } from 'lucide-reac
 import { createPortal } from 'react-dom'
 import type { StagedAttachment } from '../../shared/types'
 import { downloadAttachment, hydrateAttachment } from './mediaHydrator'
+import { downloadMediaV2, hydrateMediaV2 } from './v2/mediaHydratorV2'
 
 export type MediaViewerItem = {
   attachment: StagedAttachment
@@ -23,6 +24,7 @@ export function MediaViewer({ items, activeId, onClose, onChange }: {
   const [error, setError] = useState('')
   const [zoom, setZoom] = useState(1)
   const [retry, setRetry] = useState(0)
+  const [loadProgress, setLoadProgress] = useState(0)
 
   const previous = useMemo(() => items[activeIndex - 1], [activeIndex, items])
   const next = useMemo(() => items[activeIndex + 1], [activeIndex, items])
@@ -34,7 +36,11 @@ export function MediaViewer({ items, activeId, onClose, onChange }: {
     setUrl('')
     setError('')
     setZoom(1)
-    hydrateAttachment(active.attachment)
+    setLoadProgress(0)
+    const hydrate = active.attachment.transport_version === 2
+      ? hydrateMediaV2(active.attachment, setLoadProgress)
+      : hydrateAttachment(active.attachment)
+    hydrate
       .then((blob) => {
         if (cancelled) return
         objectUrl = URL.createObjectURL(blob)
@@ -68,7 +74,7 @@ export function MediaViewer({ items, activeId, onClose, onChange }: {
       <header className="media-viewer-header">
         <button type="button" onClick={onClose} aria-label="Close media viewer"><X size={20} /></button>
         <div><strong>{active.senderName}</strong><small>{new Date(active.createdAt).toLocaleString()}</small></div>
-        <button type="button" onClick={() => void downloadAttachment(active.attachment)} aria-label="Download media"><Download size={18} /></button>
+        <button type="button" onClick={() => void (active.attachment.transport_version === 2 ? downloadMediaV2(active.attachment, setLoadProgress) : downloadAttachment(active.attachment))} aria-label="Download media"><Download size={18} /></button>
       </header>
       <div className="media-viewer-stage" onClick={(event) => { if (event.target === event.currentTarget) onClose() }}>
         {previous && <button className="media-viewer-nav media-viewer-prev" type="button" onClick={() => onChange(previous.attachment.id)} aria-label="Previous media"><ChevronLeft size={30} /></button>}
@@ -76,7 +82,7 @@ export function MediaViewer({ items, activeId, onClose, onChange }: {
           ? <div className="media-viewer-pan">{isVideo ? <video className="media-viewer-video" src={url} controls autoPlay playsInline preload="metadata" /> : <img src={url} alt={active.attachment.filename} style={{ transform: `scale(${zoom})` }} />}</div>
           : error
             ? <div className="media-viewer-error"><p>{error}</p><button type="button" onClick={() => setRetry((value) => value + 1)}>Retry</button></div>
-            : <div className="media-viewer-loading" role="status"><span />Decrypting image…</div>}
+            : <div className="media-viewer-loading" role="status"><span />{active.attachment.transport_version === 2 ? `Loading… ${loadProgress}%` : 'Loading…'}</div>}
         {next && <button className="media-viewer-nav media-viewer-next" type="button" onClick={() => onChange(next.attachment.id)} aria-label="Next media"><ChevronRight size={30} /></button>}
       </div>
       <footer className="media-viewer-footer">

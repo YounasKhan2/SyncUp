@@ -534,3 +534,8 @@
   .video-quality-options button { flex: 1; min-width: 64px; }
   .video-quality-options .video-choice-cancel { flex: 0 0 auto; margin-left: 0; }
 }
+
+.attachment-v2-video-ready { position: relative; display: grid; width: min(340px, 100%); min-height: 150px; place-items: center; align-content: center; gap: 6px; overflow: hidden; padding: 16px; border: 0; border-radius: 8px; color: #eef3ef; background: #15251e; font: inherit; cursor: pointer; }
+.attachment-v2-video-ready .attachment-video-play { position: static; transform: none; }
+.attachment-v2-video-ready strong { max-width: 90%; overflow: hidden; font-size: 10px; font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
+.attachment-v2-video-ready small { color: #b9c5bc; font-size: 8px; }

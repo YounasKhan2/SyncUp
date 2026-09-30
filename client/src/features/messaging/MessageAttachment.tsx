@@ -70,10 +70,16 @@ export function MessageAttachment({ attachment, pending = false, onOpen }: {
           <small><Video size={11} aria-hidden="true" /> {formatFileSize(attachment.size_bytes)}</small>
         </button>
       )}
-      {isVisualMedia && !previewUrl && !error && (
+      {isMediaV2 && isVideo && !previewUrl && !error && (
+        <button type="button" className="attachment-v2-video-ready" onClick={onOpen} aria-label={`Open ${attachment.filename}`}>
+          <span className="attachment-video-play"><Play size={18} fill="currentColor" aria-hidden="true" /></span>
+          <strong>{attachment.filename}</strong><small>{formatFileSize(attachment.size_bytes)}</small>
+        </button>
+      )}
+      {isVisualMedia && !isMediaV2 && !previewUrl && !error && (
         <div className="attachment-image-skeleton" aria-label={pending ? 'Sending media' : 'Loading media'}>
           {isVideo ? <Video size={16} aria-hidden="true" /> : <ImageIcon size={16} aria-hidden="true" />}
-          <span>{pending ? `Sending ${isVideo ? 'video' : 'image'}…` : isMediaV2 ? 'Video ready' : `Loading ${isVideo ? 'video' : 'image'}…`}</span>
+          <span>{pending ? `Sending ${isVideo ? 'video' : 'image'}…` : `Loading ${isVideo ? 'video' : 'image'}…`}</span>
         </div>
       )}
       {isVisualMedia && error && (
