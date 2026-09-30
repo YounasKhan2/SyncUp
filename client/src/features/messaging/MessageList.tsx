@@ -48,9 +48,9 @@ export function MessageList({ messages, calls, members, currentUserId, loading, 
     <>
       <div className="message-list" aria-live="polite" ref={scrollContainerRef} onScroll={onScroll}>
         {loadingOlder && <div className="older-messages-loading" role="status">Loading earlier messages…</div>}
-        {loading && <div className="conversation-loading">Loading encrypted messages…</div>}
+        {loading && <div className="conversation-loading">Loading messages…</div>}
         {error && <div className="inline-error" role="alert">{error}</div>}
-        {!loading && messages.length === 0 && <div className="message-empty">{emptyMessage ?? 'This is the beginning of your encrypted conversation.'}</div>}
+        {!loading && messages.length === 0 && <div className="message-empty">{emptyMessage ?? 'This is the beginning of your conversation.'}</div>}
         {messages.map((message) => {
           const mine = message.sender_id === currentUserId
           const sender = membersById.get(message.sender_id)
@@ -62,7 +62,7 @@ export function MessageList({ messages, calls, members, currentUserId, loading, 
                 {!mine && <div className="message-meta"><strong>{sender?.displayName ?? 'Member'}</strong><span>@{sender?.username}</span></div>}
                 <div className="message-bubble">
                   {parent && <div className="reply-quote">{membersById.get(parent.sender_id)?.displayName}: {parent.deleted_at ? 'Message deleted' : parent.text}</div>}
-                  <p>{message.deleted_at ? 'This message was deleted.' : message.pending ? 'Sending encrypted message…' : message.text}</p>
+                  <p>{message.deleted_at ? 'This message was deleted.' : message.pending ? 'Sending…' : message.text}</p>
                   {!message.deleted_at && message.attachments?.map((attachment) => <MessageAttachment key={attachment.id} attachment={attachment} pending={message.pending} onOpen={(attachment.content_type.startsWith('image/') || attachment.content_type.startsWith('video/')) && !message.pending ? () => setViewerAttachmentId(attachment.id) : undefined} />)}
                   {message.edited_at && !message.deleted_at && <span className="message-edited">edited</span>}
                   <span className="message-time">{message.pending ? (message.failed ? 'Waiting to reconnect' : 'Pending') : new Date(message.created_at).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}</span>
