@@ -89,7 +89,11 @@ export class MediaV2UploadManager {
   private readonly running = new Map<string, AbortController>()
   private initialized = false
 
-  constructor(private readonly transport: MediaV2Transport) {}
+  private readonly transport: MediaV2Transport
+
+  constructor(transport: MediaV2Transport) {
+    this.transport = transport
+  }
 
   async initialize() {
     if (this.initialized) return
@@ -104,7 +108,7 @@ export class MediaV2UploadManager {
   subscribe(listener: Listener) {
     this.listeners.add(listener)
     listener(this.getSnapshots())
-    return () => this.listeners.delete(listener)
+    return () => { this.listeners.delete(listener) }
   }
 
   getSnapshots() {
