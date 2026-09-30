@@ -62,6 +62,7 @@ export function Conversation({ user, chatId, refreshInbox, online, pending, onQu
   const submittingRef = useRef(false)
   const uploadingFileKeys = useRef(new Set<string>())
   const stagedFileKeys = useRef(new Map<string, string>())
+  const pendingVoiceJobs = useRef(new Set<string>())
 
   const loadConversation = useCallback(async (id: string, initial: boolean) => {
     try {
@@ -261,18 +262,37 @@ export function Conversation({ user, chatId, refreshInbox, online, pending, onQu
       void import('../media/v2/jobStore').then(async ({ getMediaV2Job }) => {
         const job = await getMediaV2Job(item.jobId)
         if (!job?.keyEnvelope) return
-        setStagedAttachments((current) => current.some((attachment) => attachment.id === job.attachmentId) ? current : [...current, {
+        const attachment: StagedAttachment = {
           id: job.attachmentId,
           filename: job.filename,
           content_type: job.contentType,
           size_bytes: job.plaintextSize,
           nonce: null,
-          key_envelope: job.keyEnvelope!,
+          key_envelope: job.keyEnvelope,
           transport_version: 2,
-        }])
+        }
+        if (job.mediaKind === 'voice' && pendingVoiceJobs.current.delete(job.id)) {
+          const encrypted = await encryptMessage('', chat?.members ?? [])
+          const pendingMessage: PendingMessage = {
+            chatId: job.chatId,
+            localId: crypto.randomUUID(),
+            idempotencyKey: crypto.randomUUID(),
+            ...encrypted,
+            attachmentIds: [attachment.id],
+            attachments: [attachment],
+            createdAt: new Date().toISOString(),
+            attempts: 0,
+            nextAttemptAt: 0,
+          }
+          await savePendingMessage(pendingMessage)
+          onQueued(pendingMessage)
+          window.dispatchEvent(new Event('syncup-outbox-wake'))
+          return
+        }
+        setStagedAttachments((current) => current.some((item) => item.id === job.attachmentId) ? current : [...current, attachment])
       })
     }
-  }), [chatId])
+  }), [chat, chatId, onQueued])
 
   const activePending = useMemo(
     () => pending.filter((message) => message.chatId === chatId),
@@ -360,7 +380,8 @@ export function Conversation({ user, chatId, refreshInbox, online, pending, onQu
     setUploading(true)
     setError('')
     try {
-      await prepareVoiceV2(voiceDraft.file, voiceDraft.durationMs, chatId, chat.members, user.id)
+      const job = await prepareVoiceV2(voiceDraft.file, voiceDraft.durationMs, chatId, chat.members, user.id)
+      pendingVoiceJobs.current.add(job.id)
       URL.revokeObjectURL(voiceDraft.url)
       setVoiceDraft(null)
     } catch (voiceError) {
