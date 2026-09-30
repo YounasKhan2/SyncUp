@@ -60,8 +60,6 @@ export function Conversation({ user, chatId, refreshInbox, online, pending, onQu
   const submittingRef = useRef(false)
   const uploadingFileKeys = useRef(new Set<string>())
   const stagedFileKeys = useRef(new Map<string, string>())
-  const pendingVoiceJobs = useRef(new Set<string>())
-  const pendingVideoJobs = useRef(new Set<string>())
 
   const loadConversation = useCallback(async (id: string, initial: boolean) => {
     try {
@@ -274,13 +272,12 @@ export function Conversation({ user, chatId, refreshInbox, online, pending, onQu
           height: job.height ?? null,
           poster_attachment_id: job.posterAttachmentId ?? null,
         }
-        const autoSend = job.mediaKind === 'voice' ? pendingVoiceJobs.current.delete(job.id) : pendingVideoJobs.current.delete(job.id)
-        if (autoSend) {
+        if (job.sendOnComplete && job.messageIdempotencyKey) {
           const encrypted = await encryptMessage('', chat?.members ?? [])
           const pendingMessage: PendingMessage = {
             chatId: job.chatId,
             localId: crypto.randomUUID(),
-            idempotencyKey: crypto.randomUUID(),
+            idempotencyKey: job.messageIdempotencyKey,
             ...encrypted,
             attachmentIds: [attachment.id],
             attachments: [attachment],
@@ -289,6 +286,8 @@ export function Conversation({ user, chatId, refreshInbox, online, pending, onQu
             nextAttemptAt: 0,
           }
           await savePendingMessage(pendingMessage)
+          const { patchMediaV2Job } = await import('../media/v2/jobStore')
+          await patchMediaV2Job(job.id, { sendOnComplete: false })
           onQueued(pendingMessage)
           window.dispatchEvent(new Event('syncup-outbox-wake'))
           return
@@ -370,7 +369,6 @@ export function Conversation({ user, chatId, refreshInbox, online, pending, onQu
     setError('')
     try {
       const prepared = await prepareVideoV2(file, chatId, chat.members, user.id, 'hd')
-      pendingVideoJobs.current.add(prepared.job.id)
       await mediaV2UploadManager.track(prepared.job)
     } catch (videoError) {
       setError(videoError instanceof Error && /limited to|Choose an MP4|non-empty video/.test(videoError.message) ? videoError.message : 'Couldn’t prepare this video. Try again.')
@@ -385,7 +383,6 @@ export function Conversation({ user, chatId, refreshInbox, online, pending, onQu
     setError('')
     try {
       const job = await prepareVoiceV2(voiceDraft.file, voiceDraft.durationMs, chatId, chat.members, user.id)
-      pendingVoiceJobs.current.add(job.id)
       await mediaV2UploadManager.track(job)
       URL.revokeObjectURL(voiceDraft.url)
       setVoiceDraft(null)
