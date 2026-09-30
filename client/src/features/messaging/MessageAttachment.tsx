@@ -63,6 +63,7 @@ export function MessageAttachment({ attachment, pending = false, onOpen }: {
       })
     return () => {
       cancelled = true
+      controller.abort()
       if (objectUrl) URL.revokeObjectURL(objectUrl)
     }
   }, [attachment, attempt, isMediaV2, isVisualMedia, pending, visible])
@@ -100,9 +101,10 @@ export function MessageAttachment({ attachment, pending = false, onOpen }: {
     if (!isMediaV2 || !isVoice || pending || voiceUrl || voiceLoading) return
     let cancelled = false
     let objectUrl = ''
+    const controller = new AbortController()
     setVoiceLoading(true)
     setError('')
-    hydrateMediaV2(attachment)
+    hydrateMediaV2(attachment, undefined, controller.signal)
       .then((file) => {
         if (cancelled) return
         objectUrl = URL.createObjectURL(file)
@@ -111,7 +113,7 @@ export function MessageAttachment({ attachment, pending = false, onOpen }: {
       })
       .catch(() => { if (!cancelled) setError('Couldn’t load this voice note.') })
       .finally(() => { if (!cancelled) setVoiceLoading(false) })
-    return () => { cancelled = true; if (objectUrl) URL.revokeObjectURL(objectUrl) }
+    return () => { cancelled = true; controller.abort(); if (objectUrl) URL.revokeObjectURL(objectUrl) }
   }, [attachment, isMediaV2, isVoice, pending, voiceUrl])
 
   function voiceClock(seconds: number) {
