@@ -9,7 +9,8 @@ import { requireAuth, type AuthenticatedRequest } from '../auth/middleware.js'
 const MIB = 1024 * 1024
 const GIB = 1024 * MIB
 const V2_CHUNK_SIZE = 5 * MIB
-const maxVideoSourceBytes = 2 * GIB
+const maxStandardHdSourceBytes = GIB
+const maxOriginalSourceBytes = 2 * GIB
 const maxVoiceSourceBytes = 256 * MIB
 const maxCiphertextBytes = 2 * GIB + 64 * MIB
 const videoTypes = new Set(['video/mp4', 'video/webm'])
