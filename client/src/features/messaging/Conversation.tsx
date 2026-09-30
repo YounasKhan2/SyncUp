@@ -356,7 +356,7 @@ export function Conversation({ user, chatId, refreshInbox, online, pending, onQu
         key_envelope: encrypted.keyEnvelopes[user.id],
       }])
     } catch (uploadError) {
-      setError(uploadError instanceof Error ? uploadError.message : 'Unable to upload this encrypted file.')
+      setError(uploadError instanceof Error ? uploadError.message : 'Couldn’t send this file.')
     } finally {
       uploadingFileKeys.current.delete(fileKey)
       setUploading(uploadingFileKeys.current.size > 0)
@@ -557,7 +557,7 @@ export function Conversation({ user, chatId, refreshInbox, online, pending, onQu
           <div className="welcome-mark"><BrandMark /></div>
           <p className="eyebrow">PRIVATE BY DESIGN</p>
           <h2>Good conversations<br /><em>start with hello.</em></h2>
-          <p className="welcome-description">Your personal messages are encrypted on your device. Start a direct chat or create a group with people you trust.</p>
+          <p className="welcome-description">Start a direct chat or create a group with people you trust.</p>
           <div className="welcome-profile"><span className="avatar avatar-card">{user.display_name.slice(0, 1).toUpperCase()}</span><div><span className="small strong">{user.display_name}</span><span className="micro muted">@{user.username}</span></div></div>
         </div>
       </section>
@@ -600,7 +600,7 @@ export function Conversation({ user, chatId, refreshInbox, online, pending, onQu
       <ConversationHeader
         title={title}
         subtitle={typingSubtitle ?? (chat?.kind === 'group'
-          ? `${chat.members.length} people · ${onlineUsers.size} online · encrypted`
+          ? `${chat.members.length} people · ${onlineUsers.size} online`
           : `@${peer?.username ?? ''} · ${peer && onlineUsers.has(peer.id) ? 'online' : 'offline'} · encrypted`)}
         isDirect={chat?.kind === 'direct'}
         callStarting={callStarting}
