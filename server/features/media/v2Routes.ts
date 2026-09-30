@@ -1,8 +1,9 @@
-import { Router } from 'express'
+import express, { Router } from 'express'
 import { ipKeyGenerator, rateLimit } from 'express-rate-limit'
 import { v7 as uuidv7 } from 'uuid'
 import { z } from 'zod'
 import { pool } from '../../db.js'
+import { createAppwriteStorage, uploadAppwriteRange } from '../../shared/appwrite.js'
 import { requireAuth, type AuthenticatedRequest } from '../auth/middleware.js'
 
 const MIB = 1024 * 1024
@@ -23,6 +24,26 @@ const limiter = rateLimit({
   keyGenerator: (request) => (request as AuthenticatedRequest).auth?.userId ?? ipKeyGenerator(request.ip ?? ''),
   message: { error: { code: 'rate_limited', message: 'Too many media session requests. Try again shortly.' } },
 })
+
+
+const rangeLimiter = rateLimit({
+  windowMs: 60_000,
+  limit: 120,
+  standardHeaders: 'draft-8',
+  legacyHeaders: false,
+  keyGenerator: (request) => (request as AuthenticatedRequest).auth?.userId ?? ipKeyGenerator(request.ip ?? ''),
+  message: { error: { code: 'rate_limited', message: 'Too many media range requests. Try again shortly.' } },
+})
+
+function parseContentRange(value: string | undefined) {
+  const match = /^bytes (\d+)-(\d+)\/(\d+)$/u.exec(value ?? '')
+  if (!match) return null
+  const start = Number(match[1])
+  const end = Number(match[2])
+  const total = Number(match[3])
+  if (![start, end, total].every(Number.isSafeInteger) || start < 0 || end < start || total <= end) return null
+  return { start, end, total, length: end - start + 1 }
+}
 
 const intentSchema = z.object({
   chatId: z.uuid(),
@@ -168,6 +189,159 @@ mediaV2Router.get('/uploads/v2/:attachmentId/session', limiter, async (request: 
     })
   } catch (error) {
     next(error)
+  }
+})
+
+
+mediaV2Router.put(
+  '/uploads/v2/:attachmentId/range',
+  rangeLimiter,
+  express.raw({ type: 'application/octet-stream', limit: V2_CHUNK_SIZE }),
+  async (request: AuthenticatedRequest, response, next) => {
+    const attachmentId = z.uuid().safeParse(request.params.attachmentId)
+    const range = parseContentRange(request.header('content-range'))
+    if (!attachmentId.success || !range || !Buffer.isBuffer(request.body) || request.body.byteLength !== range.length) {
+      response.status(400).json({ error: { code: 'validation', message: 'Invalid encrypted media range.' } })
+      return
+    }
+    if (range.length > V2_CHUNK_SIZE) {
+      response.status(413).json({ error: { code: 'payload_too_large', message: 'Media ranges are limited to 5 MiB.' } })
+      return
+    }
+
+    try {
+      const sessionResult = await pool.query<{
+        session_id: string
+        appwrite_file_id: string
+        total_ciphertext_bytes: string
+        acknowledged_bytes: string
+        state: string
+        expires_at: Date
+        filename: string
+      }>(
+        `SELECT s.id AS session_id, s.appwrite_file_id, s.total_ciphertext_bytes, s.acknowledged_bytes,
+                s.state, s.expires_at, a.filename
+         FROM media_upload_sessions s
+         JOIN attachments a ON a.id = s.attachment_id
+         WHERE s.attachment_id = $1 AND s.uploaded_by = $2 AND a.transport_version = 2`,
+        [attachmentId.data, request.auth!.userId],
+      )
+      const session = sessionResult.rows[0]
+      if (!session || session.state !== 'active' || session.expires_at <= new Date()) {
+        response.status(404).json({ error: { code: 'not_found', message: 'Active upload session not found.' } })
+        return
+      }
+
+      const acknowledged = Number(session.acknowledged_bytes)
+      const total = Number(session.total_ciphertext_bytes)
+      if (range.total !== total || range.start !== acknowledged || range.end >= total) {
+        response.status(409).json({
+          error: { code: 'range_conflict', message: 'Upload range does not match the server acknowledgement.' },
+          acknowledgedBytes: acknowledged,
+        })
+        return
+      }
+
+      const object = await uploadAppwriteRange({
+        fileId: session.appwrite_file_id,
+        filename: `${attachmentId.data}.bin`,
+        bytes: request.body,
+        start: range.start,
+        end: range.end,
+        total,
+      })
+      if (object.$id !== session.appwrite_file_id) throw new Error('Appwrite returned an unexpected file id.')
+
+      const nextAcknowledged = range.end + 1
+      const updated = await pool.query(
+        `UPDATE media_upload_sessions
+         SET acknowledged_bytes = $1, updated_at = now()
+         WHERE id = $2 AND uploaded_by = $3 AND state = 'active' AND acknowledged_bytes = $4
+         RETURNING acknowledged_bytes`,
+        [nextAcknowledged, session.session_id, request.auth!.userId, acknowledged],
+      )
+      if (!updated.rows[0]) {
+        response.status(409).json({
+          error: { code: 'range_conflict', message: 'Upload acknowledgement changed. Reconcile before retrying.' },
+          acknowledgedBytes: acknowledged,
+        })
+        return
+      }
+      response.json({ acknowledgedBytes: nextAcknowledged, complete: nextAcknowledged === total })
+    } catch (error) {
+      next(error)
+    }
+  },
+)
+
+mediaV2Router.post('/uploads/v2/:attachmentId/finalize', limiter, async (request: AuthenticatedRequest, response, next) => {
+  const attachmentId = z.uuid().safeParse(request.params.attachmentId)
+  if (!attachmentId.success) {
+    response.status(400).json({ error: { code: 'validation', message: 'Invalid attachment id.' } })
+    return
+  }
+  const client = await pool.connect()
+  try {
+    await client.query('BEGIN')
+    const result = await client.query<{
+      session_id: string
+      appwrite_file_id: string
+      total_ciphertext_bytes: string
+      acknowledged_bytes: string
+      state: string
+    }>(
+      `SELECT s.id AS session_id, s.appwrite_file_id, s.total_ciphertext_bytes, s.acknowledged_bytes, s.state
+       FROM media_upload_sessions s
+       JOIN attachments a ON a.id = s.attachment_id
+       WHERE s.attachment_id = $1 AND s.uploaded_by = $2 AND a.transport_version = 2
+       FOR UPDATE`,
+      [attachmentId.data, request.auth!.userId],
+    )
+    const session = result.rows[0]
+    if (!session) {
+      await client.query('ROLLBACK')
+      response.status(404).json({ error: { code: 'not_found', message: 'Upload session not found.' } })
+      return
+    }
+    if (session.state === 'completed') {
+      await client.query('COMMIT')
+      response.status(204).end()
+      return
+    }
+    const total = Number(session.total_ciphertext_bytes)
+    if (session.state !== 'active' || Number(session.acknowledged_bytes) !== total) {
+      await client.query('ROLLBACK')
+      response.status(409).json({ error: { code: 'incomplete_upload', message: 'Upload is not complete.' } })
+      return
+    }
+
+    const appwrite = createAppwriteStorage()
+    const object = await appwrite.storage.getFile({ bucketId: appwrite.bucketId, fileId: session.appwrite_file_id })
+    if (object.sizeOriginal !== total) {
+      await client.query('ROLLBACK')
+      response.status(409).json({ error: { code: 'storage_mismatch', message: 'Stored ciphertext size does not match the upload manifest.' } })
+      return
+    }
+
+    await client.query(
+      `UPDATE media_upload_sessions
+       SET state = 'completed', acknowledged_bytes = total_ciphertext_bytes, finalized_at = now(), updated_at = now()
+       WHERE id = $1`,
+      [session.session_id],
+    )
+    await client.query(
+      `UPDATE attachments
+       SET status = 'ready', finalized_at = now()
+       WHERE id = $1 AND uploaded_by = $2 AND transport_version = 2 AND status = 'pending'`,
+      [attachmentId.data, request.auth!.userId],
+    )
+    await client.query('COMMIT')
+    response.status(204).end()
+  } catch (error) {
+    await client.query('ROLLBACK').catch(() => undefined)
+    next(error)
+  } finally {
+    client.release()
   }
 })
 

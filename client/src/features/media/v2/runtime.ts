@@ -1,7 +1,7 @@
-import { pendingMediaV2Transport } from './pendingTransport'
+import { appwriteMediaV2Transport } from './appwriteTransport'
 import { MediaV2UploadManager } from './uploadManager'
 
-export const mediaV2UploadManager = new MediaV2UploadManager(pendingMediaV2Transport)
+export const mediaV2UploadManager = new MediaV2UploadManager(appwriteMediaV2Transport)
 
 let started = false
 
