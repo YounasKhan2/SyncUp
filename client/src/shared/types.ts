@@ -75,8 +75,9 @@ export type EncryptedChatMessage = {
     filename: string
     content_type: string
     size_bytes: number
-    nonce: string
+    nonce: string | null
     key_envelope: string
+    transport_version?: number
   }[]
 }
 
