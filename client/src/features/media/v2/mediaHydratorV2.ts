@@ -40,7 +40,7 @@ export async function hydrateMediaV2(
   attachment: StagedAttachment,
   onProgress?: (progress: number) => void,
 ): Promise<File> {
-  if (!navigator.storage?.getDirectory) throw new Error('This browser cannot open large videos yet.')
+  if (!navigator.storage?.getDirectory) throw new Error(attachment.content_type.startsWith('audio/') ? 'This browser cannot open voice notes yet.' : 'This browser cannot open large videos yet.')
   const { attachment: metadata } = await api<{ attachment: Metadata }>(`/api/uploads/v2/${attachment.id}`)
   const cached = await existingPlayback(attachment.id, metadata.plaintextSize)
   if (cached) { onProgress?.(100); return cached }
@@ -61,9 +61,9 @@ export async function hydrateMediaV2(
         credentials: 'same-origin',
         headers: { Range: `bytes=${cipherOffset}-${cipherOffset + recordLength - 1}` },
       })
-      if (response.status !== 206) throw new Error('Couldn’t load this video.')
+      if (response.status !== 206) throw new Error(metadata.mediaKind === 'voice' ? 'Couldn’t load this voice note.' : 'Couldn’t load this video.')
       const record = await response.arrayBuffer()
-      if (record.byteLength !== recordLength) throw new Error('Couldn’t load this video.')
+      if (record.byteLength !== recordLength) throw new Error(metadata.mediaKind === 'voice' ? 'Couldn’t load this voice note.' : 'Couldn’t load this video.')
       const plaintext = await worker.decrypt({
         rawKey: rawKey.slice().buffer,
         attachmentId: attachment.id,
@@ -78,7 +78,7 @@ export async function hydrateMediaV2(
       onProgress?.(Math.min(99, Math.floor((written / metadata.plaintextSize) * 100)))
     }
     await writable.close()
-    if (written !== metadata.plaintextSize || cipherOffset !== metadata.ciphertextSize) throw new Error('Couldn’t finish loading this video.')
+    if (written !== metadata.plaintextSize || cipherOffset !== metadata.ciphertextSize) throw new Error(metadata.mediaKind === 'voice' ? 'Couldn’t finish loading this voice note.' : 'Couldn’t finish loading this video.')
     const file = await handle.getFile()
     onProgress?.(100)
     return new File([file], metadata.filename, { type: metadata.contentType, lastModified: file.lastModified })

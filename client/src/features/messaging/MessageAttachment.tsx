@@ -18,6 +18,7 @@ export function MessageAttachment({ attachment, pending = false, onOpen }: {
   const [voiceUrl, setVoiceUrl] = useState('')
   const [voiceLoading, setVoiceLoading] = useState(false)
   const [voicePlaying, setVoicePlaying] = useState(false)
+  const [voiceReady, setVoiceReady] = useState(false)
   const audioRef = useRef<HTMLAudioElement>(null)
   const isImage = attachment.content_type.startsWith('image/')
   const isVideo = attachment.content_type.startsWith('video/')
@@ -62,17 +63,29 @@ export function MessageAttachment({ attachment, pending = false, onOpen }: {
     }
   }, [attachment, attempt, isMediaV2, isVisualMedia, pending, visible])
 
+  useEffect(() => {
+    if (!isMediaV2 || !isVoice || pending || voiceUrl || voiceLoading) return
+    let cancelled = false
+    let objectUrl = ''
+    setVoiceLoading(true)
+    setError('')
+    hydrateMediaV2(attachment)
+      .then((file) => {
+        if (cancelled) return
+        objectUrl = URL.createObjectURL(file)
+        setVoiceUrl(objectUrl)
+        setVoiceReady(true)
+      })
+      .catch(() => { if (!cancelled) setError('Couldn’t load this voice note.') })
+      .finally(() => { if (!cancelled) setVoiceLoading(false) })
+    return () => { cancelled = true; if (objectUrl) URL.revokeObjectURL(objectUrl) }
+  }, [attachment, isMediaV2, isVoice, pending, voiceLoading, voiceUrl])
+
   async function toggleVoice() {
-    if (pending) return
+    if (pending || !voiceReady || !voiceUrl) return
     setError('')
     try {
-      let url = voiceUrl
-      if (!url) {
-        setVoiceLoading(true)
-        const file = await hydrateMediaV2(attachment)
-        url = URL.createObjectURL(file)
-        setVoiceUrl(url)
-      }
+      const url = voiceUrl
       const audio = audioRef.current
       if (!audio) return
       if (audio.src !== url) audio.src = url
@@ -116,7 +129,7 @@ export function MessageAttachment({ attachment, pending = false, onOpen }: {
           <RefreshCw size={13} aria-hidden="true" /><span>Retry {isVideo ? 'video' : 'image'}</span>
         </button>
       )}
-      {isMediaV2 && isVoice && <div className="voice-message"><button type="button" onClick={() => void toggleVoice()} disabled={pending || voiceLoading} aria-label={voicePlaying ? 'Pause voice note' : 'Play voice note'}>{voicePlaying ? <Pause size={14}/> : <Play size={14}/>}</button><audio ref={audioRef} onPlay={() => setVoicePlaying(true)} onPause={() => setVoicePlaying(false)} onEnded={() => setVoicePlaying(false)}/><div className="voice-message-wave">{Array.from({ length: 28 }, (_, index) => <i key={index} style={{ height: `${4 + ((index * 7) % 13)}px` }}/>)}</div><small>{voiceLoading ? 'Loading…' : 'Voice note'}</small></div>}
+      {isMediaV2 && isVoice && <div className="voice-message"><button type="button" onClick={() => void toggleVoice()} disabled={pending || voiceLoading || !voiceReady} aria-label={voicePlaying ? 'Pause voice note' : 'Play voice note'}>{voicePlaying ? <Pause size={14}/> : <Play size={14}/>}</button><audio ref={audioRef} onPlay={() => setVoicePlaying(true)} onPause={() => setVoicePlaying(false)} onEnded={() => setVoicePlaying(false)}/><div className="voice-message-wave">{Array.from({ length: 28 }, (_, index) => <i key={index} style={{ height: `${4 + ((index * 7) % 13)}px` }}/>)}</div><small>{voiceLoading ? 'Loading…' : error ? 'Couldn’t load · Retry later' : 'Voice note'}</small></div>}
       {!isVisualMedia && !isVoice && (
         <button type="button" className="attachment-file-button" onClick={() => void downloadAttachment(attachment).catch((downloadError: unknown) => setError(downloadError instanceof Error ? downloadError.message : 'Unable to download this file.'))} disabled={pending}>
           <Download size={14} aria-hidden="true" /><FileText size={14} aria-hidden="true" /><span><strong>{attachment.filename}</strong><small>{formatFileSize(attachment.size_bytes)}</small></span>
