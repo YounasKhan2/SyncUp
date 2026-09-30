@@ -8,6 +8,7 @@ import { pool } from './db.js'
 import { messagingRouter } from './features/messaging/routes.js'
 import { realtimeRouter, startRealtimeListener, stopRealtimeListener } from './features/realtime/routes.js'
 import { uploadsRouter } from './features/media/routes.js'
+import { mediaV2Router } from './features/media/v2Routes.js'
 
 const app = express()
 const port = Number(process.env.PORT ?? 4000)
@@ -43,6 +44,7 @@ app.use('/api/auth', (_request, response, next) => {
 app.use('/api/auth', authRouter)
 app.use('/api', realtimeRouter)
 app.use('/api', callsRouter)
+app.use('/api', mediaV2Router)
 app.use('/api', uploadsRouter)
 app.use('/api', messagingRouter)
 app.use((error: unknown, _request: express.Request, response: express.Response, _next: express.NextFunction) => {
