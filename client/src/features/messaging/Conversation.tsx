@@ -258,6 +258,7 @@ export function Conversation({ user, chatId, refreshInbox, online, pending, onQu
       return
     }
     const image = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'].includes(file.type)
+    const video = ['video/mp4', 'video/webm'].includes(file.type)
     const fileType = [
       'application/pdf',
       'application/msword',
@@ -267,8 +268,8 @@ export function Conversation({ user, chatId, refreshInbox, online, pending, onQu
       'application/zip',
       'text/plain',
     ].includes(file.type)
-    if ((!image && !fileType) || file.size === 0 || file.size > (image ? 10 : 25) * 1024 * 1024) {
-      setError('Images must be up to 10 MB. Supported documents are up to 25 MB.')
+    if ((!image && !video && !fileType) || file.size === 0 || file.size > (image ? 10 : 25) * 1024 * 1024) {
+      setError('Images must be up to 10 MB. MP4/WebM videos and supported documents are up to 25 MB.')
       return
     }
     uploadingFileKeys.current.add(fileKey)

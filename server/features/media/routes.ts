@@ -8,6 +8,7 @@ import { pool } from '../../db.js'
 import { createAppwriteStorage } from '../../shared/appwrite.js'
 
 const imageTypes = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/gif'])
+const videoTypes = new Set(['video/mp4', 'video/webm'])
 const fileTypes = new Set([
   'application/pdf',
   'application/msword',
@@ -19,6 +20,7 @@ const fileTypes = new Set([
 ])
 const maxImageBytes = 10 * 1024 * 1024
 const maxFileBytes = 25 * 1024 * 1024
+const maxVideoBytes = 25 * 1024 * 1024
 const nonceSchema = z.string().regex(/^[A-Za-z0-9_-]{16}$/)
 const envelopesSchema = z.record(z.uuid(), z.string().regex(/^[A-Za-z0-9_-]+$/).min(16).max(16_384))
 const createUploadLimiter = (limit: number) => rateLimit({
@@ -61,9 +63,10 @@ uploadsRouter.post('/uploads/intent', uploadIntentLimiter, async (request: Authe
     return
   }
   const image = imageTypes.has(input.data.contentType)
-  if ((!image && !fileTypes.has(input.data.contentType))
-    || input.data.sizeBytes > (image ? maxImageBytes : maxFileBytes)) {
-    response.status(400).json({ error: { code: 'validation', message: 'Images are limited to 10 MB; supported files are limited to 25 MB.' } })
+  const video = videoTypes.has(input.data.contentType)
+  if ((!image && !video && !fileTypes.has(input.data.contentType))
+    || input.data.sizeBytes > (image ? maxImageBytes : video ? maxVideoBytes : maxFileBytes)) {
+    response.status(400).json({ error: { code: 'validation', message: 'Images are limited to 10 MB; MP4/WebM videos and supported files are limited to 25 MB.' } })
     return
   }
   const appwrite = appwriteStorageConfiguration()
