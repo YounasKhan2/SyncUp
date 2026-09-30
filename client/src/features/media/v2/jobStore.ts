@@ -26,6 +26,7 @@ export type MediaV2UploadJob = {
   filename: string
   contentType: string
   durationMs?: number | null
+  waveform?: number[] | null
   width?: number | null
   height?: number | null
   posterDataUrl?: string | null
