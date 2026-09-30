@@ -60,6 +60,7 @@ const intentSchema = z.object({
   encryptionVersion: z.literal(2),
   keyEnvelopes: envelopesSchema.refine((value) => Object.keys(value).length >= 2 && Object.keys(value).length <= 32),
   durationMs: z.number().int().nonnegative().max(24 * 60 * 60 * 1000).nullable().optional(),
+  waveform: z.array(z.number().min(0).max(1)).max(64).nullable().optional(),
   width: z.number().int().positive().max(16_384).nullable().optional(),
   height: z.number().int().positive().max(16_384).nullable().optional(),
 }).superRefine((value, context) => {
@@ -120,16 +121,16 @@ mediaV2Router.post('/uploads/v2/intent', limiter, async (request: AuthenticatedR
       `INSERT INTO attachments
         (id, chat_id, uploaded_by, object_key, filename, content_type, size_bytes, nonce, key_envelopes,
          status, expires_at, transport_version, media_kind, encryption_version, plaintext_size,
-         ciphertext_size, chunk_size, chunk_count, media_mode, duration_ms, width, height)
+         ciphertext_size, chunk_size, chunk_count, media_mode, duration_ms, width, height, waveform)
        VALUES
-        ($1, $2, $3, $4, $5, $6, $7, NULL, $8::jsonb, 'pending', $9, 2, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19)`,
+        ($1, $2, $3, $4, $5, $6, $7, NULL, $8::jsonb, 'pending', $9, 2, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20::jsonb)`,
       [
         attachmentId, input.data.chatId, request.auth!.userId, `appwrite:${attachmentId}`,
         input.data.filename, input.data.contentType, input.data.plaintextSize,
         JSON.stringify(input.data.keyEnvelopes), expiresAt, input.data.mediaKind,
         input.data.encryptionVersion, input.data.plaintextSize, input.data.ciphertextSize,
         input.data.chunkSize, input.data.chunkCount, input.data.mediaMode ?? null,
-        input.data.durationMs ?? null, input.data.width ?? null, input.data.height ?? null,
+        input.data.durationMs ?? null, input.data.width ?? null, input.data.height ?? null, JSON.stringify(input.data.waveform ?? null),
       ],
     )
     await client.query(
@@ -432,7 +433,7 @@ mediaV2Router.get('/uploads/v2/:attachmentId', limiter, async (request: Authenti
   try {
     const result = await pool.query(
       `SELECT a.id, a.filename, a.content_type, a.plaintext_size, a.ciphertext_size, a.chunk_size,
-              a.chunk_count, a.media_kind, a.duration_ms, a.width, a.height, a.poster_attachment_id,
+              a.chunk_count, a.media_kind, a.duration_ms, a.waveform, a.width, a.height, a.poster_attachment_id,
               a.key_envelopes -> $2::text AS key_envelope
        FROM attachments a
        JOIN message_attachments ma ON ma.attachment_id = a.id
@@ -460,6 +461,7 @@ mediaV2Router.get('/uploads/v2/:attachmentId', limiter, async (request: Authenti
       chunkCount: Number(attachment.chunk_count),
       mediaKind: attachment.media_kind,
       durationMs: attachment.duration_ms === null ? null : Number(attachment.duration_ms),
+      waveform: attachment.waveform ?? null,
       width: attachment.width === null ? null : Number(attachment.width),
       height: attachment.height === null ? null : Number(attachment.height),
       posterAttachmentId: attachment.poster_attachment_id ?? null,
