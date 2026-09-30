@@ -268,6 +268,7 @@ export function Conversation({ user, chatId, refreshInbox, online, pending, onQu
           key_envelope: job.keyEnvelope,
           transport_version: 2,
           duration_ms: job.durationMs ?? null,
+          waveform: job.waveform ?? null,
           width: job.width ?? null,
           height: job.height ?? null,
           poster_attachment_id: job.posterAttachmentId ?? null,
@@ -382,7 +383,7 @@ export function Conversation({ user, chatId, refreshInbox, online, pending, onQu
     setUploading(true)
     setError('')
     try {
-      const job = await prepareVoiceV2(voiceDraft.file, voiceDraft.durationMs, chatId, chat.members, user.id)
+      const job = await prepareVoiceV2(voiceDraft.file, voiceDraft.durationMs, voiceDraft.waveform, chatId, chat.members, user.id)
       await mediaV2UploadManager.track(job)
       URL.revokeObjectURL(voiceDraft.url)
       setVoiceDraft(null)
