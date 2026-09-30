@@ -29,11 +29,20 @@ const limiter = rateLimit({
 
 const rangeLimiter = rateLimit({
   windowMs: 60_000,
-  limit: 720,
+  limit: 120,
   standardHeaders: 'draft-8',
   legacyHeaders: false,
   keyGenerator: (request) => (request as AuthenticatedRequest).auth?.userId ?? ipKeyGenerator(request.ip ?? ''),
   message: { error: { code: 'rate_limited', message: 'Too many media range requests. Try again shortly.' } },
+})
+
+const downloadRangeLimiter = rateLimit({
+  windowMs: 60_000,
+  limit: 720,
+  standardHeaders: 'draft-8',
+  legacyHeaders: false,
+  keyGenerator: (request) => (request as AuthenticatedRequest).auth?.userId ?? ipKeyGenerator(request.ip ?? ''),
+  message: { error: { code: 'rate_limited', message: 'Too many media download requests. Try again shortly.' } },
 })
 
 function parseContentRange(value: string | undefined) {
@@ -473,7 +482,7 @@ mediaV2Router.get('/uploads/v2/:attachmentId', limiter, async (request: Authenti
   }
 })
 
-mediaV2Router.get('/uploads/v2/:attachmentId/content', rangeLimiter, async (request: AuthenticatedRequest, response, next) => {
+mediaV2Router.get('/uploads/v2/:attachmentId/content', downloadRangeLimiter, async (request: AuthenticatedRequest, response, next) => {
   const attachmentId = z.uuid().safeParse(request.params.attachmentId)
   if (!attachmentId.success) {
     response.status(400).json({ error: { code: 'validation', message: 'Invalid attachment id.' } })
