@@ -470,3 +470,42 @@
   .call-video-local { right: 18px; bottom: 84px; }
   .conversation-header-actions { gap: 6px; }
 }
+
+/* P0-MEDIA-01: persistent encrypted image hydration + media viewer */
+.attachment-image-button { display: block; max-width: min(340px, 100%); padding: 0; border: 0; border-radius: 7px; background: transparent; cursor: zoom-in; }
+.attachment-image-button img { width: auto; max-width: 100%; min-width: 120px; min-height: 90px; }
+.attachment-image-skeleton { display: grid; width: min(280px, 65vw); aspect-ratio: 4 / 3; place-items: center; align-content: center; gap: 7px; border-radius: 7px; color: #849087; background: linear-gradient(100deg, #eef1ec 20%, #f6f7f4 40%, #eef1ec 60%); background-size: 200% 100%; animation: media-shimmer 1.35s linear infinite; font-size: 9px; }
+.attachment-image-error { display: inline-flex; align-items: center; gap: 6px; padding: 8px 10px; border: 1px solid #ecd8d2; border-radius: 7px; color: #945449; background: #fff9f7; font: inherit; font-size: 9px; cursor: pointer; }
+@keyframes media-shimmer { to { background-position: -200% 0; } }
+.media-viewer { position: fixed; z-index: 100; inset: 0; display: grid; grid-template-rows: 62px minmax(0, 1fr) 70px; color: #f3f6f3; background: rgba(10, 16, 13, .97); }
+.media-viewer-header { display: flex; align-items: center; gap: 12px; padding: 9px 16px; border-bottom: 1px solid rgba(255,255,255,.08); }
+.media-viewer-header > button, .media-viewer-footer > button, .media-viewer-nav { display: grid; width: 38px; height: 38px; place-items: center; flex: 0 0 auto; border: 0; border-radius: 50%; color: #eef3ee; background: rgba(255,255,255,.08); cursor: pointer; }
+.media-viewer-header > div { display: flex; min-width: 0; flex: 1; flex-direction: column; gap: 2px; }
+.media-viewer-header strong { font-size: 11px; font-weight: 600; }
+.media-viewer-header small { color: #aeb8b0; font-size: 9px; }
+.media-viewer-stage { position: relative; display: grid; min-height: 0; place-items: center; overflow: hidden; }
+.media-viewer-pan { display: grid; width: 100%; height: 100%; place-items: center; overflow: auto; }
+.media-viewer-pan img { max-width: 92vw; max-height: calc(100svh - 160px); object-fit: contain; transform-origin: center; transition: transform .15s ease; }
+.media-viewer-nav { position: absolute; z-index: 2; top: 50%; transform: translateY(-50%); }
+.media-viewer-prev { left: 16px; }
+.media-viewer-next { right: 16px; }
+.media-viewer-loading, .media-viewer-error { display: flex; align-items: center; flex-direction: column; gap: 10px; color: #c6cec8; font-size: 10px; }
+.media-viewer-loading span { width: 28px; height: 28px; border: 2px solid rgba(255,255,255,.18); border-top-color: #e7eee8; border-radius: 50%; animation: media-spin .8s linear infinite; }
+.media-viewer-error button { padding: 7px 10px; border: 0; border-radius: 6px; cursor: pointer; }
+@keyframes media-spin { to { transform: rotate(360deg); } }
+.media-viewer-footer { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 8px 14px; border-top: 1px solid rgba(255,255,255,.08); }
+.media-viewer-footer > span { min-width: 42px; color: #c1cac3; text-align: center; font-size: 9px; }
+.media-viewer-footer button:disabled { opacity: .35; cursor: default; }
+.media-viewer-strip { display: flex; max-width: min(620px, 58vw); gap: 5px; overflow-x: auto; margin-left: 12px; }
+.media-viewer-strip button { width: 62px; height: 42px; overflow: hidden; padding: 4px; border: 1px solid transparent; border-radius: 5px; color: #b9c2bb; background: rgba(255,255,255,.06); font: inherit; cursor: pointer; }
+.media-viewer-strip button.active { border-color: #8fb08f; background: rgba(143,176,143,.16); }
+.media-viewer-strip span { display: block; overflow: hidden; font-size: 7px; text-overflow: ellipsis; white-space: nowrap; }
+@media (max-width: 760px) {
+  .media-viewer { grid-template-rows: 56px minmax(0, 1fr) 58px; }
+  .media-viewer-nav { width: 34px; height: 34px; }
+  .media-viewer-prev { left: 6px; }
+  .media-viewer-next { right: 6px; }
+  .media-viewer-strip { display: none; }
+  .media-viewer-pan img { max-width: 100vw; max-height: calc(100svh - 120px); }
+}
+@media (prefers-reduced-motion: reduce) { .attachment-image-skeleton, .media-viewer-loading span { animation: none; } }
