@@ -17,6 +17,7 @@ export function MessageAttachment({ attachment, pending = false, onOpen }: {
   const isImage = attachment.content_type.startsWith('image/')
   const isVideo = attachment.content_type.startsWith('video/')
   const isVisualMedia = isImage || isVideo
+  const isMediaV2 = attachment.transport_version === 2
 
   useEffect(() => {
     if (!isVisualMedia || pending || visible) return
@@ -36,7 +37,7 @@ export function MessageAttachment({ attachment, pending = false, onOpen }: {
   }, [isVisualMedia, pending, visible])
 
   useEffect(() => {
-    if (pending || !isVisualMedia || !visible || !attachment.key_envelope) return
+    if (pending || isMediaV2 || !isVisualMedia || !visible || !attachment.key_envelope) return
     let cancelled = false
     let objectUrl = ''
     setError('')
@@ -53,7 +54,7 @@ export function MessageAttachment({ attachment, pending = false, onOpen }: {
       cancelled = true
       if (objectUrl) URL.revokeObjectURL(objectUrl)
     }
-  }, [attachment, attempt, isVisualMedia, pending, visible])
+  }, [attachment, attempt, isMediaV2, isVisualMedia, pending, visible])
 
   return (
     <div className="message-attachment" ref={hostRef}>
@@ -66,13 +67,13 @@ export function MessageAttachment({ attachment, pending = false, onOpen }: {
         <button type="button" className="attachment-video-button" onClick={onOpen} aria-label={`Play ${attachment.filename}`}>
           <video src={previewUrl} preload="metadata" muted playsInline />
           <span className="attachment-video-play"><Play size={18} fill="currentColor" aria-hidden="true" /></span>
-          <small><Video size={11} aria-hidden="true" /> {formatFileSize(attachment.size_bytes)} · encrypted</small>
+          <small><Video size={11} aria-hidden="true" /> {formatFileSize(attachment.size_bytes)}</small>
         </button>
       )}
       {isVisualMedia && !previewUrl && !error && (
-        <div className="attachment-image-skeleton" aria-label={pending ? 'Sending encrypted media' : 'Loading encrypted media'}>
+        <div className="attachment-image-skeleton" aria-label={pending ? 'Sending media' : 'Loading media'}>
           {isVideo ? <Video size={16} aria-hidden="true" /> : <ImageIcon size={16} aria-hidden="true" />}
-          <span>{pending ? `Sending ${isVideo ? 'video' : 'image'}…` : `Decrypting ${isVideo ? 'video' : 'image'}…`}</span>
+          <span>{pending ? `Sending ${isVideo ? 'video' : 'image'}…` : isMediaV2 ? 'Video ready' : `Loading ${isVideo ? 'video' : 'image'}…`}</span>
         </div>
       )}
       {isVisualMedia && error && (
@@ -82,7 +83,7 @@ export function MessageAttachment({ attachment, pending = false, onOpen }: {
       )}
       {!isVisualMedia && (
         <button type="button" className="attachment-file-button" onClick={() => void downloadAttachment(attachment).catch((downloadError: unknown) => setError(downloadError instanceof Error ? downloadError.message : 'Unable to download this file.'))} disabled={pending}>
-          <Download size={14} aria-hidden="true" /><FileText size={14} aria-hidden="true" /><span><strong>{attachment.filename}</strong><small>{formatFileSize(attachment.size_bytes)} · encrypted</small></span>
+          <Download size={14} aria-hidden="true" /><FileText size={14} aria-hidden="true" /><span><strong>{attachment.filename}</strong><small>{formatFileSize(attachment.size_bytes)}</small></span>
         </button>
       )}
       {error && !isVisualMedia && <small className="attachment-error" role="alert">{error}</small>}

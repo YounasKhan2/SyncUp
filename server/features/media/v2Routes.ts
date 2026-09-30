@@ -142,6 +142,7 @@ mediaV2Router.post('/uploads/v2/intent', limiter, async (request: AuthenticatedR
         id: sessionId,
         transportVersion: 2,
         chunkSize: V2_CHUNK_SIZE,
+        chunkCount: input.data.chunkCount,
         totalCiphertextBytes: input.data.ciphertextSize,
         acknowledgedBytes: 0,
         state: 'active',
