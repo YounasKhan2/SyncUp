@@ -630,6 +630,9 @@ export function Conversation({ user, chatId, refreshInbox, online, pending, onQu
         scrollContainerRef={messageListRef}
         onScroll={handleMessageListScroll}
         loadingOlder={loadingOlder}
+        mediaSends={videoSends}
+        onRetryMedia={(jobId) => void mediaV2UploadManager.resume(jobId)}
+        onCancelMedia={(jobId) => void mediaV2UploadManager.cancel(jobId)}
         calls={callHistory}
         members={chat?.members ?? []}
         currentUserId={user.id}
@@ -669,13 +672,10 @@ export function Conversation({ user, chatId, refreshInbox, online, pending, onQu
           setStagedAttachments((current) => current.filter((item) => item.id !== id))
         }}
         videoChoice={videoChoice}
-        videoSends={videoSends}
         voiceDraft={voiceDraft}
         onUpload={(file) => void uploadFile(file)}
         onChooseVideoMode={(mode) => void chooseVideoMode(mode)}
         onCancelVideoChoice={() => setVideoChoice(null)}
-        onRetryVideo={(jobId) => void mediaV2UploadManager.resume(jobId)}
-        onCancelVideo={(jobId) => void mediaV2UploadManager.cancel(jobId)}
         onVoiceReady={setVoiceDraft}
         onDeleteVoice={() => { if (voiceDraft) URL.revokeObjectURL(voiceDraft.url); setVoiceDraft(null) }}
         onSendVoice={() => void sendVoiceNote()}

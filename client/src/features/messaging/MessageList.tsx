@@ -2,6 +2,7 @@ import { Copy, Flag, Heart, Pin, Phone, ThumbsUp, Trash2, Video } from 'lucide-r
 import { useMemo, useState } from 'react'
 import type { RefObject } from 'react'
 import type { CallRecord, ChatMember, DisplayMessage } from '../../shared/types'
+import type { MediaV2UploadSnapshot } from '../media/v2/uploadManager'
 import { MessageAttachment } from './MessageAttachment'
 import { MediaViewer, type MediaViewerItem } from '../media/MediaViewer'
 
@@ -16,6 +17,9 @@ type MessageListProps = {
   scrollContainerRef: RefObject<HTMLDivElement | null>
   onScroll: () => void
   loadingOlder: boolean
+  mediaSends: MediaV2UploadSnapshot[]
+  onRetryMedia: (jobId: string) => void
+  onCancelMedia: (jobId: string) => void
   onReply: (message: DisplayMessage) => void
   onReact: (message: DisplayMessage, emoji: string) => void
   onEdit: (message: DisplayMessage) => void
@@ -25,7 +29,7 @@ type MessageListProps = {
   onReport: (message: DisplayMessage) => void
 }
 
-export function MessageList({ messages, calls, members, currentUserId, loading, error, emptyMessage, scrollContainerRef, onScroll, loadingOlder, onReply, onReact, onEdit, onDelete, onPin, onCopy, onReport }: MessageListProps) {
+export function MessageList({ messages, calls, members, currentUserId, loading, error, emptyMessage, scrollContainerRef, onScroll, loadingOlder, mediaSends, onRetryMedia, onCancelMedia, onReply, onReact, onEdit, onDelete, onPin, onCopy, onReport }: MessageListProps) {
   const membersById = new Map(members.map((member) => [member.id, member]))
   const messagesById = new Map(messages.map((message) => [message.id, message]))
   const [viewerAttachmentId, setViewerAttachmentId] = useState<string | null>(null)
@@ -74,6 +78,27 @@ export function MessageList({ messages, calls, members, currentUserId, loading, 
                   <button type="button" onClick={() => onDelete(message, 'me')} aria-label="Delete for me"><Trash2 size={12} aria-hidden="true" />Me</button>
                   {!mine && <button type="button" onClick={() => onReport(message)} aria-label="Report message"><Flag size={12} aria-hidden="true" />Report</button>}
                 </div>}
+              </div>
+            </article>
+          )
+        })}
+        {mediaSends.map((item) => {
+          const waiting = item.internalState === 'paused_offline'
+          const preparing = item.internalState === 'preparing' || item.internalState === 'optimizing' || item.internalState === 'queued'
+          const failed = item.status === 'failed'
+          const label = failed ? 'Couldn’t send' : waiting ? 'Waiting for connection…' : preparing ? 'Preparing…' : `Sending ${item.progress}%`
+          return (
+            <article className="message-row message-mine message-media-pending" key={item.jobId}>
+              <div className="message-content">
+                <div className="message-bubble media-pending-bubble">
+                  <div className={`media-pending-preview media-pending-${item.mediaKind}`}>
+                    {item.mediaKind === 'voice' ? <span className="media-pending-voice-icon">●</span> : <Video size={18} aria-hidden="true" />}
+                    <div><strong>{item.mediaKind === 'voice' ? 'Voice note' : item.filename}</strong><small>{label}</small></div>
+                    {!failed && !waiting && <span className="media-progress-ring" style={{ '--media-progress': `${item.progress * 3.6}deg` } as React.CSSProperties} />}
+                  </div>
+                  {failed && <div className="media-pending-actions"><button type="button" onClick={() => onRetryMedia(item.jobId)}>Retry</button><button type="button" onClick={() => onCancelMedia(item.jobId)}>Remove</button></div>}
+                  {!failed && <button type="button" className="media-pending-cancel" onClick={() => onCancelMedia(item.jobId)}>Cancel</button>}
+                </div>
               </div>
             </article>
           )
