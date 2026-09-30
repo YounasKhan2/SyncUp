@@ -12,7 +12,8 @@
     "build": "npm run build --workspace client && tsc -p tsconfig.server.json",
     "start": "node dist/server/index.js",
     "test:integration": "node --test tests/messaging.integration.test.mjs",
-    "typecheck": "npm run build"
+    "typecheck": "npm run build",
+    "test:media-v2": "tsx --test tests/media-v2-crypto.test.mts"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
