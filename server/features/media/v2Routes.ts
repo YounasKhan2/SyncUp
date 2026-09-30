@@ -232,8 +232,31 @@ mediaV2Router.put(
         return
       }
 
-      const acknowledged = Number(session.acknowledged_bytes)
+      let acknowledged = Number(session.acknowledged_bytes)
       const total = Number(session.total_ciphertext_bytes)
+
+      // Repair the narrow crash window where Appwrite accepted a sequential range but
+      // PostgreSQL did not persist its acknowledgement before the process stopped.
+      if (acknowledged < total) {
+        try {
+          const appwrite = createAppwriteStorage()
+          const remote = await appwrite.storage.getFile({ bucketId: appwrite.bucketId, fileId: session.appwrite_file_id })
+          const remoteAcknowledged = Math.min(total, Number(remote.chunksUploaded) * V2_CHUNK_SIZE)
+          if (Number.isSafeInteger(remoteAcknowledged) && remoteAcknowledged > acknowledged) {
+            const repaired = await pool.query(
+              `UPDATE media_upload_sessions
+               SET acknowledged_bytes = $1, updated_at = now()
+               WHERE id = $2 AND uploaded_by = $3 AND state = 'active' AND acknowledged_bytes = $4
+               RETURNING acknowledged_bytes`,
+              [remoteAcknowledged, session.session_id, request.auth!.userId, acknowledged],
+            )
+            if (repaired.rows[0]) acknowledged = remoteAcknowledged
+          }
+        } catch {
+          // No remote file exists before the first accepted range; normal upload continues.
+        }
+      }
+
       if (range.total !== total || range.start !== acknowledged || range.end >= total) {
         response.status(409).json({
           error: { code: 'range_conflict', message: 'Upload range does not match the server acknowledgement.' },
