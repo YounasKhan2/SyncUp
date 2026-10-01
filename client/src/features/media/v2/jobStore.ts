@@ -1,4 +1,5 @@
 import type { MediaV2Kind } from './recordCodec'
+import type { StagedAttachment } from '../../../shared/types'
 
 const DB_NAME = 'syncup-media-v2'
 const DB_VERSION = 1
@@ -34,6 +35,7 @@ export type MediaV2UploadJob = {
   stagePath: string | null
   sourceFingerprint: string
   keyEnvelope?: string
+  previewAttachment?: StagedAttachment
   createdAt: number
   updatedAt: number
   lastError: string | null

@@ -2,6 +2,7 @@ import { api } from '../../../shared/api'
 import type { StagedAttachment } from '../../../shared/types'
 import { unwrapMediaKey } from '../../auth/crypto/crypto'
 import { MediaV2CryptoWorker } from './cryptoWorker'
+import { getLocalMediaV2Source } from './localMediaCache'
 import { MEDIA_V2_HEADER_BYTES, MEDIA_V2_TAG_BYTES } from './recordCodec'
 
 const RECORD_PLAINTEXT_BYTES = 4 * 1024 * 1024
@@ -36,14 +37,27 @@ async function existingPlayback(id: string, expectedSize: number) {
   }
 }
 
+export async function hasCachedMediaV2Playback(attachment: StagedAttachment) {
+  if (getLocalMediaV2Source(attachment.id)) return true
+  return Boolean(await existingPlayback(attachment.id, attachment.size_bytes))
+}
+
 export async function hydrateMediaV2(
   attachment: StagedAttachment,
   onProgress?: (progress: number) => void,
 ): Promise<File> {
+  const localSource = getLocalMediaV2Source(attachment.id)
+  if (localSource) {
+    onProgress?.(100)
+    return localSource
+  }
+  const cached = await existingPlayback(attachment.id, attachment.size_bytes)
+  if (cached) {
+    onProgress?.(100)
+    return new File([cached], attachment.filename, { type: attachment.content_type, lastModified: cached.lastModified })
+  }
   if (!navigator.storage?.getDirectory) throw new Error(attachment.content_type.startsWith('audio/') ? 'This browser cannot open voice notes yet.' : 'This browser cannot open large videos yet.')
   const { attachment: metadata } = await api<{ attachment: Metadata }>(`/api/uploads/v2/${attachment.id}`)
-  const cached = await existingPlayback(attachment.id, metadata.plaintextSize)
-  if (cached) { onProgress?.(100); return cached }
 
   const rawKey = await unwrapMediaKey(metadata.keyEnvelope)
   const worker = new MediaV2CryptoWorker()
@@ -61,8 +75,12 @@ export async function hydrateMediaV2(
         credentials: 'same-origin',
         headers: { Range: `bytes=${cipherOffset}-${cipherOffset + recordLength - 1}` },
       })
-      if (response.status !== 206) throw new Error(metadata.mediaKind === 'voice' ? 'Couldn’t load this voice note.' : 'Couldn’t load this video.')
-      const record = await response.arrayBuffer()
+      if (response.status !== 206 && response.status !== 200) throw new Error(metadata.mediaKind === 'voice' ? 'Couldn’t load this voice note.' : 'Couldn’t load this video.')
+      const fullRecord = await response.arrayBuffer()
+      // When the server returns 200 (full body), extract just the record we need
+      const record = response.status === 200 && fullRecord.byteLength > recordLength
+        ? fullRecord.slice(cipherOffset, cipherOffset + recordLength)
+        : fullRecord
       if (record.byteLength !== recordLength) throw new Error(metadata.mediaKind === 'voice' ? 'Couldn’t load this voice note.' : 'Couldn’t load this video.')
       const plaintext = await worker.decrypt({
         rawKey: rawKey.slice().buffer,

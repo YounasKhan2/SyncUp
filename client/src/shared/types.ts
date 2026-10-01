@@ -78,6 +78,9 @@ export type EncryptedChatMessage = {
     nonce: string | null
     key_envelope: string
     transport_version?: number
+    is_preview?: boolean
+    preview?: StagedAttachment | null
+    poster_attachment_id?: string | null
   }[]
 }
 
@@ -110,6 +113,9 @@ export type StagedAttachment = {
   nonce: string | null
   key_envelope: string
   transport_version?: number
+  is_preview?: boolean
+  preview?: StagedAttachment | null
+  poster_attachment_id?: string | null
 }
 
 export type IncomingRequest = {

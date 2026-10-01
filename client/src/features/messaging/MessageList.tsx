@@ -1,4 +1,4 @@
-import { Copy, Flag, Heart, Pin, Phone, ThumbsUp, Trash2, Video } from 'lucide-react'
+import { Copy, Flag, Heart, Mic, Pin, Phone, ThumbsUp, Trash2, Video } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import type { RefObject } from 'react'
 import type { CallRecord, ChatMember, DisplayMessage } from '../../shared/types'
@@ -36,7 +36,9 @@ export function MessageList({ messages, calls, members, currentUserId, loading, 
 
   const mediaItems = useMemo<MediaViewerItem[]>(() => messages.flatMap((message) =>
     (message.deleted_at ? [] : message.attachments ?? [])
-      .filter((attachment) => (attachment.content_type.startsWith('image/') || attachment.content_type.startsWith('video/')) && !message.pending)
+    .filter((attachment) => !attachment.is_preview
+      && (attachment.content_type.startsWith('image/') || attachment.content_type.startsWith('video/'))
+      && !message.pending)
       .map((attachment) => ({
         attachment,
         senderName: members.find((member) => member.id === message.sender_id)?.displayName ?? (message.sender_id === currentUserId ? 'You' : 'Member'),
@@ -62,8 +64,8 @@ export function MessageList({ messages, calls, members, currentUserId, loading, 
                 {!mine && <div className="message-meta"><strong>{sender?.displayName ?? 'Member'}</strong><span>@{sender?.username}</span></div>}
                 <div className="message-bubble">
                   {parent && <div className="reply-quote">{membersById.get(parent.sender_id)?.displayName}: {parent.deleted_at ? 'Message deleted' : parent.text}</div>}
-                  <p>{message.deleted_at ? 'This message was deleted.' : message.pending ? 'Sending encrypted message…' : message.text}</p>
-                  {!message.deleted_at && message.attachments?.map((attachment) => <MessageAttachment key={attachment.id} attachment={attachment} pending={message.pending} onOpen={(attachment.content_type.startsWith('image/') || attachment.content_type.startsWith('video/')) && !message.pending ? () => setViewerAttachmentId(attachment.id) : undefined} />)}
+                  <p>{message.deleted_at ? 'This message was deleted.' : message.pending ? (message.attachments?.some((a: {content_type: string}) => a.content_type.startsWith('audio/')) && !message.text ? '' : 'Sending…') : message.text}</p>
+                  {!message.deleted_at && message.attachments?.filter((attachment) => !attachment.is_preview).map((attachment) => <MessageAttachment key={attachment.id} attachment={attachment} pending={message.pending} onOpen={(attachment.content_type.startsWith('image/') || attachment.content_type.startsWith('video/')) && !message.pending ? () => setViewerAttachmentId(attachment.id) : undefined} />)}
                   {message.edited_at && !message.deleted_at && <span className="message-edited">edited</span>}
                   <span className="message-time">{message.pending ? (message.failed ? 'Waiting to reconnect' : 'Pending') : new Date(message.created_at).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}</span>
                 </div>
@@ -86,13 +88,13 @@ export function MessageList({ messages, calls, members, currentUserId, loading, 
           const waiting = item.internalState === 'paused_offline'
           const preparing = item.internalState === 'preparing' || item.internalState === 'optimizing' || item.internalState === 'queued'
           const failed = item.status === 'failed'
-          const label = failed ? 'Couldn’t send' : waiting ? 'Waiting for connection…' : preparing ? 'Preparing…' : `Sending ${item.progress}%`
+          const label = failed ? 'Couldn’t send' : waiting ? 'Waiting for connection…' : preparing ? 'Encrypting…' : `Sending ${item.progress}%`
           return (
             <article className="message-row message-mine message-media-pending" key={item.jobId}>
               <div className="message-content">
                 <div className="message-bubble media-pending-bubble">
                   <div className={`media-pending-preview media-pending-${item.mediaKind}`}>
-                    {item.mediaKind === 'voice' ? <span className="media-pending-voice-icon">●</span> : <Video size={18} aria-hidden="true" />}
+                    {item.mediaKind === 'voice' ? <span className="media-pending-voice-icon"><Mic size={15} /></span> : <Video size={18} aria-hidden="true" />}
                     <div><strong>{item.mediaKind === 'voice' ? 'Voice note' : item.filename}</strong><small>{label}</small></div>
                     {!failed && !waiting && <span className="media-progress-ring" style={{ '--media-progress': `${item.progress * 3.6}deg` } as React.CSSProperties} />}
                   </div>

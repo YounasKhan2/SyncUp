@@ -12,18 +12,22 @@ Required:
 - authenticated record round-trip passes for video and voice
 - tamper, attachment substitution, record reorder, malformed framing fail closed
 - manifest math passes for 100 MiB, 500 MiB and 1 GiB
-- Standard/HD source limit is 1 GiB; Original is 2 GiB
+- Videos are sent without quality selection or transcoding; source limit is 2 GiB
 - voice source limit is 256 MiB
 
 ## Live browser + Appwrite scale ladder
 Run in order. Do not skip directly to 1 GiB.
 
 ### 100 MiB
-Send an MP4 in HD. Confirm:
+Send an MP4 without a quality prompt. Confirm:
+- the encrypted poster thumbnail is visible to sender and recipient
+- opening the conversation does not download the full video
+- receiver sees Download to play, receives progress, and can play after local hydration
 - UI stays responsive during preparation and send
 - only Preparing / Sending N% / Sent / Couldn't send is exposed
 - switching chats does not stop the send
-- receiver can load, play fullscreen and download
+- receiver can play fullscreen after download and separately save the video from the viewer
+- sender opens the exact original selected file without downloading it again
 - a reload after completion reuses the local playable copy
 
 ### 500 MiB

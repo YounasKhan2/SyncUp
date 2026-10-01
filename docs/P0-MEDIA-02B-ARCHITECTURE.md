@@ -22,7 +22,7 @@ Scope: scalable media transport shared by large video and voice notes without re
 14. User-facing progress is a single monotonic `Sending N%` state. Internal preparing/optimizing/encrypting/uploading/finalizing states remain hidden.
 15. Start upload concurrency conservatively and make it adaptive. Target 3-4 in-flight 5 MiB ranges initially; back off on errors/poor networks. Do not hard-code Appwrite's benchmark concurrency as a product invariant.
 16. Compression happens before encryption. Never transcode an already efficient source merely to claim compression.
-17. Standard / HD / Original are product modes. Original preserves source bytes. Standard/HD may remux/transcode only when analysis predicts a useful size win without unacceptable visual loss.
+17. Video quality selection and transcoding are out of scope. Videos preserve source bytes and use the 2 GiB source limit.
 18. Progressive playback is not assumed from transport chunking. Appwrite upload chunks and MSE media segments are different concepts.
 19. P0 large-video acceptance may use full encrypted download -> worker decrypt -> OPFS output -> File/Blob playback when progressive segmented playback is unavailable. Progressive playback is a capability-gated optimization.
 20. Voice notes use the same v2 transport, encryption, authorization, cache and hydration architecture.
@@ -166,11 +166,10 @@ Switching chat, opening settings or minimizing the window must not cancel the jo
 ## 9. Video policy
 
 Product source limits after scale acceptance:
-- Standard/HD: up to 1 GiB source
-- Original/File mode: up to 2 GiB source
+- Video: up to 2 GiB source, preserving original bytes
 - rollout begins at smaller server-configurable limits and graduates through 100 MiB, 500 MiB, 1 GiB tests.
 
-Analyze:
+Inspect:
 - container
 - codecs
 - resolution
@@ -181,19 +180,15 @@ Analyze:
 - orientation
 
 Rules:
-- never upscale
-- preserve aspect/orientation
-- preserve A/V sync
-- skip recompression when source is already efficient
-- Original = exact source bytes
-- Standard/HD = capability-gated optimization
-- do CPU-heavy media work off the main UI thread
+- preserve original source bytes; do not offer quality modes or transcode
+- inspect metadata for playback dimensions and duration
 
-P0 compatibility baseline favors broadly playable MP4/H.264/AAC when transcoding is required, but runtime capability detection controls actual behavior. Do not assume WebCodecs alone provides muxing.
+Playback compatibility is determined by the source codec and browser support; unsupported source formats fail with a clear playback error.
 
 ## 10. Playback
 
 Poster is a separate encrypted small asset and hydrates lazily.
+The sending browser may play its original selected File from a bounded in-memory cache; remote clients load only the encrypted poster until the user opens the video.
 
 Historical video:
 message metadata -> poster -> user presses play -> fetch encrypted media -> decrypt in bounded worker pipeline.
@@ -291,7 +286,7 @@ B. Durability
 C. Scale
 - 100 MiB
 - 500 MiB
-- 1 GiB Standard/HD
+- 1 GiB scale-ladder target; videos may be sent up to the 2 GiB source limit
 - memory remains bounded
 - UI remains responsive
 - bounded concurrency/backoff works
@@ -301,8 +296,7 @@ D. Media
 - play/seek/fullscreen/download
 - mixed image/video viewer
 - no historical full-video auto-download
-- Standard/HD/Original
-- skip unnecessary transcode
+- preserve video source quality without a quality selector
 
 E. Voice
 - record/pause/resume/preview/delete/send
@@ -319,7 +313,7 @@ MEDIA-V2-02 — worker crypto record format + test vectors
 MEDIA-V2-03 — OPFS staging + IndexedDB job store
 MEDIA-V2-04 — app-scoped UploadManager + resume/reconcile
 MEDIA-V2-05 — Appwrite resumable transport adapter
-MEDIA-V2-06 — video analysis/poster + Standard/HD/Original policy
+MEDIA-V2-06 — video metadata inspection and poster
 MEDIA-V2-07 — large-video hydration/playback/cache
 MEDIA-V2-08 — voice recorder/player on shared media-v2
 MEDIA-V2-09 — scale/failure/security acceptance

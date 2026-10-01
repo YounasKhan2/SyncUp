@@ -52,7 +52,8 @@ const intentSchema = z.object({
   filename: z.string().trim().min(1).max(200).refine((value) => !/[\\/\u0000-\u001f]/u.test(value)),
   contentType: z.string().min(1).max(120),
   mediaKind: z.enum(['video', 'voice']),
-  mediaMode: z.enum(['standard', 'hd', 'original']).nullable().optional(),
+  mediaMode: z.literal('original').nullable().optional(),
+  posterAttachmentId: z.uuid().nullable().optional(),
   plaintextSize: z.number().int().positive(),
   ciphertextSize: z.number().int().positive().max(maxCiphertextBytes),
   chunkSize: z.literal(V2_CHUNK_SIZE),
@@ -70,7 +71,8 @@ const intentSchema = z.object({
     : value.mediaMode === 'original' ? maxOriginalSourceBytes : maxStandardHdSourceBytes
   if (value.plaintextSize > sourceLimit) context.addIssue({ code: 'custom', message: 'Media exceeds the v2 source limit.', path: ['plaintextSize'] })
   if (value.mediaKind === 'voice' && value.mediaMode) context.addIssue({ code: 'custom', message: 'Voice notes do not use a media mode.', path: ['mediaMode'] })
-  if (value.mediaKind === 'video' && !value.mediaMode) context.addIssue({ code: 'custom', message: 'Video media mode is required.', path: ['mediaMode'] })
+  if (value.mediaKind === 'video' && (!value.mediaMode || !value.posterAttachmentId)) context.addIssue({ code: 'custom', message: 'Video source mode and encrypted poster are required.', path: ['mediaMode'] })
+  if (value.mediaKind === 'voice' && value.posterAttachmentId) context.addIssue({ code: 'custom', message: 'Voice notes do not have posters.', path: ['posterAttachmentId'] })
   if (Math.ceil(value.ciphertextSize / value.chunkSize) !== value.chunkCount) {
     context.addIssue({ code: 'custom', message: 'Chunk count does not match ciphertext size.', path: ['chunkCount'] })
   }
@@ -113,20 +115,33 @@ mediaV2Router.post('/uploads/v2/intent', limiter, async (request: AuthenticatedR
     }
 
     const attachmentId = input.data.attachmentId
+    if (input.data.posterAttachmentId) {
+      const preview = await client.query(
+        `UPDATE attachments SET expires_at = now() + interval '7 days'
+         WHERE id = $1 AND chat_id = $2 AND uploaded_by = $3 AND status = 'ready'
+           AND content_type = 'image/jpeg' AND expires_at > now()`,
+        [input.data.posterAttachmentId, input.data.chatId, request.auth!.userId],
+      )
+      if (preview.rowCount !== 1) {
+        await client.query('ROLLBACK')
+        response.status(400).json({ error: { code: 'validation', message: 'Encrypted video poster is unavailable.' } })
+        return
+      }
+    }
     const sessionId = uuidv7()
     const appwriteFileId = attachmentId
     const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000)
     await client.query(
       `INSERT INTO attachments
-        (id, chat_id, uploaded_by, object_key, filename, content_type, size_bytes, nonce, key_envelopes,
+        (id, chat_id, uploaded_by, object_key, filename, content_type, size_bytes, nonce, key_envelopes, poster_attachment_id,
          status, expires_at, transport_version, media_kind, encryption_version, plaintext_size,
          ciphertext_size, chunk_size, chunk_count, media_mode, duration_ms, width, height)
        VALUES
-        ($1, $2, $3, $4, $5, $6, $7, NULL, $8::jsonb, 'pending', $9, 2, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19)`,
+        ($1, $2, $3, $4, $5, $6, $7, NULL, $8::jsonb, $9, 'pending', $10, 2, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20)`,
       [
         attachmentId, input.data.chatId, request.auth!.userId, `appwrite:${attachmentId}`,
         input.data.filename, input.data.contentType, input.data.plaintextSize,
-        JSON.stringify(input.data.keyEnvelopes), expiresAt, input.data.mediaKind,
+        JSON.stringify(input.data.keyEnvelopes), input.data.posterAttachmentId ?? null, expiresAt, input.data.mediaKind,
         input.data.encryptionVersion, input.data.plaintextSize, input.data.ciphertextSize,
         input.data.chunkSize, input.data.chunkCount, input.data.mediaMode ?? null,
         input.data.durationMs ?? null, input.data.width ?? null, input.data.height ?? null,
