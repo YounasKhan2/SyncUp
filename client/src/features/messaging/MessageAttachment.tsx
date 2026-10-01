@@ -266,7 +266,7 @@ export function MessageAttachment({
       {isVideo && (
         <button
           type="button"
-          className="attachment-v2-video-ready"
+          className={`attachment-v2-video-ready${videoReady ? " is-ready" : ""}`}
           onClick={() => void handleVideoAction()}
           disabled={pending || videoDownloading}
           aria-label={
@@ -310,17 +310,17 @@ export function MessageAttachment({
               <Download size={18} aria-hidden="true" />
             )}
           </span>
-          <strong>
-            {pending
-              ? "Sending video…"
-              : videoDownloading
-                ? isMediaV2
-                  ? `Downloading… ${videoDownloadProgress}%`
-                  : "Downloading…"
-                : videoReady
-                  ? "Ready to play"
+          {!videoReady && (
+            <strong>
+              {pending
+                ? "Sending video…"
+                : videoDownloading
+                  ? isMediaV2
+                    ? `Downloading… ${videoDownloadProgress}%`
+                    : "Downloading…"
                   : "Download to play"}
-          </strong>
+            </strong>
+          )}
           <small>
             <Video size={11} aria-hidden="true" />{" "}
             {formatFileSize(attachment.size_bytes)}

@@ -1,6 +1,6 @@
 import type { FormEvent } from 'react'
 import { Paperclip, Send, Smile, X } from 'lucide-react'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { VoicePreview, VoiceRecorder, type VoiceDraft } from './VoiceRecorder'
 import type { DisplayMessage, StagedAttachment } from '../../shared/types'
 import { insertAtSelection } from '../../shared/presentation'
@@ -44,6 +44,14 @@ export function MessageComposer(props: MessageComposerProps) {
   const [emojiPickerOpen, setEmojiPickerOpen] = useState(false)
   const replyPreview = replyTo ? replyPreviewText(replyTo) : ''
 
+  useEffect(() => {
+    const textarea = textareaRef.current
+    if (!textarea) return
+    textarea.style.height = 'auto'
+    textarea.style.height = `${Math.min(textarea.scrollHeight, 160)}px`
+    textarea.style.overflowY = textarea.scrollHeight > 160 ? 'auto' : 'hidden'
+  }, [draft])
+
   function insertEmoji(emoji: string) {
     const textarea = textareaRef.current
     const selectionStart = textarea?.selectionStart ?? draft.length
@@ -66,7 +74,7 @@ export function MessageComposer(props: MessageComposerProps) {
         {attachments.map((attachment) => <span key={attachment.id}>{attachment.filename}<button type="button" onClick={() => props.onRemoveAttachment(attachment.id)} aria-label={`Remove ${attachment.filename}`}><X size={12} /></button></span>)}
       </div>}
 
-      <textarea ref={textareaRef} aria-label="Message" placeholder={`Message ${chatTitle}`} value={draft} maxLength={32000}
+      <textarea ref={textareaRef} rows={1} aria-label="Message" placeholder={`Message ${chatTitle}`} value={draft} maxLength={32000}
         onChange={(event) => { props.onDraftChange(event.target.value); props.onTypingChange(event.target.value) }}
         onBlur={() => props.onTypingChange('')}
         onKeyDown={(event) => { if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); event.currentTarget.form?.requestSubmit() } }} />
@@ -74,16 +82,18 @@ export function MessageComposer(props: MessageComposerProps) {
       {props.voiceDraft && <VoicePreview draft={props.voiceDraft} onDelete={props.onDeleteVoice} onSend={props.onSendVoice} disabled={uploading || submitting} />}
 
       <div className="composer-toolbar">
-        <button type="button" className="emoji-picker-toggle" aria-label={emojiPickerOpen ? 'Close emoji picker' : 'Open emoji picker'} aria-expanded={emojiPickerOpen} aria-controls="composer-emoji-picker" onClick={() => setEmojiPickerOpen((open) => !open)}><Smile size={16} aria-hidden="true" /></button>
+        <div className="composer-tools">
+          <button type="button" className="emoji-picker-toggle" title="Add emoji" aria-label={emojiPickerOpen ? 'Close emoji picker' : 'Open emoji picker'} aria-expanded={emojiPickerOpen} aria-controls="composer-emoji-picker" onClick={() => setEmojiPickerOpen((open) => !open)}><Smile size={18} aria-hidden="true" /></button>
         {!editing && <label className="attach-file-button" aria-label="Add media or file">
           <input type="file" accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/zip,text/plain"
             disabled={uploading || attachments.length >= 10}
             onChange={(event) => { const file = event.currentTarget.files?.[0]; if (file) props.onUpload(file); event.currentTarget.value = '' }} />
-          {uploading ? 'Preparing…' : <><Paperclip size={12} /> Media / file</>}
+          {uploading ? 'Preparing…' : <><Paperclip size={15} /><span>Attach</span></>}
         </label>}
-        {!editing && !props.voiceDraft && <VoiceRecorder disabled={uploading || submitting} onReady={props.onVoiceReady} />}
+          {!editing && !props.voiceDraft && <VoiceRecorder disabled={uploading || submitting} onReady={props.onVoiceReady} />}
+        </div>
         <span className="composer-hint">Enter to send · Shift+Enter for a new line</span>
-        <button type="submit" disabled={uploading || submitting || (!draft.trim() && attachments.length === 0)} aria-label="Send message"><Send size={14} /></button>
+        <button type="submit" className="composer-send-button" disabled={uploading || submitting || (!draft.trim() && attachments.length === 0)} aria-label="Send message"><Send size={17} aria-hidden="true" /><span>Send</span></button>
       </div>
       {emojiPickerOpen && <div id="composer-emoji-picker" className="emoji-picker-popover">
         <FullEmojiPicker onSelect={insertEmoji} onClose={() => setEmojiPickerOpen(false)} />
