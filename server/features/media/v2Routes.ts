@@ -3,7 +3,7 @@ import { ipKeyGenerator, rateLimit } from 'express-rate-limit'
 import { v7 as uuidv7 } from 'uuid'
 import { z } from 'zod'
 import { pool } from '../../db.js'
-import { createAppwriteStorage, uploadAppwriteRange } from '../../shared/appwrite.js'
+import { createAppwriteStorage, downloadAppwriteRange, uploadAppwriteRange } from '../../shared/appwrite.js'
 import { requireAuth, type AuthenticatedRequest } from '../auth/middleware.js'
 
 const MIB = 1024 * 1024
@@ -403,5 +403,106 @@ mediaV2Router.delete('/uploads/v2/:attachmentId/session', limiter, async (reques
     next(error)
   } finally {
     client.release()
+  }
+})
+
+
+mediaV2Router.get('/uploads/v2/:attachmentId', limiter, async (request: AuthenticatedRequest, response, next) => {
+  const attachmentId = z.uuid().safeParse(request.params.attachmentId)
+  if (!attachmentId.success) {
+    response.status(400).json({ error: { code: 'validation', message: 'Invalid attachment id.' } })
+    return
+  }
+  try {
+    const result = await pool.query(
+      `SELECT a.id, a.filename, a.content_type, a.plaintext_size, a.ciphertext_size, a.chunk_size,
+              a.chunk_count, a.media_kind, a.duration_ms, a.width, a.height,
+              a.key_envelopes -> $2::text AS key_envelope
+       FROM attachments a
+       JOIN message_attachments ma ON ma.attachment_id = a.id
+       JOIN messages m ON m.id = ma.message_id AND m.chat_id = a.chat_id
+       JOIN chat_members cm ON cm.chat_id = a.chat_id AND cm.user_id = $2 AND cm.left_at IS NULL
+       WHERE a.id = $1 AND a.status = 'ready' AND a.transport_version = 2
+         AND NOT EXISTS (
+           SELECT 1 FROM message_requests mr WHERE mr.chat_id = a.chat_id
+             AND mr.to_user = $2 AND mr.state IN ('pending', 'ignored')
+         )`,
+      [attachmentId.data, request.auth!.userId],
+    )
+    const attachment = result.rows[0]
+    if (!attachment || !attachment.key_envelope) {
+      response.status(404).json({ error: { code: 'not_found', message: 'Media not found.' } })
+      return
+    }
+    response.json({ attachment: {
+      id: attachment.id,
+      filename: attachment.filename,
+      contentType: attachment.content_type,
+      plaintextSize: Number(attachment.plaintext_size),
+      ciphertextSize: Number(attachment.ciphertext_size),
+      chunkSize: Number(attachment.chunk_size),
+      chunkCount: Number(attachment.chunk_count),
+      mediaKind: attachment.media_kind,
+      durationMs: attachment.duration_ms === null ? null : Number(attachment.duration_ms),
+      width: attachment.width === null ? null : Number(attachment.width),
+      height: attachment.height === null ? null : Number(attachment.height),
+      keyEnvelope: attachment.key_envelope,
+      downloadUrl: `/api/uploads/v2/${attachment.id}/content`,
+    } })
+  } catch (error) {
+    next(error)
+  }
+})
+
+mediaV2Router.get('/uploads/v2/:attachmentId/content', rangeLimiter, async (request: AuthenticatedRequest, response, next) => {
+  const attachmentId = z.uuid().safeParse(request.params.attachmentId)
+  if (!attachmentId.success) {
+    response.status(400).json({ error: { code: 'validation', message: 'Invalid attachment id.' } })
+    return
+  }
+  try {
+    const access = await pool.query<{ appwrite_file_id: string; ciphertext_size: string }>(
+      `SELECT s.appwrite_file_id, a.ciphertext_size
+       FROM attachments a
+       JOIN media_upload_sessions s ON s.attachment_id = a.id AND s.state = 'completed'
+       JOIN message_attachments ma ON ma.attachment_id = a.id
+       JOIN messages m ON m.id = ma.message_id AND m.chat_id = a.chat_id
+       JOIN chat_members cm ON cm.chat_id = a.chat_id AND cm.user_id = $2 AND cm.left_at IS NULL
+       WHERE a.id = $1 AND a.status = 'ready' AND a.transport_version = 2
+         AND NOT EXISTS (
+           SELECT 1 FROM message_requests mr WHERE mr.chat_id = a.chat_id
+             AND mr.to_user = $2 AND mr.state IN ('pending', 'ignored')
+         )`,
+      [attachmentId.data, request.auth!.userId],
+    )
+    const media = access.rows[0]
+    if (!media) {
+      response.status(404).json({ error: { code: 'not_found', message: 'Media not found.' } })
+      return
+    }
+    const total = Number(media.ciphertext_size)
+    const requested = /^bytes=(\d+)-(\d*)$/u.exec(request.header('range') ?? '')
+    let start = 0
+    let end = Math.min(total - 1, V2_CHUNK_SIZE - 1)
+    if (requested) {
+      start = Number(requested[1])
+      end = requested[2] ? Number(requested[2]) : Math.min(total - 1, start + V2_CHUNK_SIZE - 1)
+    }
+    if (!Number.isSafeInteger(start) || !Number.isSafeInteger(end) || start < 0 || end < start || start >= total) {
+      response.status(416).set('Content-Range', `bytes */${total}`).end()
+      return
+    }
+    end = Math.min(end, total - 1, start + V2_CHUNK_SIZE - 1)
+    const bytes = await downloadAppwriteRange({ fileId: media.appwrite_file_id, start, end })
+    response.status(206).set({
+      'Content-Type': 'application/octet-stream',
+      'Content-Length': String(bytes.byteLength),
+      'Content-Range': `bytes ${start}-${end}/${total}`,
+      'Accept-Ranges': 'bytes',
+      'Cache-Control': 'private, no-store',
+      'X-Content-Type-Options': 'nosniff',
+    }).send(bytes)
+  } catch (error) {
+    next(error)
   }
 })
