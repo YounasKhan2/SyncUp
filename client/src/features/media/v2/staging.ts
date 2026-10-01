@@ -126,3 +126,30 @@ export async function sourceMatchesMediaV2Fingerprint(
 ) {
   return (await fingerprintMediaV2Source(source)) === expectedFingerprint
 }
+
+export async function createMediaV2StageWriter(jobId: string, expectedBytes: number) {
+  await assertMediaV2StageCapacity(expectedBytes)
+  const directory = await stagingDirectory(true)
+  const path = safeStageName(jobId)
+  const handle = await directory.getFileHandle(path, { create: true })
+  const writable = await handle.createWritable({ keepExistingData: false })
+  let written = 0
+  let closed = false
+  return {
+    path,
+    async write(bytes: ArrayBuffer) {
+      if (closed) throw new Error('Media-v2 staging writer is closed.')
+      await writable.write(new Uint8Array(bytes)); written += bytes.byteLength
+      if (written > expectedBytes) throw new Error('Media-v2 staged ciphertext exceeded its manifest.')
+    },
+    async close() {
+      if (closed) return
+      closed = true; await writable.close()
+      if (written !== expectedBytes) { await directory.removeEntry(path).catch(() => undefined); throw new Error('Media-v2 staged ciphertext does not match its manifest.') }
+    },
+    async abort() {
+      if (closed) return
+      closed = true; await writable.abort().catch(() => undefined); await directory.removeEntry(path).catch(() => undefined)
+    },
+  }
+}

@@ -139,6 +139,19 @@ export async function encryptMessage(text: string, members: PublicMember[]): Pro
   }
 }
 
+export async function wrapMediaKeyForMembers(rawMediaKey: Uint8Array, members: PublicMember[]) {
+  if (!unlockedPrivateKey) throw new Error('Unlock your encryption key before preparing media.')
+  if (rawMediaKey.byteLength !== 32) throw new Error('Media-v2 requires a 256-bit key.')
+  if (members.length < 2 || members.length > 32) throw new Error('Encrypted media supports 2–32 chat members.')
+  const keyEnvelopes: Record<string, string> = {}
+  for (const member of members) {
+    const publicKey = await crypto.subtle.importKey('jwk', member.publicKey, { name: 'RSA-OAEP', hash: 'SHA-256' }, false, ['encrypt'])
+    const wrappedKey = await crypto.subtle.encrypt({ name: 'RSA-OAEP' }, publicKey, rawMediaKey)
+    keyEnvelopes[member.id] = toBase64Url(new Uint8Array(wrappedKey))
+  }
+  return keyEnvelopes
+}
+
 export async function encryptAttachment(file: File, members: PublicMember[]) {
   if (!unlockedPrivateKey) throw new Error('Unlock your encryption key before uploading files.')
   if (members.length < 2 || members.length > 32) throw new Error('Encrypted attachments support 2–32 chat members.')
