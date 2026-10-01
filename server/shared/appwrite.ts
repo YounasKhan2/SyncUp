@@ -1,6 +1,13 @@
 import { Client, Storage } from 'node-appwrite'
 
-export function createAppwriteStorage() {
+type AppwriteConfiguration = {
+  endpoint: string
+  projectId: string
+  apiKey: string
+  bucketId: string
+}
+
+function configuration(): AppwriteConfiguration {
   const endpoint = process.env.APPWRITE_ENDPOINT
   const projectId = process.env.APPWRITE_PROJECT_ID
   const apiKey = process.env.APPWRITE_API_KEY
@@ -9,11 +16,48 @@ export function createAppwriteStorage() {
   if (!endpoint || !projectId || !apiKey || !bucketId) {
     throw new Error('Configure APPWRITE_ENDPOINT, APPWRITE_PROJECT_ID, APPWRITE_API_KEY, and APPWRITE_STORAGE_BUCKET_ID to use Appwrite Storage.')
   }
+  return { endpoint: endpoint.replace(/\/$/u, ''), projectId, apiKey, bucketId }
+}
 
+export function createAppwriteStorage() {
+  const config = configuration()
   const client = new Client()
-    .setEndpoint(endpoint)
-    .setProject(projectId)
-    .setKey(apiKey)
+    .setEndpoint(config.endpoint)
+    .setProject(config.projectId)
+    .setKey(config.apiKey)
 
-  return { storage: new Storage(client), bucketId }
+  return { storage: new Storage(client), bucketId: config.bucketId }
+}
+
+export async function uploadAppwriteRange(input: {
+  fileId: string
+  filename: string
+  bytes: Buffer
+  start: number
+  end: number
+  total: number
+}) {
+  const config = configuration()
+  const form = new FormData()
+  form.append('fileId', input.fileId)
+  form.append('file', new Blob([input.bytes]), input.filename)
+
+  const headers: Record<string, string> = {
+    'X-Appwrite-Project': config.projectId,
+    'X-Appwrite-Key': config.apiKey,
+    'Content-Range': `bytes ${input.start}-${input.end}/${input.total}`,
+  }
+  if (input.start > 0) headers['X-Appwrite-ID'] = input.fileId
+
+  const response = await fetch(
+    `${config.endpoint}/storage/buckets/${encodeURIComponent(config.bucketId)}/files`,
+    { method: 'POST', headers, body: form },
+  )
+  if (!response.ok) {
+    const detail = await response.text().catch(() => '')
+    const error = new Error(`Appwrite resumable upload failed with status ${response.status}.`)
+    Object.assign(error, { status: response.status, detail: detail.slice(0, 500) })
+    throw error
+  }
+  return response.json() as Promise<{ $id: string; sizeOriginal: number; chunksTotal: number; chunksUploaded: number }>
 }
