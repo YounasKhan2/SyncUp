@@ -1,29 +1,51 @@
 import { api } from '../../../shared/api'
-import type { ChatMember } from '../../../shared/types'
-import { wrapMediaKeyForMembers } from '../../auth/crypto/crypto'
+import { apiUpload } from '../../../shared/api'
+import type { ChatMember, StagedAttachment } from '../../../shared/types'
+import { encryptAttachment, wrapMediaKeyForMembers } from '../../auth/crypto/crypto'
 import { MediaV2CryptoWorker } from './cryptoWorker'
 import { putMediaV2Job, type MediaV2UploadJob } from './jobStore'
+import { MEDIA_V2_VIDEO_MAX_BYTES } from './manifest'
+import { rememberLocalMediaV2Source } from './localMediaCache'
 import { MEDIA_V2_HEADER_BYTES, MEDIA_V2_TAG_BYTES } from './recordCodec'
 import { createMediaV2StageWriter, fingerprintMediaV2Source, requestMediaV2Persistence } from './staging'
 import { mediaV2UploadManager } from './runtime'
-import { chooseVideoPolicy, createVideoPoster, probeVideo, type VideoMode } from './videoPreparation'
+import { createVideoPoster, probeVideo } from './videoPreparation'
 
 const MIB = 1024 * 1024
 const RECORD_BYTES = 4 * MIB
 const TRANSPORT_BYTES = 5 * MIB
-const STANDARD_HD_LIMIT = 1024 * MIB
-const ORIGINAL_LIMIT = 2 * 1024 * MIB
-
 type IntentResponse = { attachmentId: string; uploadSession: { id: string; chunkSize: number; chunkCount: number; totalCiphertextBytes: number; acknowledgedBytes: number } }
 
-export async function prepareVideoV2(file: File, chatId: string, members: ChatMember[], currentUserId: string, mode: VideoMode) {
+export async function prepareVideoV2(file: File, chatId: string, members: ChatMember[], currentUserId: string) {
   if (file.size <= 0) throw new Error('Choose a non-empty video.')
-  const limit = mode === 'original' ? ORIGINAL_LIMIT : STANDARD_HD_LIMIT
-  if (file.size > limit) throw new Error(mode === 'original' ? 'Original video is limited to 2 GiB.' : 'Standard and HD video are limited to 1 GiB.')
+  if (file.size > MEDIA_V2_VIDEO_MAX_BYTES) throw new Error('Videos are limited to 2 GiB.')
 
   const probe = await probeVideo(file)
-  const policy = chooseVideoPolicy(probe, mode)
   const poster = await createVideoPoster(file)
+  const posterFile = new File([poster], 'video-preview.jpg', { type: 'image/jpeg' })
+  const encryptedPoster = await encryptAttachment(posterFile, members)
+  const posterIntent = await api<{ attachmentId: string }>('/api/uploads/intent', {
+    method: 'POST',
+    body: JSON.stringify({
+      chatId,
+      filename: posterFile.name,
+      contentType: posterFile.type,
+      sizeBytes: posterFile.size,
+      nonce: encryptedPoster.nonce,
+      keyEnvelopes: encryptedPoster.keyEnvelopes,
+    }),
+  })
+  await apiUpload(`/api/uploads/${posterIntent.attachmentId}/content`, encryptedPoster.ciphertext)
+  await api<void>(`/api/uploads/${posterIntent.attachmentId}/complete`, { method: 'POST' })
+  const previewAttachment: StagedAttachment = {
+    id: posterIntent.attachmentId,
+    filename: posterFile.name,
+    content_type: posterFile.type,
+    size_bytes: posterFile.size,
+    nonce: encryptedPoster.nonce,
+    key_envelope: encryptedPoster.keyEnvelopes[currentUserId],
+    is_preview: true,
+  }
   void requestMediaV2Persistence().catch(() => false)
 
   const attachmentId = crypto.randomUUID()
@@ -36,7 +58,8 @@ export async function prepareVideoV2(file: File, chatId: string, members: ChatMe
   const intent = await api<IntentResponse>('/api/uploads/v2/intent', {
     method: 'POST',
     body: JSON.stringify({
-      attachmentId, chatId, filename: file.name, contentType: file.type, mediaKind: 'video', mediaMode: mode,
+      attachmentId, chatId, filename: file.name, contentType: file.type, mediaKind: 'video', mediaMode: 'original',
+      posterAttachmentId: previewAttachment.id,
       plaintextSize: file.size, ciphertextSize, chunkSize: TRANSPORT_BYTES, chunkCount: transportChunkCount,
       encryptionVersion: 2, keyEnvelopes, durationMs: probe.durationMs, width: probe.width, height: probe.height,
     }),
@@ -72,16 +95,18 @@ export async function prepareVideoV2(file: File, chatId: string, members: ChatMe
   const now = Date.now()
   const job: MediaV2UploadJob = {
     id: jobId, attachmentId, uploadSessionId: intent.uploadSession.id, chatId, mediaKind: 'video',
-    filename: file.name, contentType: file.type, plaintextSize: file.size, ciphertextSize,
+    filename: file.name, contentType: file.type,
+    durationMs: probe.durationMs, waveform: null, width: probe.width, height: probe.height,
+    posterAttachmentId: previewAttachment.id, sendOnComplete: true,
+    messageIdempotencyKey: crypto.randomUUID(),
+    plaintextSize: file.size, ciphertextSize,
     chunkSize: intent.uploadSession.chunkSize, chunkCount: intent.uploadSession.chunkCount,
     acknowledgedBytes: intent.uploadSession.acknowledgedBytes, state: 'queued', stagePath: writer.path,
-    sourceFingerprint: await fingerprintMediaV2Source(file), keyEnvelope: keyEnvelopes[currentUserId], createdAt: now, updatedAt: now, lastError: null,
+    sourceFingerprint: await fingerprintMediaV2Source(file), keyEnvelope: keyEnvelopes[currentUserId],
+    previewAttachment, createdAt: now, updatedAt: now, lastError: null,
   }
   await putMediaV2Job(job)
+  rememberLocalMediaV2Source(attachmentId, file)
   await mediaV2UploadManager.track(job)
-  return {
-    job, poster, probe, policy,
-    optimizationDeferred: policy.shouldTranscode,
-    keyEnvelopes,
-  }
+  return job
 }

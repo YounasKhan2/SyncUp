@@ -9,7 +9,8 @@ import { requireAuth, type AuthenticatedRequest } from '../auth/middleware.js'
 const MIB = 1024 * 1024
 const GIB = 1024 * MIB
 const V2_CHUNK_SIZE = 5 * MIB
-const maxVideoSourceBytes = 2 * GIB
+const maxStandardHdSourceBytes = GIB
+const maxOriginalSourceBytes = 2 * GIB
 const maxVoiceSourceBytes = 256 * MIB
 const maxCiphertextBytes = 2 * GIB + 64 * MIB
 const videoTypes = new Set(['video/mp4', 'video/webm'])
@@ -35,6 +36,15 @@ const rangeLimiter = rateLimit({
   message: { error: { code: 'rate_limited', message: 'Too many media range requests. Try again shortly.' } },
 })
 
+const downloadRangeLimiter = rateLimit({
+  windowMs: 60_000,
+  limit: 720,
+  standardHeaders: 'draft-8',
+  legacyHeaders: false,
+  keyGenerator: (request) => (request as AuthenticatedRequest).auth?.userId ?? ipKeyGenerator(request.ip ?? ''),
+  message: { error: { code: 'rate_limited', message: 'Too many media download requests. Try again shortly.' } },
+})
+
 function parseContentRange(value: string | undefined) {
   const match = /^bytes (\d+)-(\d+)\/(\d+)$/u.exec(value ?? '')
   if (!match) return null
@@ -51,7 +61,8 @@ const intentSchema = z.object({
   filename: z.string().trim().min(1).max(200).refine((value) => !/[\\/\u0000-\u001f]/u.test(value)),
   contentType: z.string().min(1).max(120),
   mediaKind: z.enum(['video', 'voice']),
-  mediaMode: z.enum(['standard', 'hd', 'original']).nullable().optional(),
+  mediaMode: z.literal('original').nullable().optional(),
+  posterAttachmentId: z.uuid().nullable().optional(),
   plaintextSize: z.number().int().positive(),
   ciphertextSize: z.number().int().positive().max(maxCiphertextBytes),
   chunkSize: z.literal(V2_CHUNK_SIZE),
@@ -59,15 +70,19 @@ const intentSchema = z.object({
   encryptionVersion: z.literal(2),
   keyEnvelopes: envelopesSchema.refine((value) => Object.keys(value).length >= 2 && Object.keys(value).length <= 32),
   durationMs: z.number().int().nonnegative().max(24 * 60 * 60 * 1000).nullable().optional(),
+  waveform: z.array(z.number().min(0).max(1)).max(64).nullable().optional(),
   width: z.number().int().positive().max(16_384).nullable().optional(),
   height: z.number().int().positive().max(16_384).nullable().optional(),
 }).superRefine((value, context) => {
   const supported = value.mediaKind === 'video' ? videoTypes.has(value.contentType) : voiceTypes.has(value.contentType)
   if (!supported) context.addIssue({ code: 'custom', message: 'Unsupported media content type.', path: ['contentType'] })
-  const sourceLimit = value.mediaKind === 'video' ? maxVideoSourceBytes : maxVoiceSourceBytes
+  const sourceLimit = value.mediaKind === 'voice'
+    ? maxVoiceSourceBytes
+    : value.mediaMode === 'original' ? maxOriginalSourceBytes : maxStandardHdSourceBytes
   if (value.plaintextSize > sourceLimit) context.addIssue({ code: 'custom', message: 'Media exceeds the v2 source limit.', path: ['plaintextSize'] })
   if (value.mediaKind === 'voice' && value.mediaMode) context.addIssue({ code: 'custom', message: 'Voice notes do not use a media mode.', path: ['mediaMode'] })
-  if (value.mediaKind === 'video' && !value.mediaMode) context.addIssue({ code: 'custom', message: 'Video media mode is required.', path: ['mediaMode'] })
+  if (value.mediaKind === 'video' && (!value.mediaMode || !value.posterAttachmentId)) context.addIssue({ code: 'custom', message: 'Video source mode and encrypted poster are required.', path: ['mediaMode'] })
+  if (value.mediaKind === 'voice' && value.posterAttachmentId) context.addIssue({ code: 'custom', message: 'Voice notes do not have posters.', path: ['posterAttachmentId'] })
   if (Math.ceil(value.ciphertextSize / value.chunkSize) !== value.chunkCount) {
     context.addIssue({ code: 'custom', message: 'Chunk count does not match ciphertext size.', path: ['chunkCount'] })
   }
@@ -110,23 +125,36 @@ mediaV2Router.post('/uploads/v2/intent', limiter, async (request: AuthenticatedR
     }
 
     const attachmentId = input.data.attachmentId
+    if (input.data.posterAttachmentId) {
+      const preview = await client.query(
+        `UPDATE attachments SET expires_at = now() + interval '7 days'
+         WHERE id = $1 AND chat_id = $2 AND uploaded_by = $3 AND status = 'ready'
+           AND content_type = 'image/jpeg' AND expires_at > now()`,
+        [input.data.posterAttachmentId, input.data.chatId, request.auth!.userId],
+      )
+      if (preview.rowCount !== 1) {
+        await client.query('ROLLBACK')
+        response.status(400).json({ error: { code: 'validation', message: 'Encrypted video poster is unavailable.' } })
+        return
+      }
+    }
     const sessionId = uuidv7()
     const appwriteFileId = attachmentId
     const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000)
     await client.query(
       `INSERT INTO attachments
-        (id, chat_id, uploaded_by, object_key, filename, content_type, size_bytes, nonce, key_envelopes,
-         status, expires_at, transport_version, media_kind, encryption_version, plaintext_size,
-         ciphertext_size, chunk_size, chunk_count, media_mode, duration_ms, width, height)
-       VALUES
-        ($1, $2, $3, $4, $5, $6, $7, NULL, $8::jsonb, 'pending', $9, 2, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19)`,
+        (id, chat_id, uploaded_by, object_key, filename, content_type, size_bytes, nonce, key_envelopes, poster_attachment_id,
+          status, expires_at, transport_version, media_kind, encryption_version, plaintext_size,
+          ciphertext_size, chunk_size, chunk_count, media_mode, duration_ms, width, height, waveform)
+        VALUES
+         ($1, $2, $3, $4, $5, $6, $7, NULL, $8::jsonb, $9, 'pending', $10, 2, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21::jsonb)`,
       [
         attachmentId, input.data.chatId, request.auth!.userId, `appwrite:${attachmentId}`,
         input.data.filename, input.data.contentType, input.data.plaintextSize,
-        JSON.stringify(input.data.keyEnvelopes), expiresAt, input.data.mediaKind,
+        JSON.stringify(input.data.keyEnvelopes), input.data.posterAttachmentId ?? null, expiresAt, input.data.mediaKind,
         input.data.encryptionVersion, input.data.plaintextSize, input.data.ciphertextSize,
         input.data.chunkSize, input.data.chunkCount, input.data.mediaMode ?? null,
-        input.data.durationMs ?? null, input.data.width ?? null, input.data.height ?? null,
+        input.data.durationMs ?? null, input.data.width ?? null, input.data.height ?? null, JSON.stringify(input.data.waveform ?? null),
       ],
     )
     await client.query(
@@ -379,6 +407,10 @@ mediaV2Router.delete('/uploads/v2/:attachmentId/session', limiter, async (reques
   const client = await pool.connect()
   try {
     await client.query('BEGIN')
+    const poster = await client.query<{ poster_attachment_id: string | null }>(
+      `SELECT poster_attachment_id FROM attachments WHERE id = $1 AND uploaded_by = $2 AND transport_version = 2`,
+      [attachmentId.data, request.auth!.userId],
+    )
     const cancelled = await client.query(
       `UPDATE media_upload_sessions
        SET state = 'cancelled', updated_at = now()
@@ -396,6 +428,15 @@ mediaV2Router.delete('/uploads/v2/:attachmentId/session', limiter, async (reques
        WHERE id = $1 AND uploaded_by = $2 AND transport_version = 2 AND status = 'pending'`,
       [attachmentId.data, request.auth!.userId],
     )
+    const posterAttachmentId = poster.rows[0]?.poster_attachment_id
+    if (posterAttachmentId) {
+      await client.query(
+        `DELETE FROM attachments
+         WHERE id = $1 AND uploaded_by = $2
+           AND NOT EXISTS (SELECT 1 FROM message_attachments WHERE attachment_id = $1)`,
+        [posterAttachmentId, request.auth!.userId],
+      )
+    }
     await client.query('COMMIT')
     response.status(204).end()
   } catch (error) {
@@ -416,7 +457,7 @@ mediaV2Router.get('/uploads/v2/:attachmentId', limiter, async (request: Authenti
   try {
     const result = await pool.query(
       `SELECT a.id, a.filename, a.content_type, a.plaintext_size, a.ciphertext_size, a.chunk_size,
-              a.chunk_count, a.media_kind, a.duration_ms, a.width, a.height,
+              a.chunk_count, a.media_kind, a.duration_ms, a.waveform, a.width, a.height, a.poster_attachment_id,
               a.key_envelopes -> $2::text AS key_envelope
        FROM attachments a
        JOIN message_attachments ma ON ma.attachment_id = a.id
@@ -444,6 +485,7 @@ mediaV2Router.get('/uploads/v2/:attachmentId', limiter, async (request: Authenti
       chunkCount: Number(attachment.chunk_count),
       mediaKind: attachment.media_kind,
       durationMs: attachment.duration_ms === null ? null : Number(attachment.duration_ms),
+      waveform: attachment.waveform ?? null,
       width: attachment.width === null ? null : Number(attachment.width),
       height: attachment.height === null ? null : Number(attachment.height),
       keyEnvelope: attachment.key_envelope,
@@ -454,7 +496,7 @@ mediaV2Router.get('/uploads/v2/:attachmentId', limiter, async (request: Authenti
   }
 })
 
-mediaV2Router.get('/uploads/v2/:attachmentId/content', rangeLimiter, async (request: AuthenticatedRequest, response, next) => {
+mediaV2Router.get('/uploads/v2/:attachmentId/content', downloadRangeLimiter, async (request: AuthenticatedRequest, response, next) => {
   const attachmentId = z.uuid().safeParse(request.params.attachmentId)
   if (!attachmentId.success) {
     response.status(400).json({ error: { code: 'validation', message: 'Invalid attachment id.' } })

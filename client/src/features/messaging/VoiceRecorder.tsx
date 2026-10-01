@@ -6,17 +6,17 @@ function mimeType(){for(const type of ['audio/webm;codecs=opus','audio/ogg;codec
 function clock(ms:number){const total=Math.floor(ms/1000);return `${Math.floor(total/60)}:${String(total%60).padStart(2,'0')}`}
 export function VoiceRecorder({disabled,onReady}:{disabled:boolean;onReady:(draft:VoiceDraft)=>void}){
  const [recording,setRecording]=useState(false),[paused,setPaused]=useState(false),[elapsed,setElapsed]=useState(0),[levels,setLevels]=useState<number[]>([])
- const recorder=useRef<MediaRecorder|null>(null),stream=useRef<MediaStream|null>(null),chunks=useRef<Blob[]>([]),started=useRef(0),pausedAt=useRef(0),pausedTotal=useRef(0),timer=useRef<number|null>(null),audioContext=useRef<AudioContext|null>(null)
+ const recorder=useRef<MediaRecorder|null>(null),stream=useRef<MediaStream|null>(null),chunks=useRef<Blob[]>([]),levelsRef=useRef<number[]>([]),started=useRef(0),pausedAt=useRef(0),pausedTotal=useRef(0),timer=useRef<number|null>(null),audioContext=useRef<AudioContext|null>(null)
  const stopTracks=()=>{stream.current?.getTracks().forEach(track=>track.stop());stream.current=null;audioContext.current?.close().catch(()=>undefined);audioContext.current=null;if(timer.current)window.clearInterval(timer.current);timer.current=null}
  useEffect(()=>()=>stopTracks(),[])
  async function start(){if(disabled||!navigator.mediaDevices?.getUserMedia||typeof MediaRecorder==='undefined')return
-  const media=await navigator.mediaDevices.getUserMedia({audio:true});stream.current=media;chunks.current=[];pausedTotal.current=0;started.current=Date.now();setElapsed(0);setLevels([])
+  const media=await navigator.mediaDevices.getUserMedia({audio:true});stream.current=media;chunks.current=[];levelsRef.current=[];pausedTotal.current=0;started.current=Date.now();setElapsed(0);setLevels([])
   const type=mimeType(),r=new MediaRecorder(media,type?{mimeType:type}:undefined);recorder.current=r
   r.ondataavailable=e=>{if(e.data.size)chunks.current.push(e.data)}
-  r.onstop=()=>{const durationMs=Math.max(1,Date.now()-started.current-pausedTotal.current),blob=new Blob(chunks.current,{type:r.mimeType||'audio/webm'}),ext=blob.type.includes('ogg')?'ogg':blob.type.includes('mp4')?'m4a':'webm';const file=new File([blob],`voice-${Date.now()}.${ext}`,{type:blob.type});onReady({file,durationMs,waveform:levels.slice(-48),url:URL.createObjectURL(blob)});stopTracks();setRecording(false);setPaused(false)}
+  r.onstop=()=>{const durationMs=Math.max(1,Date.now()-started.current-pausedTotal.current),blob=new Blob(chunks.current,{type:r.mimeType||'audio/webm'}),ext=blob.type.includes('ogg')?'ogg':blob.type.includes('mp4')?'m4a':'webm';const file=new File([blob],`voice-${Date.now()}.${ext}`,{type:blob.type});onReady({file,durationMs,waveform:levelsRef.current.slice(-48),url:URL.createObjectURL(blob)});stopTracks();setRecording(false);setPaused(false)}
   r.start(500);setRecording(true)
   const context=new AudioContext(),source=context.createMediaStreamSource(media),analyser=context.createAnalyser();analyser.fftSize=256;source.connect(analyser);audioContext.current=context;const data=new Uint8Array(analyser.frequencyBinCount)
-  timer.current=window.setInterval(()=>{if(r.state==='recording'){setElapsed(Date.now()-started.current-pausedTotal.current);analyser.getByteTimeDomainData(data);let peak=0;for(const value of data)peak=Math.max(peak,Math.abs(value-128));setLevels(current=>[...current.slice(-47),Math.max(.08,peak/128)])}},120)
+  timer.current=window.setInterval(()=>{if(r.state==='recording'){setElapsed(Date.now()-started.current-pausedTotal.current);analyser.getByteTimeDomainData(data);let peak=0;for(const value of data)peak=Math.max(peak,Math.abs(value-128));const next=[...levelsRef.current.slice(-47),Math.max(.08,peak/128)];levelsRef.current=next;setLevels(next)}},120)
  }
  function toggle(){const r=recorder.current;if(!r)return;if(r.state==='recording'){r.pause();pausedAt.current=Date.now();setPaused(true)}else if(r.state==='paused'){pausedTotal.current+=Date.now()-pausedAt.current;r.resume();setPaused(false)}}
  if(!recording)return <button type="button" className="voice-record-button" onClick={()=>void start()} disabled={disabled} aria-label="Record voice note"><Mic size={15}/></button>

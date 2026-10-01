@@ -18,7 +18,7 @@ export async function inspectMediaV2Storage(): Promise<MediaV2StorageCapacity> {
   const manager = storageManager()
   if (!manager?.getDirectory) return { supported: false, persisted: false, usage: null, quota: null, available: null }
   const [estimate, persisted] = await Promise.all([
-    manager.estimate().catch(() => ({})),
+    manager.estimate().catch((): StorageEstimate => ({})),
     manager.persisted?.().catch(() => false) ?? Promise.resolve(false),
   ])
   const usage = estimate.usage ?? null

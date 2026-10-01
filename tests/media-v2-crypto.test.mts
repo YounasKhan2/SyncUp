@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import { webcrypto } from 'node:crypto'
 import test from 'node:test'
 
-globalThis.crypto = webcrypto
+if (!globalThis.crypto) Object.defineProperty(globalThis, 'crypto', { value: webcrypto, configurable: true })
 
 const codec = await import('../client/src/features/media/v2/recordCodec.ts')
 

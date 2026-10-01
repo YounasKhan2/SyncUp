@@ -40,7 +40,9 @@ export async function uploadAppwriteRange(input: {
   const config = configuration()
   const form = new FormData()
   form.append('fileId', input.fileId)
-  form.append('file', new Blob([input.bytes]), input.filename)
+  const bytes = new Uint8Array(input.bytes.byteLength)
+  bytes.set(input.bytes)
+  form.append('file', new Blob([bytes.buffer]), input.filename)
 
   const headers: Record<string, string> = {
     'X-Appwrite-Project': config.projectId,
@@ -75,11 +77,15 @@ export async function downloadAppwriteRange(input: { fileId: string; start: numb
       },
     },
   )
-  if (response.status !== 206) {
+  if (response.status !== 206 && response.status !== 200) {
     throw new Error(`Media download failed with status ${response.status}.`)
   }
-  const bytes = Buffer.from(await response.arrayBuffer())
+  const fullBytes = Buffer.from(await response.arrayBuffer())
   const expected = input.end - input.start + 1
+  // When Appwrite returns 200 (full body) instead of 206, extract the requested range
+  const bytes = response.status === 200 && fullBytes.byteLength > expected
+    ? fullBytes.subarray(input.start, input.start + expected)
+    : fullBytes
   if (bytes.byteLength !== expected) throw new Error('Media download range size did not match the request.')
   return bytes
 }

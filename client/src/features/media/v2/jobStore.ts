@@ -1,4 +1,5 @@
 import type { MediaV2Kind } from './recordCodec'
+import type { StagedAttachment } from '../../../shared/types'
 
 const DB_NAME = 'syncup-media-v2'
 const DB_VERSION = 1
@@ -25,6 +26,14 @@ export type MediaV2UploadJob = {
   mediaKind: MediaV2Kind
   filename: string
   contentType: string
+  durationMs?: number | null
+  waveform?: number[] | null
+  width?: number | null
+  height?: number | null
+  posterDataUrl?: string | null
+  posterAttachmentId?: string | null
+  sendOnComplete?: boolean
+  messageIdempotencyKey?: string
   plaintextSize: number
   ciphertextSize: number
   chunkSize: number
@@ -34,6 +43,7 @@ export type MediaV2UploadJob = {
   stagePath: string | null
   sourceFingerprint: string
   keyEnvelope?: string
+  previewAttachment?: StagedAttachment
   createdAt: number
   updatedAt: number
   lastError: string | null
@@ -100,9 +110,10 @@ export async function getMediaV2JobByAttachment(attachmentId: string) {
 }
 
 export async function listRecoverableMediaV2Jobs() {
-  const terminal = new Set<MediaV2JobState>(['complete', 'cancelled'])
   const jobs = await withStore<MediaV2UploadJob[]>('readonly', (store) => store.getAll())
-  return jobs.filter((job) => !terminal.has(job.state)).sort((left, right) => left.createdAt - right.createdAt)
+  return jobs
+    .filter((job) => job.state !== 'cancelled' && (job.state !== 'complete' || job.sendOnComplete))
+    .sort((left, right) => left.createdAt - right.createdAt)
 }
 
 export async function patchMediaV2Job(id: string, patch: Partial<Omit<MediaV2UploadJob, 'id' | 'attachmentId' | 'createdAt'>>) {

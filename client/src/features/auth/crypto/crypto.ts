@@ -146,7 +146,7 @@ export async function wrapMediaKeyForMembers(rawMediaKey: Uint8Array, members: P
   const keyEnvelopes: Record<string, string> = {}
   for (const member of members) {
     const publicKey = await crypto.subtle.importKey('jwk', member.publicKey, { name: 'RSA-OAEP', hash: 'SHA-256' }, false, ['encrypt'])
-    const wrappedKey = await crypto.subtle.encrypt({ name: 'RSA-OAEP' }, publicKey, rawMediaKey)
+    const wrappedKey = await crypto.subtle.encrypt({ name: 'RSA-OAEP' }, publicKey, rawMediaKey.slice().buffer)
     keyEnvelopes[member.id] = toBase64Url(new Uint8Array(wrappedKey))
   }
   return keyEnvelopes

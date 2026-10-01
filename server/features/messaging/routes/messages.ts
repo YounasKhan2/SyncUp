@@ -37,14 +37,38 @@ messageRoutes.get('/chats/:id/messages', async (request: AuthenticatedRequest, r
                 '[]'::jsonb
               ) AS reactions,
               COALESCE(
-                jsonb_agg(jsonb_build_object(
+                jsonb_agg(DISTINCT jsonb_build_object(
                   'id', a.id,
                   'filename', a.filename,
                   'content_type', a.content_type,
                   'size_bytes', a.size_bytes,
                   'nonce', a.nonce,
                   'key_envelope', a.key_envelopes -> $2::text,
-                  'transport_version', a.transport_version
+                  'transport_version', a.transport_version,
+                  'duration_ms', a.duration_ms,
+                  'waveform', a.waveform,
+                  'width', a.width,
+                  'height', a.height,
+                  'poster_attachment_id', a.poster_attachment_id,
+                  'is_preview', EXISTS (
+                    SELECT 1 FROM attachments parent
+                    WHERE parent.poster_attachment_id = a.id
+                  ),
+                  'preview', CASE
+                    WHEN p.id IS NOT NULL AND EXISTS (
+                      SELECT 1 FROM message_attachments pma
+                      WHERE pma.message_id = m.id AND pma.attachment_id = p.id
+                    ) THEN jsonb_build_object(
+                      'id', p.id,
+                      'filename', p.filename,
+                      'content_type', p.content_type,
+                      'size_bytes', p.size_bytes,
+                      'nonce', p.nonce,
+                      'key_envelope', p.key_envelopes -> $2::text,
+                      'transport_version', p.transport_version
+                    )
+                    ELSE NULL
+                  END
                 )) FILTER (WHERE a.id IS NOT NULL),
                 '[]'::jsonb
               ) AS attachments
@@ -53,6 +77,7 @@ messageRoutes.get('/chats/:id/messages', async (request: AuthenticatedRequest, r
        LEFT JOIN message_reactions r ON r.message_id = m.id
        LEFT JOIN message_attachments ma ON ma.message_id = m.id
        LEFT JOIN attachments a ON a.id = ma.attachment_id AND a.status = 'ready'
+       LEFT JOIN attachments p ON p.id = a.poster_attachment_id AND p.status = 'ready'
        WHERE m.chat_id = $1
          AND ($3::bigint IS NULL OR m.server_seq > $3)
          AND ($5::bigint IS NULL OR m.server_seq < $5)
@@ -132,19 +157,34 @@ messageRoutes.post('/chats/:id/messages', messageLimiter, async (request: Authen
       return
     }
     if (input.data.attachmentIds.length) {
-      const attachments = await client.query<{ id: string; key_envelopes: Record<string, string> }>(
-        `SELECT id, key_envelopes FROM attachments
-         WHERE id = ANY($1::uuid[]) AND chat_id = $2 AND uploaded_by = $3
-           AND status = 'ready' AND expires_at > now()
-         FOR UPDATE`,
+      const attachments = await client.query<{
+        id: string
+        key_envelopes: Record<string, string>
+        poster_attachment_id: string | null
+        is_preview: boolean
+      }>(
+        `SELECT a.id, a.key_envelopes, a.poster_attachment_id,
+                EXISTS (
+                  SELECT 1 FROM attachments parent
+                  WHERE parent.poster_attachment_id = a.id
+                ) AS is_preview
+         FROM attachments a
+         WHERE a.id = ANY($1::uuid[]) AND a.chat_id = $2 AND a.uploaded_by = $3
+           AND a.status = 'ready' AND a.expires_at > now()
+         FOR UPDATE OF a`,
         [input.data.attachmentIds, chatId.data, request.auth!.userId],
       )
       const expectedMembers = members.rows.map((member) => member.user_id).sort()
+      const submittedAttachmentIds = new Set(input.data.attachmentIds)
       if (attachments.rowCount !== input.data.attachmentIds.length
         || attachments.rows.some((attachment) => {
           const recipients = Object.keys(attachment.key_envelopes).sort()
           return recipients.length !== expectedMembers.length
             || recipients.some((recipient, index) => recipient !== expectedMembers[index])
+            || (attachment.poster_attachment_id !== null
+              && !submittedAttachmentIds.has(attachment.poster_attachment_id))
+            || attachment.is_preview
+              && !attachments.rows.some((parent) => parent.poster_attachment_id === attachment.id)
         })) {
         await client.query('ROLLBACK')
         response.status(400).json({ error: { code: 'validation', message: 'One or more encrypted attachments are unavailable.' } })
