@@ -55,7 +55,7 @@ export function AuthScreen({ onSignedIn }: { onSignedIn: (user: User) => void })
   return (
     <main className="auth-page">
       <section className="auth-story" aria-label="About SyncUp">
-        <div className="story-topline"><BrandMark /><span>SYNCUP</span></div>
+        <div className="story-topline"><BrandMark /><span>SyncUp</span></div>
         <div className="story-copy">
           <p className="eyebrow">A better place to work together</p>
           <h1>Good work<br />happens when<br /><em>we’re in sync.</em></h1>

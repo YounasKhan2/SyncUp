@@ -39,7 +39,7 @@ export function UnlockScreen({ onUnlocked }: { onUnlocked: () => void }) {
   return (
     <main className="auth-page">
       <section className="auth-story" aria-label="SyncUp encryption">
-        <div className="story-topline"><BrandMark /><span>SYNCUP</span></div>
+        <div className="story-topline"><BrandMark /><span>SyncUp</span></div>
         <div className="story-copy">
           <p className="eyebrow">YOUR KEYS, YOUR CONVERSATIONS</p>
           <h1>Private by<br />design.<br /><em>Ready when<br />you are.</em></h1>
