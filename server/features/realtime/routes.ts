@@ -6,7 +6,7 @@ import { z } from 'zod'
 import { requireAuth, type AuthenticatedRequest } from '../auth/middleware.js'
 import { pool } from '../../db.js'
 
-type ChatHint = { chatId: string; serverSeq: number }
+type ChatHint = { chatId: string; serverSeq?: number; messageId?: string; eventType?: string }
 type Subscriber = { userId: string; response: Response }
 type RealtimeEvent = { type: string; data: Record<string, unknown> }
 
@@ -47,7 +47,14 @@ export async function publishChatEvent(chatId: string, event: RealtimeEvent, exc
 }
 
 async function dispatch(hint: ChatHint) {
-  await publishChatEvent(hint.chatId, { type: 'message.created', data: hint })
+  const type = hint.eventType
+    ?? (hint.serverSeq === undefined ? 'message.updated' : 'message.created')
+  await publishChatEvent(hint.chatId, {
+    type,
+    data: hint.serverSeq === undefined
+      ? { messageId: hint.messageId }
+      : { chatId: hint.chatId, serverSeq: hint.serverSeq },
+  })
 }
 
 export async function startRealtimeListener() {
@@ -61,9 +68,24 @@ export async function startRealtimeListener() {
       listener.on('notification', (notification) => {
         if (notification.channel !== 'syncup_chat_messages' || !notification.payload) return
         try {
-          const parsed = JSON.parse(notification.payload) as { chatId?: unknown; serverSeq?: unknown }
-          if (typeof parsed.chatId !== 'string' || typeof parsed.serverSeq !== 'number') return
-          void dispatch({ chatId: parsed.chatId, serverSeq: parsed.serverSeq })
+          const parsed = JSON.parse(notification.payload) as {
+            chatId?: unknown
+            serverSeq?: unknown
+            messageId?: unknown
+            eventType?: unknown
+          }
+          if (typeof parsed.chatId !== 'string') return
+          if (typeof parsed.serverSeq === 'number') {
+            void dispatch({ chatId: parsed.chatId, serverSeq: parsed.serverSeq })
+            return
+          }
+          if (typeof parsed.messageId === 'string') {
+            void dispatch({
+              chatId: parsed.chatId,
+              messageId: parsed.messageId,
+              ...(typeof parsed.eventType === 'string' ? { eventType: parsed.eventType } : {}),
+            })
+          }
         } catch (error) {
           console.error('Invalid realtime message hint', error)
         }

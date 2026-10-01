@@ -617,7 +617,7 @@ Always visible at the bottom of C.
 
 Primary: text field, attach, voice (Phase 1), send.
 
-Emoji picker SHOULD and inserts into the current draft. URLs in messages are linkified for display without changing encrypted message content. `+` menu: Poll, Event, Checklist (Phase 1); never a kitchen sink.
+The full searchable emoji picker inserts into the current draft and can add message reactions. URLs in messages are linkified for display without changing encrypted message content. Call records appear in chronological order alongside messages. `+` menu: Poll, Event, Checklist (Phase 1); never a kitchen sink.
 
 ### 18.4 Empty states
 

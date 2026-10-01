@@ -298,7 +298,7 @@
 .message-row { display: flex; align-items: flex-start; gap: 8px; max-width: 88%; }
 .message-row.message-mine { align-self: flex-end; }
 .message-avatar { width: 26px; height: 26px; margin-top: 3px; color: #755f48; background: #e9dfd0; font-size: 9px; }
-.message-content { min-width: 0; }
+.message-content { position: relative; min-width: 0; }
 .message-meta { display: flex; align-items: baseline; gap: 7px; margin: 0 0 4px 2px; }
 .message-meta strong { color: #526158; font-size: 9px; font-weight: 600; }
 .message-meta span { color: #9aa29b; font-size: 8px; }
@@ -314,8 +314,17 @@
 .message-row:hover .message-actions, .message-actions:focus-within { opacity: 1; }
 .message-actions button { padding: 2px 4px; border: 0; border-radius: 4px; color: var(--color-text-muted); background: transparent; font: inherit; font-size: 8px; cursor: pointer; }
 .message-actions button:hover { color: #45664d; background: #f0f3ed; }
+.message-actions button.message-pin-active { color: #315b43; background: #e7efe4; }
+.message-reactions { display: flex; flex-wrap: wrap; gap: 4px; margin: 4px 0 0 3px; }
+.message-reactions button { display: inline-flex; min-width: 34px; min-height: 24px; align-items: center; justify-content: center; gap: 4px; padding: 2px 6px; border: 1px solid #e4e9e2; border-radius: 12px; color: #627168; background: #f8faf7; font: inherit; font-size: 10px; cursor: pointer; }
+.message-reactions button[aria-pressed="true"] { border-color: #7e9c81; background: #eaf1e8; }
+.message-pinned-label { display: inline-flex; align-items: center; gap: 4px; margin: 0 0 5px; color: #5c785f; font-size: 8px; }
+.message-jump-highlight .message-bubble { animation: message-jump-highlight 1.6s ease-out; }
+@keyframes message-jump-highlight { 0%, 45% { outline: 3px solid #87a984; outline-offset: 2px; } 100% { outline-color: transparent; outline-offset: 8px; } }
 .message-edited { display: block; margin-top: 3px; color: #88948b; font-size: 8px; }
-.reply-quote { margin-bottom: 6px; padding: 3px 7px; border-left: 2px solid #7a9776; color: #78867b; background: rgba(255, 255, 255, .5); font-size: 9px; }
+.reply-quote { display: flex; width: 100%; flex-direction: column; gap: 3px; margin: 0 0 7px; padding: 5px 7px; border: 0; border-left: 2px solid #7a9776; color: #78867b; background: rgba(255, 255, 255, .5); text-align: left; font: inherit; font-size: 9px; cursor: pointer; }
+.reply-quote strong { color: #526b56; font-size: 9px; font-weight: 650; }
+.reply-quote:disabled { cursor: default; opacity: .75; }
 .message-media-pending { width: min(420px, 88%); max-width: min(420px, 88%); }
 .media-pending-bubble { width: 100%; box-sizing: border-box; padding: 12px 13px 10px; border-color: #e1eae0; border-radius: 10px; background: #f4f7f2; }
 .media-pending-preview { display: flex; min-width: 0; align-items: center; gap: 10px; }
@@ -342,9 +351,8 @@
 .composer-toolbar > button { display: grid; width: 27px; height: 27px; flex: 0 0 auto; place-items: center; border: 0; border-radius: 8px; color: var(--color-surface); background: #254b38; font: inherit; font-size: 16px; cursor: pointer; }
 .composer-toolbar > button:disabled { cursor: default; opacity: .45; }
 .composer-toolbar > .emoji-picker-toggle { width: 30px; height: 30px; color: #64776a; background: transparent; }
-.emoji-picker { position: absolute; z-index: 12; right: 10px; bottom: calc(100% + 7px); display: grid; width: min(288px, calc(100vw - 32px)); grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 3px; padding: 8px; border: 1px solid var(--color-border); border-radius: 10px; background: var(--color-canvas); box-shadow: 0 10px 30px rgba(18, 36, 24, .2); }
-.emoji-picker button { display: grid; min-width: 42px; min-height: 42px; place-items: center; border: 0; border-radius: 7px; background: transparent; font-size: 22px; cursor: pointer; }
-.emoji-picker button:hover { background: var(--color-surface-muted); }
+.emoji-picker-popover { position: absolute; z-index: 12; right: 10px; bottom: calc(100% + 7px); overflow: hidden; border: 1px solid var(--color-border); border-radius: 10px; background: var(--color-canvas); box-shadow: 0 10px 30px rgba(18, 36, 24, .2); }
+.reaction-picker-popover { position: absolute; z-index: 13; bottom: calc(100% + 4px); left: 0; overflow: hidden; border: 1px solid var(--color-border); border-radius: 10px; box-shadow: 0 10px 30px rgba(18, 36, 24, .2); }
 .composer-reply { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 7px 12px; border-bottom: 1px solid #edf0eb; color: #78867c; font-size: 9px; }
 .composer-reply span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .composer-reply button { border: 0; color: #7b877e; background: none; font-size: 15px; cursor: pointer; }
@@ -750,8 +758,14 @@
 :root[data-theme="dark"] .profile-form .profile-checkbox > span > small,
 :root[data-theme="dark"] .search-result strong,
 :root[data-theme="dark"] .search-message-result .search-message-snippet { color: var(--color-text-muted); }
-:root[data-theme="dark"] .emoji-picker { border-color: var(--color-border); background: var(--color-canvas); }
-:root[data-theme="dark"] .emoji-picker button:hover { background: var(--color-surface-muted); }
+:root[data-theme="dark"] .emoji-picker-popover,
+:root[data-theme="dark"] .reaction-picker-popover { border-color: var(--color-border); background: var(--color-canvas); }
+:root[data-theme="dark"] .message-reactions button { border-color: var(--color-border); color: var(--color-text); background: var(--color-surface-muted); }
+:root[data-theme="dark"] .message-reactions button[aria-pressed="true"],
+:root[data-theme="dark"] .message-actions button.message-pin-active { border-color: #648667; color: #e4eee3; background: #344c39; }
+:root[data-theme="dark"] .reply-quote { color: #c0cbc2; background: rgba(0, 0, 0, .18); }
+:root[data-theme="dark"] .reply-quote strong,
+:root[data-theme="dark"] .message-pinned-label { color: #b4d5b5; }
 :root[data-theme="dark"] .incoming-call-banner { border-color: var(--color-border); background: #17221b; }
 :root[data-theme="dark"] .call-dialog { border-color: var(--color-border); background: var(--color-canvas); }
 :root[data-theme="dark"] .call-controls button,

@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { countUnreadConversations, insertAtSelection, splitMessageLinks } from '../client/src/shared/presentation.ts'
+import { countUnreadConversations, insertAtSelection, sortChronologically, splitMessageLinks } from '../client/src/shared/presentation.ts'
 import { parseAppearancePreference } from '../client/src/shared/appearance.ts'
 
 test('unread badge counts conversations, not unread messages', () => {
@@ -10,6 +10,15 @@ test('unread badge counts conversations, not unread messages', () => {
     { unread_count: '8' },
     { unread_count: '0' },
   ]), 2)
+})
+
+test('chronological chat timeline interleaves calls with messages', () => {
+  const timeline = sortChronologically([
+    { type: 'message', created_at: '2026-10-01T17:20:00.000Z' },
+    { type: 'call', created_at: '2026-10-01T15:10:00.000Z' },
+    { type: 'message', created_at: '2026-10-01T14:00:00.000Z' },
+  ])
+  assert.deepEqual(timeline.map((item) => item.type), ['message', 'call', 'message'])
 })
 
 test('message URL splitting accepts only safe HTTP(S) URLs and preserves punctuation', () => {

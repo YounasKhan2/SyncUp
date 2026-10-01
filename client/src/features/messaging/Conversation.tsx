@@ -22,6 +22,7 @@ import type {
   ChatKind,
   ChatMember,
   DisplayMessage,
+  EncryptedMessageReplyContext,
   EncryptedChatMessage,
   StagedAttachment,
   User,
@@ -40,6 +41,23 @@ import type { MediaV2UploadSnapshot } from "../media/v2/uploadManager";
 import { createGroupCallKey } from "../calls/groupCallCrypto";
 import { Avatar } from "../../shared/components/Avatar";
 import type { SearchableMessage } from "./SearchDialog";
+
+async function decryptReplyContext(
+  context: EncryptedMessageReplyContext | null | undefined,
+): Promise<DisplayMessage["reply_context"]> {
+  if (!context) return null;
+  return {
+    ...context,
+    text: context.deleted_at
+      ? ""
+      : await decryptMessage({
+          bodyCiphertext: context.body_ciphertext,
+          bodyNonce: context.body_nonce,
+          keyEnvelope: context.key_envelope,
+        }).catch(() => "Unable to decrypt this message on this device."),
+  };
+}
+
 export function Conversation({
   user,
   chatId,
@@ -96,6 +114,7 @@ export function Conversation({
   const [loading, setLoading] = useState(Boolean(chatId));
   const lastSeq = useRef(0);
   const messageListRef = useRef<HTMLDivElement>(null);
+  const pendingJumpId = useRef<string | null>(null);
   const initialScrollPending = useRef(Boolean(chatId));
   const scrollAnchor = useRef<{ height: number; top: number } | null>(null);
   const loadingOlderRef = useRef(false);
@@ -146,6 +165,7 @@ export function Conversation({
         const displayed = await Promise.all(
           messageResult.messages.map(async (message) => ({
             ...message,
+            reply_context: await decryptReplyContext(message.reply_context),
             text: message.deleted_at
               ? ""
               : await decryptMessage({
@@ -216,6 +236,7 @@ export function Conversation({
       const earlier = await Promise.all(
         result.messages.map(async (message) => ({
           ...message,
+          reply_context: await decryptReplyContext(message.reply_context),
           text: message.deleted_at
             ? ""
             : await decryptMessage({
@@ -254,9 +275,69 @@ export function Conversation({
     }
   }, [chatId, hasOlderMessages, messages]);
 
+  const highlightMessage = useCallback((messageId: string) => {
+    const target = document.getElementById(`message-${messageId}`);
+    if (!target) return false;
+    target.scrollIntoView({ behavior: "smooth", block: "center" });
+    target.classList.add("message-jump-highlight");
+    window.setTimeout(() => target.classList.remove("message-jump-highlight"), 1600);
+    return true;
+  }, []);
+
+  const jumpToMessage = useCallback(async (messageId: string, serverSeq: string) => {
+    if (messages.some((message) => message.id === messageId)) {
+      highlightMessage(messageId);
+      return;
+    }
+    if (!chatId || !serverSeq || loadingOlderRef.current) return;
+    loadingOlderRef.current = true;
+    setError("");
+    setLoadingOlder(true);
+    try {
+      const beforeSeq = (BigInt(serverSeq) + 1n).toString();
+      const result = await api<{ messages: EncryptedChatMessage[]; hasMore: boolean }>(
+        `/api/chats/${chatId}/messages?before_seq=${encodeURIComponent(beforeSeq)}&limit=50`,
+      );
+      const earlier = await Promise.all(result.messages.map(async (message) => ({
+        ...message,
+        reply_context: await decryptReplyContext(message.reply_context),
+        text: message.deleted_at
+          ? ""
+          : await decryptMessage({
+              bodyCiphertext: message.body_ciphertext,
+              bodyNonce: message.body_nonce,
+              keyEnvelope: message.key_envelope,
+            }).catch(() => "Unable to decrypt this message on this device."),
+      })));
+      if (!earlier.some((message) => message.id === messageId)) {
+        setError("That original message is no longer available in this conversation.");
+        return;
+      }
+      shouldStickToBottom.current = false;
+      pendingJumpId.current = messageId;
+      setMessages((current) => {
+        const merged = new Map(current.map((message) => [message.id, message]));
+        for (const message of earlier) merged.set(message.id, message);
+        return [...merged.values()].sort((left, right) => Number(left.server_seq) - Number(right.server_seq));
+      });
+      setHasOlderMessages(result.hasMore);
+    } catch (jumpError) {
+      setError(jumpError instanceof Error ? jumpError.message : "Unable to open the referenced message.");
+    } finally {
+      loadingOlderRef.current = false;
+      setLoadingOlder(false);
+    }
+  }, [chatId, highlightMessage, messages]);
+
   useLayoutEffect(() => {
     const container = messageListRef.current;
     if (!container) return;
+    if (pendingJumpId.current) {
+      const targetId = pendingJumpId.current;
+      pendingJumpId.current = null;
+      highlightMessage(targetId);
+      return;
+    }
     if (scrollAnchor.current) {
       const anchor = scrollAnchor.current;
       container.scrollTop = container.scrollHeight - anchor.height + anchor.top;
@@ -268,7 +349,7 @@ export function Conversation({
     } else if (shouldStickToBottom.current) {
       container.scrollTop = container.scrollHeight;
     }
-  }, [messages, loading, loadingOlder, messageSearch]);
+  }, [messages, loading, loadingOlder, messageSearch, highlightMessage]);
 
   const handleMessageListScroll = useCallback(() => {
     const container = messageListRef.current;
@@ -294,6 +375,9 @@ export function Conversation({
       void loadConversation(chatId, false);
       refreshInbox();
     });
+    for (const eventName of ["message.updated", "message.reactions", "message.pinned"]) {
+      source.addEventListener(eventName, () => void loadConversation(chatId, false));
+    }
     source.addEventListener("message.delivered", (event) => {
       const update = JSON.parse((event as MessageEvent<string>).data) as {
         userId: string;
@@ -879,14 +963,18 @@ export function Conversation({
 
   async function togglePin(message: DisplayMessage) {
     try {
-      const result = await api<{ pinned: boolean }>(
+      const result = await api<{ pinned: boolean; pinned_at: string | null; pinned_by: string | null }>(
         `/api/messages/${message.id}/pin`,
         { method: "POST" },
       );
       setMessages((current) =>
         current.map((item) =>
           item.id === message.id
-            ? { ...item, pinned_by_me: result.pinned }
+            ? {
+                ...item,
+                pinned_at: result.pinned_at,
+                pinned_by: result.pinned_by,
+              }
             : item,
         ),
       );
@@ -1061,6 +1149,7 @@ export function Conversation({
         loading={loading}
         error={error}
         onReply={setReplyTo}
+        onJumpToMessage={(messageId, serverSeq) => void jumpToMessage(messageId, serverSeq)}
         onReact={(message, emoji) => void reactTo(message, emoji)}
         onEdit={beginEdit}
         onDelete={(message, scope) => void deleteMessage(message, scope)}

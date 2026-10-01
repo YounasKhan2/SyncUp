@@ -4,14 +4,18 @@ import { useRef, useState } from 'react'
 import { VoicePreview, VoiceRecorder, type VoiceDraft } from './VoiceRecorder'
 import type { DisplayMessage, StagedAttachment } from '../../shared/types'
 import { insertAtSelection } from '../../shared/presentation'
+import { FullEmojiPicker } from '../../shared/components/FullEmojiPicker'
 
-const commonEmojis = [
-  ['😀', 'Grinning face'], ['😂', 'Face with tears of joy'], ['😊', 'Smiling face'], ['😍', 'Heart eyes'],
-  ['🥰', 'Smiling face with hearts'], ['😎', 'Smiling face with sunglasses'], ['🤔', 'Thinking face'], ['😭', 'Loudly crying face'],
-  ['👍', 'Thumbs up'], ['👎', 'Thumbs down'], ['👏', 'Clapping hands'], ['🙏', 'Folded hands'],
-  ['👋', 'Waving hand'], ['❤️', 'Red heart'], ['💚', 'Green heart'], ['🎉', 'Party popper'],
-  ['🔥', 'Fire'], ['✨', 'Sparkles'], ['✅', 'Check mark button'], ['💯', 'Hundred points'],
-] as const
+function replyPreviewText(message: DisplayMessage) {
+  if (message.deleted_at) return 'Message deleted'
+  if (message.text.trim()) return message.text
+  const attachment = message.attachments?.find((item) => !item.is_preview)
+  if (!attachment) return 'Message'
+  if (attachment.content_type.startsWith('image/')) return 'Photo'
+  if (attachment.content_type.startsWith('video/')) return 'Video'
+  if (attachment.content_type.startsWith('audio/')) return 'Voice message'
+  return attachment.filename || 'Attachment'
+}
 
 type MessageComposerProps = {
   draft: string
@@ -38,6 +42,7 @@ export function MessageComposer(props: MessageComposerProps) {
   const { draft, replyTo, editing, replyAuthor, attachments, uploading, submitting, chatTitle } = props
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const [emojiPickerOpen, setEmojiPickerOpen] = useState(false)
+  const replyPreview = replyTo ? replyPreviewText(replyTo) : ''
 
   function insertEmoji(emoji: string) {
     const textarea = textareaRef.current
@@ -55,7 +60,7 @@ export function MessageComposer(props: MessageComposerProps) {
 
   return (
     <form className="message-composer" onSubmit={props.onSubmit}>
-      {replyTo && <div className="composer-reply"><span>{editing ? 'Editing message' : `Replying to ${replyAuthor}: ${replyTo.text}`}</span><button type="button" onClick={props.onClearReply} aria-label={editing ? 'Cancel editing' : 'Cancel reply'}><X size={13} /></button></div>}
+      {replyTo && <div className="composer-reply"><span>{editing ? 'Editing message' : `Replying to ${replyAuthor}: ${replyPreview}`}</span><button type="button" onClick={props.onClearReply} aria-label={editing ? 'Cancel editing' : 'Cancel reply'}><X size={13} /></button></div>}
 
       {attachments.length > 0 && <div className="staged-attachments">
         {attachments.map((attachment) => <span key={attachment.id}>{attachment.filename}<button type="button" onClick={() => props.onRemoveAttachment(attachment.id)} aria-label={`Remove ${attachment.filename}`}><X size={12} /></button></span>)}
@@ -80,10 +85,8 @@ export function MessageComposer(props: MessageComposerProps) {
         <span className="composer-hint">Enter to send · Shift+Enter for a new line</span>
         <button type="submit" disabled={uploading || submitting || (!draft.trim() && attachments.length === 0)} aria-label="Send message"><Send size={14} /></button>
       </div>
-      {emojiPickerOpen && <div id="composer-emoji-picker" className="emoji-picker" role="group" aria-label="Choose an emoji" onKeyDown={(event) => {
-        if (event.key === 'Escape') setEmojiPickerOpen(false)
-      }}>
-        {commonEmojis.map(([emoji, label]) => <button type="button" key={label} aria-label={label} title={label} onClick={() => insertEmoji(emoji)}>{emoji}</button>)}
+      {emojiPickerOpen && <div id="composer-emoji-picker" className="emoji-picker-popover">
+        <FullEmojiPicker onSelect={insertEmoji} onClose={() => setEmojiPickerOpen(false)} />
       </div>}
     </form>
   )

@@ -871,13 +871,40 @@ test('encrypted requests, authorized chats, ordered idempotent delivery, and gro
   assert.ok(editedMessage.edited_at)
   assert.equal(await decryptMessage(editedMessage, nadia), 'Updated encrypted text')
 
+  response = await post(nadia, `/api/messages/${editableMessage.messageId}/reactions`, { emoji: '❤️' })
+  assert.equal(response.status, 200, await response.clone().text())
+  assert.equal((await response.json()).active, true)
+  response = await apiRequest(ava, `${chatPath}/messages?after_seq=${editableMessage.serverSeq - 1}&limit=10`)
+  let reactedMessage = (await response.json()).messages.find((message) => message.id === editableMessage.messageId)
+  assert.ok(reactedMessage.reactions.some((reaction) => reaction.user_id === nadia.id && reaction.emoji === '❤️'))
+  response = await post(nadia, `/api/messages/${editableMessage.messageId}/reactions`, { emoji: '❤️' })
+  assert.equal((await response.json()).active, false)
+
   response = await post(nadia, `/api/messages/${editableMessage.messageId}/pin`, {})
   assert.equal(response.status, 200)
-  assert.equal((await response.json()).pinned, true)
-  response = await apiRequest(nadia, `${chatPath}/messages?after_seq=${editableMessage.serverSeq - 1}&limit=10`)
-  assert.equal((await response.json()).messages.find((message) => message.id === editableMessage.messageId).pinned_by_me, true)
+  const pinResult = await response.json()
+  assert.equal(pinResult.pinned, true)
+  assert.equal(pinResult.pinned_by, nadia.id)
+  response = await apiRequest(ava, `${chatPath}/messages?after_seq=${editableMessage.serverSeq - 1}&limit=10`)
+  let pinnedMessage = (await response.json()).messages.find((message) => message.id === editableMessage.messageId)
+  assert.ok(pinnedMessage.pinned_at)
+  assert.equal(pinnedMessage.pinned_by, nadia.id)
   response = await post(nadia, `/api/messages/${editableMessage.messageId}/pin`, {})
   assert.equal((await response.json()).pinned, false)
+
+  const replyPayload = {
+    ...(await encryptMessage('Reply to the earlier message', chat.members)),
+    idempotencyKey: randomUUID(),
+    replyToId: editableMessage.messageId,
+  }
+  response = await post(nadia, `${chatPath}/messages`, replyPayload)
+  assert.equal(response.status, 201, await response.clone().text())
+  const replyMessage = await response.json()
+  response = await apiRequest(ava, `${chatPath}/messages?after_seq=${replyMessage.serverSeq - 1}&limit=10`)
+  const replyBody = (await response.json()).messages.find((message) => message.id === replyMessage.messageId)
+  assert.equal(replyBody.reply_context.id, editableMessage.messageId)
+  assert.equal(Number(replyBody.reply_context.server_seq), editableMessage.serverSeq)
+  assert.equal(await decryptMessage(replyBody.reply_context, ava), 'Updated encrypted text')
 
   response = await post(nadia, `/api/messages/${editableMessage.messageId}/delete`, { scope: 'me' })
   assert.equal(response.status, 200)

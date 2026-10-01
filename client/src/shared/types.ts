@@ -72,7 +72,9 @@ export type EncryptedChatMessage = {
   edited_at?: string | null
   deleted_at?: string | null
   hidden_by_me?: boolean
-  pinned_by_me?: boolean
+  pinned_at?: string | null
+  pinned_by?: string | null
+  reply_context?: EncryptedMessageReplyContext | null
   delivery_receipts?: string[]
   read_by?: string[]
   created_at: string
@@ -95,7 +97,23 @@ export type EncryptedChatMessage = {
   }[]
 }
 
-export type DisplayMessage = EncryptedChatMessage & { text: string; pending?: boolean; failed?: boolean }
+export type EncryptedMessageReplyContext = {
+  id: string
+  server_seq: string
+  sender_id: string
+  body_ciphertext: string
+  body_nonce: string
+  key_envelope: string | null
+  deleted_at: string | null
+  attachment_types: string[]
+}
+
+export type DisplayMessage = EncryptedChatMessage & {
+  text: string
+  pending?: boolean
+  failed?: boolean
+  reply_context?: (EncryptedMessageReplyContext & { text: string }) | null
+}
 
 export type CallRecord = {
   id: string

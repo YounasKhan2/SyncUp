@@ -31,7 +31,31 @@ messageRoutes.get('/chats/:id/messages', async (request: AuthenticatedRequest, r
               m.key_envelopes -> $2::text AS key_envelope,
               m.reply_to_id, m.edited_at, m.deleted_at, m.deleted_for, m.created_at,
               (state.hidden_at IS NOT NULL) AS hidden_by_me,
-              (state.pinned_at IS NOT NULL) AS pinned_by_me,
+              m.pinned_at, m.pinned_by,
+              (
+                SELECT jsonb_build_object(
+                  'id', reply.id,
+                  'server_seq', reply.server_seq,
+                  'sender_id', reply.sender_id,
+                  'body_ciphertext', reply.body_ciphertext,
+                  'body_nonce', reply.body_nonce,
+                  'key_envelope', reply.key_envelopes -> $2::text,
+                  'deleted_at', reply.deleted_at,
+                  'attachment_types', COALESCE((
+                    SELECT jsonb_agg(DISTINCT reply_attachment.content_type)
+                    FROM message_attachments reply_map
+                    JOIN attachments reply_attachment ON reply_attachment.id = reply_map.attachment_id
+                    WHERE reply_map.message_id = reply.id AND reply_attachment.status = 'ready'
+                  ), '[]'::jsonb)
+                )
+                FROM messages reply
+                WHERE reply.id = m.reply_to_id AND reply.chat_id = m.chat_id
+                  AND NOT EXISTS (
+                    SELECT 1 FROM message_user_states reply_state
+                    WHERE reply_state.message_id = reply.id
+                      AND reply_state.user_id = $2 AND reply_state.hidden_at IS NOT NULL
+                  )
+              ) AS reply_context,
               CASE WHEN m.sender_id = $2::uuid THEN COALESCE((
                 SELECT jsonb_agg(DISTINCT delivery_device.user_id)
                 FROM message_device_deliveries delivery
@@ -106,7 +130,7 @@ messageRoutes.get('/chats/:id/messages', async (request: AuthenticatedRequest, r
              AND mr.to_user = $2::uuid AND mr.state IN ('pending', 'ignored')
          )
          AND state.hidden_at IS NULL
-       GROUP BY m.id, state.hidden_at, state.pinned_at
+       GROUP BY m.id, state.hidden_at
        ORDER BY CASE WHEN $3::bigint IS NOT NULL THEN m.server_seq END ASC,
                 CASE WHEN $3::bigint IS NULL THEN m.server_seq END DESC
        LIMIT $4 + 1`,
@@ -438,32 +462,34 @@ messageRoutes.post('/messages/:id/pin', async (request: AuthenticatedRequest, re
     return
   }
   try {
-    const access = await pool.query<{ chat_id: string }>(
-      `SELECT m.chat_id FROM messages m JOIN chat_members cm ON cm.chat_id = m.chat_id
-       WHERE m.id = $1 AND cm.user_id = $2 AND cm.left_at IS NULL AND m.deleted_at IS NULL`,
+    const result = await pool.query<{ chat_id: string; pinned_at: Date | null; pinned_by: string | null }>(
+      `UPDATE messages m
+       SET pinned_at = CASE WHEN m.pinned_at IS NULL THEN now() ELSE NULL END,
+           pinned_by = CASE WHEN m.pinned_at IS NULL THEN $2 ELSE NULL END
+       WHERE m.id = $1 AND m.deleted_at IS NULL
+         AND EXISTS (
+           SELECT 1 FROM chat_members cm
+           WHERE cm.chat_id = m.chat_id AND cm.user_id = $2 AND cm.left_at IS NULL
+         )
+         AND NOT EXISTS (
+           SELECT 1 FROM message_requests mr
+           WHERE mr.chat_id = m.chat_id AND mr.to_user = $2
+             AND mr.state IN ('pending', 'ignored')
+         )
+       RETURNING m.chat_id, m.pinned_at, m.pinned_by`,
       [messageId.data, request.auth!.userId],
     )
-    if (!access.rows[0]) {
+    const pin = result.rows[0]
+    if (!pin) {
       response.status(404).json({ error: { code: 'not_found', message: 'Message not found.' } })
       return
     }
-    const removed = await pool.query(
-      `UPDATE message_user_states SET pinned_at = NULL
-       WHERE message_id = $1 AND user_id = $2 AND pinned_at IS NOT NULL
-       RETURNING message_id`,
-      [messageId.data, request.auth!.userId],
+    await pool.query(
+      `SELECT pg_notify('syncup_chat_messages',
+        json_build_object('chatId', $1::uuid, 'messageId', $2::uuid, 'eventType', 'message.pinned')::text)`,
+      [pin.chat_id, messageId.data],
     )
-    const pinned = removed.rowCount === 0
-    if (pinned) {
-      await pool.query(
-        `INSERT INTO message_user_states (message_id, user_id, pinned_at)
-         VALUES ($1, $2, now())
-         ON CONFLICT (message_id, user_id)
-         DO UPDATE SET pinned_at = now()`,
-        [messageId.data, request.auth!.userId],
-      )
-    }
-    response.json({ pinned })
+    response.json({ pinned: pin.pinned_at !== null, pinned_at: pin.pinned_at, pinned_by: pin.pinned_by })
   } catch (error) {
     next(error)
   }
@@ -531,32 +557,45 @@ messageRoutes.post('/messages/:id/reactions', async (request: AuthenticatedReque
     response.status(400).json({ error: { code: 'validation', message: 'Choose a valid reaction.' } })
     return
   }
+  const client = await pool.connect()
   try {
-    const access = await pool.query<{ chat_id: string }>(
+    await client.query('BEGIN')
+    const access = await client.query<{ chat_id: string }>(
       `SELECT m.chat_id FROM messages m JOIN chat_members cm ON cm.chat_id = m.chat_id
        WHERE m.id = $1 AND cm.user_id = $2 AND cm.left_at IS NULL
-         AND NOT EXISTS (SELECT 1 FROM message_requests mr WHERE mr.chat_id = m.chat_id
-           AND mr.to_user = $2 AND mr.state IN ('pending', 'ignored'))`,
+        AND NOT EXISTS (SELECT 1 FROM message_requests mr WHERE mr.chat_id = m.chat_id
+          AND mr.to_user = $2 AND mr.state IN ('pending', 'ignored'))
+       FOR UPDATE OF m`,
       [messageId.data, request.auth!.userId],
     )
     if (!access.rows[0]) {
+      await client.query('ROLLBACK')
       response.status(404).json({ error: { code: 'not_found', message: 'Message not found.' } })
       return
     }
-    const existing = await pool.query(
+    const existing = await client.query(
       `DELETE FROM message_reactions WHERE message_id = $1 AND user_id = $2 AND emoji = $3
        RETURNING message_id`,
       [messageId.data, request.auth!.userId, input.data.emoji],
     )
     const active = existing.rowCount === 0
     if (active) {
-      await pool.query(
-        `INSERT INTO message_reactions (message_id, user_id, emoji) VALUES ($1, $2, $3)`,
-        [messageId.data, request.auth!.userId, input.data.emoji],
+      await client.query(
+       `INSERT INTO message_reactions (message_id, user_id, emoji) VALUES ($1, $2, $3)`,
+       [messageId.data, request.auth!.userId, input.data.emoji],
       )
     }
+    await client.query(
+      `SELECT pg_notify('syncup_chat_messages',
+       json_build_object('chatId', $1::uuid, 'messageId', $2::uuid, 'eventType', 'message.reactions')::text)`,
+      [access.rows[0].chat_id, messageId.data],
+    )
+    await client.query('COMMIT')
     response.json({ active })
   } catch (error) {
+    await client.query('ROLLBACK')
     next(error)
+  } finally {
+    client.release()
   }
 })

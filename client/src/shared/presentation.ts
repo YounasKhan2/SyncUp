@@ -10,6 +10,10 @@ export function countUnreadConversations(chats: readonly { unread_count: number 
   return chats.reduce((count, chat) => count + (Number(chat.unread_count) > 0 ? 1 : 0), 0)
 }
 
+export function sortChronologically<T extends { created_at: string }>(items: readonly T[]) {
+  return [...items].sort((left, right) => Date.parse(left.created_at) - Date.parse(right.created_at))
+}
+
 export function splitMessageLinks(text: string): TextLinkPart[] {
   const parts: TextLinkPart[] = []
   let lastIndex = 0
