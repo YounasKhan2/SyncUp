@@ -38,6 +38,7 @@ import type { VoiceDraft } from "./VoiceRecorder";
 import { mediaV2UploadManager } from "../media/v2/runtime";
 import type { MediaV2UploadSnapshot } from "../media/v2/uploadManager";
 import { createGroupCallKey } from "../calls/groupCallCrypto";
+import { Avatar } from "../../shared/components/Avatar";
 export function Conversation({
   user,
   chatId,
@@ -884,9 +885,7 @@ export function Conversation({
             chat or create a group with people you trust.
           </p>
           <div className="welcome-profile">
-            <span className="avatar avatar-card">
-              {user.display_name.slice(0, 1).toUpperCase()}
-            </span>
+            <Avatar name={user.display_name} src={user.avatar_url} className="avatar-card" />
             <div>
               <span className="small strong">{user.display_name}</span>
               <span className="micro muted">@{user.username}</span>
@@ -948,6 +947,7 @@ export function Conversation({
     >
       <ConversationHeader
         title={title}
+        avatarUrl={chat?.kind === "direct" ? peer?.avatar_url : undefined}
         isGroup={chat?.kind === "group"}
         subtitle={
           typingSubtitle ??

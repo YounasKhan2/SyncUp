@@ -294,6 +294,7 @@ chatRoutes.get('/inbox', async (request: AuthenticatedRequest, response, next) =
               cm.last_read_seq,
               CASE WHEN c.kind = 'direct' THEN peer.display_name ELSE c.title END AS display_title,
               CASE WHEN c.kind = 'direct' THEN peer.username ELSE NULL END AS peer_username,
+              CASE WHEN c.kind = 'direct' THEN peer.avatar_url ELSE NULL END AS peer_avatar_url,
               last_message.id AS last_message_id,
               last_message.sender_id AS last_sender_id,
               last_message.body_ciphertext AS last_body_ciphertext,
@@ -360,7 +361,7 @@ chatRoutes.get('/chats/:id', async (request: AuthenticatedRequest, response, nex
               COALESCE(
                 jsonb_agg(jsonb_build_object(
                   'id', u.id, 'username', u.username, 'displayName', u.display_name,
-                  'publicKey', u.encryption_public_key, 'role', cm.role
+                  'publicKey', u.encryption_public_key, 'role', cm.role, 'avatar_url', u.avatar_url
                 ) ORDER BY u.display_name) FILTER (WHERE u.id IS NOT NULL),
                 '[]'::jsonb
               ) AS members

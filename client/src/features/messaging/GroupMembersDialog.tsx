@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { LogOut, UserPlus, X } from 'lucide-react'
 import { api } from '../../shared/api'
 import type { ChatMember, DiscoveredUser } from '../../shared/types'
+import { Avatar } from '../../shared/components/Avatar'
 
 export function GroupMembersDialog({ chatId, members, currentUserId, onClose, onLeave }: {
   chatId: string
@@ -88,7 +89,7 @@ export function GroupMembersDialog({ chatId, members, currentUserId, onClose, on
         <div className="group-member-list">
           {members.map((member) => (
             <div className="group-member-row" key={member.id}>
-              <span className="avatar">{member.displayName.slice(0, 1).toUpperCase()}</span>
+              <Avatar name={member.displayName} src={member.avatar_url} />
               <span><strong>{member.displayName}{member.id === currentUserId ? ' (you)' : ''}</strong><small>@{member.username}</small></span>
               {member.role === 'owner' && <small className="group-owner-label">Owner</small>}
             </div>
@@ -109,6 +110,7 @@ export function GroupMembersDialog({ chatId, members, currentUserId, onClose, on
             {searching && <p role="status">Searching usernames…</p>}
             {!searching && matches.map((match) => (
               <button className={`username-match${selected?.id === match.id ? ' is-selected' : ''}`} key={match.id} type="button" onClick={() => { setSelected(match); setUsername(match.username) }}>
+                <Avatar name={match.display_name} src={match.avatar_url} />
                 <span><strong>{match.display_name}</strong><small>@{match.username}</small></span>
               </button>
             ))}

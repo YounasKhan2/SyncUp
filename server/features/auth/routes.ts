@@ -1,9 +1,13 @@
 import { randomBytes } from 'node:crypto'
+import express from 'express'
 import { Router } from 'express'
 import bcrypt from 'bcryptjs'
 import { rateLimit } from 'express-rate-limit'
 import { v7 as uuidv7 } from 'uuid'
+import { InputFile } from 'node-appwrite/file'
+import { z } from 'zod'
 import { pool } from '../../db.js'
+import { createAppwriteStorage } from '../../shared/appwrite.js'
 import { requireAuth } from './middleware.js'
 import { authSecret, accessCookie, refreshCookie, refreshLifetimeMs, hashToken, createAccessToken, setAuthCookies, createSession, isProduction } from './session.js'
 import { initializeKeysSchema, profileSchema, signInSchema, signUpSchema } from './schemas.js'
@@ -17,6 +21,29 @@ const authLimiter = rateLimit({
   legacyHeaders: false,
   message: { error: { code: 'rate_limited', message: 'Too many authentication attempts.' } },
 })
+const avatarLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  limit: 20,
+  standardHeaders: 'draft-8',
+  legacyHeaders: false,
+  message: { error: { code: 'rate_limited', message: 'Profile photos can only be changed 20 times per hour.' } },
+})
+
+const avatarTypes = new Set(['image/jpeg', 'image/png', 'image/webp'])
+const maxAvatarBytes = 2 * 1024 * 1024
+
+function isAvatarContent(bytes: Buffer, contentType: string) {
+  if (contentType === 'image/jpeg') return bytes.length >= 3 && bytes[0] === 0xff && bytes[1] === 0xd8 && bytes[2] === 0xff
+  if (contentType === 'image/png') return bytes.length >= 8 && bytes.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]))
+  return contentType === 'image/webp'
+    && bytes.length >= 12
+    && bytes.toString('ascii', 0, 4) === 'RIFF'
+    && bytes.toString('ascii', 8, 12) === 'WEBP'
+}
+
+function profileAvatarUrl(userId: string, fileId: string) {
+  return `/api/auth/avatars/${userId}?v=${encodeURIComponent(fileId)}`
+}
 
 authRouter.post('/sign-up', authLimiter, async (request, response, next) => {
   const parsed = signUpSchema.safeParse(request.body)
@@ -258,6 +285,143 @@ authRouter.get('/me', requireAuth, async (request: AuthenticatedRequest, respons
       return
     }
     response.json({ user })
+  } catch (error) {
+    next(error)
+  }
+})
+
+authRouter.put(
+  '/me/avatar',
+  requireAuth,
+  avatarLimiter,
+  express.raw({ type: ['image/jpeg', 'image/png', 'image/webp'], limit: maxAvatarBytes }),
+  async (request: AuthenticatedRequest, response, next) => {
+    const contentType = request.get('content-type')?.split(';', 1)[0]?.trim().toLowerCase() ?? ''
+    if (!avatarTypes.has(contentType) || !Buffer.isBuffer(request.body)
+      || request.body.length === 0 || !isAvatarContent(request.body, contentType)) {
+      response.status(400).json({ error: { code: 'validation', message: 'Upload a valid JPEG, PNG, or WebP image up to 2 MB.' } })
+      return
+    }
+
+    let storage: ReturnType<typeof createAppwriteStorage>
+    try {
+      storage = createAppwriteStorage()
+    } catch {
+      response.status(503).json({ error: { code: 'service_unavailable', message: 'Profile photo storage is not configured.' } })
+      return
+    }
+
+    const fileId = uuidv7()
+    try {
+      const current = await pool.query<{ avatar_file_id: string | null }>(
+        `SELECT avatar_file_id FROM users WHERE id = $1 AND deleted_at IS NULL`,
+        [request.auth!.userId],
+      )
+      if (!current.rows[0]) {
+        response.status(401).json({ error: { code: 'unauthorized', message: 'Account unavailable.' } })
+        return
+      }
+
+      await storage.storage.createFile({
+        bucketId: storage.bucketId,
+        fileId,
+        file: InputFile.fromBuffer(request.body, `${fileId}.bin`),
+        permissions: [],
+      })
+      try {
+        const avatarUrl = profileAvatarUrl(request.auth!.userId, fileId)
+        const updated = await pool.query(
+          `UPDATE users
+           SET avatar_file_id = $1, avatar_content_type = $2, avatar_url = $3
+           WHERE id = $4 AND deleted_at IS NULL
+           RETURNING id, email, username, display_name, avatar_url, about`,
+          [fileId, contentType, avatarUrl, request.auth!.userId],
+        )
+        if (!updated.rows[0]) throw new Error('Account unavailable while saving the profile photo.')
+        if (current.rows[0].avatar_file_id) {
+          try {
+            await storage.storage.deleteFile({ bucketId: storage.bucketId, fileId: current.rows[0].avatar_file_id })
+          } catch (cleanupError) {
+            console.error('Unable to remove replaced profile avatar from Appwrite', cleanupError)
+          }
+        }
+        response.json({ user: updated.rows[0] })
+      } catch (saveError) {
+        try {
+          await storage.storage.deleteFile({ bucketId: storage.bucketId, fileId })
+        } catch (cleanupError) {
+          console.error('Unable to remove unreferenced profile avatar from Appwrite', cleanupError)
+        }
+        throw saveError
+      }
+    } catch (error) {
+      next(error)
+    }
+  },
+)
+
+authRouter.delete('/me/avatar', requireAuth, avatarLimiter, async (request: AuthenticatedRequest, response, next) => {
+  try {
+    const current = await pool.query<{ avatar_file_id: string | null }>(
+      `SELECT avatar_file_id FROM users WHERE id = $1 AND deleted_at IS NULL`,
+      [request.auth!.userId],
+    )
+    if (!current.rows[0]) {
+      response.status(401).json({ error: { code: 'unauthorized', message: 'Account unavailable.' } })
+      return
+    }
+    const updated = await pool.query(
+      `UPDATE users
+       SET avatar_file_id = NULL, avatar_content_type = NULL, avatar_url = NULL
+       WHERE id = $1 AND deleted_at IS NULL
+       RETURNING id, email, username, display_name, avatar_url, about`,
+      [request.auth!.userId],
+    )
+    if (current.rows[0].avatar_file_id) {
+      try {
+        const storage = createAppwriteStorage()
+        await storage.storage.deleteFile({ bucketId: storage.bucketId, fileId: current.rows[0].avatar_file_id })
+      } catch (cleanupError) {
+        console.error('Unable to remove deleted profile avatar from Appwrite', cleanupError)
+      }
+    }
+    response.json({ user: updated.rows[0] })
+  } catch (error) {
+    next(error)
+  }
+})
+
+authRouter.get('/avatars/:id', requireAuth, async (request: AuthenticatedRequest, response, next) => {
+  const userId = z.uuid().safeParse(request.params.id)
+  const fileId = z.uuid().safeParse(request.query.v)
+  if (!userId.success || !fileId.success) {
+    response.status(404).end()
+    return
+  }
+  try {
+    const avatar = await pool.query<{ avatar_file_id: string; avatar_content_type: string }>(
+      `SELECT avatar_file_id, avatar_content_type
+       FROM users WHERE id = $1 AND deleted_at IS NULL AND avatar_file_id = $2`,
+      [userId.data, fileId.data],
+    )
+    if (!avatar.rows[0]) {
+      response.status(404).end()
+      return
+    }
+    const storage = createAppwriteStorage()
+    const image = await storage.storage.getFileDownload({
+      bucketId: storage.bucketId,
+      fileId: avatar.rows[0].avatar_file_id,
+    })
+    response
+      .set({
+        'Content-Type': avatar.rows[0].avatar_content_type,
+        'Content-Length': String(image.byteLength),
+        'Cache-Control': 'private, max-age=300',
+        'X-Content-Type-Options': 'nosniff',
+        'Content-Security-Policy': "default-src 'none'; sandbox",
+      })
+      .send(Buffer.from(image))
   } catch (error) {
     next(error)
   }

@@ -15,6 +15,7 @@ export type User = {
   email: string
   username: string
   display_name: string
+  avatar_url?: string | null
   about?: string
 }
 
@@ -37,6 +38,7 @@ export type Chat = {
   title: string | null
   display_title: string
   peer_username: string | null
+  peer_avatar_url?: string | null
   last_seq: string
   last_read_seq: string
   unread_count: number
@@ -53,6 +55,7 @@ export type ChatMember = PublicMember & {
   username: string
   displayName: string
   role: string
+  avatar_url?: string | null
 }
 
 export type EncryptedChatMessage = {
@@ -105,6 +108,7 @@ export type CallRecord = {
   caller_name?: string
   callee_name?: string
   caller_username?: string
+  other_avatar_url?: string | null
   is_group?: boolean
   group_title?: string
   participant_count?: number
@@ -116,6 +120,7 @@ export type IncomingCall = {
   call_type: 'audio' | 'video'
   caller_name: string
   caller_username: string
+  caller_avatar_url?: string | null
   is_group?: boolean
   group_title?: string
 }

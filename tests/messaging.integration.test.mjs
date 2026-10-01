@@ -303,6 +303,54 @@ test('encrypted requests, authorized chats, ordered idempotent delivery, and gro
   const nadia = await createAccount('Nadia', 'nadia')
   const chris = await createAccount('Chris', 'chris')
 
+  const invalidAvatar = await apiRequest(ava, '/api/auth/me/avatar', {
+    method: 'PUT',
+    headers: { 'content-type': 'image/png' },
+    body: Buffer.from('not an image'),
+  })
+  assert.equal(invalidAvatar.status, 400)
+
+  const avatarBytes = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+a8ioAAAAASUVORK5CYII=', 'base64')
+  const uploadedAvatar = await apiRequest(ava, '/api/auth/me/avatar', {
+    method: 'PUT',
+    headers: { 'content-type': 'image/png' },
+    body: avatarBytes,
+  })
+  assert.equal(uploadedAvatar.status, 200, await uploadedAvatar.clone().text())
+  const uploadedProfile = (await uploadedAvatar.json()).user
+  assert.match(uploadedProfile.avatar_url, new RegExp(`^/api/auth/avatars/${ava.id}\\?v=`))
+
+  const avatarResponse = await apiRequest(nadia, uploadedProfile.avatar_url)
+  assert.equal(avatarResponse.status, 200)
+  assert.equal(avatarResponse.headers.get('content-type'), 'image/png')
+  assert.deepEqual(Buffer.from(await avatarResponse.arrayBuffer()), avatarBytes)
+  const unauthenticatedAvatar = await apiRequest(null, uploadedProfile.avatar_url)
+  assert.equal(unauthenticatedAvatar.status, 401)
+
+  const savedProfile = await apiRequest(ava, '/api/auth/me', {
+    method: 'PATCH',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ displayName: ava.displayName, username: ava.username, about: '' }),
+  })
+  assert.equal(savedProfile.status, 200)
+  assert.equal((await savedProfile.json()).user.avatar_url, uploadedProfile.avatar_url)
+
+  const replacementAvatar = await apiRequest(ava, '/api/auth/me/avatar', {
+    method: 'PUT',
+    headers: { 'content-type': 'image/png' },
+    body: avatarBytes,
+  })
+  assert.equal(replacementAvatar.status, 200, await replacementAvatar.clone().text())
+  const replacementProfile = (await replacementAvatar.json()).user
+  assert.notEqual(replacementProfile.avatar_url, uploadedProfile.avatar_url)
+  assert.equal((await apiRequest(nadia, uploadedProfile.avatar_url)).status, 404)
+
+  const removedAvatar = await apiRequest(ava, '/api/auth/me/avatar', { method: 'DELETE' })
+  assert.equal(removedAvatar.status, 200, await removedAvatar.clone().text())
+  assert.equal((await removedAvatar.json()).user.avatar_url, null)
+  const missingAvatar = await apiRequest(nadia, replacementProfile.avatar_url)
+  assert.equal(missingAvatar.status, 404)
+
   let response = await apiRequest(ava, `/api/users?username=${encodeURIComponent(nadia.username)}`)
   assert.equal(response.status, 200)
   const target = (await response.json()).users[0]

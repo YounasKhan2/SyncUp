@@ -1,6 +1,7 @@
 import { ArrowUpRight, Clock3, Plus, Search } from 'lucide-react'
 import type { CallRecord, Chat, IncomingRequest } from '../../shared/types'
 import { ChatRow } from './ChatRow'
+import { Avatar } from '../../shared/components/Avatar'
 
 type InboxPaneProps = {
   showCalls: boolean
@@ -61,7 +62,7 @@ export function InboxPane({
             ? <div className="list-empty"><div className="empty-symbol"><Clock3 size={18} aria-hidden="true" /></div><p className="empty-title">No calls yet</p><p className="empty-copy">Audio and video calls with your contacts will appear here.</p></div>
             : <div className="call-history-list">{callHistory.map((call) => (
               <button className="call-history-item" type="button" key={call.id} onClick={() => onSelectCall(call.chat_id)}>
-                <span className="avatar">{(call.group_title ?? call.other_name ?? '').slice(0, 1).toUpperCase()}</span>
+                <Avatar name={call.group_title ?? call.other_name ?? 'Call'} src={call.other_avatar_url} />
                 <span className="chat-row-copy"><strong>{call.group_title ?? call.other_name ?? 'Contact'}</strong><small>{call.status === 'declined' ? 'Declined' : call.status === 'ended' ? 'Completed' : call.end_reason ?? call.status} · {call.is_group ? 'Group ' : ''}{call.call_type === 'video' ? 'Video' : 'Audio'}</small></span>
                 <time>{new Date(call.created_at).toLocaleDateString()}</time>
               </button>
@@ -70,7 +71,7 @@ export function InboxPane({
           <div className="request-list-inline">
             {requests.length === 0 && <p>No message requests</p>}
             {requests.map((item) => <button className="chat-list-item" type="button" key={item.id} onClick={onSelectRequest}>
-              <span className="avatar">{item.display_name.slice(0, 1).toUpperCase()}</span><span className="chat-row-copy"><strong>{item.display_name}</strong><small>Message request · @{item.username}</small></span><span className="unread-pill">New</span>
+              <Avatar name={item.display_name} src={item.avatar_url} /><span className="chat-row-copy"><strong>{item.display_name}</strong><small>Message request · @{item.username}</small></span><span className="unread-pill">New</span>
             </button>)}
           </div>
         ) : visibleChats.length === 0 ? (

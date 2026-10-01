@@ -112,7 +112,7 @@ callsRouter.get('/calls/incoming', async (request: AuthenticatedRequest, respons
     )
     const result = await pool.query(
       `SELECT c.id, c.chat_id, c.call_type, c.created_at, caller.display_name AS caller_name,
-              caller.username AS caller_username
+              caller.username AS caller_username, caller.avatar_url AS caller_avatar_url
        FROM calls c
        JOIN users caller ON caller.id = c.caller_id
        JOIN chat_members cm ON cm.chat_id = c.chat_id AND cm.user_id = c.callee_id AND cm.left_at IS NULL
@@ -137,7 +137,8 @@ callsRouter.get('/calls', async (request: AuthenticatedRequest, response, next) 
     const result = await pool.query(
       `SELECT c.id, c.chat_id, c.call_type, c.status, c.end_reason,
               c.caller_id, c.callee_id, c.created_at, c.accepted_at, c.ended_at,
-              other.display_name AS other_name, other.username AS other_username
+              other.display_name AS other_name, other.username AS other_username,
+              other.avatar_url AS other_avatar_url
        FROM calls c
        JOIN users other ON other.id = CASE WHEN c.caller_id = $1 THEN c.callee_id ELSE c.caller_id END
        WHERE (c.caller_id = $1 OR c.callee_id = $1)

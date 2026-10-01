@@ -5,6 +5,7 @@ import { listAllDrafts, listPendingMessages, removePendingMessage, savePendingMe
 import type { PendingMessage } from '../messaging/outbox'
 import type { ActiveCall, CallRecord, Chat, IncomingCall, IncomingRequest, User } from '../../shared/types'
 import { unwrapMediaKey } from '../auth/crypto/crypto'
+import { Avatar } from '../../shared/components/Avatar'
 import { AccountPanel } from '../account/AccountPanel'
 import { NewConversation } from '../messaging/NewConversation'
 import { RequestsPanel } from '../messaging/RequestsPanel'
@@ -376,7 +377,7 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
       />}
       {showRequests && <RequestsPanel requests={requests} onAccept={(item) => void acceptRequest(item)} onIgnore={(item) => void ignoreRequest(item)} onClose={() => setShowRequests(false)} />}
       {incomingCall && !activeCall && <section className="incoming-call-banner" aria-label="Incoming call">
-        <span className="avatar">{(incomingCall.group_title ?? incomingCall.caller_name).slice(0, 1).toUpperCase()}</span>
+        <Avatar name={incomingCall.group_title ?? incomingCall.caller_name} src={incomingCall.is_group ? undefined : incomingCall.caller_avatar_url} />
         <div><strong>{incomingCall.group_title ?? incomingCall.caller_name}</strong><small>{incomingCall.is_group ? `${incomingCall.caller_name} is calling` : `Incoming ${incomingCall.call_type} call`}</small></div>
         <button type="button" className="answer-call-button" onClick={() => void acceptIncomingCall()}>Answer</button>
         <button type="button" className="decline-call-button" onClick={() => void declineIncomingCall()}>Decline</button>

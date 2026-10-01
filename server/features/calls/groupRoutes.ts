@@ -133,6 +133,7 @@ groupCallsRouter.get('/group-calls/incoming', async (request: AuthenticatedReque
     const result = await pool.query(
       `SELECT c.id, c.chat_id, c.call_type, c.created_at, c.started_by AS caller_id,
               g.title AS group_title, caller.display_name AS caller_name,
+              caller.avatar_url AS caller_avatar_url,
               caller.username AS caller_username, true AS is_group
        FROM group_call_participants p
        JOIN group_calls c ON c.id = p.call_id

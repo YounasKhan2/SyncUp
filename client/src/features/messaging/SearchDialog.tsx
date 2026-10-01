@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
-import { MessageSquare, Search, UserRound, X } from 'lucide-react'
+import { Search, X } from 'lucide-react'
+import { Avatar } from '../../shared/components/Avatar'
 import { api } from '../../shared/api'
 
 type SearchResults = {
-  people: { id: string; username: string; display_name: string }[]
-  chats: { id: string; kind: 'direct' | 'group'; display_title: string; peer_username: string | null }[]
+  people: { id: string; username: string; display_name: string; avatar_url: string | null }[]
+  chats: { id: string; kind: 'direct' | 'group'; display_title: string; peer_username: string | null; peer_avatar_url?: string | null }[]
   privacy: string
 }
 
@@ -78,7 +79,7 @@ export function SearchDialog({ onClose, onSelectChat, onSelectPerson }: {
             <p className="search-section-label">PEOPLE</p>
             {results.people.map((person) => (
               <button className="search-result" type="button" key={person.id} onClick={() => onSelectPerson(person.username)}>
-                <UserRound size={15} aria-hidden="true" />
+                <Avatar name={person.display_name} src={person.avatar_url} />
                 <span><strong>{person.display_name}</strong><small>@{person.username}</small></span>
               </button>
             ))}
@@ -87,7 +88,7 @@ export function SearchDialog({ onClose, onSelectChat, onSelectPerson }: {
             <p className="search-section-label">CHATS</p>
             {results.chats.map((chat) => (
               <button className="search-result" type="button" key={chat.id} onClick={() => onSelectChat(chat.id)}>
-                <MessageSquare size={15} aria-hidden="true" />
+                <Avatar name={chat.display_title} src={chat.peer_avatar_url} />
                 <span><strong>{chat.display_title}</strong><small>{chat.kind === 'group' ? 'Group' : `@${chat.peer_username}`}</small></span>
               </button>
             ))}

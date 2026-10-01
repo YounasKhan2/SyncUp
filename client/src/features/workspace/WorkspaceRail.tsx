@@ -1,6 +1,7 @@
 import { MessageSquare, Phone } from 'lucide-react'
 import { BrandMark } from '../../shared/components/BrandMark'
 import type { User } from '../../shared/types'
+import { Avatar } from '../../shared/components/Avatar'
 
 type WorkspaceRailProps = {
   user: User
@@ -22,7 +23,7 @@ export function WorkspaceRail({ user, showCalls, onShowChats, onShowCalls, onOpe
       </button>
       <div className="rail-spacer" />
       <button className="profile-trigger" type="button" onClick={onOpenAccount} aria-label="Open profile and settings">
-        <span className="avatar avatar-you">{user.display_name.slice(0, 1).toUpperCase()}</span>
+        <Avatar name={user.display_name} src={user.avatar_url} className="avatar-you" />
       </button>
     </aside>
   )

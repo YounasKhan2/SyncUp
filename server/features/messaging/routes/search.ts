@@ -34,7 +34,8 @@ searchRoutes.get('/search', searchLimiter, async (request: AuthenticatedRequest,
       pool.query(
         `SELECT c.id, c.kind, c.title,
                 CASE WHEN c.kind = 'direct' THEN peer.display_name ELSE c.title END AS display_title,
-                CASE WHEN c.kind = 'direct' THEN peer.username ELSE NULL END AS peer_username
+                CASE WHEN c.kind = 'direct' THEN peer.username ELSE NULL END AS peer_username,
+                CASE WHEN c.kind = 'direct' THEN peer.avatar_url ELSE NULL END AS peer_avatar_url
          FROM chat_members me
          JOIN chats c ON c.id = me.chat_id
          LEFT JOIN users peer ON c.kind = 'direct'

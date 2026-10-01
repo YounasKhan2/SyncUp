@@ -1,7 +1,9 @@
 import { ArrowLeft, Phone, Search, Users, Video } from 'lucide-react'
+import { Avatar } from '../../shared/components/Avatar'
 
 type ConversationHeaderProps = {
   title: string
+  avatarUrl?: string | null
   subtitle: string
   isGroup: boolean
   callStarting: boolean
@@ -12,12 +14,12 @@ type ConversationHeaderProps = {
   onStartCall: (type: 'audio' | 'video') => void
 }
 
-export function ConversationHeader({ title, subtitle, isGroup, callStarting, online, onBack, onManageGroup, onSearchMessages, onStartCall }: ConversationHeaderProps) {
+export function ConversationHeader({ title, avatarUrl, subtitle, isGroup, callStarting, online, onBack, onManageGroup, onSearchMessages, onStartCall }: ConversationHeaderProps) {
   return (
     <header className="conversation-header">
       <div className="chat-title-group">
         <button className="mobile-back" type="button" aria-label="Back to chat list" onClick={onBack}><ArrowLeft size={16} aria-hidden="true" /></button>
-        <span className="avatar chat-avatar">{title.slice(0, 1).toUpperCase()}</span>
+        <Avatar name={title} src={avatarUrl} className="chat-avatar" />
         <div><div className="conversation-heading">{title}</div><div className="conversation-subheading">{subtitle}</div></div>
       </div>
       <div className="conversation-header-actions">

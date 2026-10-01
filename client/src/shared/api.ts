@@ -41,11 +41,11 @@ export async function api<T>(path: string, options: RequestInit = {}): Promise<T
   return response.json() as Promise<T>
 }
 
-export async function apiUpload(path: string, body: BodyInit): Promise<void> {
+export async function apiUpload(path: string, body: BodyInit, contentType = 'application/octet-stream'): Promise<void> {
   const makeRequest = () => fetch(path, {
     method: 'PUT',
     credentials: 'same-origin',
-    headers: { 'Content-Type': 'application/octet-stream' },
+    headers: { 'Content-Type': contentType },
     body,
   })
   const response = await refreshAfterUnauthorized(path, await makeRequest(), makeRequest)

@@ -2,6 +2,7 @@ import { Copy, Flag, Heart, Mic, Pin, Phone, ThumbsUp, Trash2, Video } from 'luc
 import { useMemo, useState } from 'react'
 import type { RefObject } from 'react'
 import type { CallRecord, ChatMember, DisplayMessage } from '../../shared/types'
+import { Avatar } from '../../shared/components/Avatar'
 import type { MediaV2UploadSnapshot } from '../media/v2/uploadManager'
 import { MessageAttachment } from './MessageAttachment'
 import { MediaViewer, type MediaViewerItem } from '../media/MediaViewer'
@@ -59,7 +60,7 @@ export function MessageList({ messages, calls, members, currentUserId, loading, 
           const parent = message.reply_to_id ? messagesById.get(message.reply_to_id) : undefined
           return (
             <article className={`message-row${mine ? ' message-mine' : ''}`} key={message.id}>
-              {!mine && <span className="avatar message-avatar">{sender?.displayName.slice(0, 1).toUpperCase() ?? '?'}</span>}
+              {!mine && <Avatar name={sender?.displayName ?? 'Member'} src={sender?.avatar_url} className="message-avatar" />}
               <div className="message-content">
                 {!mine && <div className="message-meta"><strong>{sender?.displayName ?? 'Member'}</strong><span>@{sender?.username}</span></div>}
                 <div className="message-bubble">
