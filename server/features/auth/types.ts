@@ -1,5 +1,5 @@
 import type { Request } from 'express'
 
 export type AuthenticatedRequest = Request & {
-  auth?: { userId: string; sessionId: string }
+  auth?: { userId: string; sessionId: string; deviceId: string | null }
 }

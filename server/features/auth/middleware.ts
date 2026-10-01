@@ -23,11 +23,11 @@ export async function requireAuth(
   }
 
   try {
-    const result = await pool.query<{ user_id: string; id: string }>(
+    const result = await pool.query<{ user_id: string; id: string; device_id: string | null }>(
       `UPDATE sessions
        SET last_active_at = now()
        WHERE id = $1 AND user_id = $2 AND revoked_at IS NULL AND expires_at > now()
-       RETURNING user_id, id`,
+       RETURNING user_id, id, device_id`,
       [claims.sessionId, claims.userId],
     )
     const session = result.rows[0]
@@ -35,7 +35,7 @@ export async function requireAuth(
       response.status(401).json({ error: { code: 'unauthorized', message: 'Session expired.' } })
       return
     }
-    request.auth = { userId: session.user_id, sessionId: session.id }
+    request.auth = { userId: session.user_id, sessionId: session.id, deviceId: session.device_id }
     next()
   } catch (error) {
     next(error)

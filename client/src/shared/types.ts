@@ -17,6 +17,7 @@ export type User = {
   display_name: string
   avatar_url?: string | null
   about?: string
+  read_receipts_enabled?: boolean
 }
 
 export type Session = {
@@ -71,6 +72,8 @@ export type EncryptedChatMessage = {
   deleted_at?: string | null
   hidden_by_me?: boolean
   pinned_by_me?: boolean
+  delivery_receipts?: string[]
+  read_by?: string[]
   created_at: string
   reactions: { user_id: string; emoji: string }[]
   attachments: {

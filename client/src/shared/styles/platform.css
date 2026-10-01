@@ -202,6 +202,11 @@
 .profile-form { gap: 14px; }
 .profile-form textarea { min-height: 75px; resize: vertical; padding-top: 10px; }
 .profile-form input[readonly] { color: #879189; background: #f7f8f5; }
+.profile-form .profile-checkbox { flex-direction: row; align-items: flex-start; gap: 9px; }
+.profile-form .profile-checkbox > input { width: 14px; min-height: 14px; margin: 1px 0 0; padding: 0; accent-color: #5f805f; }
+.profile-form .profile-checkbox > span { display: flex; flex-direction: column; gap: 4px; }
+.profile-form .profile-checkbox > span > strong { color: #3e4a43; font-size: 11px; font-weight: 600; }
+.profile-form .profile-checkbox > span > small { color: #929b94; font-size: 9px; }
 .sessions-section { margin-top: 23px; padding-top: 17px; border-top: 1px solid #e9ece6; }
 .sessions-heading { display: flex; align-items: center; justify-content: space-between; }
 .sessions-heading h3 { margin: 0; color: #3b4940; font-size: 12px; font-weight: 600; }
@@ -297,7 +302,11 @@
 .message-bubble { position: relative; min-width: 50px; padding: 9px 11px 19px; border: 1px solid #ecefe9; border-radius: 3px 10px 10px 10px; color: #35433a; background: var(--color-surface); box-shadow: 0 1px 2px rgba(18, 36, 24, .03); }
 .message-mine .message-bubble { border-color: #e7eee4; border-radius: 10px 3px 10px 10px; background: #edf3ec; }
 .message-bubble p { margin: 0; overflow-wrap: anywhere; white-space: pre-wrap; font-size: 11px; line-height: 1.6; }
-.message-time { position: absolute; right: 8px; bottom: 4px; color: #99a29b; font-size: 8px; }
+.message-footer { position: absolute; right: 8px; bottom: 4px; display: flex; align-items: center; gap: 6px; }
+.message-time { color: #99a29b; font-size: 8px; }
+.message-receipt { display: inline-flex; align-items: center; gap: 2px; color: #89958b; font-size: 8px; }
+.message-receipt.delivered { color: #6f8172; }
+.message-receipt.read { color: #4d8062; }
 .message-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 3px; margin: 3px 0 0 3px; opacity: 0; transition: opacity .12s ease; }
 .message-row:hover .message-actions, .message-actions:focus-within { opacity: 1; }
 .message-actions button { padding: 2px 4px; border: 0; border-radius: 4px; color: var(--color-text-muted); background: transparent; font: inherit; font-size: 8px; cursor: pointer; }

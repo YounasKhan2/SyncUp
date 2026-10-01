@@ -6,6 +6,7 @@ import type { AuthenticatedRequest } from '../../auth/types.js'
 import { messageLimiter } from '../limits.js'
 import { encryptedMessageSchema, matchingEnvelopes } from '../validation.js'
 import type { MemberKey } from '../validation.js'
+import { publishChatEvent } from '../../realtime/routes.js'
 
 export const messageRoutes = Router()
 
@@ -31,6 +32,21 @@ messageRoutes.get('/chats/:id/messages', async (request: AuthenticatedRequest, r
               m.reply_to_id, m.edited_at, m.deleted_at, m.deleted_for, m.created_at,
               (state.hidden_at IS NOT NULL) AS hidden_by_me,
               (state.pinned_at IS NOT NULL) AS pinned_by_me,
+              CASE WHEN m.sender_id = $2::uuid THEN COALESCE((
+                SELECT jsonb_agg(DISTINCT delivery_device.user_id)
+                FROM message_device_deliveries delivery
+                JOIN devices delivery_device ON delivery_device.id = delivery.device_id
+                WHERE delivery.message_id = m.id
+              ), '[]'::jsonb) ELSE '[]'::jsonb END AS delivery_receipts,
+              CASE WHEN m.sender_id = $2::uuid THEN COALESCE((
+                SELECT jsonb_agg(reader.user_id ORDER BY reader.user_id)
+                FROM chat_members reader
+                JOIN users reader_user ON reader_user.id = reader.user_id
+                WHERE reader.chat_id = m.chat_id AND reader.left_at IS NULL
+                  AND reader.user_id <> m.sender_id
+                  AND reader.last_read_seq >= m.server_seq
+                  AND reader_user.read_receipts_enabled
+              ), '[]'::jsonb) ELSE '[]'::jsonb END AS read_by,
               COALESCE(
                 jsonb_agg(DISTINCT jsonb_build_object('user_id', r.user_id, 'emoji', r.emoji))
                   FILTER (WHERE r.message_id IS NOT NULL),
@@ -98,6 +114,30 @@ messageRoutes.get('/chats/:id/messages', async (request: AuthenticatedRequest, r
     )
     const hasMore = result.rows.length > limit.data
     const page = result.rows.slice(0, limit.data)
+    const receivedMessageIds = page
+      .filter((message) => message.sender_id !== request.auth!.userId && !message.deleted_at)
+      .map((message) => message.id)
+    if (receivedMessageIds.length > 0 && request.auth!.deviceId) {
+      const delivered = await pool.query<{ message_id: string }>(
+        `INSERT INTO message_device_deliveries (message_id, device_id)
+         SELECT m.id, $2
+         FROM messages m
+         WHERE m.id = ANY($1::uuid[]) AND m.chat_id = $3
+           AND m.sender_id <> $4 AND m.deleted_at IS NULL
+         ON CONFLICT (message_id, device_id) DO NOTHING
+         RETURNING message_id`,
+        [receivedMessageIds, request.auth!.deviceId, chatId.data, request.auth!.userId],
+      )
+      if (delivered.rows.length > 0) {
+        await publishChatEvent(chatId.data, {
+          type: 'message.delivered',
+          data: {
+            userId: request.auth!.userId,
+            messageIds: delivered.rows.map((receipt) => receipt.message_id),
+          },
+        }, request.auth!.userId)
+      }
+    }
     response.json({
       messages: afterSeq.data !== undefined ? page : page.reverse(),
       hasMore,
@@ -437,17 +477,46 @@ messageRoutes.post('/chats/:id/read', async (request: AuthenticatedRequest, resp
     return
   }
   try {
-    const result = await pool.query(
-      `UPDATE chat_members cm
-       SET last_read_seq = GREATEST(cm.last_read_seq, LEAST($3, c.last_seq))
-       FROM chats c
-       WHERE cm.chat_id = c.id AND cm.chat_id = $1 AND cm.user_id = $2 AND cm.left_at IS NULL
-       RETURNING cm.last_read_seq`,
+    const result = await pool.query<{
+      last_read_seq: string
+      advanced: boolean
+      read_receipts_enabled: boolean
+    }>(
+      `WITH target AS (
+         SELECT cm.chat_id, cm.user_id, cm.last_read_seq AS previous_seq,
+                LEAST($3::bigint, c.last_seq) AS next_seq, u.read_receipts_enabled
+         FROM chat_members cm
+         JOIN chats c ON c.id = cm.chat_id
+         JOIN users u ON u.id = cm.user_id
+         WHERE cm.chat_id = $1 AND cm.user_id = $2 AND cm.left_at IS NULL
+           AND NOT EXISTS (
+             SELECT 1 FROM message_requests mr
+             WHERE mr.chat_id = cm.chat_id AND mr.to_user = cm.user_id
+               AND mr.state IN ('pending', 'ignored')
+           )
+       ), updated AS (
+         UPDATE chat_members cm
+         SET last_read_seq = target.next_seq
+         FROM target
+         WHERE cm.chat_id = target.chat_id AND cm.user_id = target.user_id
+           AND cm.left_at IS NULL AND target.next_seq > cm.last_read_seq
+         RETURNING cm.last_read_seq
+       )
+       SELECT COALESCE(updated.last_read_seq, target.previous_seq) AS last_read_seq,
+              target.next_seq > target.previous_seq AS advanced,
+              target.read_receipts_enabled
+       FROM target LEFT JOIN updated ON true`,
       [chatId.data, request.auth!.userId, lastSeq.data],
     )
     if (result.rowCount === 0) {
       response.status(404).json({ error: { code: 'not_found', message: 'Chat not found.' } })
       return
+    }
+    if (result.rows[0].advanced && result.rows[0].read_receipts_enabled) {
+      await publishChatEvent(chatId.data, {
+        type: 'chat.read',
+        data: { userId: request.auth!.userId, lastReadSeq: result.rows[0].last_read_seq },
+      }, request.auth!.userId)
     }
     response.json({ lastReadSeq: result.rows[0].last_read_seq })
   } catch (error) {

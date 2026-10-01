@@ -72,6 +72,7 @@ export function AccountPanel({ user, onClose, onSaved }: {
           displayName: String(form.get('displayName') ?? ''),
           username: String(form.get('username') ?? ''),
           about: String(form.get('about') ?? ''),
+          readReceiptsEnabled: form.get('readReceiptsEnabled') === 'on',
         }),
       })
       onSaved(result.user)
@@ -181,6 +182,10 @@ export function AccountPanel({ user, onClose, onSaved }: {
           <label><span>Display name</span><input name="displayName" defaultValue={user.display_name} maxLength={60} required /></label>
           <label><span>Username</span><div className="username-input"><span>@</span><input name="username" defaultValue={user.username} minLength={3} maxLength={24} pattern="[A-Za-z0-9_]+" required /></div></label>
           <label><span>About</span><textarea name="about" defaultValue={user.about ?? ''} rows={3} maxLength={160} placeholder="A little about you" /></label>
+          <label className="profile-checkbox">
+            <input type="checkbox" name="readReceiptsEnabled" defaultChecked={user.read_receipts_enabled ?? true} />
+            <span><strong>Read receipts</strong><small>Let other members know when you have read their messages.</small></span>
+          </label>
           <label><span>Email</span><input value={user.email} readOnly /></label>
           {error && <div className="form-error" role="alert">{error}</div>}
           {saved && <p className="form-success" role="status">{saved}</p>}

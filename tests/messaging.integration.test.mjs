@@ -252,12 +252,24 @@ async function createAccount(name, userPrefix) {
   return {
     ...jar,
     id: payload.user.id,
+    email,
     username,
     displayName: name,
     password,
     keyBundle,
     publicKey: keyBundle.publicKey,
   }
+}
+
+async function signInAccount(account) {
+  const jar = cookieJar()
+  const response = await apiRequest(jar, '/api/auth/sign-in', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ email: account.email, password: account.password }),
+  })
+  assert.equal(response.status, 200, await response.clone().text())
+  return { ...jar, id: account.id, email: account.email, username: account.username }
 }
 
 async function post(identity, path, body) {
@@ -381,6 +393,8 @@ test('encrypted requests, authorized chats, ordered idempotent delivery, and gro
   assert.equal(requests.length, 1)
   assert.equal(await decryptMessage(requests[0], nadia), 'Hello, Nadia — this is private.')
   response = await apiRequest(nadia, `/api/chats/${messageRequest.chatId}`)
+  assert.equal(response.status, 404)
+  response = await post(nadia, `/api/chats/${messageRequest.chatId}/read`, { lastSeq: 1 })
   assert.equal(response.status, 404)
 
   response = await post(nadia, `/api/requests/${messageRequest.requestId}/accept`, {})
@@ -550,14 +564,44 @@ test('encrypted requests, authorized chats, ordered idempotent delivery, and gro
   assert.equal(replay.messageId, saved.messageId)
   assert.equal(Number(replay.serverSeq), 2)
 
+  const receiptController = new AbortController()
+  context.after(() => receiptController.abort())
+  const receiptStream = await fetch(new URL(`/api/events?chat_id=${messageRequest.chatId}`, apiBase), {
+    headers: { cookie: ava.header() },
+    signal: receiptController.signal,
+  })
+  assert.equal(receiptStream.status, 200)
+  const receiptReader = receiptStream.body.getReader()
+  await waitForEvent(receiptReader, 'ready')
+
   response = await apiRequest(nadia, `${chatPath}/messages?after_seq=1&limit=10`)
   let messagePage = await response.json()
   assert.equal(response.status, 200, JSON.stringify(messagePage))
   let messages = messagePage.messages
   assert.equal(messages.length, 1)
+  assert.deepEqual(messages[0].delivery_receipts, [])
   assert.equal(await decryptMessage(messages[0], nadia), 'Message two should exist once.')
   assert.equal(messages[0].attachments.length, 1)
   assert.equal(messages[0].attachments[0].filename, 'meeting-notes.txt')
+  const firstDeviceDelivery = waitForEvent(receiptReader, 'message.delivered')
+  response = await apiRequest(nadia, `${chatPath}/messages?after_seq=1&limit=10`)
+  assert.equal(response.status, 200)
+  const firstDeliveryEvent = await firstDeviceDelivery
+  assert.equal(firstDeliveryEvent.userId, nadia.id)
+  assert.deepEqual(firstDeliveryEvent.messageIds, [saved.messageId])
+
+  const secondNadiaDevice = await signInAccount(nadia)
+  const secondDeviceDelivery = waitForEvent(receiptReader, 'message.delivered')
+  response = await apiRequest(secondNadiaDevice, `${chatPath}/messages?after_seq=1&limit=10`)
+  assert.equal(response.status, 200)
+  const secondDeliveryEvent = await secondDeviceDelivery
+  assert.equal(secondDeliveryEvent.userId, nadia.id)
+  assert.deepEqual(secondDeliveryEvent.messageIds, [saved.messageId])
+
+  response = await apiRequest(ava, `${chatPath}/messages?after_seq=1&limit=10`)
+  const deliveredMessage = (await response.json()).messages[0]
+  assert.deepEqual(deliveredMessage.delivery_receipts, [nadia.id])
+
   response = await apiRequest(nadia, `/api/uploads/${uploadIntent.attachmentId}`)
   assert.equal(response.status, 200, await response.clone().text())
   const download = (await response.json()).attachment
@@ -581,9 +625,44 @@ test('encrypted requests, authorized chats, ordered idempotent delivery, and gro
   response = await apiRequest(chris, `/api/events?chat_id=${messageRequest.chatId}`)
   assert.equal(response.status, 404)
 
+  const readEventPromise = waitForEvent(receiptReader, 'chat.read')
   response = await post(nadia, `${chatPath}/read`, { lastSeq: 9999 })
   assert.equal(response.status, 200)
   assert.equal(Number((await response.json()).lastReadSeq), 2)
+  const readEvent = await readEventPromise
+  assert.equal(readEvent.userId, nadia.id)
+  assert.equal(Number(readEvent.lastReadSeq), 2)
+  response = await apiRequest(nadia, '/api/auth/me', {
+    method: 'PATCH',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({
+      displayName: nadia.displayName,
+      username: nadia.username,
+      about: '',
+      readReceiptsEnabled: false,
+    }),
+  })
+  assert.equal(response.status, 200)
+  assert.equal((await response.json()).user.read_receipts_enabled, false)
+  response = await apiRequest(ava, `${chatPath}/messages?after_seq=1&limit=10`)
+  assert.deepEqual((await response.json()).messages[0].read_by, [])
+  response = await apiRequest(nadia, '/api/auth/me', {
+    method: 'PATCH',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({
+      displayName: nadia.displayName,
+      username: nadia.username,
+      about: '',
+      readReceiptsEnabled: true,
+    }),
+  })
+  assert.equal(response.status, 200)
+  assert.equal((await response.json()).user.read_receipts_enabled, true)
+  response = await apiRequest(ava, `${chatPath}/messages?after_seq=1&limit=10`)
+  const readMessage = (await response.json()).messages[0]
+  assert.deepEqual(readMessage.read_by, [nadia.id])
+  await receiptReader.cancel()
+  receiptController.abort()
   response = await post(nadia, `/api/messages/${saved.messageId}/reactions`, { emoji: '👍' })
   assert.equal(response.status, 200)
   assert.equal((await response.json()).active, true)

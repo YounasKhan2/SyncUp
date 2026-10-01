@@ -78,7 +78,7 @@ SyncUp exists to own **external collaboration that feels like a messenger**.
 
 **Phase 0 (messenger) — 30-day exit test**
 
-- Two seeded users can complete: sign in, DM, reply, react, send image, 1:1 call, see the same history on a second session.
+- Two seeded users can complete: sign in, DM, reply, react, send image, 1:1 call, see the same history on a second session, and observe message delivery/read receipts.
 - Message round-trip (send → appear on peer) p95 < 400ms on a healthy link.
 - Duplicate delivery rate = 0 for idempotent retries.
 - Offline send while disconnected, appear once after reconnect.
@@ -284,7 +284,7 @@ Every read/write of chat, message, object, membership, file, or call requires an
 - Edit (text only, 15-minute window, “edited” flag).
 - Delete for me; delete for everyone (15-minute window, sender or chat admin).
 - Copy; pin in-chat (distinct from “pin as decision” object).
-- Delivery states: `pending` (outbox) → `sent` (server ack) → `delivered` (peer device ack) → `read` (optional, user setting).
+- Delivery states: `pending` (local outbox) → `sent` (server ack) → `delivered` (persisted per peer device, shown per recipient) → `read` (peer read cursor; hidden when that user's read receipts are disabled).
 - Typing indicator (ephemeral, not persisted).
 - Presence: online / recently / offline; user can hide last-seen.
 - Drafts per chat, persisted locally, restored on navigation.
@@ -665,7 +665,7 @@ Omar’s group “Vendor Q4” gets a guest invite. SyncUp prompts to turn it in
 
 ### J4 — Offline (Phase 0)
 
-Omar composes two messages in a tunnel. Both appear as pending. Connectivity returns. Both send once. Ava sees two messages, not four. Omar’s pending ticks to sent/delivered.
+Omar composes two messages in a tunnel. Both appear as pending. Connectivity returns. Both send once. Ava sees two messages, not four. Omar’s pending messages become sent, then delivered when Ava's device fetches them, and read when Ava opens the conversation.
 
 ### J5 — Attention
 

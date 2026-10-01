@@ -1,4 +1,4 @@
-import { Copy, Flag, Heart, Mic, Pin, Phone, ThumbsUp, Trash2, Video } from 'lucide-react'
+import { Check, CheckCheck, Copy, Flag, Heart, Mic, Pin, Phone, ThumbsUp, Trash2, Video } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import type { RefObject } from 'react'
 import type { CallRecord, ChatMember, DisplayMessage } from '../../shared/types'
@@ -58,6 +58,18 @@ export function MessageList({ messages, calls, members, currentUserId, loading, 
           const mine = message.sender_id === currentUserId
           const sender = membersById.get(message.sender_id)
           const parent = message.reply_to_id ? messagesById.get(message.reply_to_id) : undefined
+          const recipients = members.filter((member) => member.id !== currentUserId)
+          const deliveredUsers = new Set(message.delivery_receipts ?? [])
+          const readUsers = new Set(message.read_by ?? [])
+          const deliveredCount = recipients.filter((member) => deliveredUsers.has(member.id)).length
+          const readCount = recipients.filter((member) => readUsers.has(member.id)).length
+          const groupReceipt = recipients.length > 1
+          const receiptLabel = readCount > 0
+            ? groupReceipt ? `Read ${readCount}/${recipients.length}` : 'Read'
+            : deliveredCount > 0
+              ? groupReceipt ? `Delivered ${deliveredCount}/${recipients.length}` : 'Delivered'
+              : 'Sent'
+          const receiptState = readCount > 0 ? 'read' : deliveredCount > 0 ? 'delivered' : 'sent'
           return (
             <article className={`message-row${mine ? ' message-mine' : ''}`} key={message.id}>
               {!mine && <Avatar name={sender?.displayName ?? 'Member'} src={sender?.avatar_url} className="message-avatar" />}
@@ -68,7 +80,13 @@ export function MessageList({ messages, calls, members, currentUserId, loading, 
                   <p>{message.deleted_at ? 'This message was deleted.' : message.pending ? (message.attachments?.some((a: {content_type: string}) => a.content_type.startsWith('audio/')) && !message.text ? '' : 'Sending…') : message.text}</p>
                   {!message.deleted_at && message.attachments?.filter((attachment) => !attachment.is_preview).map((attachment) => <MessageAttachment key={attachment.id} attachment={attachment} pending={message.pending} onOpen={(attachment.content_type.startsWith('image/') || attachment.content_type.startsWith('video/')) && !message.pending ? () => setViewerAttachmentId(attachment.id) : undefined} />)}
                   {message.edited_at && !message.deleted_at && <span className="message-edited">edited</span>}
-                  <span className="message-time">{message.pending ? (message.failed ? 'Waiting to reconnect' : 'Pending') : new Date(message.created_at).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}</span>
+                  <span className="message-footer">
+                    <time className="message-time">{message.pending ? (message.failed ? 'Waiting to reconnect' : 'Pending') : new Date(message.created_at).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}</time>
+                    {!message.pending && mine && !message.deleted_at && <span className={`message-receipt ${receiptState}`} role="img" aria-label={receiptLabel} title={receiptLabel}>
+                      {receiptState === 'sent' ? <Check size={10} aria-hidden="true" /> : <CheckCheck size={12} aria-hidden="true" />}
+                      {groupReceipt && (readCount > 0 || deliveredCount > 0) && <span>{readCount > 0 ? readCount : deliveredCount}/{recipients.length}</span>}
+                    </span>}
+                  </span>
                 </div>
                 {!message.pending && !message.deleted_at && <div className="message-actions">
                   <button type="button" onClick={() => onReply(message)}>Reply</button>

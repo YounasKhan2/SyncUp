@@ -144,11 +144,9 @@ export function Conversation({
         setCallHistory([...callResult.calls, ...groupCallResult.calls].sort((a, b) => Date.parse(a.created_at) - Date.parse(b.created_at)));
         setMessages((current) => {
           if (initial) return displayed;
-          const existing = new Set(current.map((message) => message.id));
-          return [
-            ...current,
-            ...displayed.filter((message) => !existing.has(message.id)),
-          ];
+          const merged = new Map(current.map((message) => [message.id, message]));
+          for (const message of displayed) merged.set(message.id, message);
+          return [...merged.values()].sort((left, right) => Number(left.server_seq) - Number(right.server_seq));
         });
         if (initial) {
           setHasOlderMessages(messageResult.hasMore);
@@ -279,6 +277,35 @@ export function Conversation({
       void loadConversation(chatId, false);
       refreshInbox();
     });
+    source.addEventListener("message.delivered", (event) => {
+      const update = JSON.parse((event as MessageEvent<string>).data) as {
+        userId: string;
+        messageIds: string[];
+      };
+      const messageIds = new Set(update.messageIds);
+      setMessages((current) => current.map((message) => {
+        if (message.sender_id !== user.id || !messageIds.has(message.id)) return message;
+        const receipts = message.delivery_receipts ?? [];
+        if (receipts.includes(update.userId)) return message;
+        return {
+          ...message,
+          delivery_receipts: [...receipts, update.userId],
+        };
+      }));
+    });
+    source.addEventListener("chat.read", (event) => {
+      const update = JSON.parse((event as MessageEvent<string>).data) as {
+        userId: string;
+        lastReadSeq: string;
+      };
+      setMessages((current) => current.map((message) => {
+        if (message.sender_id !== user.id || Number(message.server_seq) > Number(update.lastReadSeq)) return message;
+        const readBy = message.read_by ?? [];
+        return readBy.includes(update.userId)
+          ? message
+          : { ...message, read_by: [...readBy, update.userId] };
+      }));
+    });
     source.addEventListener("presence", (event) => {
       const update = JSON.parse((event as MessageEvent<string>).data) as {
         userId: string;
@@ -344,7 +371,7 @@ export function Conversation({
       window.clearInterval(fallback);
       window.removeEventListener("syncup-refresh-chat", wake);
     };
-  }, [chatId, loadConversation, refreshInbox]);
+  }, [chatId, loadConversation, refreshInbox, user.id]);
 
   useEffect(() => {
     typingActive.current = false;
