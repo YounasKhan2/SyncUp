@@ -50,7 +50,12 @@ export function MessageAttachment({
   const [voicePlaying, setVoicePlaying] = useState(false);
   const [voiceReady, setVoiceReady] = useState(false);
   const [voiceAttempt, setVoiceAttempt] = useState(0);
+  const [voiceCurrent, setVoiceCurrent] = useState(0);
+  const [voiceDuration, setVoiceDuration] = useState(
+    () => (attachment.duration_ms ?? 0) / 1000,
+  );
   const audioRef = useRef<HTMLAudioElement>(null);
+  const voiceUrlRef = useRef("");
   const isImage = attachment.content_type.startsWith("image/");
   const isVideo = attachment.content_type.startsWith("video/");
   const isVoice = attachment.content_type.startsWith("audio/");
@@ -155,15 +160,17 @@ export function MessageAttachment({
   }, [attachment, isMediaV2, isVideo, pending]);
 
   useEffect(() => {
-    if (!isMediaV2 || !isVoice || pending || voiceUrl || voiceLoading) return;
+    if (!isMediaV2 || !isVoice || pending || voiceUrlRef.current) return;
     let cancelled = false;
     let objectUrl = "";
+    const controller = new AbortController();
     setVoiceLoading(true);
     setError("");
-    hydrateMediaV2(attachment)
+    hydrateMediaV2(attachment, undefined, controller.signal)
       .then((file) => {
         if (cancelled) return;
         objectUrl = URL.createObjectURL(file);
+        voiceUrlRef.current = objectUrl;
         setVoiceUrl(objectUrl);
         setVoiceReady(true);
       })
@@ -175,18 +182,19 @@ export function MessageAttachment({
       });
     return () => {
       cancelled = true;
-      if (objectUrl) URL.revokeObjectURL(objectUrl);
+      controller.abort();
+      if (objectUrl) {
+        URL.revokeObjectURL(objectUrl);
+        if (voiceUrlRef.current === objectUrl) voiceUrlRef.current = "";
+      }
     };
-    // voiceAttempt lets us break the dependency deadlock and retry after failure
-  }, [
-    attachment,
-    isMediaV2,
-    isVoice,
-    pending,
-    voiceAttempt,
-    voiceLoading,
-    voiceUrl,
-  ]);
+  }, [attachment, isMediaV2, isVoice, pending, voiceAttempt]);
+
+  function voiceClock(seconds: number) {
+    if (!Number.isFinite(seconds) || seconds < 0) return "0:00";
+    const whole = Math.floor(seconds);
+    return `${Math.floor(whole / 60)}:${String(whole % 60).padStart(2, "0")}`;
+  }
 
   async function toggleVoice() {
     if (pending || !voiceReady || !voiceUrl) return;
@@ -375,7 +383,7 @@ export function MessageAttachment({
               }
               void toggleVoice();
             }}
-            disabled={pending || voiceLoading}
+            disabled={pending || voiceLoading || (!voiceReady && !error)}
             aria-label={
               error && !voiceReady
                 ? "Retry voice note"
@@ -384,25 +392,82 @@ export function MessageAttachment({
                   : "Play voice note"
             }
           >
-            {voicePlaying ? <Pause size={14} /> : <Play size={14} />}
+            {voicePlaying ? (
+              <Pause size={14} />
+            ) : error && !voiceReady ? (
+              <RefreshCw size={14} />
+            ) : (
+              <Play size={14} fill="currentColor" />
+            )}
           </button>
           <audio
             ref={audioRef}
+            src={voiceUrl || undefined}
+            preload="metadata"
+            onLoadedMetadata={(event) => {
+              if (Number.isFinite(event.currentTarget.duration)) {
+                setVoiceDuration(event.currentTarget.duration);
+              }
+            }}
+            onTimeUpdate={(event) =>
+              setVoiceCurrent(event.currentTarget.currentTime)
+            }
             onPlay={() => setVoicePlaying(true)}
             onPause={() => setVoicePlaying(false)}
-            onEnded={() => setVoicePlaying(false)}
+            onEnded={() => {
+              setVoicePlaying(false);
+              setVoiceCurrent(0);
+            }}
           />
-          <div className="voice-message-wave">
-            {Array.from({ length: 28 }, (_, index) => (
-              <i
-                key={index}
-                style={{ height: `${4 + ((index * 7) % 13)}px` }}
-              />
-            ))}
+          <div className="voice-message-body">
+            {attachment.waveform?.length ? (
+              <div className="voice-wave" aria-hidden="true">
+                {attachment.waveform.map((level, index) => (
+                  <i
+                    key={index}
+                    style={{ height: `${Math.max(3, level * 18)}px` }}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="voice-message-wave" aria-hidden="true">
+                {Array.from({ length: 28 }, (_, index) => (
+                  <i
+                    key={index}
+                    style={{ height: `${4 + ((index * 7) % 13)}px` }}
+                  />
+                ))}
+              </div>
+            )}
+            <input
+              className="voice-scrubber"
+              type="range"
+              min="0"
+              max={Math.max(voiceDuration, 0)}
+              step=".05"
+              value={Math.max(0, Math.min(voiceCurrent, voiceDuration || 0))}
+              disabled={!voiceReady}
+              aria-label="Voice note position"
+              onChange={(event) => {
+                const audio = audioRef.current;
+                if (!audio) return;
+                audio.currentTime = Number(event.currentTarget.value);
+                setVoiceCurrent(audio.currentTime);
+              }}
+            />
+            <div className="voice-message-meta">
+              <small>
+                {voiceLoading
+                  ? "Loading…"
+                  : error
+                    ? "Tap to retry"
+                    : voiceClock(voiceCurrent)}
+              </small>
+              <small>
+                {voiceDuration > 0 ? voiceClock(voiceDuration) : ""}
+              </small>
+            </div>
           </div>
-          <small>
-            {voiceLoading ? "Loading…" : error ? "Tap to retry" : "Voice note"}
-          </small>
         </div>
       )}
       {!isVisualMedia && !isVoice && (
@@ -429,7 +494,7 @@ export function MessageAttachment({
           </span>
         </button>
       )}
-      {error && !isVisualMedia && (
+      {error && !isVisualMedia && !isVoice && (
         <small className="attachment-error" role="alert">
           {error}
         </small>

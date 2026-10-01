@@ -101,8 +101,8 @@ export function Conversation({
   const submittingRef = useRef(false);
   const uploadingFileKeys = useRef(new Set<string>());
   const stagedFileKeys = useRef(new Map<string, string>());
-  const pendingVoiceJobs = useRef(new Set<string>());
   const sentV2AttachmentIds = useRef(new Set<string>());
+  const processingV2AttachmentIds = useRef(new Set<string>());
 
   const loadConversation = useCallback(
     async (id: string, initial: boolean) => {
@@ -391,7 +391,14 @@ export function Conversation({
           ),
         );
         for (const item of snapshots) {
-          if (item.chatId !== chatId || item.status !== "sent") continue;
+          if (item.status !== "sent") continue;
+          if (
+            sentV2AttachmentIds.current.has(item.attachmentId) ||
+            processingV2AttachmentIds.current.has(item.attachmentId)
+          ) {
+            continue;
+          }
+          processingV2AttachmentIds.current.add(item.attachmentId);
           void import("../media/v2/jobStore").then(
             async ({ getMediaV2Job }) => {
               const job = await getMediaV2Job(item.jobId);
@@ -404,33 +411,49 @@ export function Conversation({
                 nonce: null,
                 key_envelope: job.keyEnvelope,
                 transport_version: 2,
+                duration_ms: job.durationMs ?? null,
+                waveform: job.waveform ?? null,
+                width: job.width ?? null,
+                height: job.height ?? null,
                 poster_attachment_id: job.previewAttachment?.id ?? null,
                 preview: job.previewAttachment ?? null,
               };
-              // Skip attachments that have already been submitted as part of a message
-              if (sentV2AttachmentIds.current.has(job.attachmentId)) return;
-              if (
-                job.mediaKind === "voice" &&
-                pendingVoiceJobs.current.delete(job.id)
-              ) {
-                sentV2AttachmentIds.current.add(job.attachmentId);
-                const encrypted = await encryptMessage("", chat?.members ?? []);
+              if (job.sendOnComplete && job.messageIdempotencyKey) {
+                const members =
+                  job.chatId === chat?.id
+                    ? chat.members
+                    : (
+                        await api<{ chat: { members: ChatMember[] } }>(
+                          `/api/chats/${job.chatId}`,
+                        )
+                      ).chat.members;
+                const attachments = [
+                  attachment,
+                  ...(job.mediaKind === "video" && job.previewAttachment
+                    ? [job.previewAttachment]
+                    : []),
+                ];
+                const encrypted = await encryptMessage("", members);
                 const pendingMessage: PendingMessage = {
                   chatId: job.chatId,
                   localId: crypto.randomUUID(),
-                  idempotencyKey: crypto.randomUUID(),
+                  idempotencyKey: job.messageIdempotencyKey,
                   ...encrypted,
-                  attachmentIds: [attachment.id],
-                  attachments: [attachment],
+                  attachmentIds: attachments.map((item) => item.id),
+                  attachments,
                   createdAt: new Date().toISOString(),
                   attempts: 0,
                   nextAttemptAt: 0,
                 };
                 await savePendingMessage(pendingMessage);
+                const { patchMediaV2Job } = await import("../media/v2/jobStore");
+                await patchMediaV2Job(job.id, { sendOnComplete: false });
+                sentV2AttachmentIds.current.add(job.attachmentId);
                 onQueued(pendingMessage);
                 window.dispatchEvent(new Event("syncup-outbox-wake"));
                 return;
               }
+              if (job.chatId !== chatId) return;
               setStagedAttachments((current) => {
                 const additions = [
                   attachment,
@@ -444,7 +467,17 @@ export function Conversation({
                 return additions.length ? [...current, ...additions] : current;
               });
             },
-          );
+          )
+            .catch((queueError: unknown) => {
+              setError(
+                queueError instanceof Error
+                  ? queueError.message
+                  : "Unable to queue uploaded media.",
+              );
+            })
+            .finally(() => {
+              processingV2AttachmentIds.current.delete(item.attachmentId);
+            });
         }
       }),
     [chat, chatId, onQueued],
@@ -572,11 +605,12 @@ export function Conversation({
       const job = await prepareVoiceV2(
         voiceDraft.file,
         voiceDraft.durationMs,
+        voiceDraft.waveform,
         chatId,
         chat.members,
         user.id,
       );
-      pendingVoiceJobs.current.add(job.id);
+      await mediaV2UploadManager.track(job);
       URL.revokeObjectURL(voiceDraft.url);
       setVoiceDraft(null);
     } catch (voiceError) {

@@ -50,9 +50,9 @@ export function MessageList({ messages, calls, members, currentUserId, loading, 
     <>
       <div className="message-list" aria-live="polite" ref={scrollContainerRef} onScroll={onScroll}>
         {loadingOlder && <div className="older-messages-loading" role="status">Loading earlier messages…</div>}
-        {loading && <div className="conversation-loading">Loading encrypted messages…</div>}
+        {loading && <div className="conversation-loading">Loading messages…</div>}
         {error && <div className="inline-error" role="alert">{error}</div>}
-        {!loading && messages.length === 0 && <div className="message-empty">{emptyMessage ?? 'This is the beginning of your encrypted conversation.'}</div>}
+        {!loading && messages.length === 0 && <div className="message-empty">{emptyMessage ?? 'This is the beginning of your conversation.'}</div>}
         {messages.map((message) => {
           const mine = message.sender_id === currentUserId
           const sender = membersById.get(message.sender_id)

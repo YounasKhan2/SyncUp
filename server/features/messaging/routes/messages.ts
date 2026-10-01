@@ -45,6 +45,11 @@ messageRoutes.get('/chats/:id/messages', async (request: AuthenticatedRequest, r
                   'nonce', a.nonce,
                   'key_envelope', a.key_envelopes -> $2::text,
                   'transport_version', a.transport_version,
+                  'duration_ms', a.duration_ms,
+                  'waveform', a.waveform,
+                  'width', a.width,
+                  'height', a.height,
+                  'poster_attachment_id', a.poster_attachment_id,
                   'is_preview', EXISTS (
                     SELECT 1 FROM attachments parent
                     WHERE parent.poster_attachment_id = a.id

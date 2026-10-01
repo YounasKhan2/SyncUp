@@ -95,7 +95,11 @@ export async function prepareVideoV2(file: File, chatId: string, members: ChatMe
   const now = Date.now()
   const job: MediaV2UploadJob = {
     id: jobId, attachmentId, uploadSessionId: intent.uploadSession.id, chatId, mediaKind: 'video',
-    filename: file.name, contentType: file.type, plaintextSize: file.size, ciphertextSize,
+    filename: file.name, contentType: file.type,
+    durationMs: probe.durationMs, waveform: null, width: probe.width, height: probe.height,
+    posterAttachmentId: previewAttachment.id, sendOnComplete: true,
+    messageIdempotencyKey: crypto.randomUUID(),
+    plaintextSize: file.size, ciphertextSize,
     chunkSize: intent.uploadSession.chunkSize, chunkCount: intent.uploadSession.chunkCount,
     acknowledgedBytes: intent.uploadSession.acknowledgedBytes, state: 'queued', stagePath: writer.path,
     sourceFingerprint: await fingerprintMediaV2Source(file), keyEnvelope: keyEnvelopes[currentUserId],

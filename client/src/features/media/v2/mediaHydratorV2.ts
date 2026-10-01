@@ -45,7 +45,14 @@ export async function hasCachedMediaV2Playback(attachment: StagedAttachment) {
 export async function hydrateMediaV2(
   attachment: StagedAttachment,
   onProgress?: (progress: number) => void,
+  signal?: AbortSignal,
 ): Promise<File> {
+  const throwIfAborted = () => {
+    if (signal?.aborted) {
+      throw new DOMException('The media download was cancelled.', 'AbortError')
+    }
+  }
+  throwIfAborted()
   const localSource = getLocalMediaV2Source(attachment.id)
   if (localSource) {
     onProgress?.(100)
@@ -56,9 +63,11 @@ export async function hydrateMediaV2(
     onProgress?.(100)
     return new File([cached], attachment.filename, { type: attachment.content_type, lastModified: cached.lastModified })
   }
+  throwIfAborted()
   if (!navigator.storage?.getDirectory) throw new Error(attachment.content_type.startsWith('audio/') ? 'This browser cannot open voice notes yet.' : 'This browser cannot open large videos yet.')
-  const { attachment: metadata } = await api<{ attachment: Metadata }>(`/api/uploads/v2/${attachment.id}`)
+  const { attachment: metadata } = await api<{ attachment: Metadata }>(`/api/uploads/v2/${attachment.id}`, { signal })
 
+  throwIfAborted()
   const rawKey = await unwrapMediaKey(metadata.keyEnvelope)
   const worker = new MediaV2CryptoWorker()
   const directory = await playbackDirectory()
@@ -69,12 +78,15 @@ export async function hydrateMediaV2(
   let written = 0
   try {
     for (let index = 0; index < recordCount; index += 1) {
+      throwIfAborted()
       const plainLength = Math.min(RECORD_PLAINTEXT_BYTES, metadata.plaintextSize - written)
       const recordLength = plainLength + RECORD_OVERHEAD_BYTES
       const response = await fetch(metadata.downloadUrl, {
         credentials: 'same-origin',
         headers: { Range: `bytes=${cipherOffset}-${cipherOffset + recordLength - 1}` },
+        signal,
       })
+      throwIfAborted()
       if (response.status !== 206 && response.status !== 200) throw new Error(metadata.mediaKind === 'voice' ? 'Couldn’t load this voice note.' : 'Couldn’t load this video.')
       const fullRecord = await response.arrayBuffer()
       // When the server returns 200 (full body), extract just the record we need
@@ -90,11 +102,13 @@ export async function hydrateMediaV2(
         recordCount,
         record,
       })
+      throwIfAborted()
       await writable.write(new Uint8Array(plaintext))
       written += plaintext.byteLength
       cipherOffset += recordLength
       onProgress?.(Math.min(99, Math.floor((written / metadata.plaintextSize) * 100)))
     }
+    throwIfAborted()
     await writable.close()
     if (written !== metadata.plaintextSize || cipherOffset !== metadata.ciphertextSize) throw new Error(metadata.mediaKind === 'voice' ? 'Couldn’t finish loading this voice note.' : 'Couldn’t finish loading this video.')
     const file = await handle.getFile()
