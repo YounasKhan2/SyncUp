@@ -6,17 +6,18 @@ import { Avatar } from '../../shared/components/Avatar'
 type WorkspaceRailProps = {
   user: User
   showCalls: boolean
+  unreadConversationCount: number
   onShowChats: () => void
   onShowCalls: () => void
   onOpenAccount: () => void
 }
 
-export function WorkspaceRail({ user, showCalls, onShowChats, onShowCalls, onOpenAccount }: WorkspaceRailProps) {
+export function WorkspaceRail({ user, showCalls, unreadConversationCount, onShowChats, onShowCalls, onOpenAccount }: WorkspaceRailProps) {
   return (
     <aside className="primary-rail" aria-label="Main navigation">
       <BrandMark small />
-      <button className={`rail-item${!showCalls ? ' rail-item-active' : ''}`} type="button" aria-current={!showCalls ? 'page' : undefined} onClick={onShowChats}>
-        <MessageSquare size={15} aria-hidden="true" /><span>Chats</span>
+      <button className={`rail-item${!showCalls ? ' rail-item-active' : ''}`} type="button" aria-current={!showCalls ? 'page' : undefined} aria-label={unreadConversationCount ? `Chats, ${unreadConversationCount} unread conversations` : 'Chats'} onClick={onShowChats}>
+        <span className="rail-item-icon"><MessageSquare size={15} aria-hidden="true" />{unreadConversationCount > 0 && <b className="navigation-badge">{unreadConversationCount > 99 ? '99+' : unreadConversationCount}</b>}</span><span>Chats</span>
       </button>
       <button className={`rail-item${showCalls ? ' rail-item-active' : ''}`} type="button" aria-current={showCalls ? 'page' : undefined} onClick={onShowCalls}>
         <Phone size={15} aria-hidden="true" /><span>Calls</span>

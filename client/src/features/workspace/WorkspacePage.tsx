@@ -15,8 +15,12 @@ import { CallWindow } from '../calls/CallWindow'
 import { InboxPane } from './InboxPane'
 import { MobileNavigation } from './MobileNavigation'
 import { WorkspaceRail } from './WorkspaceRail'
+import { countUnreadConversations } from '../../shared/presentation'
+import { applyAppearancePreference, readAppearancePreference, saveAppearancePreference } from '../../shared/appearance'
+import type { AppearancePreference } from '../../shared/appearance'
 export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: () => void }) {
   const [accountOpen, setAccountOpen] = useState(false)
+  const [appearance, setAppearance] = useState<AppearancePreference>(readAppearancePreference)
   const [currentUser, setCurrentUser] = useState(user)
   const [chats, setChats] = useState<Chat[]>([])
   const [searchableMessages, setSearchableMessages] = useState<Record<string, SearchableMessage[]>>({})
@@ -36,6 +40,21 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
   const [online, setOnline] = useState(navigator.onLine)
   const [error, setError] = useState('')
   const flushing = useRef(false)
+  const unreadConversationCount = countUnreadConversations(chats)
+
+  useEffect(() => {
+    if (appearance !== 'system') return
+    const preference = window.matchMedia('(prefers-color-scheme: dark)')
+    const updateTheme = () => applyAppearancePreference('system')
+    preference.addEventListener('change', updateTheme)
+    return () => preference.removeEventListener('change', updateTheme)
+  }, [appearance])
+
+  function updateAppearance(preference: AppearancePreference) {
+    saveAppearancePreference(preference)
+    setAppearance(preference)
+    applyAppearancePreference(preference)
+  }
 
   const refreshCallHistory = useCallback(async () => {
     const [direct, groups] = await Promise.all([
@@ -349,6 +368,7 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
       <WorkspaceRail
         user={currentUser}
         showCalls={showCalls}
+        unreadConversationCount={unreadConversationCount}
         onShowChats={showChatsHome}
         onShowCalls={openCallHistory}
         onOpenAccount={() => setAccountOpen(true)}
@@ -386,12 +406,13 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
       <MobileNavigation
         section={showCalls ? 'calls' : 'chats'}
         accountOpen={accountOpen}
+        unreadConversationCount={unreadConversationCount}
         onShowChats={showChatsHome}
         onShowCalls={openCallHistory}
         onOpenAccount={() => setAccountOpen(true)}
       />
       <footer className="workspace-footer"><button type="button" onClick={signOut}>Sign out</button><span>Chats · End-to-end encrypted</span></footer>
-      {accountOpen && <AccountPanel user={currentUser} onClose={() => setAccountOpen(false)} onSaved={setCurrentUser} />}
+      {accountOpen && <AccountPanel user={currentUser} appearance={appearance} onAppearanceChange={updateAppearance} onClose={() => setAccountOpen(false)} onSaved={setCurrentUser} />}
       {newConversation && <NewConversation user={currentUser} initialUsername={initialUsername} onClose={() => { setNewConversation(false); setInitialUsername('') }} onCreated={(chatId) => {
         setNewConversation(false)
         setInitialUsername('')

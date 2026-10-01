@@ -17,6 +17,7 @@ export type User = {
   display_name: string
   avatar_url?: string | null
   about?: string
+  discoverable?: boolean
   read_receipts_enabled?: boolean
 }
 

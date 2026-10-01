@@ -249,6 +249,7 @@ async function createAccount(name, userPrefix) {
   })
   assert.equal(response.status, 201, await response.clone().text())
   const payload = await response.json()
+  assert.equal(payload.user.discoverable, true)
   return {
     ...jar,
     id: payload.user.id,
@@ -269,7 +270,9 @@ async function signInAccount(account) {
     body: JSON.stringify({ email: account.email, password: account.password }),
   })
   assert.equal(response.status, 200, await response.clone().text())
-  return { ...jar, id: account.id, email: account.email, username: account.username }
+  const payload = await response.json()
+  assert.equal(payload.user.discoverable, true)
+  return { ...jar, id: account.id, email: account.email, username: account.username, user: payload.user }
 }
 
 async function post(identity, path, body) {
@@ -363,7 +366,27 @@ test('encrypted requests, authorized chats, ordered idempotent delivery, and gro
   const missingAvatar = await apiRequest(nadia, replacementProfile.avatar_url)
   assert.equal(missingAvatar.status, 404)
 
-  let response = await apiRequest(ava, `/api/users?username=${encodeURIComponent(nadia.username)}`)
+  let response = await apiRequest(nadia, '/api/auth/me', {
+    method: 'PATCH',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ displayName: nadia.displayName, username: nadia.username, about: '', discoverable: false }),
+  })
+  assert.equal(response.status, 200, await response.clone().text())
+  assert.equal((await response.json()).user.discoverable, false)
+  response = await apiRequest(ava, `/api/users?username=${encodeURIComponent(nadia.username)}`)
+  assert.equal(response.status, 200)
+  assert.equal((await response.json()).users.some((match) => match.id === nadia.id), false)
+  response = await apiRequest(ava, `/api/search?q=${encodeURIComponent(nadia.username)}`)
+  assert.equal(response.status, 200)
+  assert.equal((await response.json()).people.some((match) => match.id === nadia.id), false)
+  response = await apiRequest(nadia, '/api/auth/me', {
+    method: 'PATCH',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ displayName: nadia.displayName, username: nadia.username, about: '', discoverable: true }),
+  })
+  assert.equal(response.status, 200)
+  assert.equal((await response.json()).user.discoverable, true)
+  response = await apiRequest(ava, `/api/users?username=${encodeURIComponent(nadia.username)}`)
   assert.equal(response.status, 200)
   const target = (await response.json()).users[0]
   assert.equal(target.id, nadia.id)

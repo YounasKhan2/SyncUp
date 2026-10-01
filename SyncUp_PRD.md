@@ -436,6 +436,7 @@ Objects render as compact cards in the message stream, not as grey system noise.
 - Incoming call UI (accept / decline)
 - Mute, camera on/off, end
 - Call history as a system message in the chat (“Call, 4 min”) plus an entry in Calls tab
+- Calls tab shows recent call history and current ringing/active direct calls; selecting a history item opens its conversation.
 - Device picker (mic / camera) — SHOULD
 
 ### 12.2 Phase 1 MUST
@@ -555,7 +556,7 @@ Semantic search, AI summaries as a dependency of correctness. Postgres FTS (or e
 
 ### 16.3 Badge math
 
-The Chats rail badge counts conversations with unread **reply-expected** messages (DMs, groups set to all, mentions). Pins and events do **not** increment Chats unread; they increment Updates.
+The Chats navigation badge counts distinct conversations with unread **reply-expected** messages, not the total number of unread messages. Each chat row may show its own unread-message count. In Phase 0, all DMs and groups use the all-messages behavior, so any unread incoming message makes that conversation count once. Message requests have a separate Requests badge. In Phase 1, channel mentions and notification preferences determine which Space conversations count. Pins and events do **not** increment Chats unread; they increment Updates.
 
 ---
 
@@ -602,7 +603,7 @@ The conversation header's chat name/avatar opens a dedicated details screen in p
 
 Bottom nav: **Chats | Updates | Spaces | Calls | You**. Phase 0 renders only implemented destinations (Chats, Calls, You); Updates and Spaces stay hidden until their Phase 1 screens exist.
 
-- Chats is WhatsApp-shaped: search, filters (All / Unread / Requests), list, thread.
+- Chats is WhatsApp-shaped: search, filters (All / Unread / Requests), list, thread. The Chats navigation badge counts unread conversations; each row can show its unread-message count and Requests keeps a separate badge.
 - Tapping the chat or group name/avatar opens a dedicated full-screen details view; Back returns to the thread. Details never appear as a drawer, sheet, or additional pane.
 - Group members, mutual-contact invites, and leave-group actions are managed from group details.
 - Space: home → channel list → thread. Back stack is sacred.
@@ -616,7 +617,7 @@ Always visible at the bottom of C.
 
 Primary: text field, attach, voice (Phase 1), send.
 
-`+` menu: Poll, Event, Checklist (Phase 1); never a kitchen sink. GIF/emoji picker SHOULD.
+Emoji picker SHOULD and inserts into the current draft. URLs in messages are linkified for display without changing encrypted message content. `+` menu: Poll, Event, Checklist (Phase 1); never a kitchen sink.
 
 ### 18.4 Empty states
 
@@ -641,9 +642,9 @@ Primary: text field, attach, voice (Phase 1), send.
 
 **Updates:** Needs you / Happening / Decided; object detail sheet.
 
-**Calls:** Calls tab (history + ongoing), in-call overlay.
+**Calls:** Calls tab (recent history + ringing/active direct calls), in-call overlay.
 
-**Profile:** You, profile edit, notification settings, privacy, sessions, appearance.
+**Profile:** You, profile/avatar edit, username discoverability, read-receipt and safety/privacy controls, sessions, appearance (system/light/dark; saved locally). Disabling discoverability removes the account from username search and blocks new username-based message requests without removing existing contacts. Phase 1 adds notification preferences.
 
 **Search:** Palette / full-screen search (desktop: ⌘K).
 

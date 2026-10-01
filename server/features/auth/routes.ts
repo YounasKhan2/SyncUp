@@ -71,6 +71,9 @@ authRouter.post('/sign-up', authLimiter, async (request, response, next) => {
       email: string
       username: string
       display_name: string
+      avatar_url: string | null
+      about: string
+      discoverable: boolean
       read_receipts_enabled: boolean
       session_id: string
     }>(
@@ -80,7 +83,7 @@ authRouter.post('/sign-up', authLimiter, async (request, response, next) => {
            encrypted_private_key, private_key_iv, key_vault_salt, encryption_key_version
          )
          VALUES ($1, $2, $3, $4, $5, $6::jsonb, $7, $8, $9, 1)
-         RETURNING id, email, username, display_name, read_receipts_enabled
+         RETURNING id, email, username, display_name, avatar_url, about, discoverable, read_receipts_enabled
        ), new_device AS (
          INSERT INTO devices (id, user_id, name, platform)
          SELECT $10, id, 'Web browser', 'web' FROM new_user
@@ -112,7 +115,8 @@ authRouter.post('/sign-up', authLimiter, async (request, response, next) => {
     response.status(201).json({
       user: {
         id: user.id, email: user.email, username: user.username,
-        display_name: user.display_name, read_receipts_enabled: user.read_receipts_enabled,
+        display_name: user.display_name, avatar_url: user.avatar_url, about: user.about,
+        discoverable: user.discoverable, read_receipts_enabled: user.read_receipts_enabled,
       },
       sessionId: user.session_id,
     })
@@ -143,6 +147,9 @@ authRouter.post('/sign-in', authLimiter, async (request, response, next) => {
       email: string
       username: string
       display_name: string
+      avatar_url: string | null
+      about: string
+      discoverable: boolean
       read_receipts_enabled: boolean
       password_hash: string
       encryption_public_key: JsonWebKey
@@ -150,7 +157,7 @@ authRouter.post('/sign-in', authLimiter, async (request, response, next) => {
       private_key_iv: string
       key_vault_salt: string
     }>(
-      `SELECT id, email, username, display_name, read_receipts_enabled, password_hash,
+      `SELECT id, email, username, display_name, avatar_url, about, discoverable, read_receipts_enabled, password_hash,
               encryption_public_key, encrypted_private_key, private_key_iv, key_vault_salt
        FROM users WHERE email = $1 AND deleted_at IS NULL`,
       [parsed.data.email],
@@ -170,7 +177,8 @@ authRouter.post('/sign-in', authLimiter, async (request, response, next) => {
     response.json({
       user: {
         id: user.id, email: user.email, username: user.username,
-        display_name: user.display_name, read_receipts_enabled: user.read_receipts_enabled,
+        display_name: user.display_name, avatar_url: user.avatar_url, about: user.about,
+        discoverable: user.discoverable, read_receipts_enabled: user.read_receipts_enabled,
       },
       sessionId,
       keyBundle: {
@@ -282,9 +290,10 @@ authRouter.get('/me', requireAuth, async (request: AuthenticatedRequest, respons
       display_name: string
       avatar_url: string | null
       read_receipts_enabled: boolean
+      discoverable: boolean
       about: string
     }>(
-      `SELECT id, email, username, display_name, avatar_url, about, read_receipts_enabled
+      `SELECT id, email, username, display_name, avatar_url, about, read_receipts_enabled, discoverable
        FROM users WHERE id = $1 AND deleted_at IS NULL`,
       [request.auth!.userId],
     )
@@ -510,10 +519,11 @@ authRouter.patch('/me', requireAuth, async (request: AuthenticatedRequest, respo
     const result = await pool.query(
       `UPDATE users
        SET username = $1, display_name = $2, about = $3,
-           read_receipts_enabled = COALESCE($4, read_receipts_enabled)
-       WHERE id = $5 AND deleted_at IS NULL
-       RETURNING id, email, username, display_name, avatar_url, about, read_receipts_enabled`,
-      [parsed.data.username, parsed.data.displayName, parsed.data.about, parsed.data.readReceiptsEnabled ?? null, request.auth!.userId],
+          read_receipts_enabled = COALESCE($4, read_receipts_enabled),
+          discoverable = COALESCE($5, discoverable)
+      WHERE id = $6 AND deleted_at IS NULL
+      RETURNING id, email, username, display_name, avatar_url, about, read_receipts_enabled, discoverable`,
+      [parsed.data.username, parsed.data.displayName, parsed.data.about, parsed.data.readReceiptsEnabled ?? null, parsed.data.discoverable ?? null, request.auth!.userId],
     )
     response.json({ user: result.rows[0] })
   } catch (error) {

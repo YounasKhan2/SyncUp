@@ -5,8 +5,11 @@ import { api, apiUpload } from '../../shared/api'
 import type { Session, User } from '../../shared/types'
 import { Avatar } from '../../shared/components/Avatar'
 import { SafetySettings } from './SafetySettings'
-export function AccountPanel({ user, onClose, onSaved }: {
+import type { AppearancePreference } from '../../shared/appearance'
+export function AccountPanel({ user, appearance, onAppearanceChange, onClose, onSaved }: {
   user: User
+  appearance: AppearancePreference
+  onAppearanceChange: (preference: AppearancePreference) => void
   onClose: () => void
   onSaved: (user: User) => void
 }) {
@@ -72,6 +75,7 @@ export function AccountPanel({ user, onClose, onSaved }: {
           displayName: String(form.get('displayName') ?? ''),
           username: String(form.get('username') ?? ''),
           about: String(form.get('about') ?? ''),
+          discoverable: form.get('discoverable') === 'on',
           readReceiptsEnabled: form.get('readReceiptsEnabled') === 'on',
         }),
       })
@@ -183,9 +187,28 @@ export function AccountPanel({ user, onClose, onSaved }: {
           <label><span>Username</span><div className="username-input"><span>@</span><input name="username" defaultValue={user.username} minLength={3} maxLength={24} pattern="[A-Za-z0-9_]+" required /></div></label>
           <label><span>About</span><textarea name="about" defaultValue={user.about ?? ''} rows={3} maxLength={160} placeholder="A little about you" /></label>
           <label className="profile-checkbox">
+            <input type="checkbox" name="discoverable" defaultChecked={user.discoverable ?? true} />
+            <span><strong>Username discoverability</strong><small>Let people find you by username and send you a message request.</small></span>
+          </label>
+          <label className="profile-checkbox">
             <input type="checkbox" name="readReceiptsEnabled" defaultChecked={user.read_receipts_enabled ?? true} />
             <span><strong>Read receipts</strong><small>Let other members know when you have read their messages.</small></span>
           </label>
+          <label><span>Appearance</span><select value={appearance} onChange={(event) => {
+            const preference = event.currentTarget.value
+            try {
+              if (preference === 'system' || preference === 'light' || preference === 'dark') {
+                onAppearanceChange(preference)
+              }
+              setError('')
+            } catch (appearanceError) {
+              setError(appearanceError instanceof Error ? appearanceError.message : 'Unable to save appearance preference.')
+            }
+          }}>
+            <option value="system">Use device setting</option>
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+          </select><small className="appearance-caption">Saved on this device.</small></label>
           <label><span>Email</span><input value={user.email} readOnly /></label>
           {error && <div className="form-error" role="alert">{error}</div>}
           {saved && <p className="form-success" role="status">{saved}</p>}

@@ -43,6 +43,14 @@ export function InboxPane({
   onOpenSearch,
 }: InboxPaneProps) {
   const visibleChats = chats.filter((chat) => filter === 'all' || Number(chat.unread_count) > 0)
+  const callStatus = (call: CallRecord) => {
+    if (call.status === 'ringing') return 'Ringing'
+    if (call.status === 'active') return 'In progress'
+    if (call.status === 'declined') return 'Declined'
+    if (call.status === 'missed') return 'Missed'
+    if (call.status === 'ended') return call.end_reason === 'cancelled' ? 'Cancelled' : 'Completed'
+    return call.end_reason ?? call.status
+  }
 
   return (
     <aside className="inbox-pane">
@@ -63,7 +71,7 @@ export function InboxPane({
             : <div className="call-history-list">{callHistory.map((call) => (
               <button className="call-history-item" type="button" key={call.id} onClick={() => onSelectCall(call.chat_id)}>
                 <Avatar name={call.group_title ?? call.other_name ?? 'Call'} src={call.other_avatar_url} />
-                <span className="chat-row-copy"><strong>{call.group_title ?? call.other_name ?? 'Contact'}</strong><small>{call.status === 'declined' ? 'Declined' : call.status === 'ended' ? 'Completed' : call.end_reason ?? call.status} · {call.is_group ? 'Group ' : ''}{call.call_type === 'video' ? 'Video' : 'Audio'}</small></span>
+                <span className="chat-row-copy"><strong>{call.group_title ?? call.other_name ?? 'Contact'}</strong><small>{callStatus(call)} · {call.is_group ? 'Group ' : ''}{call.call_type === 'video' ? 'Video' : 'Audio'}</small></span>
                 <time>{new Date(call.created_at).toLocaleDateString()}</time>
               </button>
             ))}</div>

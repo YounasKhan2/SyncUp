@@ -6,6 +6,7 @@ import { Avatar } from '../../shared/components/Avatar'
 import type { MediaV2UploadSnapshot } from '../media/v2/uploadManager'
 import { MessageAttachment } from './MessageAttachment'
 import { MediaViewer, type MediaViewerItem } from '../media/MediaViewer'
+import { splitMessageLinks } from '../../shared/presentation'
 
 type MessageListProps = {
   messages: DisplayMessage[]
@@ -70,6 +71,7 @@ export function MessageList({ messages, calls, members, currentUserId, loading, 
               ? groupReceipt ? `Delivered ${deliveredCount}/${recipients.length}` : 'Delivered'
               : 'Sent'
           const receiptState = readCount > 0 ? 'read' : deliveredCount > 0 ? 'delivered' : 'sent'
+          const textParts = message.deleted_at || message.pending ? [{ text: '' }] : splitMessageLinks(message.text)
           return (
             <article className={`message-row${mine ? ' message-mine' : ''}`} key={message.id}>
               {!mine && <Avatar name={sender?.displayName ?? 'Member'} src={sender?.avatar_url} className="message-avatar" />}
@@ -77,7 +79,9 @@ export function MessageList({ messages, calls, members, currentUserId, loading, 
                 {!mine && <div className="message-meta"><strong>{sender?.displayName ?? 'Member'}</strong><span>@{sender?.username}</span></div>}
                 <div className="message-bubble">
                   {parent && <div className="reply-quote">{membersById.get(parent.sender_id)?.displayName}: {parent.deleted_at ? 'Message deleted' : parent.text}</div>}
-                  <p>{message.deleted_at ? 'This message was deleted.' : message.pending ? (message.attachments?.some((a: {content_type: string}) => a.content_type.startsWith('audio/')) && !message.text ? '' : 'Sending…') : message.text}</p>
+                  <p>{message.deleted_at ? 'This message was deleted.' : message.pending ? (message.attachments?.some((a: {content_type: string}) => a.content_type.startsWith('audio/')) && !message.text ? '' : 'Sending…') : textParts.map((part, index) => part.href
+                    ? <a href={part.href} target="_blank" rel="noopener noreferrer" key={`${index}:${part.href}`}>{part.text}</a>
+                    : <span key={index}>{part.text}</span>)}</p>
                   {!message.deleted_at && message.attachments?.filter((attachment) => !attachment.is_preview).map((attachment) => <MessageAttachment key={attachment.id} attachment={attachment} pending={message.pending} onOpen={(attachment.content_type.startsWith('image/') || attachment.content_type.startsWith('video/')) && !message.pending ? () => setViewerAttachmentId(attachment.id) : undefined} />)}
                   {message.edited_at && !message.deleted_at && <span className="message-edited">edited</span>}
                   <span className="message-footer">

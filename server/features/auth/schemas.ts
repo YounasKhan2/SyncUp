@@ -38,5 +38,6 @@ export const profileSchema = z.object({
     .transform((value) => value.toLowerCase()),
   displayName: z.string().trim().min(1).max(60),
   about: z.string().trim().max(160).default(''),
+  discoverable: z.boolean().optional(),
   readReceiptsEnabled: z.boolean().optional(),
 })
