@@ -28,10 +28,10 @@ import type {
 } from "../../shared/types";
 import { BrandMark } from "../../shared/components/BrandMark";
 import { ConversationHeader } from "./ConversationHeader";
+import { ChatDetailsScreen } from "./ChatDetailsScreen";
 import { MessageComposer } from "./MessageComposer";
 import { MessageList } from "./MessageList";
 import { ReportDialog } from "./ReportDialog";
-import { GroupMembersDialog } from "./GroupMembersDialog";
 import { prepareVideoV2 } from "../media/v2/prepareVideo";
 import { prepareVoiceV2 } from "../media/v2/prepareVoice";
 import type { VoiceDraft } from "./VoiceRecorder";
@@ -39,6 +39,7 @@ import { mediaV2UploadManager } from "../media/v2/runtime";
 import type { MediaV2UploadSnapshot } from "../media/v2/uploadManager";
 import { createGroupCallKey } from "../calls/groupCallCrypto";
 import { Avatar } from "../../shared/components/Avatar";
+import type { SearchableMessage } from "./SearchDialog";
 export function Conversation({
   user,
   chatId,
@@ -47,6 +48,7 @@ export function Conversation({
   pending,
   onQueued,
   onCallStarted,
+  onSearchableMessages,
 }: {
   user: User;
   chatId: string | null;
@@ -55,6 +57,7 @@ export function Conversation({
   pending: PendingMessage[];
   onQueued: (message: PendingMessage) => void;
   onCallStarted: (call: ActiveCall) => void;
+  onSearchableMessages: (chatId: string, messages: SearchableMessage[]) => void;
 }) {
   const [chat, setChat] = useState<{
     id: string;
@@ -74,7 +77,7 @@ export function Conversation({
   const [reportingMessageId, setReportingMessageId] = useState<string | null>(
     null,
   );
-  const [managingMembers, setManagingMembers] = useState(false);
+  const [detailsOpen, setDetailsOpen] = useState(false);
   const [messageSearchOpen, setMessageSearchOpen] = useState(false);
   const [messageSearch, setMessageSearch] = useState("");
   const [hasOlderMessages, setHasOlderMessages] = useState(false);
@@ -105,6 +108,20 @@ export function Conversation({
   const stagedFileKeys = useRef(new Map<string, string>());
   const sentV2AttachmentIds = useRef(new Set<string>());
   const processingV2AttachmentIds = useRef(new Set<string>());
+
+  useEffect(() => {
+    if (!chatId || !chat) return;
+    onSearchableMessages(chatId, messages
+      .filter((message) => !message.pending && !message.deleted_at && message.text.trim() && !message.text.startsWith("Unable to decrypt"))
+      .map((message) => ({
+        id: message.id,
+        chatId,
+        senderName: chat.members.find((member) => member.id === message.sender_id)?.displayName
+          ?? (message.sender_id === user.id ? "You" : "Member"),
+        text: message.text,
+        createdAt: message.created_at,
+      })));
+  }, [chat, chatId, messages, onSearchableMessages, user.id]);
 
   const loadConversation = useCallback(
     async (id: string, initial: boolean) => {
@@ -968,14 +985,12 @@ export function Conversation({
     return Number(left.server_seq) - Number(right.server_seq);
   });
   return (
-    <section
-      className="conversation-pane active-conversation"
-      aria-label={title}
-    >
+    <div className="conversation-layout">
+    <section className={`conversation-pane active-conversation${detailsOpen ? " conversation-hidden" : ""}`} aria-label={title} aria-hidden={detailsOpen}>
       <ConversationHeader
         title={title}
         avatarUrl={chat?.kind === "direct" ? peer?.avatar_url : undefined}
-        isGroup={chat?.kind === "group"}
+        canOpenDetails={Boolean(chat)}
         subtitle={
           typingSubtitle ??
           (chat?.kind === "group"
@@ -984,7 +999,7 @@ export function Conversation({
         }
         callStarting={callStarting}
         online={online}
-        onManageGroup={() => setManagingMembers(true)}
+        onOpenDetails={() => setDetailsOpen(true)}
         onSearchMessages={() => setMessageSearchOpen((open) => !open)}
         onBack={() => window.dispatchEvent(new Event("syncup-close-chat"))}
         onStartCall={(type) => void startCall(type)}
@@ -1097,19 +1112,23 @@ export function Conversation({
           onClose={() => setReportingMessageId(null)}
         />
       )}
-      {managingMembers && chat?.kind === "group" && (
-        <GroupMembersDialog
-          chatId={chat.id}
-          members={chat.members}
-          currentUserId={user.id}
-          onClose={() => setManagingMembers(false)}
-          onLeave={() => {
-            setManagingMembers(false);
-            window.dispatchEvent(new Event("syncup-close-chat"));
-            refreshInbox();
-          }}
-        />
-      )}
     </section>
+    {detailsOpen && chat && <ChatDetailsScreen
+      chatId={chat.id}
+      title={title}
+      isGroup={chat.kind === "group"}
+      members={chat.members}
+      currentUserId={user.id}
+      onBack={() => setDetailsOpen(false)}
+      onMembersChanged={() => {
+        void loadConversation(chat.id, false);
+        refreshInbox();
+      }}
+      onLeave={() => {
+        window.dispatchEvent(new Event("syncup-close-chat"));
+        refreshInbox();
+      }}
+    />}
+    </div>
   );
 }

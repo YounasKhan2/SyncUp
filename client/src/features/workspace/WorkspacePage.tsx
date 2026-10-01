@@ -9,15 +9,17 @@ import { Avatar } from '../../shared/components/Avatar'
 import { AccountPanel } from '../account/AccountPanel'
 import { NewConversation } from '../messaging/NewConversation'
 import { RequestsPanel } from '../messaging/RequestsPanel'
-import { SearchDialog } from '../messaging/SearchDialog'
+import { SearchDialog, type SearchableMessage } from '../messaging/SearchDialog'
 import { Conversation } from '../messaging/Conversation'
 import { CallWindow } from '../calls/CallWindow'
 import { InboxPane } from './InboxPane'
+import { MobileNavigation } from './MobileNavigation'
 import { WorkspaceRail } from './WorkspaceRail'
 export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: () => void }) {
   const [accountOpen, setAccountOpen] = useState(false)
   const [currentUser, setCurrentUser] = useState(user)
   const [chats, setChats] = useState<Chat[]>([])
+  const [searchableMessages, setSearchableMessages] = useState<Record<string, SearchableMessage[]>>({})
   const [requests, setRequests] = useState<IncomingRequest[]>([])
   const [filter, setFilter] = useState<'all' | 'unread'>('all')
   const [showRequests, setShowRequests] = useState(false)
@@ -114,6 +116,10 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
     })
   }, [refreshInbox])
 
+  const updateSearchableMessages = useCallback((chatId: string, messages: SearchableMessage[]) => {
+    setSearchableMessages((current) => ({ ...current, [chatId]: messages }))
+  }, [])
+
   useEffect(() => {
     if (activeCall) return
     let active = true
@@ -177,6 +183,14 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
       window.removeEventListener('syncup-refresh-chat', refreshChat)
     }
   }, [refreshInbox])
+
+  useEffect(() => {
+    const adjustMobileCallsView = () => {
+      if (showCalls && window.matchMedia('(max-width: 700px)').matches) setActiveChatId(null)
+    }
+    window.addEventListener('resize', adjustMobileCallsView)
+    return () => window.removeEventListener('resize', adjustMobileCallsView)
+  }, [showCalls])
 
   useEffect(() => {
     const openSearch = (event: KeyboardEvent) => {
@@ -310,17 +324,32 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
   function openCallHistory() {
     setShowCalls(true)
     setShowRequests(false)
+    if (window.matchMedia('(max-width: 700px)').matches) setActiveChatId(null)
     refreshCallHistory().catch((loadError: unknown) => {
       setError(loadError instanceof Error ? loadError.message : 'Unable to load call history.')
     })
   }
 
+  function showChatsHome() {
+    setShowCalls(false)
+    setShowRequests(false)
+    if (window.matchMedia('(max-width: 700px)').matches) setActiveChatId(null)
+  }
+
+  function selectChat(chatId: string) {
+    setShowCalls(false)
+    setShowRequests(false)
+    setActiveChatId(chatId)
+  }
+
   return (
-    <main className={`workspace${activeChatId ? ' has-active-chat' : ''}`}>
+    <>
+    <a className="skip-link" href="#workspace-main">Skip to main content</a>
+    <main id="workspace-main" tabIndex={-1} className={`workspace${activeChatId ? ' has-active-chat' : ''}`}>
       <WorkspaceRail
         user={currentUser}
         showCalls={showCalls}
-        onShowChats={() => setShowCalls(false)}
+        onShowChats={showChatsHome}
         onShowCalls={openCallHistory}
         onOpenAccount={() => setAccountOpen(true)}
       />
@@ -335,8 +364,8 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
         drafts={drafts}
         activeChatId={activeChatId}
         online={online}
-        onSelectChat={setActiveChatId}
-        onSelectCall={(chatId) => { setActiveChatId(chatId); setShowCalls(false) }}
+        onSelectChat={selectChat}
+        onSelectCall={selectChat}
         onSelectRequest={() => setShowRequests(false)}
         onSelectFilter={(value) => { setFilter(value); setShowRequests(false) }}
         onShowRequests={() => { setShowRequests(true); setFilter('all') }}
@@ -352,6 +381,14 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
         pending={pending}
         onQueued={(message) => setPending((current) => [...current, message])}
         onCallStarted={setActiveCall}
+        onSearchableMessages={updateSearchableMessages}
+      />
+      <MobileNavigation
+        section={showCalls ? 'calls' : 'chats'}
+        accountOpen={accountOpen}
+        onShowChats={showChatsHome}
+        onShowCalls={openCallHistory}
+        onOpenAccount={() => setAccountOpen(true)}
       />
       <footer className="workspace-footer"><button type="button" onClick={signOut}>Sign out</button><span>Chats · End-to-end encrypted</span></footer>
       {accountOpen && <AccountPanel user={currentUser} onClose={() => setAccountOpen(false)} onSaved={setCurrentUser} />}
@@ -362,6 +399,8 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
         void refreshInbox()
       }} />}
       {searchOpen && <SearchDialog
+        chats={chats}
+        messages={Object.values(searchableMessages).flat()}
         onClose={() => setSearchOpen(false)}
         onSelectChat={(chatId) => {
           setSearchOpen(false)
@@ -376,9 +415,9 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
         }}
       />}
       {showRequests && <RequestsPanel requests={requests} onAccept={(item) => void acceptRequest(item)} onIgnore={(item) => void ignoreRequest(item)} onClose={() => setShowRequests(false)} />}
-      {incomingCall && !activeCall && <section className="incoming-call-banner" aria-label="Incoming call">
+      {incomingCall && !activeCall && <section className="incoming-call-banner" role="alertdialog" aria-modal="true" aria-labelledby="incoming-call-title">
         <Avatar name={incomingCall.group_title ?? incomingCall.caller_name} src={incomingCall.is_group ? undefined : incomingCall.caller_avatar_url} />
-        <div><strong>{incomingCall.group_title ?? incomingCall.caller_name}</strong><small>{incomingCall.is_group ? `${incomingCall.caller_name} is calling` : `Incoming ${incomingCall.call_type} call`}</small></div>
+        <div><strong id="incoming-call-title">{incomingCall.group_title ?? incomingCall.caller_name}</strong><small>{incomingCall.is_group ? `${incomingCall.caller_name} is calling` : `Incoming ${incomingCall.call_type} call`}</small></div>
         <button type="button" className="answer-call-button" onClick={() => void acceptIncomingCall()}>Answer</button>
         <button type="button" className="decline-call-button" onClick={() => void declineIncomingCall()}>Decline</button>
       </section>}
@@ -393,5 +432,6 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
         onClose={closeFinishedCall}
       />}
     </main>
+    </>
   )
 }

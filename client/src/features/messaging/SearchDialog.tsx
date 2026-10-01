@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Search, X } from 'lucide-react'
 import { Avatar } from '../../shared/components/Avatar'
 import { api } from '../../shared/api'
+import type { Chat } from '../../shared/types'
 
 type SearchResults = {
   people: { id: string; username: string; display_name: string; avatar_url: string | null }[]
@@ -9,7 +10,17 @@ type SearchResults = {
   privacy: string
 }
 
-export function SearchDialog({ onClose, onSelectChat, onSelectPerson }: {
+export type SearchableMessage = {
+  id: string
+  chatId: string
+  senderName: string
+  text: string
+  createdAt: string
+}
+
+export function SearchDialog({ chats, messages, onClose, onSelectChat, onSelectPerson }: {
+  chats: Chat[]
+  messages: SearchableMessage[]
   onClose: () => void
   onSelectChat: (chatId: string) => void
   onSelectPerson: (username: string) => void
@@ -18,10 +29,22 @@ export function SearchDialog({ onClose, onSelectChat, onSelectPerson }: {
   const [results, setResults] = useState<SearchResults>({ people: [], chats: [], privacy: '' })
   const [searching, setSearching] = useState(false)
   const [error, setError] = useState('')
+  const value = query.trim()
+  const normalizedQuery = value.toLocaleLowerCase()
+  const accessibleChatIds = new Set(chats.map((chat) => chat.id))
+  const matchedMessages = value.length >= 2
+    ? messages.filter((message) => accessibleChatIds.has(message.chatId)
+      && message.text.toLocaleLowerCase().includes(normalizedQuery)).slice(0, 20)
+    : []
+  const chatsById = new Map(chats.map((chat) => [chat.id, chat]))
 
   useEffect(() => {
-    const value = query.trim()
-    if (value.length < 2) return
+    if (value.length < 2) {
+      setSearching(false)
+      setResults({ people: [], chats: [], privacy: '' })
+      setError('')
+      return
+    }
     const controller = new AbortController()
     const timeout = window.setTimeout(() => {
       void api<SearchResults>(`/api/search?q=${encodeURIComponent(value)}`, { signal: controller.signal })
@@ -37,7 +60,7 @@ export function SearchDialog({ onClose, onSelectChat, onSelectPerson }: {
       window.clearTimeout(timeout)
       controller.abort()
     }
-  }, [query])
+  }, [value])
 
   useEffect(() => {
     const closeOnEscape = (event: KeyboardEvent) => {
@@ -68,11 +91,25 @@ export function SearchDialog({ onClose, onSelectChat, onSelectPerson }: {
               setSearching(true)
               setError('')
             }
-          }} placeholder="People or chat names" aria-label="Search people and chats" />
+          }} placeholder="People, chats, or messages" aria-label="Search people, chats, and loaded messages" />
           <kbd>ESC</kbd>
         </label>
         <div className="global-search-results" aria-live="polite">
-          {query.trim().length > 0 && query.trim().length < 2 && <p className="search-empty">Enter at least 2 characters.</p>}
+          {value.length > 0 && value.length < 2 && <p className="search-empty">Enter at least 2 characters.</p>}
+          {value.length >= 2 && <>
+            <p className="search-section-label">MESSAGES LOADED THIS SESSION</p>
+            {matchedMessages.map((message) => {
+              const chat = chatsById.get(message.chatId)
+              const title = chat?.display_title ?? chat?.title ?? 'Conversation'
+              return (
+                <button className="search-result search-message-result" type="button" key={`${message.chatId}:${message.id}`} onClick={() => onSelectChat(message.chatId)} aria-label={`Open message in ${title}`}>
+                  <span className="search-message-icon" aria-hidden="true">↳</span>
+                  <span><strong>{title}</strong><small>{message.senderName} · {new Date(message.createdAt).toLocaleString()}</small><span className="search-message-snippet">{message.text}</span></span>
+                </button>
+              )
+            })}
+            {matchedMessages.length === 0 && <p className="search-empty">No matching decrypted messages have been loaded in this session.</p>}
+          </>}
           {searching && <p className="search-empty" role="status">Searching people and chats…</p>}
           {error && <p className="search-error" role="alert">{error}</p>}
           {!searching && !error && query.trim().length >= 2 && results.people.length > 0 && <>
@@ -93,9 +130,9 @@ export function SearchDialog({ onClose, onSelectChat, onSelectPerson }: {
               </button>
             ))}
           </>}
-          {!searching && !error && query.trim().length >= 2 && results.people.length === 0 && results.chats.length === 0 && <p className="search-empty">No people or chats found.</p>}
+          {!searching && !error && value.length >= 2 && results.people.length === 0 && results.chats.length === 0 && <p className="search-empty">No people or chats found.</p>}
         </div>
-        <p className="search-privacy-note">Encrypted messages are never searched on the server. Use search inside a conversation to find messages already loaded on this device.</p>
+        <p className="search-privacy-note">Encrypted message text is searched locally and never sent to the server. Global results include decrypted messages loaded during this app session; search inside a chat to filter its currently loaded history.</p>
       </section>
     </div>
   )

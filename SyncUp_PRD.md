@@ -515,7 +515,7 @@ Out of v1. If shipped later: disables server search, bots, and server-side objec
 
 ### 15.1 Phase 0
 
-- Global search: people (username), chats by title, messages in **server-readable** chats the user can access, plus **local** search of E2EE plaintext the device has.
+- Global search: people (username), chats by title, messages in **server-readable** chats the user can access, plus **local-only** search of decrypted E2EE messages loaded during the current app session. Message text from E2EE chats is never sent to or searched by the server.
 - Conversation search: filter current chat.
 - Results permission-checked.
 
@@ -584,31 +584,31 @@ Admin/ops console is **out of the end-user app**; a stub internal review queue f
 
 ## 18. Information architecture and UX
 
-### 18.1 Desktop (≥ 1100px) — four panes
+### 18.1 Desktop (≥ 1100px) — chat list and conversation
 
 ```
-[ A rail 72px ][ B list 280px ][ C conversation flex ][ D context 320px, collapsible ]
+[ A rail 72px ][ B list 280px ][ C conversation flex ]
 ```
 
 | Pane | Contains | Never contains |
 |---|---|---|
 | **A Rail** | Chats, Updates, Spaces, Calls, You (avatar) | Message text |
 | **B List** | Inbox **or** Space channel list + members | Transcript |
-| **C Main** | Active chat, composer locked to bottom | Settings, member admin |
-| **D Context** | Pinned, files, people, object detail — on demand | A second inbox |
+| **C Main** | Active chat and composer locked to bottom, or the selected chat's full-screen details | Settings or member admin as a third pane |
 
-Default: D is collapsed. Opens when user clicks a card, “Files”, or “Pinned”.
+The conversation header's chat name/avatar opens a dedicated details screen in place of the conversation. Back returns to the same conversation without discarding its draft or scroll position. Group members, mutual-contact invites, and leave-group actions live on group details.
 
 ### 18.2 Mobile (≤ 700px)
 
-Bottom nav: **Chats | Updates | Spaces | Calls | You**
+Bottom nav: **Chats | Updates | Spaces | Calls | You**. Phase 0 renders only implemented destinations (Chats, Calls, You); Updates and Spaces stay hidden until their Phase 1 screens exist.
 
 - Chats is WhatsApp-shaped: search, filters (All / Unread / Requests), list, thread.
+- Tapping the chat or group name/avatar opens a dedicated full-screen details view; Back returns to the thread. Details never appear as a drawer, sheet, or additional pane.
+- Group members, mutual-contact invites, and leave-group actions are managed from group details.
 - Space: home → channel list → thread. Back stack is sacred.
-- Context is a sheet, not a fourth column.
 - Incoming call is a full-screen overlay.
 
-Tablet (700–1099px): rail + list + conversation; context as sheet.
+Tablet (701–1099px): rail + list + conversation; details replace the conversation with Back navigation. At ≤700px, the implemented bottom navigation remains available in list, thread, and details views, and the composer stays above it and the device safe area.
 
 ### 18.3 Composer
 
