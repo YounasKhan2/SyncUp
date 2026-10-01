@@ -86,6 +86,8 @@ export function Conversation({
     members: ChatMember[];
   } | null>(null);
   const [messages, setMessages] = useState<DisplayMessage[]>([]);
+  const messagesRef = useRef(messages);
+  messagesRef.current = messages;
   const [callHistory, setCallHistory] = useState<CallRecord[]>([]);
   const [draft, setDraft] = useState("");
   const [replyTo, setReplyTo] = useState<DisplayMessage | null>(null);
@@ -375,9 +377,15 @@ export function Conversation({
       void loadConversation(chatId, false);
       refreshInbox();
     });
-    for (const eventName of ["message.updated", "message.reactions", "message.pinned"]) {
+    for (const eventName of ["message.updated", "message.pinned"]) {
       source.addEventListener(eventName, () => void loadConversation(chatId, false));
     }
+    source.addEventListener("message.reactions", (event) => {
+      const update = JSON.parse((event as MessageEvent<string>).data) as {
+        messageId: string;
+      };
+      void refreshMessageReactions(update.messageId);
+    });
     source.addEventListener("message.delivered", (event) => {
       const update = JSON.parse((event as MessageEvent<string>).data) as {
         userId: string;
@@ -914,16 +922,57 @@ export function Conversation({
 
   async function reactTo(message: DisplayMessage, emoji: string) {
     try {
-      await api(`/api/messages/${message.id}/reactions`, {
+      const result = await api<{ active: boolean }>(`/api/messages/${message.id}/reactions`, {
         method: "POST",
         body: JSON.stringify({ emoji }),
       });
-      if (chatId) await loadConversation(chatId, false);
+      setMessages((current) => current.map((item) => {
+        if (item.id !== message.id) return item;
+        const reactions = item.reactions ?? [];
+        if (!result.active) {
+          return {
+            ...item,
+            reactions: reactions.filter(
+              (reaction) => !(reaction.user_id === user.id && reaction.emoji === emoji),
+            ),
+          };
+        }
+        return {
+          ...item,
+          reactions: [
+            ...reactions.filter((reaction) => reaction.user_id !== user.id),
+            { user_id: user.id, emoji },
+          ],
+        };
+      }));
     } catch (reactionError) {
       setError(
         reactionError instanceof Error
           ? reactionError.message
           : "Unable to update reaction.",
+      );
+    }
+  }
+
+  async function refreshMessageReactions(messageId: string) {
+    const target = messagesRef.current.find((message) => message.id === messageId);
+    if (!chatId || !target) return;
+    try {
+      const result = await api<{ messages: EncryptedChatMessage[] }>(
+        `/api/chats/${chatId}/messages?before_seq=${Number(target.server_seq) + 1}&limit=1`,
+      );
+      const updated = result.messages.find((message) => message.id === messageId);
+      if (!updated) return;
+      setMessages((current) => current.map((message) =>
+        message.id === messageId
+          ? { ...message, reactions: updated.reactions }
+          : message,
+      ));
+    } catch (reactionError) {
+      setError(
+        reactionError instanceof Error
+          ? reactionError.message
+          : "Unable to refresh message reactions.",
       );
     }
   }

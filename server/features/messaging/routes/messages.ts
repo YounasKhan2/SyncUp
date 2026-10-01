@@ -573,12 +573,15 @@ messageRoutes.post('/messages/:id/reactions', async (request: AuthenticatedReque
       response.status(404).json({ error: { code: 'not_found', message: 'Message not found.' } })
       return
     }
-    const existing = await client.query(
-      `DELETE FROM message_reactions WHERE message_id = $1 AND user_id = $2 AND emoji = $3
-       RETURNING message_id`,
-      [messageId.data, request.auth!.userId, input.data.emoji],
+    const existing = await client.query<{ emoji: string }>(
+      `SELECT emoji FROM message_reactions WHERE message_id = $1 AND user_id = $2`,
+      [messageId.data, request.auth!.userId],
     )
-    const active = existing.rowCount === 0
+    const active = existing.rows[0]?.emoji !== input.data.emoji
+    await client.query(
+      `DELETE FROM message_reactions WHERE message_id = $1 AND user_id = $2`,
+      [messageId.data, request.auth!.userId],
+    )
     if (active) {
       await client.query(
        `INSERT INTO message_reactions (message_id, user_id, emoji) VALUES ($1, $2, $3)`,
