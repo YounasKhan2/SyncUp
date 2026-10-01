@@ -154,7 +154,8 @@ mediaV2Router.post('/uploads/v2/intent', limiter, async (request: AuthenticatedR
         JSON.stringify(input.data.keyEnvelopes), input.data.posterAttachmentId ?? null, expiresAt, input.data.mediaKind,
         input.data.encryptionVersion, input.data.plaintextSize, input.data.ciphertextSize,
         input.data.chunkSize, input.data.chunkCount, input.data.mediaMode ?? null,
-        input.data.durationMs ?? null, input.data.width ?? null, input.data.height ?? null, JSON.stringify(input.data.waveform ?? null),
+        input.data.durationMs ?? null, input.data.width ?? null, input.data.height ?? null,
+        input.data.waveform == null ? null : JSON.stringify(input.data.waveform),
       ],
     )
     await client.query(

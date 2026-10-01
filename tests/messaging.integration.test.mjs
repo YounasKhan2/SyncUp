@@ -375,6 +375,53 @@ test('encrypted requests, authorized chats, ordered idempotent delivery, and gro
   response = await apiRequest(chris, `/api/uploads/${uploadIntent.attachmentId}`)
   assert.equal(response.status, 404)
 
+  const posterPlaintext = encoder.encode('Encrypted video poster content.')
+  const encryptedPoster = await encryptAttachment(posterPlaintext, chat.members)
+  response = await post(ava, '/api/uploads/intent', {
+    chatId: messageRequest.chatId,
+    filename: 'video-preview.jpg',
+    contentType: 'image/jpeg',
+    sizeBytes: posterPlaintext.byteLength,
+    nonce: encryptedPoster.nonce,
+    keyEnvelopes: encryptedPoster.keyEnvelopes,
+  })
+  assert.equal(response.status, 201, await response.clone().text())
+  const posterIntent = await response.json()
+  const posterUpload = await apiRequest(ava, `/api/uploads/${posterIntent.attachmentId}/content`, {
+    method: 'PUT',
+    headers: { 'content-type': 'application/octet-stream' },
+    body: encryptedPoster.ciphertext,
+  })
+  assert.equal(posterUpload.status, 204, await posterUpload.text())
+  response = await post(ava, `/api/uploads/${posterIntent.attachmentId}/complete`, {})
+  assert.equal(response.status, 204)
+
+  const videoEnvelope = await encryptAttachment(filePlaintext, chat.members)
+  response = await post(ava, '/api/uploads/v2/intent', {
+    attachmentId: randomUUID(),
+    chatId: messageRequest.chatId,
+    filename: 'test-video.mp4',
+    contentType: 'video/mp4',
+    mediaKind: 'video',
+    mediaMode: 'original',
+    posterAttachmentId: posterIntent.attachmentId,
+    plaintextSize: 1000,
+    ciphertextSize: 1052,
+    chunkSize: 5 * 1024 * 1024,
+    chunkCount: 1,
+    encryptionVersion: 2,
+    keyEnvelopes: videoEnvelope.keyEnvelopes,
+    durationMs: 1000,
+    width: 640,
+    height: 360,
+  })
+  assert.equal(response.status, 201, await response.clone().text())
+  const videoIntent = await response.json()
+  response = await apiRequest(ava, `/api/uploads/v2/${videoIntent.attachmentId}/session`, {
+    method: 'DELETE',
+  })
+  assert.equal(response.status, 204)
+
   const encrypted = await encryptMessage('Message two should exist once.', chat.members)
   const duplicateAttachments = await post(ava, `${chatPath}/messages`, {
     ...encrypted,
