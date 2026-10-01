@@ -105,9 +105,30 @@ export type CallRecord = {
   caller_name?: string
   callee_name?: string
   caller_username?: string
+  is_group?: boolean
+  group_title?: string
+  participant_count?: number
 }
 
-export type ActiveCall = { id: string; chatId: string; callType: 'audio' | 'video'; title: string }
+export type IncomingCall = {
+  id: string
+  chat_id: string
+  call_type: 'audio' | 'video'
+  caller_name: string
+  caller_username: string
+  is_group?: boolean
+  group_title?: string
+}
+
+export type ActiveCall = {
+  id: string
+  chatId: string
+  callType: 'audio' | 'video'
+  title: string
+  isGroup?: boolean
+  isHost?: boolean
+  e2eeKey?: Uint8Array
+}
 
 export type StagedAttachment = {
   id: string

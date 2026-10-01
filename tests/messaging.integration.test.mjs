@@ -71,6 +71,51 @@ async function encryptMessage(text, recipients) {
   }
 }
 
+async function wrapCallKey(rawKey, recipients) {
+  const keyEnvelopes = {}
+  for (const recipient of recipients) {
+    const publicKey = await webcrypto.subtle.importKey(
+      'jwk',
+      recipient.publicKey,
+      { name: 'RSA-OAEP', hash: 'SHA-256' },
+      false,
+      ['encrypt'],
+    )
+    keyEnvelopes[recipient.id] = encode(new Uint8Array(
+      await webcrypto.subtle.encrypt({ name: 'RSA-OAEP' }, publicKey, rawKey),
+    ))
+  }
+  return keyEnvelopes
+}
+
+async function unwrapCallKey(envelope, recipient) {
+  const material = await webcrypto.subtle.importKey('raw', encoder.encode(recipient.password), 'PBKDF2', false, ['deriveKey'])
+  const wrappingKey = await webcrypto.subtle.deriveKey(
+    { name: 'PBKDF2', salt: decode(recipient.keyBundle.vaultSalt), iterations: 310_000, hash: 'SHA-256' },
+    material,
+    { name: 'AES-GCM', length: 256 },
+    false,
+    ['decrypt'],
+  )
+  const privateKeyBytes = await webcrypto.subtle.decrypt(
+    { name: 'AES-GCM', iv: decode(recipient.keyBundle.privateKeyIv) },
+    wrappingKey,
+    decode(recipient.keyBundle.encryptedPrivateKey),
+  )
+  const privateKey = await webcrypto.subtle.importKey(
+    'pkcs8',
+    privateKeyBytes,
+    { name: 'RSA-OAEP', hash: 'SHA-256' },
+    false,
+    ['decrypt'],
+  )
+  return new Uint8Array(await webcrypto.subtle.decrypt(
+    { name: 'RSA-OAEP' },
+    privateKey,
+    decode(envelope),
+  ))
+}
+
 async function encryptAttachment(plaintext, recipients) {
   const contentKey = await webcrypto.subtle.generateKey({ name: 'AES-GCM', length: 256 }, true, ['encrypt', 'decrypt'])
   const rawKey = new Uint8Array(await webcrypto.subtle.exportKey('raw', contentKey))
@@ -499,7 +544,51 @@ test('encrypted requests, authorized chats, ordered idempotent delivery, and gro
   assert.equal(response.status, 201, await response.clone().text())
   const group = await response.json()
   response = await apiRequest(ava, `/api/chats/${group.chatId}`)
-  assert.equal((await response.json()).chat.members.length, 2)
+  const groupChat = (await response.json()).chat
+  assert.equal(groupChat.members.length, 2)
+  const groupCallKey = webcrypto.getRandomValues(new Uint8Array(32))
+  const groupCallEnvelopes = await wrapCallKey(groupCallKey, groupChat.members)
+  response = await post(ava, '/api/group-calls', {
+    chatId: group.chatId,
+    callType: 'audio',
+    keyEnvelopes: { [ava.id]: groupCallEnvelopes[ava.id] },
+  })
+  assert.equal(response.status, 409)
+  response = await post(ava, '/api/group-calls', {
+    chatId: group.chatId,
+    callType: 'audio',
+    keyEnvelopes: groupCallEnvelopes,
+  })
+  let groupCallId = null
+  if (response.status === 503) {
+    assert.equal((await response.json()).error.code, 'service_unavailable')
+  } else {
+    assert.equal(response.status, 201, await response.clone().text())
+    groupCallId = (await response.json()).call.id
+    response = await post(ava, '/api/group-calls', {
+      chatId: group.chatId,
+      callType: 'audio',
+      keyEnvelopes: groupCallEnvelopes,
+    })
+    assert.equal(response.status, 409)
+    response = await post(ava, `/api/chats/${group.chatId}/members`, { username: nadia.username })
+    assert.equal(response.status, 409)
+    response = await apiRequest(nadia, '/api/group-calls/incoming')
+    const incomingGroupCall = (await response.json()).calls.find((call) => call.id === groupCallId)
+    assert.ok(incomingGroupCall)
+    assert.equal(incomingGroupCall.group_title, 'Launch crew')
+    assert.equal(Object.hasOwn(incomingGroupCall, 'key_envelope'), false)
+    response = await post(nadia, `/api/group-calls/${groupCallId}/answer`, {})
+    assert.equal(response.status, 200, await response.clone().text())
+    const answeredGroupCall = (await response.json()).call
+    assert.equal(answeredGroupCall.key_envelope, groupCallEnvelopes[nadia.id])
+    assert.deepEqual(await unwrapCallKey(answeredGroupCall.key_envelope, nadia), groupCallKey)
+    response = await apiRequest(nadia, `/api/group-calls/${groupCallId}/token`, { method: 'POST' })
+    assert.equal(response.status, 200, await response.clone().text())
+    response = await apiRequest(chris, `/api/group-calls/${groupCallId}/status`)
+    assert.equal(response.status, 404)
+  }
+  groupCallKey.fill(0)
   const chrisFirstContact = await encryptMessage('Let’s connect before adding you to a group.', [ava, chris])
   response = await post(ava, '/api/requests', {
     username: chris.username,
@@ -511,12 +600,69 @@ test('encrypted requests, authorized chats, ordered idempotent delivery, and gro
   assert.equal(response.status, 200)
   response = await post(ava, `/api/chats/${group.chatId}/members`, { username: chris.username })
   assert.equal(response.status, 201, await response.clone().text())
+  let leaveTriggeredCallId = null
+  if (groupCallId) {
+    response = await apiRequest(nadia, `/api/group-calls/${groupCallId}/status`)
+    assert.equal(response.status, 200)
+    assert.equal((await response.json()).status, 'ended')
+    response = await apiRequest(nadia, `/api/group-calls/${groupCallId}/token`, { method: 'POST' })
+    assert.equal(response.status, 404)
+    response = await apiRequest(nadia, `/api/chats/${group.chatId}/group-calls`)
+    assert.equal((await response.json()).calls[0].is_group, true)
+
+    response = await apiRequest(ava, `/api/chats/${group.chatId}`)
+    const expandedGroup = (await response.json()).chat
+    assert.equal(expandedGroup.members.length, 3)
+    const secondGroupCallKey = webcrypto.getRandomValues(new Uint8Array(32))
+    const secondGroupCallEnvelopes = await wrapCallKey(secondGroupCallKey, expandedGroup.members)
+    response = await post(ava, '/api/group-calls', {
+      chatId: group.chatId,
+      callType: 'video',
+      keyEnvelopes: secondGroupCallEnvelopes,
+    })
+    assert.equal(response.status, 201, await response.clone().text())
+    const secondGroupCallId = (await response.json()).call.id
+    for (const recipient of [nadia, chris]) {
+      response = await apiRequest(recipient, '/api/group-calls/incoming')
+      assert.ok((await response.json()).calls.some((call) => call.id === secondGroupCallId))
+    }
+    response = await post(nadia, `/api/group-calls/${secondGroupCallId}/answer`, {})
+    assert.equal(response.status, 200, await response.clone().text())
+    const acceptedCall = (await response.json()).call
+    assert.deepEqual(await unwrapCallKey(acceptedCall.key_envelope, nadia), secondGroupCallKey)
+    response = await post(chris, `/api/group-calls/${secondGroupCallId}/decline`, {})
+    assert.equal(response.status, 204)
+    response = await apiRequest(ava, `/api/group-calls/${secondGroupCallId}/status`)
+    const groupCallStatus = await response.json()
+    assert.equal(groupCallStatus.status, 'active')
+    assert.equal(groupCallStatus.participants.find((participant) => participant.user_id === chris.id).status, 'declined')
+    response = await post(ava, `/api/group-calls/${secondGroupCallId}/end`, {})
+    assert.equal(response.status, 204)
+    secondGroupCallKey.fill(0)
+
+    const leaveCallKey = webcrypto.getRandomValues(new Uint8Array(32))
+    response = await post(ava, '/api/group-calls', {
+      chatId: group.chatId,
+      callType: 'audio',
+      keyEnvelopes: await wrapCallKey(leaveCallKey, expandedGroup.members),
+    })
+    assert.equal(response.status, 201, await response.clone().text())
+    leaveTriggeredCallId = (await response.json()).call.id
+    leaveCallKey.fill(0)
+    console.info('PASS all-member group-call ringing, encrypted key access, decline, and host end')
+  }
   response = await apiRequest(chris, `/api/chats/${group.chatId}`)
   assert.equal((await response.json()).chat.members.length, 3)
   response = await post(ava, `/api/chats/${group.chatId}/members`, { username: chris.username })
   assert.equal(response.status, 409)
   response = await post(chris, `/api/chats/${group.chatId}/leave`, {})
   assert.equal(response.status, 204)
+  if (leaveTriggeredCallId) {
+    response = await apiRequest(nadia, `/api/group-calls/${leaveTriggeredCallId}/status`)
+    assert.equal(response.status, 200)
+    assert.equal((await response.json()).status, 'ended')
+    console.info('PASS group-call teardown when a member leaves')
+  }
   response = await apiRequest(chris, `/api/chats/${group.chatId}`)
   assert.equal(response.status, 404)
   response = await post(ava, `/api/chats/${group.chatId}/leave`, {})

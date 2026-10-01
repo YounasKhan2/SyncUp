@@ -1,6 +1,6 @@
 # SyncUp
 
-SyncUp is a compact React/TypeScript web app with a TypeScript modular-monolith API backed by PostgreSQL. Its current vertical slice includes account identity, end-to-end encrypted direct/group messaging, message requests, read state, reactions, local drafts/outbox, realtime sync hints, encrypted file attachments, and 1:1 audio/video calls.
+SyncUp is a compact React/TypeScript web app with a TypeScript modular-monolith API backed by PostgreSQL. Its current vertical slice includes account identity, end-to-end encrypted direct/group messaging, message requests, read state, reactions, local drafts/outbox, realtime sync hints, encrypted file attachments, and end-to-end encrypted group plus 1:1 audio/video calls.
 
 ## Architecture
 
@@ -38,7 +38,7 @@ For a production build, run `npm run build` followed by `npm start` with the sam
 
 ## Integration test
 
-With the Compose services and API running, run `npm run test:integration`. The test creates isolated accounts and verifies encrypted first-contact requests, request privacy and acceptance, recipient decryption, authorization, idempotent retries, concurrent message ordering, read cursors, reactions, groups, encrypted object uploads/downloads, 1:1 call authorization/token/history, message edit/delete/pin controls, safety reports, and user blocking. Set `TEST_API_URL` to target an API other than `http://localhost:4000`.
+With the Compose services and API running, run `npm run test:integration`. The test creates isolated accounts and verifies encrypted first-contact requests, request privacy and acceptance, recipient decryption, authorization, idempotent retries, concurrent message ordering, read cursors, reactions, groups, encrypted object uploads/downloads, call authorization/token/history, message edit/delete/pin controls, safety reports, and user blocking. Set `TEST_API_URL` to target an API other than `http://localhost:4000`.
 
 ## Current scope
 
@@ -50,10 +50,10 @@ With the Compose services and API running, run `npm run test:integration`. The t
 - The browser outbox stores encrypted payloads in IndexedDB. Local key material remains in memory and the user unlocks it again after a reload; key recovery/password reset and independently verified identity fingerprints still need dedicated product/security review before a public production launch.
 - Text messages support encrypted edits within 15 minutes, delete-for-me, delete-for-everyone within 15 minutes (sender or chat admin), per-user pins, and clipboard copy. Deleting for everyone clears the stored ciphertext/envelopes; per-user hides and pins are stored separately.
 - Users can block/unblock accounts and report users or messages with a reason and optional details. Blocks close pending requests and direct-chat membership; reports are stored in the internal review table and rate-limited. There is not yet an administrator review UI.
-- Direct-chat files are encrypted in the browser with a per-file AES-GCM key wrapped for each chat member. Object storage holds ciphertext; download links are short-lived and membership-checked. Calls use LiveKit, with short-lived participant tokens; media is transport-encrypted but **not end-to-end encrypted**.
+- Direct-chat files are encrypted in the browser with a per-file AES-GCM key wrapped for each chat member. Object storage holds ciphertext; download links are short-lived and membership-checked. Calls use LiveKit with short-lived participant tokens. One-to-one call media is transport-encrypted but **not end-to-end encrypted**. Group-call media uses LiveKit frame E2EE with a fresh 256-bit call key wrapped to every current group member's RSA identity key; the server stores only opaque key envelopes. Every other current group member is rung, and each can answer or decline for 60 seconds. A group membership change ends the room rather than continuing with a stale key; starting another call creates a fresh key.
 - Group members can invite discoverable mutual contacts and leave; if the owner leaves, ownership passes to the longest-tenured remaining member. New members can decrypt messages/files sent after joining, not earlier history. Groups remain capped at 32 members.
 - Typing indicators and online presence are ephemeral and scoped to a chat with an active realtime connection; they are not persisted or a global presence directory.
 - Global search finds discoverable people and chats the signed-in user may access. Conversation message search filters decrypted messages already loaded in the current browser; encrypted message plaintext is never sent to or indexed by the server.
 - Conversations open at the latest messages and load older authorized history in pages while scrolling upward, preserving the current reading position as earlier messages are added.
-- Spaces, guests, shared objects, group/channel calls, and Communities are not implemented yet. They are intentionally absent rather than simulated in navigation.
+- Spaces, guests, shared objects, and Communities are not implemented yet. They are intentionally absent rather than simulated in navigation.
 - Architecture/product work still required before a broad production launch includes identity-key verification and recovery, a security review of the cryptographic design, operational deployment/monitoring, and the remaining PRD phases listed above.

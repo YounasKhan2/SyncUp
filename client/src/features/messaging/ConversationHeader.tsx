@@ -3,7 +3,7 @@ import { ArrowLeft, Phone, Search, Users, Video } from 'lucide-react'
 type ConversationHeaderProps = {
   title: string
   subtitle: string
-  isDirect: boolean
+  isGroup: boolean
   callStarting: boolean
   online: boolean
   onManageGroup: () => void
@@ -12,7 +12,7 @@ type ConversationHeaderProps = {
   onStartCall: (type: 'audio' | 'video') => void
 }
 
-export function ConversationHeader({ title, subtitle, isDirect, callStarting, online, onBack, onManageGroup, onSearchMessages, onStartCall }: ConversationHeaderProps) {
+export function ConversationHeader({ title, subtitle, isGroup, callStarting, online, onBack, onManageGroup, onSearchMessages, onStartCall }: ConversationHeaderProps) {
   return (
     <header className="conversation-header">
       <div className="chat-title-group">
@@ -22,11 +22,11 @@ export function ConversationHeader({ title, subtitle, isDirect, callStarting, on
       </div>
       <div className="conversation-header-actions">
         <button type="button" className="call-action" onClick={onSearchMessages} aria-label="Search messages in this chat"><Search size={15} aria-hidden="true" /></button>
-        {!isDirect && <button type="button" className="call-action" onClick={onManageGroup} aria-label="Manage group members"><Users size={15} aria-hidden="true" /></button>}
-        {isDirect && <>
+        {isGroup && <button type="button" className="call-action" onClick={onManageGroup} aria-label="Manage group members"><Users size={15} aria-hidden="true" /></button>}
+        <>
           <button type="button" className="call-action" disabled={callStarting} onClick={() => onStartCall('audio')} aria-label="Start audio call"><Phone size={15} aria-hidden="true" /></button>
           <button type="button" className="call-action" disabled={callStarting} onClick={() => onStartCall('video')} aria-label="Start video call"><Video size={15} aria-hidden="true" /></button>
-        </>}
+        </>
         <span className={`connection-status${online ? '' : ' offline'}`}><i />{online ? 'Synced' : 'Offline'}</span>
       </div>
     </header>

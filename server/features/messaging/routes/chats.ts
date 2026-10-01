@@ -6,6 +6,7 @@ import type { AuthenticatedRequest } from '../../auth/types.js'
 import { groupLimiter } from '../limits.js'
 import type { MemberKey } from '../validation.js'
 import { publishChatEvent } from '../../realtime/routes.js'
+import { endGroupCallsForMembershipChange } from '../../calls/groupCallService.js'
 
 export const chatRoutes = Router()
 
@@ -211,6 +212,7 @@ chatRoutes.post('/chats/:id/members', groupLimiter, async (request: Authenticate
       response.status(409).json({ error: { code: 'conflict', message: 'That person is already in this group.' } })
       return
     }
+    await endGroupCallsForMembershipChange(client, chatId.data)
     await client.query('COMMIT')
     await publishChatEvent(chatId.data, {
       type: 'membership.changed',
@@ -258,6 +260,7 @@ chatRoutes.post('/chats/:id/leave', async (request: AuthenticatedRequest, respon
         [chatId.data, request.auth!.userId],
       )
       : null
+    await endGroupCallsForMembershipChange(client, chatId.data)
     await client.query(
       `UPDATE chat_members SET left_at = now()
        WHERE chat_id = $1 AND user_id = $2 AND left_at IS NULL`,

@@ -476,6 +476,14 @@
 .call-peer-status strong { color: #f2f5f0; font-size: 18px; font-weight: 600; }
 .call-peer-status > span { display: flex; align-items: center; gap: 12px; color: #d2dad3; font-size: 10px; }
 .call-peer-status > span > svg { margin-right: -8px; }
+.call-group-participant {
+  display: flex; min-height: 150px; flex-direction: column; align-items: center; justify-content: center; gap: 7px;
+  border-radius: 9px; color: #f2f5f0; background: #26372f;
+}
+.call-group-participant strong { font-size: 13px; }
+.call-group-participant span { color: #c8d2ca; font-size: 9px; }
+.call-participant-list { display: flex; flex-wrap: wrap; gap: 5px; padding: 7px 12px; border-top: 1px solid #e8ece5; }
+.call-participant-list span { padding: 4px 6px; border-radius: 10px; color: #647267; background: #f0f3ee; font-size: 8px; }
 .call-local-camera-status { position: absolute; right: 16px; bottom: 16px; display: flex; align-items: center; gap: 5px; margin: 0; padding: 6px 8px; border-radius: 6px; color: #e5ebe5; background: rgba(0, 0, 0, .42); font-size: 9px; }
 
 @media (max-width: 760px) {

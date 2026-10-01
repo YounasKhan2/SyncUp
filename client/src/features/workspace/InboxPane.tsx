@@ -61,8 +61,8 @@ export function InboxPane({
             ? <div className="list-empty"><div className="empty-symbol"><Clock3 size={18} aria-hidden="true" /></div><p className="empty-title">No calls yet</p><p className="empty-copy">Audio and video calls with your contacts will appear here.</p></div>
             : <div className="call-history-list">{callHistory.map((call) => (
               <button className="call-history-item" type="button" key={call.id} onClick={() => onSelectCall(call.chat_id)}>
-                <span className="avatar">{(call.other_name ?? '').slice(0, 1).toUpperCase()}</span>
-                <span className="chat-row-copy"><strong>{call.other_name ?? 'Contact'}</strong><small>{call.status === 'declined' ? 'Declined' : call.status === 'ended' ? 'Completed' : call.end_reason ?? call.status} · {call.call_type === 'video' ? 'Video' : 'Audio'}</small></span>
+                <span className="avatar">{(call.group_title ?? call.other_name ?? '').slice(0, 1).toUpperCase()}</span>
+                <span className="chat-row-copy"><strong>{call.group_title ?? call.other_name ?? 'Contact'}</strong><small>{call.status === 'declined' ? 'Declined' : call.status === 'ended' ? 'Completed' : call.end_reason ?? call.status} · {call.is_group ? 'Group ' : ''}{call.call_type === 'video' ? 'Video' : 'Audio'}</small></span>
                 <time>{new Date(call.created_at).toLocaleDateString()}</time>
               </button>
             ))}</div>

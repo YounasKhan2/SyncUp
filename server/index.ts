@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser'
 import helmet from 'helmet'
 import { authRouter } from './features/auth/routes.js'
 import { callsRouter } from './features/calls/routes.js'
+import { groupCallsRouter } from './features/calls/groupRoutes.js'
 import { pool } from './db.js'
 import { messagingRouter } from './features/messaging/routes.js'
 import { realtimeRouter, startRealtimeListener, stopRealtimeListener } from './features/realtime/routes.js'
@@ -44,6 +45,7 @@ app.use('/api/auth', (_request, response, next) => {
 app.use('/api/auth', authRouter)
 app.use('/api', realtimeRouter)
 app.use('/api', callsRouter)
+app.use('/api', groupCallsRouter)
 app.use('/api', mediaV2Router)
 app.use('/api', uploadsRouter)
 app.use('/api', messagingRouter)

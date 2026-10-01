@@ -20,32 +20,68 @@ async function callApi<T>(path: string, options: RequestInit = {}): Promise<T> {
   return response.json() as Promise<T>
 }
 
-export function CallWindow({ callId, title, video, onEnd }: {
+type CallParticipant = {
+  id: string
+  name: string
+  microphoneEnabled: boolean
+  cameraEnabled: boolean
+}
+
+export function CallWindow({ callId, title, video, isGroup = false, isHost = false, e2eeKey, onEnd, onClose }: {
   callId: string
   title: string
   video: boolean
+  isGroup?: boolean
+  isHost?: boolean
+  e2eeKey?: Uint8Array
   onEnd: () => void
+  onClose: () => void
 }) {
   const mediaStage = useRef<HTMLDivElement>(null)
   const roomRef = useRef<Room | null>(null)
+  const encryptionWorkerRef = useRef<Worker | null>(null)
   const [muted, setMuted] = useState(false)
   const [cameraEnabled, setCameraEnabled] = useState(video)
   const [connected, setConnected] = useState(false)
-  const [peer, setPeer] = useState<{ id: string; name: string; microphoneEnabled: boolean; cameraEnabled: boolean } | null>(null)
+  const [localIdentity, setLocalIdentity] = useState('')
+  const [peers, setPeers] = useState<Record<string, CallParticipant>>({})
+  const [groupRoster, setGroupRoster] = useState<{ user_id: string; display_name: string; status: string }[]>([])
   const [finished, setFinished] = useState(false)
   const [error, setError] = useState('')
+  const peer = Object.values(peers)[0] ?? null
 
   useEffect(() => {
     let cancelled = false
     let disconnect: (() => void) | null = null
+    let encryptionWorker: Worker | null = null
 
     void (async () => {
       try {
-        const { ParticipantEvent, Room, RoomEvent } = await import('livekit-client')
+        const { ExternalE2EEKeyProvider, isE2EESupported, ParticipantEvent, Room, RoomEvent } = await import('livekit-client')
         if (cancelled) return
-        const room = new Room({ adaptiveStream: true, dynacast: true })
+        let roomOptions: ConstructorParameters<typeof Room>[0] = { adaptiveStream: true, dynacast: true }
+        if (isGroup) {
+          if (!e2eeKey || !isE2EESupported()) {
+            throw new Error('This browser cannot securely encrypt group-call media.')
+          }
+          const keyProvider = new ExternalE2EEKeyProvider()
+          await keyProvider.setKey(e2eeKey.slice().buffer)
+          encryptionWorker = new Worker(new URL('livekit-client/e2ee-worker', import.meta.url), { type: 'module' })
+          encryptionWorkerRef.current = encryptionWorker
+          roomOptions = {
+            ...roomOptions,
+            encryption: { keyProvider, worker: encryptionWorker },
+          }
+        }
+        const room = new Room(roomOptions)
+        if (isGroup) await room.setE2EEEnabled(true)
         roomRef.current = room
-        disconnect = () => { void room.disconnect() }
+        disconnect = () => {
+          void room.disconnect()
+          encryptionWorkerRef.current?.terminate()
+          encryptionWorkerRef.current = null
+          encryptionWorker = null
+        }
         const attach = (track: { attach: () => HTMLMediaElement }, identity: string, local = false) => {
           const element = track.attach()
           element.dataset.participant = identity
@@ -62,28 +98,59 @@ export function CallWindow({ callId, title, video, onEnd }: {
         const detach = (track: { detach: () => HTMLMediaElement[] }) => {
           for (const element of track.detach()) element.remove()
         }
+        const syncedParticipants = new Set<string>()
         const syncPeer = (participant: RemoteParticipant) => {
-          const update = () => setPeer({
-            id: participant.identity,
-            name: participant.name || participant.identity,
-            microphoneEnabled: participant.isMicrophoneEnabled,
-            cameraEnabled: participant.isCameraEnabled,
-          })
-          participant.on(ParticipantEvent.TrackMuted, update)
-          participant.on(ParticipantEvent.TrackUnmuted, update)
+          const update = () => setPeers((current) => ({
+            ...current,
+            [participant.identity]: {
+              id: participant.identity,
+              name: participant.name || participant.identity,
+              microphoneEnabled: participant.isMicrophoneEnabled,
+              cameraEnabled: participant.isCameraEnabled,
+            },
+          }))
+          if (!syncedParticipants.has(participant.identity)) {
+            participant.on(ParticipantEvent.TrackMuted, update)
+            participant.on(ParticipantEvent.TrackUnmuted, update)
+            syncedParticipants.add(participant.identity)
+          }
           update()
         }
-        room.on(RoomEvent.TrackSubscribed, (track, _publication, participant) => attach(track, participant.identity))
+        room.on(RoomEvent.TrackSubscribed, (track, _publication, participant) => {
+          attach(track, participant.identity)
+          syncPeer(participant)
+        })
         room.on(RoomEvent.TrackUnsubscribed, detach)
         room.on(RoomEvent.ParticipantConnected, syncPeer)
         room.on(RoomEvent.ParticipantDisconnected, (participant) => {
-          setPeer((current) => current?.id === participant.identity ? null : current)
+          syncedParticipants.delete(participant.identity)
+          setPeers((current) => {
+            const next = { ...current }
+            delete next[participant.identity]
+            return next
+          })
         })
         room.on(RoomEvent.Disconnected, () => setConnected(false))
-        const credentials = await callApi<{ url: string; token: string }>(`/api/calls/${callId}/token`, { method: 'POST' })
+        if (isGroup) {
+          room.on(RoomEvent.EncryptionError, (encryptionError) => {
+            setError(`Group-call encryption failed: ${encryptionError.message}`)
+            setConnected(false)
+            setFinished(true)
+            e2eeKey?.fill(0)
+            void room.disconnect()
+            encryptionWorkerRef.current?.terminate()
+            encryptionWorkerRef.current = null
+            void callApi(`/api/group-calls/${callId}/${isHost ? 'end' : 'leave'}`, { method: 'POST' })
+              .catch((leaveError: unknown) => {
+                setError(`Group-call encryption failed, and ending your call participation also failed: ${leaveError instanceof Error ? leaveError.message : 'unknown error'}`)
+              })
+          })
+        }
+        const credentials = await callApi<{ url: string; token: string }>(`/api/${isGroup ? 'group-calls' : 'calls'}/${callId}/token`, { method: 'POST' })
         if (cancelled) return
         await room.connect(credentials.url, credentials.token)
         if (cancelled) return
+        setLocalIdentity(room.localParticipant.identity)
         for (const participant of room.remoteParticipants.values()) syncPeer(participant)
         await room.localParticipant.setMicrophoneEnabled(true)
         if (video) await room.localParticipant.setCameraEnabled(true)
@@ -92,23 +159,46 @@ export function CallWindow({ callId, title, video, onEnd }: {
         }
         setConnected(true)
       } catch (connectionError) {
-        if (!cancelled) setError(connectionError instanceof Error ? connectionError.message : 'Unable to join this call.')
+        encryptionWorker?.terminate()
+        encryptionWorkerRef.current?.terminate()
+        encryptionWorkerRef.current = null
+        encryptionWorker = null
+        if (!cancelled) {
+          const message = connectionError instanceof Error ? connectionError.message : 'Unable to join this call.'
+          setError(message)
+          if (isGroup) {
+            setFinished(true)
+            e2eeKey?.fill(0)
+            void callApi(`/api/group-calls/${callId}/${isHost ? 'end' : 'leave'}`, { method: 'POST' })
+              .catch((leaveError: unknown) => {
+                setError(`${message} Unable to end your group-call participation: ${leaveError instanceof Error ? leaveError.message : 'unknown error'}`)
+              })
+          }
+        }
       }
     })()
 
     return () => {
       cancelled = true
       disconnect?.()
+      encryptionWorkerRef.current?.terminate()
+      encryptionWorkerRef.current = null
+      e2eeKey?.fill(0)
       roomRef.current = null
     }
-  }, [callId, video])
+  }, [callId, video, isGroup, isHost, e2eeKey])
 
   useEffect(() => {
     let cancelled = false
     let finished = false
     const checkStatus = () => {
-      callApi<{ status: string }>(`/api/calls/${callId}/status`)
-        .then(({ status }) => {
+      callApi<{ status: string; participants?: { user_id: string; display_name: string; status: string }[] }>(`/api/${isGroup ? 'group-calls' : 'calls'}/${callId}/status`)
+        .then(({ status, participants }) => {
+          if (isGroup && participants) setGroupRoster(participants.map((participant) => ({
+            user_id: participant.user_id,
+            display_name: participant.display_name,
+            status: participant.status,
+          })))
           if (cancelled || finished || !['declined', 'missed', 'ended'].includes(status)) return
           finished = true
           setFinished(true)
@@ -116,17 +206,33 @@ export function CallWindow({ callId, title, video, onEnd }: {
           setError(status === 'declined' ? 'The other person declined the call.' : status === 'missed' ? 'The call was missed.' : 'The other person ended the call.')
           void roomRef.current?.disconnect()
           roomRef.current = null
+          e2eeKey?.fill(0)
+          encryptionWorkerRef.current?.terminate()
+          encryptionWorkerRef.current = null
         })
         .catch((statusError: unknown) => {
-          if (!cancelled) setError(statusError instanceof Error ? statusError.message : 'Unable to check call status.')
+          if (cancelled) return
+          if (isGroup && statusError instanceof Error && statusError.message === 'Group call not found.') {
+            finished = true
+            setFinished(true)
+            setConnected(false)
+            e2eeKey?.fill(0)
+            void roomRef.current?.disconnect()
+            roomRef.current = null
+            encryptionWorkerRef.current?.terminate()
+            encryptionWorkerRef.current = null
+            return
+          }
+          setError(statusError instanceof Error ? statusError.message : 'Unable to check call status.')
         })
     }
+    checkStatus()
     const interval = window.setInterval(checkStatus, 4000)
     return () => {
       cancelled = true
       window.clearInterval(interval)
     }
-  }, [callId])
+  }, [callId, isGroup, e2eeKey])
 
   async function toggleMute() {
     const room = roomRef.current
@@ -156,25 +262,37 @@ export function CallWindow({ callId, title, video, onEnd }: {
     <div className="overlay call-overlay" role="presentation">
       <section className="call-dialog" role="dialog" aria-modal="true" aria-label={`${video ? 'Video' : 'Audio'} call with ${title}`}>
         <header className="call-dialog-header">
-          <div><span className="eyebrow">1:1 CALL · NOT END-TO-END ENCRYPTED</span><h2>{title}</h2></div>
-          <span className={`call-connection${peer ? ' is-connected' : ''}`}><i />{connected ? peer ? `${peer.name} joined` : `Waiting for ${title} to join` : 'Joining call…'}</span>
+          <div><span className="eyebrow">{isGroup ? 'GROUP CALL · END-TO-END ENCRYPTED' : '1:1 CALL · NOT END-TO-END ENCRYPTED'}</span><h2>{title}</h2></div>
+          <span className={`call-connection${connected && (isGroup ? groupRoster.some((participant) => participant.status === 'joined') : Boolean(peer)) ? ' is-connected' : ''}`}><i />{connected ? isGroup ? `${groupRoster.filter((participant) => participant.status === 'joined').length} joined` : peer ? `${peer.name} joined` : `Waiting for ${title} to join` : 'Joining call…'}</span>
         </header>
         <div className={`call-media-stage${video ? '' : ' audio-only'}`} ref={mediaStage}>
           {!connected && !error && <p>Connecting to the call service…</p>}
-          {connected && !peer && !error && <p className="call-waiting">Waiting for {title} to join…</p>}
-          {peer && (!video || !peer.cameraEnabled) && (
+          {connected && isGroup && groupRoster.every((participant) => participant.user_id === localIdentity || participant.status !== 'joined') && !error && <p className="call-waiting">Waiting for group members to join…</p>}
+          {connected && !isGroup && !peer && !error && <p className="call-waiting">Waiting for {title} to join…</p>}
+          {!isGroup && peer && (!video || !peer.cameraEnabled) && (
             <div className="call-peer-status">
               <strong>{peer.name}</strong>
               <span>{!peer.cameraEnabled && <><VideoOff size={13} aria-hidden="true" /> Camera off</>}{!peer.microphoneEnabled && <><MicOff size={13} aria-hidden="true" /> Mic muted</>}</span>
             </div>
           )}
+          {isGroup && groupRoster.filter((participant) => participant.status === 'joined' && participant.user_id !== localIdentity).map((participant) => (
+            <div className="call-group-participant" key={participant.user_id}>
+              <strong>{participant.display_name}</strong>
+              <span>{peers[participant.user_id]?.cameraEnabled ? 'Camera on' : 'Camera off'} · {peers[participant.user_id]?.microphoneEnabled === false ? 'Mic muted' : 'Mic on'}</span>
+            </div>
+          ))}
           {video && !cameraEnabled && <p className="call-local-camera-status"><VideoOff size={13} aria-hidden="true" /> Your camera is off</p>}
           {error && <p className="call-error" role="alert">{error}</p>}
         </div>
+        {isGroup && <div className="call-participant-list" aria-label="Group call participants">
+          {groupRoster.map((participant) => (
+            <span key={participant.user_id}>{participant.display_name} · {participant.status}</span>
+          ))}
+        </div>}
         <footer className="call-controls">
           <button type="button" onClick={() => void toggleMute()} disabled={!connected} aria-pressed={muted} aria-label={muted ? 'Unmute microphone' : 'Mute microphone'}>{muted ? <MicOff size={15} aria-hidden="true" /> : <Mic size={15} aria-hidden="true" />}{muted ? 'Unmute' : 'Mute'}</button>
           {video && <button type="button" onClick={() => void toggleCamera()} disabled={!connected} aria-pressed={!cameraEnabled} aria-label={cameraEnabled ? 'Turn camera off' : 'Turn camera on'}>{cameraEnabled ? <Video size={15} aria-hidden="true" /> : <VideoOff size={15} aria-hidden="true" />}{cameraEnabled ? 'Camera on' : 'Camera off'}</button>}
-          <button type="button" className="call-end-button" onClick={onEnd}>{finished ? 'Close' : <><PhoneOff size={14} aria-hidden="true" /> End call</>}</button>
+          <button type="button" className="call-end-button" onClick={finished ? onClose : onEnd}>{finished ? 'Close' : <><PhoneOff size={14} aria-hidden="true" /> {isGroup && !isHost ? 'Leave call' : 'End call'}</>}</button>
         </footer>
       </section>
     </div>

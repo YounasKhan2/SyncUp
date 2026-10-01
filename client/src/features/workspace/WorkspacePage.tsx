@@ -3,7 +3,8 @@ import { api } from '../../shared/api'
 import { decryptMessage, lockKeyBundle } from '../auth/crypto/crypto'
 import { listAllDrafts, listPendingMessages, removePendingMessage, savePendingMessage } from '../messaging/outbox'
 import type { PendingMessage } from '../messaging/outbox'
-import type { ActiveCall, CallRecord, Chat, IncomingRequest, User } from '../../shared/types'
+import type { ActiveCall, CallRecord, Chat, IncomingCall, IncomingRequest, User } from '../../shared/types'
+import { unwrapMediaKey } from '../auth/crypto/crypto'
 import { AccountPanel } from '../account/AccountPanel'
 import { NewConversation } from '../messaging/NewConversation'
 import { RequestsPanel } from '../messaging/RequestsPanel'
@@ -21,7 +22,7 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
   const [showRequests, setShowRequests] = useState(false)
   const [showCalls, setShowCalls] = useState(false)
   const [callHistory, setCallHistory] = useState<CallRecord[]>([])
-  const [incomingCall, setIncomingCall] = useState<(CallRecord & { caller_name: string; caller_username: string }) | null>(null)
+  const [incomingCall, setIncomingCall] = useState<IncomingCall | null>(null)
   const [activeCall, setActiveCall] = useState<ActiveCall | null>(null)
   const [newConversation, setNewConversation] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
@@ -34,8 +35,11 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
   const flushing = useRef(false)
 
   const refreshCallHistory = useCallback(async () => {
-    const result = await api<{ calls: CallRecord[] }>('/api/calls')
-    setCallHistory(result.calls)
+    const [direct, groups] = await Promise.all([
+      api<{ calls: CallRecord[] }>('/api/calls'),
+      api<{ calls: CallRecord[] }>('/api/group-calls'),
+    ])
+    setCallHistory([...direct.calls, ...groups.calls].sort((a, b) => Date.parse(b.created_at) - Date.parse(a.created_at)))
   }, [])
 
   const refreshInbox = useCallback(async () => {
@@ -113,9 +117,12 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
     if (activeCall) return
     let active = true
     const pollIncomingCalls = () => {
-      api<{ calls: (CallRecord & { caller_name: string; caller_username: string })[] }>('/api/calls/incoming')
-        .then((result) => {
-          if (active) setIncomingCall(result.calls[0] ?? null)
+      Promise.all([
+        api<{ calls: IncomingCall[] }>('/api/calls/incoming'),
+        api<{ calls: IncomingCall[] }>('/api/group-calls/incoming'),
+      ])
+        .then(([direct, groups]) => {
+          if (active) setIncomingCall([...direct.calls, ...groups.calls][0] ?? null)
         })
         .catch((loadError: unknown) => {
           if (active) setError(loadError instanceof Error ? loadError.message : 'Unable to check incoming calls.')
@@ -213,18 +220,49 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
 
   async function acceptIncomingCall() {
     if (!incomingCall) return
+    let joinedGroup = false
     try {
-      await api(`/api/calls/${incomingCall.id}/accept`, { method: 'POST' })
-      setActiveCall({
-        id: incomingCall.id,
-        chatId: incomingCall.chat_id,
-        callType: incomingCall.call_type,
-        title: incomingCall.caller_name,
-      })
+      if (incomingCall.is_group) {
+        const { isE2EESupported } = await import('livekit-client')
+        if (!isE2EESupported()) {
+          throw new Error('This browser cannot securely decrypt group-call media.')
+        }
+        const result = await api<{ call: { id: string; chat_id: string; call_type: 'audio' | 'video'; key_envelope: string } }>(
+          `/api/group-calls/${incomingCall.id}/answer`,
+          { method: 'POST' },
+        )
+        joinedGroup = true
+        const e2eeKey = await unwrapMediaKey(result.call.key_envelope)
+        setActiveCall({
+          id: result.call.id,
+          chatId: result.call.chat_id,
+          callType: result.call.call_type,
+          title: incomingCall.group_title ?? 'Group call',
+          isGroup: true,
+          isHost: false,
+          e2eeKey,
+        })
+      } else {
+        await api(`/api/calls/${incomingCall.id}/accept`, { method: 'POST' })
+        setActiveCall({
+          id: incomingCall.id,
+          chatId: incomingCall.chat_id,
+          callType: incomingCall.call_type,
+          title: incomingCall.caller_name,
+        })
+      }
       setIncomingCall(null)
       setShowCalls(false)
       setActiveChatId(incomingCall.chat_id)
     } catch (callError) {
+      if (joinedGroup) {
+        try {
+          await api(`/api/group-calls/${incomingCall.id}/leave`, { method: 'POST' })
+        } catch (leaveError) {
+          setError(`${callError instanceof Error ? callError.message : 'Unable to answer this call.'} Unable to leave the failed call: ${leaveError instanceof Error ? leaveError.message : 'unknown error'}`)
+          return
+        }
+      }
       setError(callError instanceof Error ? callError.message : 'Unable to answer this call.')
     }
   }
@@ -232,7 +270,7 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
   async function declineIncomingCall() {
     if (!incomingCall) return
     try {
-      await api(`/api/calls/${incomingCall.id}/decline`, { method: 'POST' })
+      await api(`/api/${incomingCall.is_group ? 'group-calls' : 'calls'}/${incomingCall.id}/decline`, { method: 'POST' })
       setIncomingCall(null)
       await refreshCallHistory()
     } catch (callError) {
@@ -243,15 +281,29 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
   async function endActiveCall() {
     if (!activeCall) return
     try {
-      await api(`/api/calls/${activeCall.id}/end`, { method: 'POST' })
+      if (activeCall.isGroup) {
+        await api(`/api/group-calls/${activeCall.id}/${activeCall.isHost ? 'end' : 'leave'}`, { method: 'POST' })
+      } else {
+        await api(`/api/calls/${activeCall.id}/end`, { method: 'POST' })
+      }
       await refreshCallHistory()
     } catch (callError) {
       setError(callError instanceof Error ? callError.message : 'Unable to end this call on the server.')
     } finally {
+      activeCall.e2eeKey?.fill(0)
       setActiveCall(null)
       window.dispatchEvent(new Event('syncup-refresh-chat'))
       void refreshInbox()
     }
+  }
+
+  function closeFinishedCall() {
+    activeCall?.e2eeKey?.fill(0)
+    setActiveCall(null)
+    void refreshCallHistory().catch((loadError: unknown) => {
+      setError(loadError instanceof Error ? loadError.message : 'Unable to refresh call history.')
+    })
+    void refreshInbox()
   }
 
   function openCallHistory() {
@@ -324,12 +376,21 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
       />}
       {showRequests && <RequestsPanel requests={requests} onAccept={(item) => void acceptRequest(item)} onIgnore={(item) => void ignoreRequest(item)} onClose={() => setShowRequests(false)} />}
       {incomingCall && !activeCall && <section className="incoming-call-banner" aria-label="Incoming call">
-        <span className="avatar">{incomingCall.caller_name.slice(0, 1).toUpperCase()}</span>
-        <div><strong>{incomingCall.caller_name}</strong><small>Incoming {incomingCall.call_type} call</small></div>
+        <span className="avatar">{(incomingCall.group_title ?? incomingCall.caller_name).slice(0, 1).toUpperCase()}</span>
+        <div><strong>{incomingCall.group_title ?? incomingCall.caller_name}</strong><small>{incomingCall.is_group ? `${incomingCall.caller_name} is calling` : `Incoming ${incomingCall.call_type} call`}</small></div>
         <button type="button" className="answer-call-button" onClick={() => void acceptIncomingCall()}>Answer</button>
         <button type="button" className="decline-call-button" onClick={() => void declineIncomingCall()}>Decline</button>
       </section>}
-      {activeCall && <CallWindow callId={activeCall.id} title={activeCall.title} video={activeCall.callType === 'video'} onEnd={() => void endActiveCall()} />}
+      {activeCall && <CallWindow
+        callId={activeCall.id}
+        title={activeCall.title}
+        video={activeCall.callType === 'video'}
+        isGroup={activeCall.isGroup}
+        isHost={activeCall.isHost}
+        e2eeKey={activeCall.e2eeKey}
+        onEnd={() => void endActiveCall()}
+        onClose={closeFinishedCall}
+      />}
     </main>
   )
 }

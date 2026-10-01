@@ -110,7 +110,7 @@ export function MessageList({ messages, calls, members, currentUserId, loading, 
           return (
             <div className="call-history-message" key={call.id}>
               {call.call_type === 'video' ? <Video size={13} aria-hidden="true" /> : <Phone size={13} aria-hidden="true" />}
-              <span>{call.status === 'declined' ? 'Call declined' : call.status === 'ended' ? `${call.call_type === 'video' ? 'Video' : 'Audio'} call · ${duration} min` : call.end_reason === 'cancelled' ? 'Call cancelled' : 'Missed call'}</span>
+              <span>{call.status === 'declined' ? 'Call declined' : call.status === 'ended' ? `${call.is_group ? 'Group ' : ''}${call.call_type === 'video' ? 'Video' : 'Audio'} call · ${duration} min` : call.end_reason === 'cancelled' ? 'Call cancelled' : 'Missed call'}</span>
               <time>{new Date(call.created_at).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}</time>
             </div>
           )

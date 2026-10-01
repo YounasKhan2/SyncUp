@@ -37,6 +37,7 @@ import { prepareVoiceV2 } from "../media/v2/prepareVoice";
 import type { VoiceDraft } from "./VoiceRecorder";
 import { mediaV2UploadManager } from "../media/v2/runtime";
 import type { MediaV2UploadSnapshot } from "../media/v2/uploadManager";
+import { createGroupCallKey } from "../calls/groupCallCrypto";
 export function Conversation({
   user,
   chatId,
@@ -107,7 +108,7 @@ export function Conversation({
   const loadConversation = useCallback(
     async (id: string, initial: boolean) => {
       try {
-        const [chatResult, messageResult, callResult] = await Promise.all([
+        const [chatResult, messageResult, callResult, groupCallResult] = await Promise.all([
           api<{
             chat: {
               id: string;
@@ -122,6 +123,7 @@ export function Conversation({
             `/api/chats/${id}/messages?${initial ? "limit=50" : `after_seq=${lastSeq.current}&limit=100`}`,
           ),
           api<{ calls: CallRecord[] }>(`/api/chats/${id}/calls`),
+          api<{ calls: CallRecord[] }>(`/api/chats/${id}/group-calls`),
         ]);
         const displayed = await Promise.all(
           messageResult.messages.map(async (message) => ({
@@ -138,7 +140,7 @@ export function Conversation({
           })),
         );
         setChat(chatResult.chat);
-        setCallHistory(callResult.calls);
+        setCallHistory([...callResult.calls, ...groupCallResult.calls].sort((a, b) => Date.parse(a.created_at) - Date.parse(b.created_at)));
         setMessages((current) => {
           if (initial) return displayed;
           const existing = new Set(current.map((message) => message.id));
@@ -625,10 +627,30 @@ export function Conversation({
   }
 
   async function startCall(callType: "audio" | "video") {
-    if (!chatId || !chat || chat.kind !== "direct") return;
+    if (!chatId || !chat) return;
     setCallStarting(true);
     setError("");
+    let e2eeKey: Uint8Array | undefined;
     try {
+      if (chat.kind === "group") {
+        const preparedKey = await createGroupCallKey(chat.members);
+        e2eeKey = preparedKey.rawKey;
+        const result = await api<{ call: { id: string } }>("/api/group-calls", {
+          method: "POST",
+          body: JSON.stringify({ chatId, callType, keyEnvelopes: preparedKey.keyEnvelopes }),
+        });
+        onCallStarted({
+          id: result.call.id,
+          chatId,
+          callType,
+          title,
+          isGroup: true,
+          isHost: true,
+          e2eeKey,
+        });
+        e2eeKey = undefined;
+        return;
+      }
       const result = await api<{ call: { id: string } }>("/api/calls", {
         method: "POST",
         body: JSON.stringify({ chatId, callType }),
@@ -641,6 +663,7 @@ export function Conversation({
           : "Unable to start this call.",
       );
     } finally {
+      e2eeKey?.fill(0);
       setCallStarting(false);
     }
   }
@@ -925,13 +948,13 @@ export function Conversation({
     >
       <ConversationHeader
         title={title}
+        isGroup={chat?.kind === "group"}
         subtitle={
           typingSubtitle ??
           (chat?.kind === "group"
             ? `${chat.members.length} people · ${onlineUsers.size} online · encrypted`
             : `@${peer?.username ?? ""} · ${peer && onlineUsers.has(peer.id) ? "online" : "offline"} · encrypted`)
         }
-        isDirect={chat?.kind === "direct"}
         callStarting={callStarting}
         online={online}
         onManageGroup={() => setManagingMembers(true)}
