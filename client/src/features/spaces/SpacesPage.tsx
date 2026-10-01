@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import type { FormEvent, ReactNode } from 'react'
-import { ArrowLeft, AtSign, BriefcaseBusiness, ChevronDown, ChevronRight, Hash, Heart, Layers3, LockKeyhole, Megaphone, Mic, Plus, Rocket, Send, Settings2, Sparkles, Users, Volume2, X } from 'lucide-react'
-import { api } from '../../shared/api'
+import { ArrowLeft, AtSign, BriefcaseBusiness, CalendarDays, ChevronDown, ChevronRight, Download, FileText, FileUp, Hash, Heart, Image, Layers3, LockKeyhole, Megaphone, Mic, Plus, Rocket, Search, Send, Settings2, Sparkles, Users, Volume2, X } from 'lucide-react'
+import { api, apiUpload } from '../../shared/api'
 import type { ActiveCall, SpaceCategory, SpaceChannel, SpaceChannelRolePermission, SpaceIcon, SpaceMember, SpaceMessage, SpaceSharedObject, SpaceSummary } from '../../shared/types'
 import { SharedObjectCard } from './SharedObjectCard'
 
@@ -20,6 +20,32 @@ type SharedObjectInput =
   | { type: 'poll'; question: string; options: string[]; multiSelect: boolean; closesAt: string | null; anonymous: boolean }
   | { type: 'event'; title: string; startsAt: string; endsAt: string | null; timezone: string; locationText: string; rsvpRequired: boolean }
   | { type: 'checklist'; title: string; items: { text: string; assigneeId: string | null; dueAt: string | null }[] }
+
+type SpaceFile = {
+  id: string
+  filename: string
+  content_type: string
+  size_bytes: string
+  author_name: string
+  created_at: string
+}
+
+type SpaceSearchResult = {
+  type: 'message' | 'file' | 'object'
+  id: string
+  channel_id: string
+  channel_name: string
+  author_name: string
+  author_username: string
+  title: string
+  excerpt?: string
+  content_type?: string
+  size_bytes?: string
+  object_type?: 'poll' | 'event' | 'checklist' | 'decision'
+  server_seq?: string
+  message_id?: string
+  created_at: string
+}
 
 function normalizeChannelName(value: string) {
   return value.toLowerCase()
@@ -73,6 +99,18 @@ export function SpacesPage({ onBack, onJoinVoiceRoom, openTarget, userId }: {
   const [channelId, setChannelId] = useState<string | null>(null)
   const [messages, setMessages] = useState<SpaceMessage[]>([])
   const [sharedObjects, setSharedObjects] = useState<SpaceSharedObject[]>([])
+  const [searchOpen, setSearchOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [searchAfter, setSearchAfter] = useState('')
+  const [searchBefore, setSearchBefore] = useState('')
+  const [searchFrom, setSearchFrom] = useState('')
+  const [searchHas, setSearchHas] = useState('')
+  const [searchObjectType, setSearchObjectType] = useState('')
+  const [searchResults, setSearchResults] = useState<SpaceSearchResult[]>([])
+  const [searchSubmitted, setSearchSubmitted] = useState(false)
+  const [filePanelOpen, setFilePanelOpen] = useState(false)
+  const [channelFiles, setChannelFiles] = useState<SpaceFile[]>([])
+  const [historyCursor, setHistoryCursor] = useState<{ channelId: string; beforeSeq: string } | null>(null)
   const [spaceName, setSpaceName] = useState('')
   const [spaceDescription, setSpaceDescription] = useState('')
   const [spaceIcon, setSpaceIcon] = useState<SpaceIcon>('layers')
@@ -108,6 +146,7 @@ export function SpacesPage({ onBack, onJoinVoiceRoom, openTarget, userId }: {
   const [busy, setBusy] = useState(false)
   const [collapsedCategories, setCollapsedCategories] = useState<Record<string, boolean>>({})
   const messageEnd = useRef<HTMLDivElement>(null)
+  const fileInput = useRef<HTMLInputElement>(null)
   const activeChannel = space?.channels.find((channel) => channel.id === channelId) ?? null
   const canCreateChannels = space ? ['owner', 'admin'].includes(space.role) : false
   const canInvite = space ? ['owner', 'admin', 'moderator'].includes(space.role) : false
@@ -142,11 +181,13 @@ export function SpacesPage({ onBack, onJoinVoiceRoom, openTarget, userId }: {
         .then(({ space: nextSpace }) => {
           setSpace(nextSpace)
           setChannelId(openTarget.channelId)
+          setHistoryCursor(null)
           setHighlightedMessageId(openTarget.messageId)
         })
         .catch((loadError: unknown) => setError(loadError instanceof Error ? loadError.message : 'Unable to open this update.'))
       return
     }
+    setHistoryCursor(null)
     setChannelId(openTarget.channelId)
     setHighlightedMessageId(openTarget.messageId)
   }, [openTarget?.spaceId, openTarget?.channelId, openTarget?.messageId, space?.id])
@@ -220,7 +261,8 @@ export function SpacesPage({ onBack, onJoinVoiceRoom, openTarget, userId }: {
     }
     setMentionNotice('')
     let active = true
-    const path = `/api/spaces/${space.id}/channels/${channelId}/messages`
+    const beforeSeq = historyCursor?.channelId === channelId ? historyCursor.beforeSeq : null
+    const path = `/api/spaces/${space.id}/channels/${channelId}/messages${beforeSeq ? `?before_seq=${encodeURIComponent(beforeSeq)}` : ''}`
     const refresh = async () => {
       try {
         const [messageResult, objectResult] = await Promise.all([
@@ -247,7 +289,7 @@ export function SpacesPage({ onBack, onJoinVoiceRoom, openTarget, userId }: {
     stream.addEventListener('channel.mention', onMention)
     const timer = window.setInterval(() => { void refresh() }, 5000)
     return () => { active = false; window.clearInterval(timer); stream.close() }
-  }, [space?.id, channelId, activeChannel?.name])
+  }, [space?.id, channelId, activeChannel?.name, historyCursor])
 
   useEffect(() => {
     messageEnd.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
@@ -484,6 +526,70 @@ export function SpacesPage({ onBack, onJoinVoiceRoom, openTarget, userId }: {
     setSharedObjects(objectResult.objects)
   }
 
+  async function searchSpace(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    if (!space || searchQuery.trim().length < 2) return
+    const params = new URLSearchParams({ q: searchQuery.trim() })
+    if (searchFrom) params.set('from', searchFrom)
+    if (searchAfter) params.set('after', searchAfter)
+    if (searchBefore) params.set('before', searchBefore)
+    if (searchHas) params.set('has', searchHas)
+    if (searchObjectType) params.set('objectType', searchObjectType)
+    setBusy(true)
+    setError('')
+    try {
+      const result = await api<{ results: SpaceSearchResult[] }>(`/api/spaces/${space.id}/search?${params}`)
+      setSearchResults(result.results)
+      setSearchSubmitted(true)
+    } catch (searchError) {
+      setError(searchError instanceof Error ? searchError.message : 'Unable to search this Space.')
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  async function openFilePanel() {
+    if (!space || !activeChannel) return
+    setFilePanelOpen(true)
+    setError('')
+    try {
+      const result = await api<{ files: SpaceFile[] }>(`/api/spaces/${space.id}/channels/${activeChannel.id}/files`)
+      setChannelFiles(result.files)
+    } catch (loadError) {
+      setError(loadError instanceof Error ? loadError.message : 'Unable to load channel files.')
+    }
+  }
+
+  async function uploadSpaceFile(file: File) {
+    if (!space || !activeChannel) return
+    setBusy(true)
+    setError('')
+    try {
+      const intent = await api<{ fileId: string }>(`/api/spaces/${space.id}/channels/${activeChannel.id}/files`, {
+        method: 'POST',
+        body: JSON.stringify({ filename: file.name, contentType: file.type || 'application/octet-stream', sizeBytes: file.size }),
+      })
+      const filePath = `/api/spaces/${space.id}/channels/${activeChannel.id}/files/${intent.fileId}`
+      await apiUpload(`${filePath}/content`, file, file.type || 'application/octet-stream')
+      await api(`${filePath}/complete`, { method: 'POST', body: JSON.stringify({}) })
+      const result = await api<{ files: SpaceFile[] }>(`/api/spaces/${space.id}/channels/${activeChannel.id}/files`)
+      setChannelFiles(result.files)
+    } catch (uploadError) {
+      setError(uploadError instanceof Error ? uploadError.message : 'Unable to upload this file.')
+    } finally {
+      setBusy(false)
+      if (fileInput.current) fileInput.current.value = ''
+    }
+  }
+
+  function openSearchResult(result: SpaceSearchResult) {
+    if (result.type === 'file' || !result.server_seq) return
+    setHistoryCursor({ channelId: result.channel_id, beforeSeq: (Number(result.server_seq) + 1).toString() })
+    setChannelId(result.channel_id)
+    setHighlightedMessageId(result.type === 'object' ? (result.message_id ?? result.id) : result.id)
+    setSearchOpen(false)
+  }
+
   async function respondToObject(object: SpaceSharedObject, response: Record<string, unknown>) {
     if (!space) return
     setBusy(true)
@@ -607,7 +713,7 @@ export function SpacesPage({ onBack, onJoinVoiceRoom, openTarget, userId }: {
               </div>
               {!collapsed && <nav className="space-channel-list" aria-label={`${category.name} channels`}>
                 {categoryChannels.map((channel) => <div key={channel.id} className={`space-channel-row${channel.id === channelId ? ' is-active' : ''}`}>
-                  <button type="button" className="space-channel" onClick={() => setChannelId(channel.id)}>
+                  <button type="button" className="space-channel" onClick={() => { setHistoryCursor(null); setChannelId(channel.id) }}>
                     {channel.type === 'announcement'
                       ? <Megaphone size={14} aria-hidden="true" />
                       : channel.type === 'private'
@@ -618,6 +724,7 @@ export function SpacesPage({ onBack, onJoinVoiceRoom, openTarget, userId }: {
                     <span>{channel.name}</span>
                   </button>
                   {canCreateChannels && <button className="space-channel-settings" type="button" onClick={() => {
+                    setHistoryCursor(null)
                     setChannelId(channel.id)
                     setError('')
                     setChannelSettingsTab('overview')
@@ -637,6 +744,10 @@ export function SpacesPage({ onBack, onJoinVoiceRoom, openTarget, userId }: {
               <small>{activeChannel.topic || (activeChannel.type === 'announcement' ? 'Only Space moderators can post here' : activeChannel.type === 'private' ? 'Private channel' : activeChannel.type === 'voice' ? 'Persistent voice room · up to 16 people' : 'Visible to invited members')}</small>
             </div>
             <div className="space-channel-actions">
+              {activeChannel.type !== 'voice' && <>
+                <button className="space-topic-edit" type="button" onClick={() => { setError(''); setSearchResults([]); setSearchSubmitted(false); setSearchOpen(true) }} aria-label={`Search ${space.name}`} title="Search this Space"><Search size={14} aria-hidden="true" /><span>Search</span></button>
+                <button className="space-topic-edit" type="button" onClick={() => void openFilePanel()} aria-label={`Files in ${activeChannel.name}`} title="Channel files"><FileText size={14} aria-hidden="true" /><span>Files</span></button>
+              </>}
               {canCreateChannels && <button className="space-topic-edit" type="button" onClick={() => openChannelSettings('overview')}><Settings2 size={13} aria-hidden="true" /> Edit channel</button>}
               {activeChannel.type === 'voice' && <button className="space-topic-edit" type="button" onClick={() => {
                 onJoinVoiceRoom({
@@ -711,12 +822,86 @@ export function SpacesPage({ onBack, onJoinVoiceRoom, openTarget, userId }: {
               </div>}
               <small className="space-composer-note">{activeChannel.can_send ? 'Messages in Spaces are visible to channel members and stored by SyncUp.' : 'You can view messages here, but your Space role cannot send in this channel.'}</small>
             </form>
+            <input
+              ref={fileInput}
+              type="file"
+              className="visually-hidden"
+              accept="image/gif,image/jpeg,image/png,image/webp,video/mp4,video/webm,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.zip,.txt,.csv"
+              onChange={(event) => {
+                const selected = event.currentTarget.files?.[0]
+                if (selected) void uploadSpaceFile(selected)
+              }}
+            />
             {sharedObjects.length > 0 && <span className="visually-hidden" aria-live="polite">{sharedObjects.length} shared items in this channel</span>}
             </>}
           </> : <div className="space-no-channel">Choose a channel to get started.</div>}
         </section>
       </div>
-      {error && !channelDialogOpen && !spaceSettingsTab && !channelSettingsTab && !objectDialogType && <p className="spaces-error space-detail-error" role="alert">{error}</p>}
+      {error && !channelDialogOpen && !spaceSettingsTab && !channelSettingsTab && !objectDialogType && !searchOpen && !filePanelOpen && <p className="spaces-error space-detail-error" role="alert">{error}</p>}
+      {searchOpen && space && <div className="overlay space-dialog-overlay" role="presentation" onMouseDown={(event) => {
+        if (event.target === event.currentTarget) setSearchOpen(false)
+      }}>
+        <section className="account-dialog space-dialog space-discovery-dialog" role="dialog" aria-modal="true" aria-labelledby="space-search-title">
+          <header className="space-discovery-heading">
+            <div><p className="eyebrow">SEARCH SPACE</p><h2 id="space-search-title">{space.name}</h2></div>
+            <button className="space-settings-button" type="button" aria-label="Close search" onClick={() => setSearchOpen(false)}><X size={16} aria-hidden="true" /></button>
+          </header>
+          <form className="space-discovery-form" onSubmit={(event) => void searchSpace(event)}>
+            <label htmlFor="space-search-query">Search messages, files, and shared items</label>
+            <div className="space-search-input"><Search size={16} aria-hidden="true" /><input id="space-search-query" value={searchQuery} onChange={(event) => setSearchQuery(event.target.value)} minLength={2} maxLength={80} autoFocus required placeholder="Try a keyword or phrase" /><button className="primary-button" disabled={busy || searchQuery.trim().length < 2}>{busy ? 'Searching…' : 'Search'}</button></div>
+            <div className="space-search-filters">
+              <label>From<select value={searchFrom} onChange={(event) => setSearchFrom(event.target.value)}><option value="">Anyone</option>{space.members.map((member) => <option key={member.id} value={member.id}>{member.display_name}</option>)}</select></label>
+              <label>After<input type="date" value={searchAfter} onChange={(event) => setSearchAfter(event.target.value)} /></label>
+              <label>Before<input type="date" value={searchBefore} onChange={(event) => setSearchBefore(event.target.value)} /></label>
+              <label>Content<select value={searchHas} onChange={(event) => { setSearchHas(event.target.value); if (event.target.value) setSearchObjectType('') }}><option value="">All content</option><option value="file">Files</option><option value="image">Images</option></select></label>
+              <label>Shared item<select value={searchObjectType} onChange={(event) => { setSearchObjectType(event.target.value); if (event.target.value) setSearchHas('') }}><option value="">Any type</option><option value="poll">Polls</option><option value="event">Events</option><option value="checklist">Checklists</option><option value="decision">Decisions</option></select></label>
+            </div>
+          </form>
+          {error && <p className="spaces-error" role="alert">{error}</p>}
+          <div className="space-search-results" aria-live="polite">
+            {searchResults.length === 0
+              ? <p className="space-discovery-empty">{searchSubmitted ? 'No matching results. Try a different term or filter.' : 'Search results from channels you can access will appear here.'}</p>
+              : searchResults.map((result) => result.type === 'file'
+                ? <a className="space-search-result" key={`${result.type}-${result.id}`} href={`/api/spaces/${space.id}/channels/${result.channel_id}/files/${result.id}/content`}>
+                  {result.content_type?.startsWith('image/') ? <Image size={17} aria-hidden="true" /> : <FileText size={17} aria-hidden="true" />}
+                  <span><strong>{result.title}</strong><small>#{result.channel_name} · {result.author_name} · {new Intl.DateTimeFormat(undefined, { dateStyle: 'medium' }).format(new Date(result.created_at))}</small></span><Download size={15} aria-hidden="true" />
+                </a>
+                : <button className="space-search-result" key={`${result.type}-${result.id}`} type="button" onClick={() => openSearchResult(result)}>
+                  {result.type === 'message' ? <Hash size={17} aria-hidden="true" /> : <CalendarDays size={17} aria-hidden="true" />}
+                  <span><strong>{result.title}</strong><small>#{result.channel_name} · {result.author_name} · {result.type === 'object' ? result.object_type : 'message'} · {new Intl.DateTimeFormat(undefined, { dateStyle: 'medium' }).format(new Date(result.created_at))}</small></span>
+                </button>)}
+          </div>
+        </section>
+      </div>}
+      {filePanelOpen && space && activeChannel && <div className="overlay space-dialog-overlay" role="presentation" onMouseDown={(event) => {
+        if (event.target === event.currentTarget) setFilePanelOpen(false)
+      }}>
+        <section className="account-dialog space-dialog space-discovery-dialog" role="dialog" aria-modal="true" aria-labelledby="channel-files-title">
+          <header className="space-discovery-heading">
+            <div><p className="eyebrow">CHANNEL FILES</p><h2 id="channel-files-title">#{activeChannel.name}</h2></div>
+            <button className="space-settings-button" type="button" aria-label="Close files" onClick={() => setFilePanelOpen(false)}><X size={16} aria-hidden="true" /></button>
+          </header>
+          <div className="space-file-panel-actions">
+            <p>Channel files are visible to its members. Allowed: .pdf, .doc/.docx, .xls/.xlsx, .ppt/.pptx, .zip, .txt, .csv, .gif, .jpg/.jpeg, .png, .webp, .mp4, .webm. Max 25 MB (images: 10 MB).</p>
+            {activeChannel.can_send && <button className="primary-button" type="button" disabled={busy} onClick={() => fileInput.current?.click()}><FileUp size={15} aria-hidden="true" /> Upload file</button>}
+          </div>
+          {error && <p className="spaces-error" role="alert">{error}</p>}
+          <div className="space-file-grid" aria-live="polite">
+            {channelFiles.length === 0
+              ? <p className="space-discovery-empty">No files have been shared in this channel yet.</p>
+              : channelFiles.map((file) => {
+                const url = `/api/spaces/${space.id}/channels/${activeChannel.id}/files/${file.id}/content`
+                return <a className="space-file-card" href={url} key={file.id}>
+                  {file.content_type.startsWith('image/')
+                    ? <img src={url} alt="" loading="lazy" />
+                    : <span className="space-file-icon"><FileText size={24} aria-hidden="true" /></span>}
+                  <strong>{file.filename}</strong>
+                  <small>{file.author_name} · {new Intl.DateTimeFormat(undefined, { dateStyle: 'medium' }).format(new Date(file.created_at))}</small>
+                </a>
+              })}
+          </div>
+        </section>
+      </div>}
       {channelDialogOpen && canCreateChannels && <div className="overlay space-dialog-overlay" role="presentation" onMouseDown={(event) => {
         if (event.target === event.currentTarget) setChannelDialogOpen(false)
       }}>

@@ -8,9 +8,11 @@ import type { AuthenticatedRequest } from '../auth/types.js'
 import { publishChatEvent } from '../realtime/routes.js'
 import { messageLimiter } from '../messaging/limits.js'
 import { spaceObjectRoutes } from './objects.js'
+import { spaceDiscoveryRoutes } from './discovery.js'
 
 export const spaceRoutes = Router()
 spaceRoutes.use(spaceObjectRoutes)
+spaceRoutes.use(spaceDiscoveryRoutes)
 
 const idSchema = z.uuid()
 const channelNameSchema = z.string().trim().toLowerCase().min(1).max(40).regex(/^[a-z0-9][a-z0-9-]*$/)

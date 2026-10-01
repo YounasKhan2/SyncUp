@@ -74,6 +74,8 @@ Purpose: turn the messaging app into a working collaboration product for operato
 - ✅ `@username` mentions and restricted `@everyone` access logic
 - ✅ Space membership and role enforcement logic for channel access
 - ✅ Server-readable channel text storage
+- ✅ Space-scoped search across accessible channel messages, files, and shared objects, with author/date/type filters
+- ✅ Channel file gallery/list with permission-checked upload and download
 - ✅ Group membership and invite flow
 
 ### Partially implemented / in progress
@@ -85,13 +87,11 @@ Purpose: turn the messaging app into a working collaboration product for operato
 
 ### Remaining / not yet done in this phase
 
-- ❌ Full Space search + files panel completion
 - ❌ Group → Space in-place conversion flow
 - ❌ Custom role creation and role reassignment
 - ❌ Email invitations and guest invite pipeline
 - ❌ Mature notification policy controls for each chat and space
 - ❌ Production-level permission hardening and guest isolation validation
-- ❌ Channel media / file work for spaces
 - ❌ Advanced operator admin surfaces
 - 🟡 Phase 1 exit scenarios J2, J3, and J5 still need end-to-end verification
 
@@ -101,7 +101,7 @@ Purpose: turn the messaging app into a working collaboration product for operato
 
 ### Recommended next implementation
 
-Continue with **P1-09: Space search + files panel**, then complete the in-place Group → Space upgrade (P1-10), channel/group call exit criteria (P1-11), and per-chat/Space notification policies (P1-12). Before calling Phase 1 complete, verify the J2, J3, and J5 user journeys and automated guest-isolation checks.
+Continue with the in-place Group → Space upgrade (P1-10), channel/group call exit criteria (P1-11), and per-chat/Space notification policies (P1-12). Before calling Phase 1 complete, verify the J2, J3, and J5 user journeys and automated guest-isolation checks.
 
 ---
 

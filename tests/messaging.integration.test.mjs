@@ -592,12 +592,64 @@ test('encrypted requests, authorized chats, ordered idempotent delivery, and gro
   assert.equal(generalMessages.length, 3)
   assert.equal(generalMessages.find((message) => message.body === 'Welcome to the client room.')?.display_name, 'Ava')
 
+  const privateSearchSecret = 'private-channel-search-isolation-marker'
+  response = await post(ava, `/api/spaces/${createdSpace.spaceId}/channels/${privateChannel.channelId}/messages`, { body: privateSearchSecret })
+  assert.equal(response.status, 201, await response.clone().text())
+  response = await apiRequest(ava, `/api/spaces/${createdSpace.spaceId}/search?q=${privateSearchSecret}`)
+  assert.equal(response.status, 200, await response.clone().text())
+  assert.equal((await response.json()).results.some((result) => result.title === privateSearchSecret), true)
+  response = await apiRequest(nadia, `/api/spaces/${createdSpace.spaceId}/search?q=${privateSearchSecret}`)
+  assert.equal(response.status, 200, await response.clone().text())
+  assert.deepEqual((await response.json()).results, [])
+  response = await apiRequest(nadia, `/api/spaces/${createdSpace.spaceId}/search?q=Welcome&from=${ava.id}`)
+  assert.equal(response.status, 200, await response.clone().text())
+  assert.equal((await response.json()).results.some((result) => result.type === 'message' && result.channel_id === generalChannel.id), true)
+  response = await apiRequest(ava, `/api/spaces/${createdSpace.spaceId}/channels/${generalChannel.id}/files`)
+  assert.equal(response.status, 200, await response.clone().text())
+  assert.deepEqual((await response.json()).files, [])
+  response = await apiRequest(nadia, `/api/spaces/${createdSpace.spaceId}/channels/${privateChannel.channelId}/files`)
+  assert.equal(response.status, 404)
+  response = await post(ava, `/api/spaces/${createdSpace.spaceId}/channels/${generalChannel.id}/files`, {
+    filename: 'unsupported.html',
+    contentType: 'text/html',
+    sizeBytes: 20,
+  })
+  assert.equal(response.status, 400)
+  const spaceFileBytes = Buffer.from('Project notes shared with channel members.')
+  response = await post(ava, `/api/spaces/${createdSpace.spaceId}/channels/${generalChannel.id}/files`, {
+    filename: 'release-notes.txt',
+    contentType: 'text/plain',
+    sizeBytes: spaceFileBytes.byteLength,
+  })
+  assert.equal(response.status, 201, await response.clone().text())
+  const spaceFile = await response.json()
+  response = await apiRequest(ava, `/api/spaces/${createdSpace.spaceId}/channels/${generalChannel.id}/files/${spaceFile.fileId}/content`, {
+    method: 'PUT',
+    headers: { 'content-type': 'text/plain' },
+    body: spaceFileBytes,
+  })
+  assert.equal(response.status, 204)
+  response = await post(ava, `/api/spaces/${createdSpace.spaceId}/channels/${generalChannel.id}/files/${spaceFile.fileId}/complete`, {})
+  assert.equal(response.status, 204)
+  response = await apiRequest(nadia, `/api/spaces/${createdSpace.spaceId}/channels/${generalChannel.id}/files`)
+  assert.equal(response.status, 200, await response.clone().text())
+  assert.equal((await response.json()).files.some((file) => file.id === spaceFile.fileId), true)
+  response = await apiRequest(nadia, `/api/spaces/${createdSpace.spaceId}/channels/${generalChannel.id}/files/${spaceFile.fileId}/content`)
+  assert.equal(response.status, 200)
+  assert.deepEqual(Buffer.from(await response.arrayBuffer()), spaceFileBytes)
+  response = await apiRequest(nadia, `/api/spaces/${createdSpace.spaceId}/search?q=release-notes&has=file`)
+  assert.equal(response.status, 200, await response.clone().text())
+  assert.equal((await response.json()).results.some((result) => result.type === 'file' && result.id === spaceFile.fileId), true)
+
   const channelObjectsPath = `/api/spaces/${createdSpace.spaceId}/channels/${generalChannel.id}/objects`
   response = await post(ava, channelObjectsPath, {
     type: 'poll', question: 'Which direction?', options: ['Minimal', 'Expressive'], anonymous: true,
   })
   assert.equal(response.status, 201, await response.clone().text())
   const pollId = (await response.json()).objectId
+  response = await apiRequest(nadia, `/api/spaces/${createdSpace.spaceId}/search?q=Minimal&objectType=poll`)
+  assert.equal(response.status, 200, await response.clone().text())
+  assert.equal((await response.json()).results.some((result) => result.type === 'object' && result.id === pollId), true)
   response = await apiRequest(chris, channelObjectsPath)
   const poll = (await response.json()).objects.find((item) => item.id === pollId)
   assert.deepEqual(poll.payload.options.map((option) => option.text), ['Minimal', 'Expressive'])
