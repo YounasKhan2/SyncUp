@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
-import { Download, FileText, Image as ImageIcon, Play, RefreshCw, Video } from 'lucide-react'
+import { Download, FileText, Image as ImageIcon, Pause, Play, RefreshCw, Video } from 'lucide-react'
 import type { StagedAttachment } from '../../shared/types'
 import { formatFileSize } from '../../shared/utils/format'
 import { downloadAttachment, hydrateAttachment } from '../media/mediaHydrator'
+import { hydrateMediaV2 } from '../media/v2/mediaHydratorV2'
 
 export function MessageAttachment({ attachment, pending = false, onOpen }: {
   attachment: StagedAttachment
@@ -14,8 +15,13 @@ export function MessageAttachment({ attachment, pending = false, onOpen }: {
   const [visible, setVisible] = useState(pending)
   const [attempt, setAttempt] = useState(0)
   const [error, setError] = useState('')
+  const [voiceUrl, setVoiceUrl] = useState('')
+  const [voiceLoading, setVoiceLoading] = useState(false)
+  const [voicePlaying, setVoicePlaying] = useState(false)
+  const audioRef = useRef<HTMLAudioElement>(null)
   const isImage = attachment.content_type.startsWith('image/')
   const isVideo = attachment.content_type.startsWith('video/')
+  const isVoice = attachment.content_type.startsWith('audio/')
   const isVisualMedia = isImage || isVideo
   const isMediaV2 = attachment.transport_version === 2
 
@@ -56,6 +62,29 @@ export function MessageAttachment({ attachment, pending = false, onOpen }: {
     }
   }, [attachment, attempt, isMediaV2, isVisualMedia, pending, visible])
 
+  async function toggleVoice() {
+    if (pending) return
+    setError('')
+    try {
+      let url = voiceUrl
+      if (!url) {
+        setVoiceLoading(true)
+        const file = await hydrateMediaV2(attachment)
+        url = URL.createObjectURL(file)
+        setVoiceUrl(url)
+      }
+      const audio = audioRef.current
+      if (!audio) return
+      if (audio.src !== url) audio.src = url
+      if (audio.paused) await audio.play()
+      else audio.pause()
+    } catch (voiceError) {
+      setError(voiceError instanceof Error ? voiceError.message : 'Unable to play this voice note.')
+    } finally {
+      setVoiceLoading(false)
+    }
+  }
+
   return (
     <div className="message-attachment" ref={hostRef}>
       {isImage && previewUrl && (
@@ -87,7 +116,8 @@ export function MessageAttachment({ attachment, pending = false, onOpen }: {
           <RefreshCw size={13} aria-hidden="true" /><span>Retry {isVideo ? 'video' : 'image'}</span>
         </button>
       )}
-      {!isVisualMedia && (
+      {isMediaV2 && isVoice && <div className="voice-message"><button type="button" onClick={() => void toggleVoice()} disabled={pending || voiceLoading} aria-label={voicePlaying ? 'Pause voice note' : 'Play voice note'}>{voicePlaying ? <Pause size={14}/> : <Play size={14}/>}</button><audio ref={audioRef} onPlay={() => setVoicePlaying(true)} onPause={() => setVoicePlaying(false)} onEnded={() => setVoicePlaying(false)}/><div className="voice-message-wave">{Array.from({ length: 28 }, (_, index) => <i key={index} style={{ height: `${4 + ((index * 7) % 13)}px` }}/>)}</div><small>{voiceLoading ? 'Loading…' : 'Voice note'}</small></div>}
+      {!isVisualMedia && !isVoice && (
         <button type="button" className="attachment-file-button" onClick={() => void downloadAttachment(attachment).catch((downloadError: unknown) => setError(downloadError instanceof Error ? downloadError.message : 'Unable to download this file.'))} disabled={pending}>
           <Download size={14} aria-hidden="true" /><FileText size={14} aria-hidden="true" /><span><strong>{attachment.filename}</strong><small>{formatFileSize(attachment.size_bytes)}</small></span>
         </button>

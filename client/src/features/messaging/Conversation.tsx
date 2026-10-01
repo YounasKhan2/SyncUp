@@ -13,6 +13,8 @@ import { MessageList } from './MessageList'
 import { ReportDialog } from './ReportDialog'
 import { GroupMembersDialog } from './GroupMembersDialog'
 import { prepareVideoV2 } from '../media/v2/prepareVideo'
+import { prepareVoiceV2 } from '../media/v2/prepareVoice'
+import type { VoiceDraft } from './VoiceRecorder'
 import { mediaV2UploadManager } from '../media/v2/runtime'
 import type { MediaV2UploadSnapshot } from '../media/v2/uploadManager'
 import type { PendingVideoChoice } from './MessageComposer'
@@ -43,6 +45,7 @@ export function Conversation({ user, chatId, refreshInbox, online, pending, onQu
   const [uploading, setUploading] = useState(false)
   const [videoChoice, setVideoChoice] = useState<PendingVideoChoice | null>(null)
   const [videoSends, setVideoSends] = useState<MediaV2UploadSnapshot[]>([])
+  const [voiceDraft, setVoiceDraft] = useState<VoiceDraft | null>(null)
   const [submitting, setSubmitting] = useState(false)
   const [callStarting, setCallStarting] = useState(false)
   const [error, setError] = useState('')
@@ -352,6 +355,21 @@ export function Conversation({ user, chatId, refreshInbox, online, pending, onQu
     }
   }
 
+  async function sendVoiceNote() {
+    if (!voiceDraft || !chat || !chatId) return
+    setUploading(true)
+    setError('')
+    try {
+      await prepareVoiceV2(voiceDraft.file, voiceDraft.durationMs, chatId, chat.members, user.id)
+      URL.revokeObjectURL(voiceDraft.url)
+      setVoiceDraft(null)
+    } catch (voiceError) {
+      setError(voiceError instanceof Error ? voiceError.message : 'Couldn’t send this voice note.')
+    } finally {
+      setUploading(false)
+    }
+  }
+
   async function startCall(callType: 'audio' | 'video') {
     if (!chatId || !chat || chat.kind !== 'direct') return
     setCallStarting(true)
@@ -631,11 +649,15 @@ export function Conversation({ user, chatId, refreshInbox, online, pending, onQu
         }}
         videoChoice={videoChoice}
         videoSends={videoSends}
+        voiceDraft={voiceDraft}
         onUpload={(file) => void uploadFile(file)}
         onChooseVideoMode={(mode) => void chooseVideoMode(mode)}
         onCancelVideoChoice={() => setVideoChoice(null)}
         onRetryVideo={(jobId) => void mediaV2UploadManager.resume(jobId)}
         onCancelVideo={(jobId) => void mediaV2UploadManager.cancel(jobId)}
+        onVoiceReady={setVoiceDraft}
+        onDeleteVoice={() => { if (voiceDraft) URL.revokeObjectURL(voiceDraft.url); setVoiceDraft(null) }}
+        onSendVoice={() => void sendVoiceNote()}
       />
       {reportingMessageId && <ReportDialog messageId={reportingMessageId} onClose={() => setReportingMessageId(null)} />}
       {managingMembers && chat?.kind === 'group' && <GroupMembersDialog
