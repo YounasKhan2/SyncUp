@@ -27,13 +27,17 @@ type CallParticipant = {
   cameraEnabled: boolean
 }
 
-export function CallWindow({ callId, title, video, isGroup = false, isHost = false, e2eeKey, onEnd, onClose }: {
+export function CallWindow({ callId, title, video, isGroup = false, isHost = false, e2eeKey, isVoiceRoom = false, voiceSpaceId, voiceChannelId, canPublish = true, onEnd, onClose }: {
   callId: string
   title: string
   video: boolean
   isGroup?: boolean
   isHost?: boolean
   e2eeKey?: Uint8Array
+  isVoiceRoom?: boolean
+  voiceSpaceId?: string
+  voiceChannelId?: string
+  canPublish?: boolean
   onEnd: () => void
   onClose: () => void
 }) {
@@ -46,6 +50,7 @@ export function CallWindow({ callId, title, video, isGroup = false, isHost = fal
   const [localIdentity, setLocalIdentity] = useState('')
   const [peers, setPeers] = useState<Record<string, CallParticipant>>({})
   const [groupRoster, setGroupRoster] = useState<{ user_id: string; display_name: string; status: string }[]>([])
+  const [voiceRoster, setVoiceRoster] = useState<{ user_id: string; display_name: string; can_speak: boolean }[]>([])
   const [finished, setFinished] = useState(false)
   const [error, setError] = useState('')
   const peer = Object.values(peers)[0] ?? null
@@ -146,13 +151,16 @@ export function CallWindow({ callId, title, video, isGroup = false, isHost = fal
               })
           })
         }
-        const credentials = await callApi<{ url: string; token: string }>(`/api/${isGroup ? 'group-calls' : 'calls'}/${callId}/token`, { method: 'POST' })
+        const credentialsPath = isVoiceRoom && voiceSpaceId && voiceChannelId
+          ? `/api/spaces/${voiceSpaceId}/channels/${voiceChannelId}/voice/token`
+          : `/api/${isGroup ? 'group-calls' : 'calls'}/${callId}/token`
+        const credentials = await callApi<{ url: string; token: string }>(credentialsPath, { method: 'POST' })
         if (cancelled) return
         await room.connect(credentials.url, credentials.token)
         if (cancelled) return
         setLocalIdentity(room.localParticipant.identity)
         for (const participant of room.remoteParticipants.values()) syncPeer(participant)
-        await room.localParticipant.setMicrophoneEnabled(true)
+        await room.localParticipant.setMicrophoneEnabled(!isVoiceRoom || canPublish)
         if (video) await room.localParticipant.setCameraEnabled(true)
         for (const publication of room.localParticipant.videoTrackPublications.values()) {
           if (publication.track) attach(publication.track, room.localParticipant.identity, true)
@@ -186,9 +194,10 @@ export function CallWindow({ callId, title, video, isGroup = false, isHost = fal
       e2eeKey?.fill(0)
       roomRef.current = null
     }
-  }, [callId, video, isGroup, isHost, e2eeKey])
+  }, [callId, video, isGroup, isHost, e2eeKey, isVoiceRoom, voiceSpaceId, voiceChannelId, canPublish])
 
   useEffect(() => {
+    if (isVoiceRoom || !callId) return
     let cancelled = false
     let finished = false
     const checkStatus = () => {
@@ -232,7 +241,33 @@ export function CallWindow({ callId, title, video, isGroup = false, isHost = fal
       cancelled = true
       window.clearInterval(interval)
     }
-  }, [callId, isGroup, e2eeKey])
+  }, [callId, isGroup, e2eeKey, isVoiceRoom])
+
+  useEffect(() => {
+    if (!isVoiceRoom || !voiceSpaceId || !voiceChannelId) return
+    let cancelled = false
+    const refreshRoster = () => callApi<{ participants: typeof voiceRoster }>(
+      `/api/spaces/${voiceSpaceId}/channels/${voiceChannelId}/voice`,
+    ).then(({ participants }) => {
+      if (!cancelled) setVoiceRoster(participants)
+    }).catch((rosterError: unknown) => {
+      if (cancelled) return
+      const message = rosterError instanceof Error ? rosterError.message : 'Unable to refresh voice room access.'
+      setError(message)
+      if (/not found/iu.test(message)) {
+        setFinished(true)
+        setConnected(false)
+        void roomRef.current?.disconnect()
+        roomRef.current = null
+      }
+    })
+    void refreshRoster()
+    const interval = window.setInterval(() => { void refreshRoster() }, 5000)
+    return () => {
+      cancelled = true
+      window.clearInterval(interval)
+    }
+  }, [isVoiceRoom, voiceSpaceId, voiceChannelId])
 
   async function toggleMute() {
     const room = roomRef.current
@@ -260,13 +295,14 @@ export function CallWindow({ callId, title, video, isGroup = false, isHost = fal
 
   return (
     <div className="overlay call-overlay" role="presentation">
-      <section className="call-dialog" role="dialog" aria-modal="true" aria-label={`${video ? 'Video' : 'Audio'} call with ${title}`}>
+      <section className="call-dialog" role="dialog" aria-modal="true" aria-label={isVoiceRoom ? `Voice room ${title}` : `${video ? 'Video' : 'Audio'} call with ${title}`}>
         <header className="call-dialog-header">
-          <div><span className="eyebrow">{isGroup ? 'GROUP CALL · END-TO-END ENCRYPTED' : '1:1 CALL · NOT END-TO-END ENCRYPTED'}</span><h2>{title}</h2></div>
-          <span className={`call-connection${connected && (isGroup ? groupRoster.some((participant) => participant.status === 'joined') : Boolean(peer)) ? ' is-connected' : ''}`}><i />{connected ? isGroup ? `${groupRoster.filter((participant) => participant.status === 'joined').length} joined` : peer ? `${peer.name} joined` : `Waiting for ${title} to join` : 'Joining call…'}</span>
+          <div><span className="eyebrow">{isVoiceRoom ? 'SPACE VOICE ROOM · NOT END-TO-END ENCRYPTED' : isGroup ? 'GROUP CALL · END-TO-END ENCRYPTED' : '1:1 CALL · NOT END-TO-END ENCRYPTED'}</span><h2>{title}</h2></div>
+          <span className={`call-connection${connected && (isVoiceRoom ? voiceRoster.length > 0 : isGroup ? groupRoster.some((participant) => participant.status === 'joined') : Boolean(peer)) ? ' is-connected' : ''}`}><i />{connected ? isVoiceRoom ? `${Math.max(voiceRoster.length, 1)} in room` : isGroup ? `${groupRoster.filter((participant) => participant.status === 'joined').length} joined` : peer ? `${peer.name} joined` : `Waiting for ${title} to join` : 'Joining call…'}</span>
         </header>
         <div className={`call-media-stage${video ? '' : ' audio-only'}`} ref={mediaStage}>
           {!connected && !error && <p>Connecting to the call service…</p>}
+          {connected && isVoiceRoom && voiceRoster.length <= 1 && !error && <p className="call-waiting">You’re in the room. Others can join anytime.</p>}
           {connected && isGroup && groupRoster.every((participant) => participant.user_id === localIdentity || participant.status !== 'joined') && !error && <p className="call-waiting">Waiting for group members to join…</p>}
           {connected && !isGroup && !peer && !error && <p className="call-waiting">Waiting for {title} to join…</p>}
           {!isGroup && peer && (!video || !peer.cameraEnabled) && (
@@ -275,6 +311,12 @@ export function CallWindow({ callId, title, video, isGroup = false, isHost = fal
               <span>{!peer.cameraEnabled && <><VideoOff size={13} aria-hidden="true" /> Camera off</>}{!peer.microphoneEnabled && <><MicOff size={13} aria-hidden="true" /> Mic muted</>}</span>
             </div>
           )}
+          {isVoiceRoom && voiceRoster.filter((participant) => participant.user_id !== localIdentity).map((participant) => (
+            <div className="call-group-participant" key={participant.user_id}>
+              <strong>{participant.display_name}</strong>
+              <span>{participant.can_speak ? 'Can speak' : 'Listening'}</span>
+            </div>
+          ))}
           {isGroup && groupRoster.filter((participant) => participant.status === 'joined' && participant.user_id !== localIdentity).map((participant) => (
             <div className="call-group-participant" key={participant.user_id}>
               <strong>{participant.display_name}</strong>
@@ -284,15 +326,18 @@ export function CallWindow({ callId, title, video, isGroup = false, isHost = fal
           {video && !cameraEnabled && <p className="call-local-camera-status"><VideoOff size={13} aria-hidden="true" /> Your camera is off</p>}
           {error && <p className="call-error" role="alert">{error}</p>}
         </div>
+        {isVoiceRoom && <div className="call-participant-list" aria-label="Voice room participants">
+          {voiceRoster.map((participant) => <span key={participant.user_id}>{participant.display_name}{participant.user_id === localIdentity ? ' · you' : ''}{participant.can_speak ? '' : ' · listening'}</span>)}
+        </div>}
         {isGroup && <div className="call-participant-list" aria-label="Group call participants">
           {groupRoster.map((participant) => (
             <span key={participant.user_id}>{participant.display_name} · {participant.status}</span>
           ))}
         </div>}
         <footer className="call-controls">
-          <button type="button" onClick={() => void toggleMute()} disabled={!connected} aria-pressed={muted} aria-label={muted ? 'Unmute microphone' : 'Mute microphone'}>{muted ? <MicOff size={15} aria-hidden="true" /> : <Mic size={15} aria-hidden="true" />}{muted ? 'Unmute' : 'Mute'}</button>
+          <button type="button" onClick={() => void toggleMute()} disabled={!connected || (isVoiceRoom && !canPublish)} aria-pressed={muted || (isVoiceRoom && !canPublish)} aria-label={isVoiceRoom && !canPublish ? 'You can listen but cannot speak' : muted ? 'Unmute microphone' : 'Mute microphone'}>{muted || (isVoiceRoom && !canPublish) ? <MicOff size={15} aria-hidden="true" /> : <Mic size={15} aria-hidden="true" />}{isVoiceRoom && !canPublish ? 'Listening only' : muted ? 'Unmute' : 'Mute'}</button>
           {video && <button type="button" onClick={() => void toggleCamera()} disabled={!connected} aria-pressed={!cameraEnabled} aria-label={cameraEnabled ? 'Turn camera off' : 'Turn camera on'}>{cameraEnabled ? <Video size={15} aria-hidden="true" /> : <VideoOff size={15} aria-hidden="true" />}{cameraEnabled ? 'Camera on' : 'Camera off'}</button>}
-          <button type="button" className="call-end-button" onClick={finished ? onClose : onEnd}>{finished ? 'Close' : <><PhoneOff size={14} aria-hidden="true" /> {isGroup && !isHost ? 'Leave call' : 'End call'}</>}</button>
+          <button type="button" className="call-end-button" onClick={finished ? onClose : onEnd}>{finished ? 'Close' : <><PhoneOff size={14} aria-hidden="true" /> {isVoiceRoom || (isGroup && !isHost) ? 'Leave room' : 'End call'}</>}</button>
         </footer>
       </section>
     </div>

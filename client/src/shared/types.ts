@@ -155,6 +155,10 @@ export type ActiveCall = {
   isGroup?: boolean
   isHost?: boolean
   e2eeKey?: Uint8Array
+  isVoiceRoom?: boolean
+  voiceSpaceId?: string
+  voiceChannelId?: string
+  canPublish?: boolean
 }
 
 export type StagedAttachment = {
@@ -214,10 +218,27 @@ export type SpaceCategory = {
 export type SpaceChannel = {
   id: string
   name: string
-  type: 'discussion' | 'announcement' | 'private'
+  type: 'discussion' | 'announcement' | 'private' | 'voice'
   category_id: string
   category_name: string
   topic: string
+  can_send: boolean
+  can_speak: boolean
+  members: SpaceChannelMember[]
+  permissions?: SpaceChannelRolePermission[] | null
+}
+
+export type SpaceChannelRolePermission = {
+  role: 'moderator' | 'member' | 'guest'
+  can_view: boolean
+  can_send: boolean
+  can_speak: boolean
+}
+
+export type SpaceChannelMember = {
+  id: string
+  username: string
+  display_name: string
 }
 
 export type SpaceMember = {
@@ -235,5 +256,8 @@ export type SpaceMessage = {
   display_name: string
   username: string
   body: string
+  mentions: SpaceChannelMember[]
+  everyone_mentioned: boolean
+  is_mentioned: boolean
   created_at: string
 }

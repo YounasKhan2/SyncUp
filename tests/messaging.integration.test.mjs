@@ -352,6 +352,9 @@ test('encrypted requests, authorized chats, ordered idempotent delivery, and gro
   response = await post(ava, `/api/spaces/${createdSpace.spaceId}/channels`, { name: 'announcements', type: 'announcement' })
   assert.equal(response.status, 201, await response.clone().text())
   const announcementChannel = await response.json()
+  response = await post(ava, `/api/spaces/${createdSpace.spaceId}/channels`, { name: 'lounge', type: 'voice' })
+  assert.equal(response.status, 201, await response.clone().text())
+  const voiceChannel = await response.json()
   response = await apiRequest(ava, `/api/spaces/${createdSpace.spaceId}/channels/${feedbackChannel.channelId}`, {
     method: 'PATCH',
     headers: { 'content-type': 'application/json' },
@@ -405,6 +408,149 @@ test('encrypted requests, authorized chats, ordered idempotent delivery, and gro
   assert.equal(feedbackDetails.topic, 'Share design feedback and approvals here.')
   assert.equal(feedbackDetails.category_id, clientCategory.id)
   assert.equal(feedbackDetails.category_name, 'Client')
+  response = await apiRequest(ava, `/api/spaces/${createdSpace.spaceId}`)
+  const ownerSpace = (await response.json()).space
+  const ownerFeedback = ownerSpace.channels.find((channel) => channel.id === feedbackChannel.channelId)
+  assert.deepEqual(ownerFeedback.permissions, [
+    { role: 'moderator', can_view: true, can_send: true, can_speak: true },
+    { role: 'member', can_view: true, can_send: true, can_speak: true },
+    { role: 'guest', can_view: true, can_send: true, can_speak: true },
+  ])
+  const announcementPermissions = ownerSpace.channels
+    .find((channel) => channel.id === announcementChannel.channelId).permissions
+  assert.equal(announcementPermissions.find((permission) => permission.role === 'member').can_send, false)
+
+  const configuredPermissions = [
+    { role: 'moderator', can_view: true, can_send: true, can_speak: true },
+    { role: 'member', can_view: true, can_send: false, can_speak: true },
+    { role: 'guest', can_view: false, can_send: false, can_speak: false },
+  ]
+  response = await apiRequest(ava, `/api/spaces/${createdSpace.spaceId}/channels/${feedbackChannel.channelId}/permissions`, {
+    method: 'PATCH',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({
+      permissions: [
+        { role: 'moderator', can_view: true, can_send: true, can_speak: true },
+        { role: 'member', can_view: false, can_send: true, can_speak: true },
+        { role: 'guest', can_view: false, can_send: false, can_speak: false },
+      ],
+    }),
+  })
+  assert.equal(response.status, 400)
+  response = await apiRequest(nadia, `/api/spaces/${createdSpace.spaceId}/channels/${feedbackChannel.channelId}/permissions`, {
+    method: 'PATCH',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ permissions: configuredPermissions }),
+  })
+  assert.equal(response.status, 403)
+  response = await apiRequest(ava, `/api/spaces/${createdSpace.spaceId}/channels/${feedbackChannel.channelId}/permissions`, {
+    method: 'PATCH',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ permissions: configuredPermissions }),
+  })
+  assert.equal(response.status, 200, await response.clone().text())
+  response = await apiRequest(chris, `/api/spaces/${createdSpace.spaceId}`)
+  const restrictedMemberSpace = (await response.json()).space
+  const restrictedFeedback = restrictedMemberSpace.channels.find((channel) => channel.id === feedbackChannel.channelId)
+  assert.equal(restrictedFeedback.can_send, false)
+  const defaultVoicePermission = restrictedMemberSpace.channels.find((channel) => channel.id === voiceChannel.channelId)
+  assert.equal(defaultVoicePermission.can_speak, true)
+  response = await apiRequest(chris, `/api/spaces/${createdSpace.spaceId}/channels/${feedbackChannel.channelId}/messages`)
+  assert.equal(response.status, 200)
+  response = await post(chris, `/api/spaces/${createdSpace.spaceId}/channels/${feedbackChannel.channelId}/messages`, {
+    body: 'Role settings should reject this message.',
+  })
+  assert.equal(response.status, 403)
+
+  const mentionedText = `Hey @${nadia.username}, please take a look.`
+  response = await apiRequest(nadia, `/api/events?chat_id=${generalChannel.id}`)
+  assert.equal(response.status, 200)
+  const mentionReader = response.body.getReader()
+  await waitForEvent(mentionReader, 'ready')
+  const mentionPing = waitForEvent(mentionReader, 'channel.mention')
+  response = await post(ava, `/api/spaces/${createdSpace.spaceId}/channels/${generalChannel.id}/messages`, { body: mentionedText })
+  assert.equal(response.status, 201, await response.clone().text())
+  const mentionPingEvent = await mentionPing
+  assert.equal(mentionPingEvent.chatId, generalChannel.id)
+  assert.equal(typeof mentionPingEvent.messageId, 'string')
+  assert.equal(Object.hasOwn(mentionPingEvent, 'body'), false)
+  await mentionReader.cancel()
+  response = await apiRequest(nadia, `/api/spaces/${createdSpace.spaceId}/channels/${generalChannel.id}/messages`)
+  const mentionedMessages = (await response.json()).messages
+  const mentionedMessage = mentionedMessages.find((message) => message.body === mentionedText)
+  assert.ok(mentionedMessage)
+  assert.deepEqual(mentionedMessage.mentions.map((mention) => mention.id), [nadia.id])
+  assert.equal(mentionedMessage.everyone_mentioned, false)
+  assert.equal(mentionedMessage.is_mentioned, true)
+  response = await post(ava, `/api/spaces/${createdSpace.spaceId}/channels/${generalChannel.id}/messages`, { body: 'Kickoff update for @everyone.' })
+  assert.equal(response.status, 201, await response.clone().text())
+  response = await apiRequest(nadia, `/api/spaces/${createdSpace.spaceId}/channels/${generalChannel.id}/messages`)
+  const everyoneMessage = (await response.json()).messages.find((message) => message.body === 'Kickoff update for @everyone.')
+  assert.equal(everyoneMessage.everyone_mentioned, true)
+  assert.equal(everyoneMessage.is_mentioned, true)
+  assert.equal(everyoneMessage.mentions.some((mention) => mention.id === nadia.id), true)
+  response = await post(nadia, `/api/spaces/${createdSpace.spaceId}/channels/${generalChannel.id}/messages`, { body: 'Unauthorized @everyone ping.' })
+  assert.equal(response.status, 403)
+
+  response = await apiRequest(nadia, `/api/spaces/${createdSpace.spaceId}/channels/${voiceChannel.channelId}/voice/token`, { method: 'POST' })
+  assert.equal(response.status, 404)
+  response = await apiRequest(nadia, `/api/spaces/${createdSpace.spaceId}/channels/${voiceChannel.channelId}/voice`)
+  assert.equal(response.status, 404)
+  const voicePermissions = ownerSpace.channels.find((channel) => channel.id === voiceChannel.channelId)
+    .permissions.map((permission) => ({
+      ...permission,
+      ...(permission.role === 'member' ? { can_speak: false } : {}),
+    }))
+  response = await apiRequest(ava, `/api/spaces/${createdSpace.spaceId}/channels/${voiceChannel.channelId}/permissions`, {
+    method: 'PATCH',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ permissions: voicePermissions }),
+  })
+  assert.equal(response.status, 200, await response.clone().text())
+  response = await apiRequest(chris, `/api/spaces/${createdSpace.spaceId}/channels/${voiceChannel.channelId}/voice/token`, { method: 'POST' })
+  assert.ok([200, 503].includes(response.status), await response.clone().text())
+  if (response.status === 200) {
+    const voiceToken = await response.json()
+    assert.equal(voiceToken.canSpeak, false)
+    assert.equal(typeof voiceToken.token, 'string')
+    const voiceClaims = JSON.parse(Buffer.from(voiceToken.token.split('.')[1], 'base64url').toString('utf8'))
+    assert.equal(voiceClaims.video.canPublish, false)
+    response = await apiRequest(chris, `/api/spaces/${createdSpace.spaceId}/channels/${voiceChannel.channelId}/voice`)
+    assert.equal(response.status, 200, await response.clone().text())
+    assert.deepEqual((await response.json()).participants, [])
+  }
+  response = await apiRequest(chris, `/api/spaces/${createdSpace.spaceId}/channels/${voiceChannel.channelId}/messages`)
+  assert.equal(response.status, 404)
+  response = await post(chris, `/api/spaces/${createdSpace.spaceId}/channels/${voiceChannel.channelId}/messages`, { body: 'Text does not belong in voice rooms.' })
+  assert.equal(response.status, 400)
+
+  configuredPermissions[1].can_view = false
+  configuredPermissions[1].can_speak = false
+  response = await apiRequest(ava, `/api/spaces/${createdSpace.spaceId}/channels/${feedbackChannel.channelId}/permissions`, {
+    method: 'PATCH',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ permissions: configuredPermissions }),
+  })
+  assert.equal(response.status, 200, await response.clone().text())
+  response = await apiRequest(chris, `/api/spaces/${createdSpace.spaceId}`)
+  const hiddenChannelSpace = (await response.json()).space
+  assert.equal(hiddenChannelSpace.channels.some((channel) => channel.id === feedbackChannel.channelId), false)
+  assert.equal(hiddenChannelSpace.categories.some((category) => category.id === clientCategory.id), false)
+  response = await apiRequest(chris, '/api/spaces')
+  assert.equal((await response.json()).spaces.some((item) => item.id === createdSpace.spaceId && item.channel_count === 3), true)
+  response = await apiRequest(chris, `/api/spaces/${createdSpace.spaceId}/channels/${feedbackChannel.channelId}/messages`)
+  assert.equal(response.status, 404)
+  response = await post(chris, `/api/spaces/${createdSpace.spaceId}/channels/${feedbackChannel.channelId}/messages`, {
+    body: 'A hidden channel must not accept this message.',
+  })
+  assert.equal(response.status, 404)
+  response = await apiRequest(chris, `/api/events?chat_id=${feedbackChannel.channelId}`)
+  if (response.status === 200) await response.body?.cancel()
+  assert.equal(response.status, 404)
+  response = await post(chris, `/api/chats/${feedbackChannel.channelId}/typing`, { active: true })
+  assert.equal(response.status, 404)
+  response = await apiRequest(ava, `/api/spaces/${createdSpace.spaceId}`)
+  assert.equal((await response.json()).space.channels.some((channel) => channel.id === feedbackChannel.channelId), true)
   response = await apiRequest(nadia, '/api/spaces')
   assert.equal(response.status, 200)
   assert.equal((await response.json()).spaces.length, 1)
@@ -421,7 +567,8 @@ test('encrypted requests, authorized chats, ordered idempotent delivery, and gro
   response = await apiRequest(chris, `/api/spaces/${createdSpace.spaceId}`)
   assert.equal(response.status, 200, await response.clone().text())
   const chrisSpace = (await response.json()).space
-  assert.deepEqual(new Set(chrisSpace.channels.map((channel) => channel.name)), new Set(['general', 'feedback', 'announcements']))
+  assert.deepEqual(new Set(chrisSpace.channels.map((channel) => channel.name)), new Set(['general', 'announcements', 'lounge']))
+  assert.equal(chrisSpace.channels.find((channel) => channel.id === announcementChannel.channelId).can_send, false)
   assert.equal(JSON.stringify(chrisSpace).includes('internal'), false)
   response = await apiRequest(chris, `/api/spaces/${createdSpace.spaceId}/channels/${privateChannel.channelId}/messages`)
   assert.equal(response.status, 404)
@@ -442,13 +589,12 @@ test('encrypted requests, authorized chats, ordered idempotent delivery, and gro
   response = await apiRequest(nadia, `/api/spaces/${createdSpace.spaceId}/channels/${generalChannel.id}/messages`)
   assert.equal(response.status, 200, await response.clone().text())
   const generalMessages = (await response.json()).messages
-  assert.equal(generalMessages.length, 1)
-  assert.equal(generalMessages[0].body, 'Welcome to the client room.')
-  assert.equal(generalMessages[0].display_name, 'Ava')
+  assert.equal(generalMessages.length, 3)
+  assert.equal(generalMessages.find((message) => message.body === 'Welcome to the client room.')?.display_name, 'Ava')
   response = await post(chris, `/api/spaces/${createdSpace.spaceId}/channels/${privateChannel.channelId}/messages`, { body: 'This must not go through.' })
   assert.equal(response.status, 404)
   response = await apiRequest(ava, '/api/spaces')
-  assert.equal((await response.json()).spaces.some((item) => item.id === createdSpace.spaceId && item.channel_count === 4), true)
+  assert.equal((await response.json()).spaces.some((item) => item.id === createdSpace.spaceId && item.channel_count === 5), true)
   response = await apiRequest(nadia, `/api/spaces/${randomUUID()}`)
   assert.equal(response.status, 404)
   response = await apiRequest(chris, '/api/inbox')

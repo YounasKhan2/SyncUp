@@ -1,4 +1,6 @@
 import { Router } from 'express'
+import { AccessToken, RoomServiceClient, TrackSource } from 'livekit-server-sdk'
+import { rateLimit } from 'express-rate-limit'
 import { v7 as uuidv7 } from 'uuid'
 import { z } from 'zod'
 import { pool } from '../../db.js'
@@ -10,6 +12,27 @@ export const spaceRoutes = Router()
 
 const idSchema = z.uuid()
 const channelNameSchema = z.string().trim().toLowerCase().min(1).max(40).regex(/^[a-z0-9][a-z0-9-]*$/)
+const mentionPattern = /(?:^|[^\w@])@([a-zA-Z0-9_]{3,24})(?![a-zA-Z0-9_])/gu
+const voiceLimiter = rateLimit({
+  windowMs: 60_000,
+  limit: 30,
+  standardHeaders: 'draft-8',
+  legacyHeaders: false,
+  keyGenerator: (request) => (request as AuthenticatedRequest).auth!.userId,
+  message: { error: { code: 'rate_limited', message: 'Too many voice room requests. Try again shortly.' } },
+})
+
+function liveKitSettings() {
+  const url = process.env.LIVEKIT_URL
+  const apiKey = process.env.LIVEKIT_API_KEY
+  const apiSecret = process.env.LIVEKIT_API_SECRET
+  if (!url || !apiKey || !apiSecret) return null
+  return { url, apiKey, apiSecret }
+}
+
+function voiceRoomName(channelId: string) {
+  return `syncup-space-voice-${channelId}`
+}
 
 spaceRoutes.get('/spaces', async (request: AuthenticatedRequest, response, next) => {
   try {
@@ -22,6 +45,11 @@ spaceRoutes.get('/spaces', async (request: AuthenticatedRequest, response, next)
        LEFT JOIN chat_members grant_member
          ON grant_member.chat_id = sc.chat_id AND grant_member.user_id = $1 AND grant_member.left_at IS NULL
        WHERE grant_member.user_id IS NOT NULL
+         AND (sm.role IN ('owner', 'admin') OR COALESCE((
+           SELECT permission.can_view FROM space_channel_role_permissions permission
+           WHERE permission.space_id = sc.space_id AND permission.chat_id = sc.chat_id
+             AND permission.role = sm.role
+         ), true))
        GROUP BY s.id, sm.role
        ORDER BY s.created_at DESC, s.id`,
       [request.auth!.userId],
@@ -98,7 +126,51 @@ spaceRoutes.get('/spaces/:id', async (request: AuthenticatedRequest, response, n
               COALESCE((
                 SELECT jsonb_agg(jsonb_build_object(
                   'id', sc.chat_id, 'name', sc.name, 'type', sc.channel_type,
-                  'category_id', category.id, 'category_name', category.name, 'topic', sc.topic
+                  'category_id', category.id, 'category_name', category.name, 'topic', sc.topic,
+                  'can_send', sm.role IN ('owner', 'admin') OR COALESCE((
+                    SELECT permission.can_send FROM space_channel_role_permissions permission
+                    WHERE permission.space_id = sc.space_id AND permission.chat_id = sc.chat_id
+                      AND permission.role = sm.role
+                  ), sc.channel_type <> 'announcement' OR sm.role = 'moderator'),
+                  'can_speak', sm.role IN ('owner', 'admin') OR COALESCE((
+                    SELECT permission.can_speak FROM space_channel_role_permissions permission
+                    WHERE permission.space_id = sc.space_id AND permission.chat_id = sc.chat_id
+                      AND permission.role = sm.role
+                  ), true),
+                  'members', COALESCE((
+                    SELECT jsonb_agg(jsonb_build_object(
+                      'id', member.user_id, 'username', member_user.username,
+                      'display_name', member_user.display_name
+                    ) ORDER BY lower(member_user.display_name), member.user_id)
+                    FROM chat_members member
+                    JOIN users member_user ON member_user.id = member.user_id
+                    LEFT JOIN space_members channel_role
+                      ON channel_role.space_id = sc.space_id AND channel_role.user_id = member.user_id
+                    WHERE member.chat_id = sc.chat_id AND member.left_at IS NULL
+                      AND channel_role.user_id IS NOT NULL
+                      AND (channel_role.role IN ('owner', 'admin') OR COALESCE((
+                        SELECT member_permission.can_view FROM space_channel_role_permissions member_permission
+                        WHERE member_permission.space_id = sc.space_id
+                          AND member_permission.chat_id = sc.chat_id
+                          AND member_permission.role = channel_role.role
+                      ), true))
+                  ), '[]'::jsonb),
+                  'permissions', CASE WHEN sm.role IN ('owner', 'admin') THEN (
+                    SELECT jsonb_agg(jsonb_build_object(
+                      'role', target_role.role,
+                      'can_view', COALESCE(permission.can_view, true),
+                      'can_send', COALESCE(
+                        permission.can_send,
+                        sc.channel_type <> 'announcement' OR target_role.role = 'moderator'
+                      ),
+                      'can_speak', COALESCE(permission.can_speak, true)
+                    ) ORDER BY target_role.position)
+                    FROM (VALUES ('moderator', 1), ('member', 2), ('guest', 3))
+                      AS target_role(role, position)
+                    LEFT JOIN space_channel_role_permissions permission
+                      ON permission.space_id = sc.space_id AND permission.chat_id = sc.chat_id
+                        AND permission.role = target_role.role
+                  ) ELSE NULL END
                 ) ORDER BY sc.created_at, sc.chat_id)
                 FROM space_channels sc
                 JOIN space_channel_categories category
@@ -106,18 +178,27 @@ spaceRoutes.get('/spaces/:id', async (request: AuthenticatedRequest, response, n
                 JOIN chat_members grant_member ON grant_member.chat_id = sc.chat_id
                   AND grant_member.user_id = $2 AND grant_member.left_at IS NULL
                 WHERE sc.space_id = s.id
+                  AND (sm.role IN ('owner', 'admin') OR COALESCE((
+                    SELECT permission.can_view FROM space_channel_role_permissions permission
+                    WHERE permission.space_id = sc.space_id AND permission.chat_id = sc.chat_id
+                      AND permission.role = sm.role
+                  ), true))
               ), '[]'::jsonb) AS channels,
               COALESCE((
                 SELECT jsonb_agg(jsonb_build_object('id', category.id, 'name', category.name)
                   ORDER BY category.created_at, category.id)
                 FROM space_channel_categories category
-                WHERE category.space_id = s.id AND (
-                  sm.role <> 'guest' OR EXISTS (
-                    SELECT 1 FROM space_channels visible_channel
-                    JOIN chat_members grant_member ON grant_member.chat_id = visible_channel.chat_id
-                      AND grant_member.user_id = $2 AND grant_member.left_at IS NULL
-                    WHERE visible_channel.space_id = s.id AND visible_channel.category_id = category.id
-                  )
+                WHERE category.space_id = s.id AND EXISTS (
+                  SELECT 1 FROM space_channels visible_channel
+                  JOIN chat_members grant_member ON grant_member.chat_id = visible_channel.chat_id
+                    AND grant_member.user_id = $2 AND grant_member.left_at IS NULL
+                  WHERE visible_channel.space_id = s.id AND visible_channel.category_id = category.id
+                    AND (sm.role IN ('owner', 'admin') OR COALESCE((
+                      SELECT permission.can_view FROM space_channel_role_permissions permission
+                      WHERE permission.space_id = visible_channel.space_id
+                        AND permission.chat_id = visible_channel.chat_id
+                        AND permission.role = sm.role
+                    ), true))
                 )
               ), '[]'::jsonb) AS categories,
               COALESCE((
@@ -135,6 +216,18 @@ spaceRoutes.get('/spaces/:id', async (request: AuthenticatedRequest, response, n
                     WHERE mine.user_id = $2 AND mine.left_at IS NULL
                       AND shared_channel.space_id = s.id
                       AND theirs.user_id = visible_member.user_id AND theirs.left_at IS NULL
+                      AND (sm.role IN ('owner', 'admin') OR COALESCE((
+                        SELECT own_permission.can_view FROM space_channel_role_permissions own_permission
+                        WHERE own_permission.space_id = shared_channel.space_id
+                          AND own_permission.chat_id = shared_channel.chat_id
+                          AND own_permission.role = sm.role
+                      ), true))
+                      AND (visible_member.role IN ('owner', 'admin') OR COALESCE((
+                        SELECT other_permission.can_view FROM space_channel_role_permissions other_permission
+                        WHERE other_permission.space_id = shared_channel.space_id
+                          AND other_permission.chat_id = shared_channel.chat_id
+                          AND other_permission.role = visible_member.role
+                      ), true))
                   ))
               ), '[]'::jsonb) AS members
        FROM spaces s
@@ -145,6 +238,11 @@ spaceRoutes.get('/spaces/:id', async (request: AuthenticatedRequest, response, n
            JOIN chat_members grant_member ON grant_member.chat_id = visible_channel.chat_id
              AND grant_member.user_id = $2 AND grant_member.left_at IS NULL
            WHERE visible_channel.space_id = s.id
+             AND (sm.role IN ('owner', 'admin') OR COALESCE((
+               SELECT permission.can_view FROM space_channel_role_permissions permission
+               WHERE permission.space_id = visible_channel.space_id
+                 AND permission.chat_id = visible_channel.chat_id AND permission.role = sm.role
+             ), true))
          )`,
       [spaceId.data, request.auth!.userId],
     )
@@ -201,7 +299,7 @@ spaceRoutes.post('/spaces/:id/channels', async (request: AuthenticatedRequest, r
     name: channelNameSchema,
     topic: z.string().trim().max(160).default(''),
     categoryId: idSchema.optional(),
-    type: z.enum(['discussion', 'announcement', 'private']).default('discussion'),
+    type: z.enum(['discussion', 'announcement', 'private', 'voice']).default('discussion'),
   }).safeParse(request.body)
   if (!spaceId.success || !input.success) {
     response.status(400).json({ error: { code: 'validation', message: 'Choose a valid channel name and type.' } })
@@ -250,6 +348,13 @@ spaceRoutes.post('/spaces/:id/channels', async (request: AuthenticatedRequest, r
       `INSERT INTO space_channels (space_id, chat_id, name, channel_type, category_id, topic)
        VALUES ($1, $2, $3, $4, $5, $6)`,
       [spaceId.data, channelId, input.data.name, input.data.type, category.rows[0].id, input.data.topic],
+    )
+    await client.query(
+      `INSERT INTO space_channel_role_permissions (space_id, chat_id, role, can_view, can_send, updated_by)
+       SELECT $1, $2, target_role.role, true,
+              $3 <> 'announcement' OR target_role.role = 'moderator', $4
+       FROM (VALUES ('moderator'), ('member'), ('guest')) AS target_role(role)`,
+      [spaceId.data, channelId, input.data.type, request.auth!.userId],
     )
     if (input.data.type === 'private') {
       await client.query(
@@ -347,6 +452,246 @@ spaceRoutes.patch('/spaces/:spaceId/channels/:channelId', async (request: Authen
       return
     }
     response.json({ channel: result.rows[0] })
+  } catch (error) {
+    next(error)
+  }
+})
+
+spaceRoutes.patch('/spaces/:spaceId/channels/:channelId/permissions', async (request: AuthenticatedRequest, response, next) => {
+  const spaceId = idSchema.safeParse(request.params.spaceId)
+  const channelId = idSchema.safeParse(request.params.channelId)
+  const input = z.object({
+    permissions: z.array(z.object({
+      role: z.enum(['moderator', 'member', 'guest']),
+      can_view: z.boolean(),
+      can_send: z.boolean(),
+      can_speak: z.boolean(),
+    })).length(3).refine((permissions) => {
+      const roles = permissions.map((permission) => permission.role)
+      return new Set(roles).size === 3
+        && ['moderator', 'member', 'guest'].every((role) => roles.includes(role as typeof roles[number]))
+        && permissions.every((permission) => permission.can_view || (!permission.can_send && !permission.can_speak))
+    }),
+  }).safeParse(request.body)
+  if (!spaceId.success || !channelId.success || !input.success) {
+    response.status(400).json({ error: { code: 'validation', message: 'Set view and send permissions for moderator, member, and guest roles.' } })
+    return
+  }
+
+  const client = await pool.connect()
+  try {
+    await client.query('BEGIN')
+    const access = await client.query<{ role: string }>(
+      `SELECT sm.role
+       FROM space_channels sc
+       JOIN space_members sm ON sm.space_id = sc.space_id AND sm.user_id = $3
+       WHERE sc.space_id = $1 AND sc.chat_id = $2
+       FOR UPDATE OF sc`,
+      [spaceId.data, channelId.data, request.auth!.userId],
+    )
+    if (!access.rows[0]) {
+      await client.query('ROLLBACK')
+      response.status(404).json({ error: { code: 'not_found', message: 'Channel not found.' } })
+      return
+    }
+    if (!['owner', 'admin'].includes(access.rows[0].role)) {
+      await client.query('ROLLBACK')
+      response.status(403).json({ error: { code: 'forbidden', message: 'Only Space owners and admins can manage channel permissions.' } })
+      return
+    }
+    await client.query(
+      `INSERT INTO space_channel_role_permissions
+         (space_id, chat_id, role, can_view, can_send, can_speak, updated_by, updated_at)
+       SELECT $1, $2, permission.role, permission.can_view, permission.can_send,
+              permission.can_speak, $4, now()
+       FROM jsonb_to_recordset($3::jsonb) AS permission(role text, can_view boolean, can_send boolean, can_speak boolean)
+       ON CONFLICT (space_id, chat_id, role) DO UPDATE
+       SET can_view = EXCLUDED.can_view, can_send = EXCLUDED.can_send,
+           can_speak = EXCLUDED.can_speak,
+           updated_by = EXCLUDED.updated_by, updated_at = now()`,
+      [spaceId.data, channelId.data, JSON.stringify(input.data.permissions), request.auth!.userId],
+    )
+    await client.query('COMMIT')
+    response.json({ permissions: input.data.permissions })
+  } catch (error) {
+    await client.query('ROLLBACK')
+    next(error)
+  } finally {
+    client.release()
+  }
+})
+
+spaceRoutes.post('/spaces/:spaceId/channels/:channelId/voice/token', voiceLimiter, async (request: AuthenticatedRequest, response, next) => {
+  const spaceId = idSchema.safeParse(request.params.spaceId)
+  const channelId = idSchema.safeParse(request.params.channelId)
+  if (!spaceId.success || !channelId.success) {
+    response.status(400).json({ error: { code: 'validation', message: 'Invalid voice channel.' } })
+    return
+  }
+  try {
+    const access = await pool.query<{ role: string; display_name: string; can_view: boolean; can_speak: boolean }>(
+      `SELECT sm.role, u.display_name,
+              sm.role IN ('owner', 'admin') OR COALESCE(permission.can_view, true) AS can_view,
+              sm.role IN ('owner', 'admin') OR COALESCE(permission.can_speak, true) AS can_speak
+       FROM space_channels sc
+       JOIN space_members sm ON sm.space_id = sc.space_id AND sm.user_id = $3
+       JOIN chat_members grant_member ON grant_member.chat_id = sc.chat_id
+         AND grant_member.user_id = $3 AND grant_member.left_at IS NULL
+       JOIN users u ON u.id = sm.user_id
+       LEFT JOIN space_channel_role_permissions permission
+         ON permission.space_id = sc.space_id AND permission.chat_id = sc.chat_id
+           AND permission.role = sm.role
+       WHERE sc.space_id = $1 AND sc.chat_id = $2 AND sc.channel_type = 'voice'`,
+      [spaceId.data, channelId.data, request.auth!.userId],
+    )
+    if (!access.rows[0] || !access.rows[0].can_view) {
+      response.status(404).json({ error: { code: 'not_found', message: 'Voice room not found.' } })
+      return
+    }
+    const settings = liveKitSettings()
+    if (!settings) {
+      response.status(503).json({ error: { code: 'service_unavailable', message: 'Voice rooms are not configured on this server.' } })
+      return
+    }
+
+    const roomName = voiceRoomName(channelId.data)
+    const service = new RoomServiceClient(settings.url, settings.apiKey, settings.apiSecret)
+    const rooms = await service.listRooms([roomName])
+    if (!rooms.some((room) => room.name === roomName)) {
+      try {
+        await service.createRoom({ name: roomName, emptyTimeout: 60, maxParticipants: 16 })
+      } catch (error) {
+        const roomsAfterCreate = await service.listRooms([roomName])
+        if (!roomsAfterCreate.some((room) => room.name === roomName)) throw error
+      }
+    }
+
+    const token = new AccessToken(settings.apiKey, settings.apiSecret, {
+      identity: request.auth!.userId,
+      name: access.rows[0].display_name,
+      ttl: '10m',
+    })
+    token.addGrant({
+      roomJoin: true,
+      room: roomName,
+      canPublish: access.rows[0].can_speak,
+      canPublishSources: [TrackSource.MICROPHONE],
+      canSubscribe: true,
+      canPublishData: false,
+    })
+    response.json({
+      url: settings.url,
+      token: await token.toJwt(),
+      canSpeak: access.rows[0].can_speak,
+    })
+  } catch (error) {
+    next(error)
+  }
+})
+
+spaceRoutes.get('/spaces/:spaceId/channels/:channelId/voice', voiceLimiter, async (request: AuthenticatedRequest, response, next) => {
+  const spaceId = idSchema.safeParse(request.params.spaceId)
+  const channelId = idSchema.safeParse(request.params.channelId)
+  if (!spaceId.success || !channelId.success) {
+    response.status(400).json({ error: { code: 'validation', message: 'Invalid voice channel.' } })
+    return
+  }
+  try {
+    const access = await pool.query<{ can_view: boolean }>(
+      `SELECT sm.role IN ('owner', 'admin') OR COALESCE(permission.can_view, true) AS can_view
+       FROM space_channels sc
+       JOIN space_members sm ON sm.space_id = sc.space_id AND sm.user_id = $3
+       JOIN chat_members grant_member ON grant_member.chat_id = sc.chat_id
+         AND grant_member.user_id = $3 AND grant_member.left_at IS NULL
+       LEFT JOIN space_channel_role_permissions permission
+         ON permission.space_id = sc.space_id AND permission.chat_id = sc.chat_id
+           AND permission.role = sm.role
+       WHERE sc.space_id = $1 AND sc.chat_id = $2 AND sc.channel_type = 'voice'`,
+      [spaceId.data, channelId.data, request.auth!.userId],
+    )
+    const settings = liveKitSettings()
+    const roomName = voiceRoomName(channelId.data)
+    if (!access.rows[0]?.can_view) {
+      if (settings) {
+        const service = new RoomServiceClient(settings.url, settings.apiKey, settings.apiSecret)
+        const rooms = await service.listRooms([roomName])
+        if (!rooms.some((room) => room.name === roomName)) {
+          response.status(404).json({ error: { code: 'not_found', message: 'Voice room not found.' } })
+          return
+        }
+        try {
+          await service.removeParticipant(roomName, request.auth!.userId, {
+            revokeTokenTs: BigInt(Math.floor(Date.now() / 1000)),
+          })
+        } catch (error) {
+          const currentRooms = await service.listRooms([roomName])
+          if (currentRooms.some((room) => room.name === roomName)) throw error
+        }
+      }
+      response.status(404).json({ error: { code: 'not_found', message: 'Voice room not found.' } })
+      return
+    }
+    if (!settings) {
+      response.status(503).json({ error: { code: 'service_unavailable', message: 'Voice rooms are not configured on this server.' } })
+      return
+    }
+    const service = new RoomServiceClient(settings.url, settings.apiKey, settings.apiSecret)
+    const rooms = await service.listRooms([roomName])
+    if (!rooms.some((room) => room.name === roomName)) {
+      response.json({ participants: [] })
+      return
+    }
+
+    const participants = await service.listParticipants(roomName)
+    const roster = await pool.query<{
+      user_id: string
+      display_name: string
+      can_speak: boolean
+    }>(
+      `SELECT cm.user_id, u.display_name,
+              sm.role IN ('owner', 'admin') OR COALESCE(permission.can_speak, true) AS can_speak
+       FROM chat_members cm
+       JOIN space_channels sc ON sc.chat_id = cm.chat_id AND sc.space_id = $1
+       JOIN space_members sm ON sm.space_id = sc.space_id AND sm.user_id = cm.user_id
+       JOIN users u ON u.id = cm.user_id
+       LEFT JOIN space_channel_role_permissions permission
+         ON permission.space_id = sc.space_id AND permission.chat_id = sc.chat_id
+           AND permission.role = sm.role
+       WHERE sc.chat_id = $2 AND cm.left_at IS NULL
+         AND (sm.role IN ('owner', 'admin') OR COALESCE(permission.can_view, true))`,
+      [spaceId.data, channelId.data],
+    )
+    const allowedUsers = new Map(roster.rows.map((member) => [member.user_id, member]))
+    const visibleParticipants = []
+    for (const participant of participants) {
+      const member = allowedUsers.get(participant.identity)
+      if (member) {
+        if (participant.permission?.canPublish !== member.can_speak) {
+          await service.updateParticipant(roomName, participant.identity, {
+            permission: {
+              canSubscribe: true,
+              canPublish: member.can_speak,
+              canPublishData: false,
+              canPublishSources: member.can_speak ? [TrackSource.MICROPHONE] : [],
+              hidden: false,
+              recorder: false,
+              canUpdateMetadata: false,
+            },
+          })
+        }
+        visibleParticipants.push({ user_id: member.user_id, display_name: member.display_name, can_speak: member.can_speak })
+      } else {
+        try {
+          await service.removeParticipant(roomName, participant.identity, {
+            revokeTokenTs: BigInt(Math.floor(Date.now() / 1000)),
+          })
+        } catch (error) {
+          const currentRooms = await service.listRooms([roomName])
+          if (currentRooms.some((room) => room.name === roomName)) throw error
+        }
+      }
+    }
+    response.json({ participants: visibleParticipants })
   } catch (error) {
     next(error)
   }
@@ -467,13 +812,39 @@ spaceRoutes.get('/spaces/:spaceId/channels/:channelId/messages', async (request:
   try {
     const result = await pool.query(
       `SELECT m.id, m.chat_id, m.server_seq, m.sender_id, u.display_name, u.username,
-              m.body, m.created_at
+              m.body, m.created_at,
+              COALESCE((
+                SELECT jsonb_agg(jsonb_build_object(
+                  'id', mentioned_user.id, 'username', mentioned_user.username,
+                  'display_name', mentioned_user.display_name
+                ) ORDER BY lower(mentioned_user.username))
+                FROM channel_message_mentions mention
+                JOIN users mentioned_user ON mentioned_user.id = mention.mentioned_user_id
+                WHERE mention.message_id = m.id AND mention.mentioned_user_id IS NOT NULL
+              ), '[]'::jsonb) AS mentions,
+              EXISTS (
+                SELECT 1 FROM channel_message_mentions everyone
+                WHERE everyone.message_id = m.id AND everyone.is_everyone
+              ) AS everyone_mentioned,
+              EXISTS (
+                SELECT 1 FROM channel_message_mentions own_mention
+                WHERE own_mention.message_id = m.id
+                  AND (own_mention.mentioned_user_id = $2
+                    OR (own_mention.is_everyone AND m.sender_id <> $2))
+              ) AS is_mentioned
        FROM channel_messages m
        JOIN users u ON u.id = m.sender_id
        JOIN space_channels sc ON sc.chat_id = m.chat_id AND sc.space_id = $1
+       JOIN space_members sm ON sm.space_id = sc.space_id AND sm.user_id = $2
        JOIN chat_members grant_member ON grant_member.chat_id = sc.chat_id
          AND grant_member.user_id = $2 AND grant_member.left_at IS NULL
-       WHERE m.chat_id = $3 AND ($4::bigint IS NULL OR m.server_seq < $4)
+       WHERE m.chat_id = $3 AND sc.channel_type <> 'voice'
+         AND ($4::bigint IS NULL OR m.server_seq < $4)
+         AND (sm.role IN ('owner', 'admin') OR COALESCE((
+           SELECT permission.can_view FROM space_channel_role_permissions permission
+           WHERE permission.space_id = sc.space_id AND permission.chat_id = sc.chat_id
+             AND permission.role = sm.role
+         ), true))
        ORDER BY m.server_seq DESC LIMIT $5`,
       [spaceId.data, request.auth!.userId, channelId.data, before.data ?? null, limit.data],
     )
@@ -482,7 +853,12 @@ spaceRoutes.get('/spaces/:spaceId/channels/:channelId/messages', async (request:
        JOIN space_members sm ON sm.space_id = sc.space_id AND sm.user_id = $2
        JOIN chat_members grant_member ON grant_member.chat_id = sc.chat_id
          AND grant_member.user_id = $2 AND grant_member.left_at IS NULL
-       WHERE sc.space_id = $1 AND sc.chat_id = $3`,
+       WHERE sc.space_id = $1 AND sc.chat_id = $3 AND sc.channel_type <> 'voice'
+         AND (sm.role IN ('owner', 'admin') OR COALESCE((
+           SELECT permission.can_view FROM space_channel_role_permissions permission
+           WHERE permission.space_id = sc.space_id AND permission.chat_id = sc.chat_id
+             AND permission.role = sm.role
+         ), true))`,
       [spaceId.data, request.auth!.userId, channelId.data],
     )
     if (!channelExists.rowCount) {
@@ -507,14 +883,28 @@ spaceRoutes.post('/spaces/:spaceId/channels/:channelId/messages', messageLimiter
   const messageId = uuidv7()
   try {
     await client.query('BEGIN')
-    const channel = await client.query<{ chat_id: string; role: string; channel_type: string }>(
-      `SELECT sc.chat_id, sm.role, sc.channel_type
+    const channel = await client.query<{
+      chat_id: string
+      role: string
+      can_view: boolean
+      can_send: boolean
+      channel_type: string
+    }>(
+      `SELECT sc.chat_id, sc.channel_type, sm.role,
+              sm.role IN ('owner', 'admin') OR COALESCE(permission.can_view, true) AS can_view,
+              sm.role IN ('owner', 'admin') OR COALESCE(
+                permission.can_send,
+                sc.channel_type <> 'announcement' OR sm.role = 'moderator'
+              ) AS can_send
        FROM space_channels sc
        JOIN space_members sm ON sm.space_id = sc.space_id AND sm.user_id = $2
        JOIN chat_members grant_member ON grant_member.chat_id = sc.chat_id
          AND grant_member.user_id = $2 AND grant_member.left_at IS NULL
+       LEFT JOIN space_channel_role_permissions permission
+         ON permission.space_id = sc.space_id AND permission.chat_id = sc.chat_id
+           AND permission.role = sm.role
        WHERE sc.space_id = $1 AND sc.chat_id = $3
-       FOR UPDATE OF grant_member`,
+       FOR UPDATE OF sc, grant_member`,
       [spaceId.data, request.auth!.userId, channelId.data],
     )
     if (!channel.rows[0]) {
@@ -522,12 +912,44 @@ spaceRoutes.post('/spaces/:spaceId/channels/:channelId/messages', messageLimiter
       response.status(404).json({ error: { code: 'not_found', message: 'Channel not found.' } })
       return
     }
-    if (channel.rows[0].channel_type === 'announcement'
-      && !['owner', 'admin', 'moderator'].includes(channel.rows[0].role)) {
+    if (channel.rows[0].channel_type === 'voice') {
       await client.query('ROLLBACK')
-      response.status(403).json({ error: { code: 'forbidden', message: 'Only Space moderators can post in announcement channels.' } })
+      response.status(400).json({ error: { code: 'validation', message: 'Voice channels do not support text messages.' } })
       return
     }
+    if (!channel.rows[0].can_view) {
+      await client.query('ROLLBACK')
+      response.status(404).json({ error: { code: 'not_found', message: 'Channel not found.' } })
+      return
+    }
+    if (!channel.rows[0].can_send) {
+      await client.query('ROLLBACK')
+      response.status(403).json({ error: { code: 'forbidden', message: 'You do not have permission to send messages in this channel.' } })
+      return
+    }
+    const usernames = [...input.data.body.matchAll(mentionPattern)].map((match) => match[1].toLowerCase())
+    const mentionEveryone = /(?:^|[^\w@])@everyone(?![a-zA-Z0-9_])/iu.test(input.data.body)
+    if (mentionEveryone && !['owner', 'admin', 'moderator'].includes(channel.rows[0].role)) {
+      await client.query('ROLLBACK')
+      response.status(403).json({ error: { code: 'forbidden', message: 'Only Space owners, admins, and moderators can mention everyone.' } })
+      return
+    }
+    const mentionedUsers = usernames.length || mentionEveryone
+      ? await client.query<{ user_id: string }>(
+        `SELECT DISTINCT cm.user_id
+         FROM chat_members cm
+         JOIN users mentioned_user ON mentioned_user.id = cm.user_id
+         JOIN space_members member_role ON member_role.space_id = $1 AND member_role.user_id = cm.user_id
+         LEFT JOIN space_channel_role_permissions permission
+           ON permission.space_id = $1 AND permission.chat_id = $2
+             AND permission.role = member_role.role
+         WHERE cm.chat_id = $2 AND cm.left_at IS NULL AND cm.user_id <> $3
+           AND ($4::boolean OR lower(mentioned_user.username) = ANY($5::text[]))
+           AND (member_role.role IN ('owner', 'admin') OR COALESCE(permission.can_view, true))`,
+        [spaceId.data, channelId.data, request.auth!.userId, mentionEveryone, usernames],
+      )
+      : { rows: [] as { user_id: string }[] }
+    const mentionUserIds = mentionedUsers.rows.map((user) => user.user_id)
     const sequence = await client.query<{ last_seq: string }>(
       `UPDATE chats SET last_seq = last_seq + 1, last_message_at = now()
        WHERE id = $1 RETURNING last_seq`,
@@ -538,11 +960,31 @@ spaceRoutes.post('/spaces/:spaceId/channels/:channelId/messages', messageLimiter
        VALUES ($1, $2, $3, $4, $5)`,
       [messageId, channel.rows[0].chat_id, sequence.rows[0].last_seq, request.auth!.userId, input.data.body],
     )
+    if (mentionUserIds.length) {
+      await client.query(
+        `INSERT INTO channel_message_mentions (message_id, mentioned_user_id)
+         SELECT $1, mentioned_user_id FROM unnest($2::uuid[]) AS mentioned_user_id`,
+        [messageId, mentionUserIds],
+      )
+    }
+    if (mentionEveryone) {
+      await client.query(
+        `INSERT INTO channel_message_mentions (message_id, mentioned_user_id, is_everyone)
+         VALUES ($1, NULL, true)`,
+        [messageId],
+      )
+    }
     await client.query('COMMIT')
     await publishChatEvent(channel.rows[0].chat_id, {
       type: 'channel.message',
       data: { id: messageId, serverSeq: sequence.rows[0].last_seq },
     })
+    if (mentionUserIds.length) {
+      await publishChatEvent(channel.rows[0].chat_id, {
+        type: 'channel.mention',
+        data: { chatId: channel.rows[0].chat_id, messageId, serverSeq: sequence.rows[0].last_seq },
+      }, undefined, mentionUserIds)
+    }
     response.status(201).json({ messageId, serverSeq: sequence.rows[0].last_seq })
   } catch (error) {
     await client.query('ROLLBACK')

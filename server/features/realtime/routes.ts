@@ -17,13 +17,29 @@ function publish(response: Response, event: RealtimeEvent) {
   response.write(`event: ${event.type}\ndata: ${JSON.stringify(event.data)}\n\n`)
 }
 
-export async function publishChatEvent(chatId: string, event: RealtimeEvent, excludeUserId?: string) {
+export async function publishChatEvent(
+  chatId: string,
+  event: RealtimeEvent,
+  excludeUserId?: string,
+  onlyUserIds?: readonly string[],
+) {
   const subscribers = subscribersByChat.get(chatId)
   if (!subscribers?.size) return
   try {
     const members = await pool.query<{ user_id: string }>(
       `SELECT cm.user_id FROM chat_members cm
        WHERE cm.chat_id = $1 AND cm.left_at IS NULL
+         AND NOT EXISTS (
+           SELECT 1
+           FROM space_channels sc
+           JOIN space_members sm ON sm.space_id = sc.space_id AND sm.user_id = cm.user_id
+           WHERE sc.chat_id = cm.chat_id AND sm.role NOT IN ('owner', 'admin')
+             AND NOT COALESCE((
+               SELECT permission.can_view FROM space_channel_role_permissions permission
+               WHERE permission.space_id = sc.space_id AND permission.chat_id = sc.chat_id
+                 AND permission.role = sm.role
+             ), true)
+         )
          AND NOT EXISTS (
            SELECT 1 FROM message_requests mr
            WHERE mr.chat_id = cm.chat_id AND mr.to_user = cm.user_id
@@ -32,8 +48,10 @@ export async function publishChatEvent(chatId: string, event: RealtimeEvent, exc
       [chatId],
     )
     const allowed = new Set(members.rows.map((member) => member.user_id))
+    const recipients = onlyUserIds ? new Set(onlyUserIds) : null
     for (const subscriber of subscribers) {
-      if (allowed.has(subscriber.userId) && subscriber.userId !== excludeUserId) {
+      if (allowed.has(subscriber.userId) && subscriber.userId !== excludeUserId
+        && (!recipients || recipients.has(subscriber.userId))) {
         publish(subscriber.response, event)
       } else if (!allowed.has(subscriber.userId)) {
         subscribers.delete(subscriber)
@@ -137,6 +155,17 @@ realtimeRouter.post('/chats/:id/typing', typingLimiter, async (request: Authenti
        FROM chat_members cm JOIN users u ON u.id = cm.user_id
        WHERE cm.chat_id = $1 AND cm.user_id = $2 AND cm.left_at IS NULL
          AND NOT EXISTS (
+           SELECT 1
+           FROM space_channels sc
+           JOIN space_members sm ON sm.space_id = sc.space_id AND sm.user_id = cm.user_id
+           WHERE sc.chat_id = cm.chat_id AND sm.role NOT IN ('owner', 'admin')
+             AND NOT COALESCE((
+               SELECT permission.can_view FROM space_channel_role_permissions permission
+               WHERE permission.space_id = sc.space_id AND permission.chat_id = sc.chat_id
+                 AND permission.role = sm.role
+             ), true)
+         )
+         AND NOT EXISTS (
            SELECT 1 FROM message_requests mr WHERE mr.chat_id = cm.chat_id
              AND mr.to_user = $2 AND mr.state IN ('pending', 'ignored')
          )`,
@@ -166,6 +195,17 @@ realtimeRouter.get('/events', async (request: AuthenticatedRequest, response, ne
     const access = await pool.query(
       `SELECT 1 FROM chat_members cm
        WHERE cm.chat_id = $1 AND cm.user_id = $2 AND cm.left_at IS NULL
+         AND NOT EXISTS (
+           SELECT 1
+           FROM space_channels sc
+           JOIN space_members sm ON sm.space_id = sc.space_id AND sm.user_id = cm.user_id
+           WHERE sc.chat_id = cm.chat_id AND sm.role NOT IN ('owner', 'admin')
+             AND NOT COALESCE((
+               SELECT permission.can_view FROM space_channel_role_permissions permission
+               WHERE permission.space_id = sc.space_id AND permission.chat_id = sc.chat_id
+                 AND permission.role = sm.role
+             ), true)
+         )
          AND NOT EXISTS (
            SELECT 1 FROM message_requests mr
            WHERE mr.chat_id = cm.chat_id AND mr.to_user = $2

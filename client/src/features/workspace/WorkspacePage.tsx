@@ -317,7 +317,10 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
   async function endActiveCall() {
     if (!activeCall) return
     try {
-      if (activeCall.isGroup) {
+      if (activeCall.isVoiceRoom) {
+        setActiveCall(null)
+        return
+      } else if (activeCall.isGroup) {
         await api(`/api/group-calls/${activeCall.id}/${activeCall.isHost ? 'end' : 'leave'}`, { method: 'POST' })
       } else {
         await api(`/api/calls/${activeCall.id}/end`, { method: 'POST' })
@@ -419,7 +422,13 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
         onShowSpaces={() => { setShowCalls(false); setShowRequests(false); setShowSpaces(true); setActiveChatId(null) }}
         onOpenAccount={() => setAccountOpen(true)}
       />
-      {showSpaces && <SpacesPage onBack={showChatsHome} />}
+      {showSpaces && <SpacesPage onBack={showChatsHome} onJoinVoiceRoom={(call) => {
+        if (activeCall) {
+          setError('Leave your active call before joining a Space voice room.')
+          return
+        }
+        setActiveCall(call)
+      }} />}
       <footer className="workspace-footer"><button type="button" onClick={signOut}>Sign out</button><span>Chats · End-to-end encrypted</span></footer>
       {accountOpen && <AccountPanel user={currentUser} appearance={appearance} onAppearanceChange={updateAppearance} onClose={() => setAccountOpen(false)} onSaved={setCurrentUser} />}
       {newConversation && <NewConversation user={currentUser} initialUsername={initialUsername} onClose={() => { setNewConversation(false); setInitialUsername('') }} onCreated={(chatId) => {
@@ -458,6 +467,10 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
         isGroup={activeCall.isGroup}
         isHost={activeCall.isHost}
         e2eeKey={activeCall.e2eeKey}
+        isVoiceRoom={activeCall.isVoiceRoom}
+        voiceSpaceId={activeCall.voiceSpaceId}
+        voiceChannelId={activeCall.voiceChannelId}
+        canPublish={activeCall.canPublish}
         onEnd={() => void endActiveCall()}
         onClose={closeFinishedCall}
       />}
