@@ -266,7 +266,7 @@ export function MessageAttachment({
       {isVideo && (
         <button
           type="button"
-          className={`attachment-v2-video-ready${videoReady ? " is-ready" : ""}`}
+          className="attachment-v2-video-ready"
           onClick={() => void handleVideoAction()}
           disabled={pending || videoDownloading}
           aria-label={
@@ -297,34 +297,36 @@ export function MessageAttachment({
               playsInline
             />
           )}
-          <span className="attachment-video-play">
-            {videoDownloading ? (
-              <LoaderCircle
-                size={18}
-                className="attachment-video-spinner"
-                aria-hidden="true"
-              />
-            ) : videoReady ? (
-              <Play size={18} fill="currentColor" aria-hidden="true" />
-            ) : (
-              <Download size={18} aria-hidden="true" />
+          <span className="attachment-video-overlay">
+            <span className="attachment-video-play">
+              {videoDownloading ? (
+                <LoaderCircle
+                  size={18}
+                  className="attachment-video-spinner"
+                  aria-hidden="true"
+                />
+              ) : videoReady ? (
+                <Play size={18} fill="currentColor" aria-hidden="true" />
+              ) : (
+                <Download size={18} aria-hidden="true" />
+              )}
+            </span>
+            {!videoReady && (
+              <small>
+                <Video size={11} aria-hidden="true" />{" "}
+                {formatFileSize(attachment.size_bytes)}
+              </small>
+            )}
+            {(pending || videoDownloading) && (
+              <strong>
+                {pending
+                  ? "Sending video…"
+                  : isMediaV2
+                    ? `Downloading… ${videoDownloadProgress}%`
+                    : "Downloading…"}
+              </strong>
             )}
           </span>
-          {!videoReady && (
-            <strong>
-              {pending
-                ? "Sending video…"
-                : videoDownloading
-                  ? isMediaV2
-                    ? `Downloading… ${videoDownloadProgress}%`
-                    : "Downloading…"
-                  : "Download to play"}
-            </strong>
-          )}
-          <small>
-            <Video size={11} aria-hidden="true" />{" "}
-            {formatFileSize(attachment.size_bytes)}
-          </small>
           {videoDownloading && isMediaV2 && (
             <span
               className="attachment-v2-video-progress"
@@ -340,7 +342,7 @@ export function MessageAttachment({
       )}
       {isMediaV2 && isVideo && videoPosterError && (
         <small className="attachment-error" role="status">
-          Preview unavailable. Download to play.
+          Video preview unavailable. Select to download.
         </small>
       )}
       {isImage && !isMediaV2 && !previewUrl && !error && (
