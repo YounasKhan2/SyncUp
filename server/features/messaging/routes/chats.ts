@@ -323,6 +323,7 @@ chatRoutes.get('/inbox', async (request: AuthenticatedRequest, response, next) =
          ORDER BY m.server_seq DESC LIMIT 1
        ) last_message ON true
        WHERE cm.user_id = $1 AND cm.left_at IS NULL
+         AND c.kind <> 'channel'
          AND NOT EXISTS (
            SELECT 1 FROM message_requests mr
            WHERE mr.chat_id = c.id AND mr.to_user = $1 AND mr.state IN ('pending', 'ignored')
@@ -345,6 +346,7 @@ chatRoutes.get('/chats/:id', async (request: AuthenticatedRequest, response, nex
   try {
     const access = await pool.query(
       `SELECT 1 FROM chat_members cm
+       JOIN chats c ON c.id = cm.chat_id AND c.kind IN ('direct', 'group')
        WHERE cm.chat_id = $1 AND cm.user_id = $2 AND cm.left_at IS NULL
          AND NOT EXISTS (
            SELECT 1 FROM message_requests mr WHERE mr.chat_id = cm.chat_id
@@ -369,7 +371,7 @@ chatRoutes.get('/chats/:id', async (request: AuthenticatedRequest, response, nex
        JOIN chat_members me ON me.chat_id = c.id AND me.user_id = $2 AND me.left_at IS NULL
        JOIN chat_members cm ON cm.chat_id = c.id AND cm.left_at IS NULL
        JOIN users u ON u.id = cm.user_id
-       WHERE c.id = $1
+       WHERE c.id = $1 AND c.kind IN ('direct', 'group')
        GROUP BY c.id, me.last_read_seq`,
       [chatId.data, request.auth!.userId],
     )

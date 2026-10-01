@@ -1,15 +1,16 @@
-import { MessageSquare, Phone, UserRound } from 'lucide-react'
+import { Layers3, MessageSquare, Phone, UserRound } from 'lucide-react'
 
 type MobileNavigationProps = {
-  section: 'chats' | 'calls'
+  section: 'chats' | 'calls' | 'spaces'
   accountOpen: boolean
   unreadConversationCount: number
   onShowChats: () => void
   onShowCalls: () => void
+  onShowSpaces: () => void
   onOpenAccount: () => void
 }
 
-export function MobileNavigation({ section, accountOpen, unreadConversationCount, onShowChats, onShowCalls, onOpenAccount }: MobileNavigationProps) {
+export function MobileNavigation({ section, accountOpen, unreadConversationCount, onShowChats, onShowCalls, onShowSpaces, onOpenAccount }: MobileNavigationProps) {
   return (
     <nav className="mobile-bottom-nav" aria-label="Main navigation">
       <button type="button" aria-current={!accountOpen && section === 'chats' ? 'page' : undefined} aria-label={unreadConversationCount ? `Chats, ${unreadConversationCount} unread conversations` : 'Chats'} onClick={onShowChats}>
@@ -19,6 +20,10 @@ export function MobileNavigation({ section, accountOpen, unreadConversationCount
       <button type="button" aria-current={!accountOpen && section === 'calls' ? 'page' : undefined} onClick={onShowCalls}>
         <Phone size={19} aria-hidden="true" />
         <span>Calls</span>
+      </button>
+      <button type="button" aria-current={!accountOpen && section === 'spaces' ? 'page' : undefined} onClick={onShowSpaces}>
+        <Layers3 size={19} aria-hidden="true" />
+        <span>Spaces</span>
       </button>
       <button type="button" aria-current={accountOpen ? 'page' : undefined} onClick={onOpenAccount}>
         <UserRound size={19} aria-hidden="true" />

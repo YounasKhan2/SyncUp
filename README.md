@@ -1,6 +1,6 @@
 # SyncUp
 
-SyncUp is a compact React/TypeScript web app with a TypeScript modular-monolith API backed by PostgreSQL. Its current vertical slice includes account identity, end-to-end encrypted direct/group messaging, message requests, read state, reactions, local drafts/outbox, realtime sync hints, encrypted file attachments, and end-to-end encrypted group plus 1:1 audio/video calls.
+SyncUp is a compact React/TypeScript web app with a TypeScript modular-monolith API backed by PostgreSQL. Its current vertical slice includes account identity, end-to-end encrypted direct/group messaging, message requests, read state, reactions, local drafts/outbox, realtime sync hints, encrypted file attachments, end-to-end encrypted group plus 1:1 audio/video calls, and the first Phase 1 Space/client-room slice.
 
 ## Architecture
 
@@ -38,7 +38,7 @@ For a production build, run `npm run build` followed by `npm start` with the sam
 
 ## Integration test
 
-With the Compose services and API running, run `npm run test:integration`. The test creates isolated accounts and verifies encrypted first-contact requests, request privacy and acceptance, recipient decryption, authorization, idempotent retries, concurrent message ordering, read cursors, reactions, groups, encrypted object uploads/downloads, call authorization/token/history, message edit/delete/pin controls, safety reports, and user blocking. Set `TEST_API_URL` to target an API other than `http://localhost:4000`.
+With the Compose services and API running, run `npm run test:integration`. The test creates isolated accounts and verifies Space/channel creation, guest channel isolation, server-readable channel messages, encrypted first-contact requests, request privacy and acceptance, recipient decryption, authorization, idempotent retries, concurrent message ordering, read cursors, reactions, groups, encrypted object uploads/downloads, call authorization/token/history, message edit/delete/pin controls, safety reports, and user blocking. Set `TEST_API_URL` to target an API other than `http://localhost:4000`.
 
 ## Current scope
 
@@ -55,5 +55,6 @@ With the Compose services and API running, run `npm run test:integration`. The t
 - Typing indicators and online presence are ephemeral and scoped to a chat with an active realtime connection; they are not persisted or a global presence directory.
 - Global search finds discoverable people and chats the signed-in user may access. Conversation message search filters decrypted messages already loaded in the current browser; encrypted message plaintext is never sent to or indexed by the server.
 - Conversations open at the latest messages and load older authorized history in pages while scrolling upward, preserving the current reading position as earlier messages are added.
-- Spaces, guests, shared objects, and Communities are not implemented yet. They are intentionally absent rather than simulated in navigation.
+- Initial Spaces support provides a client-room template, customizable Space name/description/icon, an owner-created `#general`, collapsible channel categories, channel topics, discussion/announcement/private channels, username-based member/guest invites, and channel-scoped guest grants. Guests can list and read only channels explicitly granted to them, including only categories containing visible channels; private channels are excluded by default. Space channel text is server-readable (unlike E2EE personal chats) and is stored separately. The current slice does not yet include group-to-Space conversion, role management/removal, email invitations, shared objects/Updates, channel media, or channel calls.
+- Communities and the remaining Phase 1 shared objects/Updates work are not implemented yet.
 - Architecture/product work still required before a broad production launch includes identity-key verification and recovery, a security review of the cryptographic design, operational deployment/monitoring, and the remaining PRD phases listed above.

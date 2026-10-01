@@ -318,6 +318,142 @@ test('encrypted requests, authorized chats, ordered idempotent delivery, and gro
   const nadia = await createAccount('Nadia', 'nadia')
   const chris = await createAccount('Chris', 'chris')
 
+  let response = await post(ava, '/api/spaces', {
+    name: 'Website redesign',
+    description: 'Design and ship the new customer site.',
+    icon: 'rocket',
+    template: 'client-room',
+  })
+  assert.equal(response.status, 201, await response.clone().text())
+  const createdSpace = await response.json()
+  response = await apiRequest(ava, `/api/spaces/${createdSpace.spaceId}`)
+  assert.equal(response.status, 200, await response.clone().text())
+  const avaSpace = (await response.json()).space
+  assert.equal(avaSpace.name, 'Website redesign')
+  assert.equal(avaSpace.description, 'Design and ship the new customer site.')
+  assert.equal(avaSpace.icon, 'rocket')
+  assert.deepEqual(avaSpace.categories.map((category) => category.name), ['Text Channels'])
+  assert.deepEqual(avaSpace.channels.map((channel) => channel.name), ['general'])
+  const generalChannel = avaSpace.channels[0]
+
+  response = await post(ava, `/api/spaces/${createdSpace.spaceId}/categories`, { name: 'Client' })
+  assert.equal(response.status, 201, await response.clone().text())
+  const clientCategory = (await response.json()).category
+  response = await post(ava, `/api/spaces/${createdSpace.spaceId}/categories`, { name: 'Client' })
+  assert.equal(response.status, 409)
+  response = await post(ava, `/api/spaces/${createdSpace.spaceId}/channels`, {
+    name: 'feedback', type: 'discussion', categoryId: clientCategory.id, topic: 'Share design feedback here.',
+  })
+  assert.equal(response.status, 201, await response.clone().text())
+  const feedbackChannel = await response.json()
+  response = await post(ava, `/api/spaces/${createdSpace.spaceId}/channels`, { name: 'internal', type: 'private' })
+  assert.equal(response.status, 201, await response.clone().text())
+  const privateChannel = await response.json()
+  response = await post(ava, `/api/spaces/${createdSpace.spaceId}/channels`, { name: 'announcements', type: 'announcement' })
+  assert.equal(response.status, 201, await response.clone().text())
+  const announcementChannel = await response.json()
+  response = await apiRequest(ava, `/api/spaces/${createdSpace.spaceId}/channels/${feedbackChannel.channelId}`, {
+    method: 'PATCH',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ topic: 'Share design feedback and approvals here.' }),
+  })
+  assert.equal(response.status, 200, await response.clone().text())
+  assert.equal((await response.json()).channel.topic, 'Share design feedback and approvals here.')
+  response = await post(ava, `/api/spaces/${createdSpace.spaceId}/channels`, { name: 'feedback', type: 'discussion' })
+  assert.equal(response.status, 409)
+
+  response = await post(ava, `/api/spaces/${createdSpace.spaceId}/members`, {
+    username: nadia.username,
+    role: 'guest',
+    channels: [generalChannel.id],
+  })
+  assert.equal(response.status, 201, await response.clone().text())
+  response = await apiRequest(nadia, `/api/spaces/${createdSpace.spaceId}/channels/${feedbackChannel.channelId}`, {
+    method: 'PATCH',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ topic: 'Unauthorized change' }),
+  })
+  assert.equal(response.status, 403)
+  response = await post(ava, `/api/spaces/${createdSpace.spaceId}/members`, {
+    username: chris.username,
+    role: 'member',
+  })
+  assert.equal(response.status, 201, await response.clone().text())
+  response = await apiRequest(ava, `/api/spaces/${createdSpace.spaceId}`, {
+    method: 'PATCH',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ name: 'Customer website', description: 'A refreshed brand and web experience.', icon: 'briefcase' }),
+  })
+  assert.equal(response.status, 200, await response.clone().text())
+  response = await apiRequest(nadia, `/api/spaces/${createdSpace.spaceId}`, {
+    method: 'PATCH',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ name: 'Guest should not rename', description: '', icon: 'heart' }),
+  })
+  assert.equal(response.status, 403)
+  response = await apiRequest(nadia, `/api/spaces/${createdSpace.spaceId}`)
+  assert.equal(response.status, 200)
+  assert.deepEqual((await response.json()).space.categories.map((category) => category.name), ['Text Channels'])
+  response = await apiRequest(chris, `/api/spaces/${createdSpace.spaceId}`)
+  assert.equal(response.status, 200)
+  const memberSpace = (await response.json()).space
+  assert.equal(memberSpace.name, 'Customer website')
+  assert.equal(memberSpace.icon, 'briefcase')
+  assert.equal(memberSpace.description, 'A refreshed brand and web experience.')
+  assert.ok(memberSpace.categories.some((category) => category.id === clientCategory.id))
+  const feedbackDetails = memberSpace.channels.find((channel) => channel.id === feedbackChannel.channelId)
+  assert.equal(feedbackDetails.topic, 'Share design feedback and approvals here.')
+  assert.equal(feedbackDetails.category_id, clientCategory.id)
+  assert.equal(feedbackDetails.category_name, 'Client')
+  response = await apiRequest(nadia, '/api/spaces')
+  assert.equal(response.status, 200)
+  assert.equal((await response.json()).spaces.length, 1)
+  response = await apiRequest(nadia, `/api/spaces/${createdSpace.spaceId}`)
+  assert.equal(response.status, 200, await response.clone().text())
+  const nadiaSpaceResponse = await response.json()
+  assert.deepEqual(nadiaSpaceResponse.space.channels.map((channel) => channel.name), ['general'])
+  assert.equal(JSON.stringify(nadiaSpaceResponse).includes('internal'), false)
+  response = await apiRequest(nadia, `/api/spaces/${createdSpace.spaceId}/channels/${privateChannel.channelId}/messages`)
+  assert.equal(response.status, 404)
+  response = await post(nadia, `/api/spaces/${createdSpace.spaceId}/members`, { username: chris.username, role: 'guest' })
+  assert.equal(response.status, 403)
+
+  response = await apiRequest(chris, `/api/spaces/${createdSpace.spaceId}`)
+  assert.equal(response.status, 200, await response.clone().text())
+  const chrisSpace = (await response.json()).space
+  assert.deepEqual(new Set(chrisSpace.channels.map((channel) => channel.name)), new Set(['general', 'feedback', 'announcements']))
+  assert.equal(JSON.stringify(chrisSpace).includes('internal'), false)
+  response = await apiRequest(chris, `/api/spaces/${createdSpace.spaceId}/channels/${privateChannel.channelId}/messages`)
+  assert.equal(response.status, 404)
+  response = await apiRequest(chris, `/api/chats/${generalChannel.id}`)
+  assert.equal(response.status, 404)
+  const encryptedWrongChannelPath = await encryptMessage('Not a channel message path.', [ava, nadia, chris])
+  response = await post(chris, `/api/chats/${generalChannel.id}/messages`, {
+    ...encryptedWrongChannelPath,
+    idempotencyKey: randomUUID(),
+  })
+  assert.equal(response.status, 404)
+  response = await post(ava, `/api/spaces/${createdSpace.spaceId}/channels/${generalChannel.id}/messages`, { body: 'Welcome to the client room.' })
+  assert.equal(response.status, 201, await response.clone().text())
+  response = await post(ava, `/api/spaces/${createdSpace.spaceId}/channels/${announcementChannel.channelId}/messages`, { body: 'Project kickoff is Monday.' })
+  assert.equal(response.status, 201, await response.clone().text())
+  response = await post(chris, `/api/spaces/${createdSpace.spaceId}/channels/${announcementChannel.channelId}/messages`, { body: 'Only moderators can post here.' })
+  assert.equal(response.status, 403)
+  response = await apiRequest(nadia, `/api/spaces/${createdSpace.spaceId}/channels/${generalChannel.id}/messages`)
+  assert.equal(response.status, 200, await response.clone().text())
+  const generalMessages = (await response.json()).messages
+  assert.equal(generalMessages.length, 1)
+  assert.equal(generalMessages[0].body, 'Welcome to the client room.')
+  assert.equal(generalMessages[0].display_name, 'Ava')
+  response = await post(chris, `/api/spaces/${createdSpace.spaceId}/channels/${privateChannel.channelId}/messages`, { body: 'This must not go through.' })
+  assert.equal(response.status, 404)
+  response = await apiRequest(ava, '/api/spaces')
+  assert.equal((await response.json()).spaces.some((item) => item.id === createdSpace.spaceId && item.channel_count === 4), true)
+  response = await apiRequest(nadia, `/api/spaces/${randomUUID()}`)
+  assert.equal(response.status, 404)
+  response = await apiRequest(chris, '/api/inbox')
+  assert.equal((await response.json()).chats.some((chat) => chat.kind === 'channel'), false)
+
   const invalidAvatar = await apiRequest(ava, '/api/auth/me/avatar', {
     method: 'PUT',
     headers: { 'content-type': 'image/png' },
@@ -366,7 +502,7 @@ test('encrypted requests, authorized chats, ordered idempotent delivery, and gro
   const missingAvatar = await apiRequest(nadia, replacementProfile.avatar_url)
   assert.equal(missingAvatar.status, 404)
 
-  let response = await apiRequest(nadia, '/api/auth/me', {
+  response = await apiRequest(nadia, '/api/auth/me', {
     method: 'PATCH',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ displayName: nadia.displayName, username: nadia.username, about: '', discoverable: false }),
@@ -424,7 +560,7 @@ test('encrypted requests, authorized chats, ordered idempotent delivery, and gro
   assert.equal(response.status, 200)
   response = await apiRequest(ava, '/api/contacts')
   assert.equal((await response.json()).contacts.length, 1)
-  response = await apiRequest(ava, `/api/search?q=${encodeURIComponent(nadia.displayName)}`)
+  response = await apiRequest(ava, `/api/search?q=${encodeURIComponent(nadia.username)}`)
   assert.equal(response.status, 200, await response.clone().text())
   const searchResults = await response.json()
   assert.ok(searchResults.people.some((person) => person.id === nadia.id))

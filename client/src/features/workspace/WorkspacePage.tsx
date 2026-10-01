@@ -15,6 +15,7 @@ import { CallWindow } from '../calls/CallWindow'
 import { InboxPane } from './InboxPane'
 import { MobileNavigation } from './MobileNavigation'
 import { WorkspaceRail } from './WorkspaceRail'
+import { SpacesPage } from '../spaces/SpacesPage'
 import { countUnreadConversations } from '../../shared/presentation'
 import { applyAppearancePreference, readAppearancePreference, saveAppearancePreference } from '../../shared/appearance'
 import type { AppearancePreference } from '../../shared/appearance'
@@ -28,6 +29,7 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
   const [filter, setFilter] = useState<'all' | 'unread'>('all')
   const [showRequests, setShowRequests] = useState(false)
   const [showCalls, setShowCalls] = useState(false)
+  const [showSpaces, setShowSpaces] = useState(false)
   const [callHistory, setCallHistory] = useState<CallRecord[]>([])
   const [incomingCall, setIncomingCall] = useState<IncomingCall | null>(null)
   const [activeCall, setActiveCall] = useState<ActiveCall | null>(null)
@@ -342,6 +344,7 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
 
   function openCallHistory() {
     setShowCalls(true)
+    setShowSpaces(false)
     setShowRequests(false)
     if (window.matchMedia('(max-width: 700px)').matches) setActiveChatId(null)
     refreshCallHistory().catch((loadError: unknown) => {
@@ -351,12 +354,14 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
 
   function showChatsHome() {
     setShowCalls(false)
+    setShowSpaces(false)
     setShowRequests(false)
     if (window.matchMedia('(max-width: 700px)').matches) setActiveChatId(null)
   }
 
   function selectChat(chatId: string) {
     setShowCalls(false)
+    setShowSpaces(false)
     setShowRequests(false)
     setActiveChatId(chatId)
   }
@@ -364,13 +369,15 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
   return (
     <>
     <a className="skip-link" href="#workspace-main">Skip to main content</a>
-    <main id="workspace-main" tabIndex={-1} className={`workspace${activeChatId ? ' has-active-chat' : ''}`}>
+    <main id="workspace-main" tabIndex={-1} className={`workspace${activeChatId ? ' has-active-chat' : ''}${showSpaces ? ' has-active-space' : ''}`}>
       <WorkspaceRail
         user={currentUser}
         showCalls={showCalls}
+        showSpaces={showSpaces}
         unreadConversationCount={unreadConversationCount}
         onShowChats={showChatsHome}
         onShowCalls={openCallHistory}
+        onShowSpaces={() => { setShowCalls(false); setShowRequests(false); setShowSpaces(true); setActiveChatId(null) }}
         onOpenAccount={() => setAccountOpen(true)}
       />
       <InboxPane
@@ -404,13 +411,15 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
         onSearchableMessages={updateSearchableMessages}
       />
       <MobileNavigation
-        section={showCalls ? 'calls' : 'chats'}
+        section={showSpaces ? 'spaces' : showCalls ? 'calls' : 'chats'}
         accountOpen={accountOpen}
         unreadConversationCount={unreadConversationCount}
         onShowChats={showChatsHome}
         onShowCalls={openCallHistory}
+        onShowSpaces={() => { setShowCalls(false); setShowRequests(false); setShowSpaces(true); setActiveChatId(null) }}
         onOpenAccount={() => setAccountOpen(true)}
       />
+      {showSpaces && <SpacesPage onBack={showChatsHome} />}
       <footer className="workspace-footer"><button type="button" onClick={signOut}>Sign out</button><span>Chats · End-to-end encrypted</span></footer>
       {accountOpen && <AccountPanel user={currentUser} appearance={appearance} onAppearanceChange={updateAppearance} onClose={() => setAccountOpen(false)} onSaved={setCurrentUser} />}
       {newConversation && <NewConversation user={currentUser} initialUsername={initialUsername} onClose={() => { setNewConversation(false); setInitialUsername('') }} onCreated={(chatId) => {

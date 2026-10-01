@@ -194,3 +194,46 @@ export type DiscoveredUser = PublicMember & {
   display_name: string
   avatar_url: string | null
 }
+
+export type SpaceSummary = {
+  id: string
+  name: string
+  description: string
+  icon: SpaceIcon
+  role: 'owner' | 'admin' | 'moderator' | 'member' | 'guest'
+  channel_count: number
+}
+
+export type SpaceIcon = 'layers' | 'briefcase' | 'rocket' | 'heart' | 'sparkles'
+
+export type SpaceCategory = {
+  id: string
+  name: string
+}
+
+export type SpaceChannel = {
+  id: string
+  name: string
+  type: 'discussion' | 'announcement' | 'private'
+  category_id: string
+  category_name: string
+  topic: string
+}
+
+export type SpaceMember = {
+  id: string
+  username: string
+  display_name: string
+  role: SpaceSummary['role']
+}
+
+export type SpaceMessage = {
+  id: string
+  chat_id: string
+  server_seq: string
+  sender_id: string
+  display_name: string
+  username: string
+  body: string
+  created_at: string
+}

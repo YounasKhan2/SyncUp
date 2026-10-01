@@ -125,6 +125,10 @@ messageRoutes.get('/chats/:id/messages', async (request: AuthenticatedRequest, r
            SELECT 1 FROM chat_members cm WHERE cm.chat_id = m.chat_id
              AND cm.user_id = $2::uuid AND cm.left_at IS NULL
          )
+         AND EXISTS (
+           SELECT 1 FROM chats personal_chat WHERE personal_chat.id = m.chat_id
+             AND personal_chat.kind IN ('direct', 'group')
+         )
          AND NOT EXISTS (
            SELECT 1 FROM message_requests mr WHERE mr.chat_id = m.chat_id
              AND mr.to_user = $2::uuid AND mr.state IN ('pending', 'ignored')
@@ -204,7 +208,7 @@ messageRoutes.post('/chats/:id/messages', messageLimiter, async (request: Authen
        FOR UPDATE OF c`,
       [chatId.data, request.auth!.userId],
     )
-    if (!membership.rows[0]) {
+    if (!membership.rows[0] || membership.rows[0].kind === 'channel') {
       await client.query('ROLLBACK')
       response.status(404).json({ error: { code: 'not_found', message: 'Chat not found.' } })
       return
