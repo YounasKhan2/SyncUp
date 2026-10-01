@@ -260,4 +260,38 @@ export type SpaceMessage = {
   everyone_mentioned: boolean
   is_mentioned: boolean
   created_at: string
+  shared_object_id?: string | null
+}
+
+export type SpaceSharedObject = {
+  id: string
+  chat_id: string
+  message_id: string
+  object_type: 'poll' | 'event' | 'checklist' | 'decision'
+  title: string
+  state: 'open' | 'scheduled' | 'active' | 'completed' | 'closed' | 'cancelled' | 'ended' | 'unpinned'
+  payload: {
+    question?: string
+    options?: { id: string; text: string }[]
+    multiSelect?: boolean
+    closesAt?: string | null
+    anonymous?: boolean
+    startsAt?: string
+    endsAt?: string | null
+    timezone?: string
+    locationText?: string
+    rsvpRequired?: boolean
+    items?: { id: string; text: string; assigneeId?: string | null; dueAt?: string | null; done: boolean }[]
+    quote?: string
+  }
+  created_by: string
+  created_at: string
+  updated_at: string
+  terminal_at: string | null
+  channel_name: string
+  space_id: string
+  space_name: string
+  message_seq: string
+  my_response: { optionIds?: string[]; rsvp?: 'yes' | 'no' | 'maybe' } | null
+  response_counts: Record<string, number>
 }

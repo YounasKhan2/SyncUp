@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import type { FormEvent, ReactNode } from 'react'
 import { ArrowLeft, AtSign, BriefcaseBusiness, ChevronDown, ChevronRight, Hash, Heart, Layers3, LockKeyhole, Megaphone, Mic, Plus, Rocket, Send, Settings2, Sparkles, Users, Volume2, X } from 'lucide-react'
 import { api } from '../../shared/api'
-import type { ActiveCall, SpaceCategory, SpaceChannel, SpaceChannelRolePermission, SpaceIcon, SpaceMember, SpaceMessage, SpaceSummary } from '../../shared/types'
+import type { ActiveCall, SpaceCategory, SpaceChannel, SpaceChannelRolePermission, SpaceIcon, SpaceMember, SpaceMessage, SpaceSharedObject, SpaceSummary } from '../../shared/types'
+import { SharedObjectCard } from './SharedObjectCard'
 
 type SpaceDetails = {
   id: string
@@ -14,6 +15,11 @@ type SpaceDetails = {
   channels: SpaceChannel[]
   members: SpaceMember[]
 }
+
+type SharedObjectInput =
+  | { type: 'poll'; question: string; options: string[]; multiSelect: boolean; closesAt: string | null; anonymous: boolean }
+  | { type: 'event'; title: string; startsAt: string; endsAt: string | null; timezone: string; locationText: string; rsvpRequired: boolean }
+  | { type: 'checklist'; title: string; items: { text: string; assigneeId: string | null; dueAt: string | null }[] }
 
 function normalizeChannelName(value: string) {
   return value.toLowerCase()
@@ -56,14 +62,17 @@ function renderMentionText(message: SpaceMessage) {
   return output
 }
 
-export function SpacesPage({ onBack, onJoinVoiceRoom }: {
+export function SpacesPage({ onBack, onJoinVoiceRoom, openTarget, userId }: {
   onBack: () => void
   onJoinVoiceRoom: (call: ActiveCall) => void
+  openTarget?: { spaceId: string; channelId: string; messageId: string } | null
+  userId: string
 }) {
   const [spaces, setSpaces] = useState<SpaceSummary[]>([])
   const [space, setSpace] = useState<SpaceDetails | null>(null)
   const [channelId, setChannelId] = useState<string | null>(null)
   const [messages, setMessages] = useState<SpaceMessage[]>([])
+  const [sharedObjects, setSharedObjects] = useState<SpaceSharedObject[]>([])
   const [spaceName, setSpaceName] = useState('')
   const [spaceDescription, setSpaceDescription] = useState('')
   const [spaceIcon, setSpaceIcon] = useState<SpaceIcon>('layers')
@@ -82,6 +91,17 @@ export function SpacesPage({ onBack, onJoinVoiceRoom }: {
   const [topicDraft, setTopicDraft] = useState('')
   const [permissionDraft, setPermissionDraft] = useState<SpaceChannelRolePermission[]>([])
   const [mentionMenuOpen, setMentionMenuOpen] = useState(false)
+  const [objectMenuOpen, setObjectMenuOpen] = useState(false)
+  const [objectDialogType, setObjectDialogType] = useState<'poll' | 'event' | 'checklist' | null>(null)
+  const [objectTitle, setObjectTitle] = useState('')
+  const [objectOptions, setObjectOptions] = useState(['', ''])
+  const [objectItemsText, setObjectItemsText] = useState('')
+  const [objectAssigneeId, setObjectAssigneeId] = useState('')
+  const [objectStartsAt, setObjectStartsAt] = useState('')
+  const [objectLocation, setObjectLocation] = useState('')
+  const [objectMultiSelect, setObjectMultiSelect] = useState(false)
+  const [objectAnonymous, setObjectAnonymous] = useState(false)
+  const [highlightedMessageId, setHighlightedMessageId] = useState<string | null>(null)
   const [mentionNotice, setMentionNotice] = useState('')
   const [draft, setDraft] = useState('')
   const [error, setError] = useState('')
@@ -91,6 +111,7 @@ export function SpacesPage({ onBack, onJoinVoiceRoom }: {
   const activeChannel = space?.channels.find((channel) => channel.id === channelId) ?? null
   const canCreateChannels = space ? ['owner', 'admin'].includes(space.role) : false
   const canInvite = space ? ['owner', 'admin', 'moderator'].includes(space.role) : false
+  const canPinDecision = space ? ['owner', 'admin', 'moderator'].includes(space.role) : false
 
   async function loadSpaces() {
     const result = await api<{ spaces: SpaceSummary[] }>('/api/spaces')
@@ -113,6 +134,22 @@ export function SpacesPage({ onBack, onJoinVoiceRoom }: {
       setError(loadError instanceof Error ? loadError.message : 'Unable to open this Space.')
     }
   }
+
+  useEffect(() => {
+    if (!openTarget) return
+    if (!space || space.id !== openTarget.spaceId) {
+      void api<{ space: SpaceDetails }>(`/api/spaces/${openTarget.spaceId}`)
+        .then(({ space: nextSpace }) => {
+          setSpace(nextSpace)
+          setChannelId(openTarget.channelId)
+          setHighlightedMessageId(openTarget.messageId)
+        })
+        .catch((loadError: unknown) => setError(loadError instanceof Error ? loadError.message : 'Unable to open this update.'))
+      return
+    }
+    setChannelId(openTarget.channelId)
+    setHighlightedMessageId(openTarget.messageId)
+  }, [openTarget?.spaceId, openTarget?.channelId, openTarget?.messageId, space?.id])
 
   function openChannelSettings(tab: 'overview' | 'permissions') {
     if (!activeChannel) return
@@ -184,9 +221,20 @@ export function SpacesPage({ onBack, onJoinVoiceRoom }: {
     setMentionNotice('')
     let active = true
     const path = `/api/spaces/${space.id}/channels/${channelId}/messages`
-    const refresh = () => api<{ messages: SpaceMessage[] }>(path)
-      .then(({ messages: nextMessages }) => { if (active) setMessages(nextMessages) })
-      .catch((loadError: unknown) => { if (active) setError(loadError instanceof Error ? loadError.message : 'Unable to load channel messages.') })
+    const refresh = async () => {
+      try {
+        const [messageResult, objectResult] = await Promise.all([
+          api<{ messages: SpaceMessage[] }>(path),
+          api<{ objects: SpaceSharedObject[] }>(`/api/spaces/${space.id}/channels/${channelId}/objects`),
+        ])
+        if (active) {
+          setMessages(messageResult.messages)
+          setSharedObjects(objectResult.objects)
+        }
+      } catch (loadError) {
+        if (active) setError(loadError instanceof Error ? loadError.message : 'Unable to load channel messages.')
+      }
+    }
     void refresh()
     const stream = new EventSource(`/api/events?chat_id=${encodeURIComponent(channelId)}`)
     const refreshOnEvent = () => { void refresh() }
@@ -195,6 +243,7 @@ export function SpacesPage({ onBack, onJoinVoiceRoom }: {
       refreshOnEvent()
     }
     stream.addEventListener('channel.message', refreshOnEvent)
+    stream.addEventListener('channel.object', refreshOnEvent)
     stream.addEventListener('channel.mention', onMention)
     const timer = window.setInterval(() => { void refresh() }, 5000)
     return () => { active = false; window.clearInterval(timer); stream.close() }
@@ -203,6 +252,15 @@ export function SpacesPage({ onBack, onJoinVoiceRoom }: {
   useEffect(() => {
     messageEnd.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
   }, [messages])
+
+  useEffect(() => {
+    if (!highlightedMessageId) return
+    const message = document.getElementById(`space-message-${highlightedMessageId}`)
+    if (message) {
+      message.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      window.setTimeout(() => setHighlightedMessageId(null), 4000)
+    }
+  }, [messages, highlightedMessageId])
 
   async function createSpace(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -354,6 +412,131 @@ export function SpacesPage({ onBack, onJoinVoiceRoom }: {
     }
   }
 
+  function resetObjectForm() {
+    setObjectDialogType(null)
+    setObjectTitle('')
+    setObjectOptions(['', ''])
+    setObjectItemsText('')
+    setObjectAssigneeId('')
+    setObjectStartsAt('')
+    setObjectLocation('')
+    setObjectMultiSelect(false)
+    setObjectAnonymous(false)
+  }
+
+  async function createSharedObject(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    if (!space || !activeChannel || !objectDialogType) return
+    let body: SharedObjectInput
+    if (objectDialogType === 'poll') {
+      body = {
+        type: 'poll',
+        question: objectTitle,
+        options: objectOptions.map((option) => option.trim()).filter(Boolean),
+        multiSelect: objectMultiSelect,
+        closesAt: null,
+        anonymous: objectAnonymous,
+      }
+    } else if (objectDialogType === 'event') {
+      const startsAt = new Date(objectStartsAt)
+      if (!objectStartsAt || Number.isNaN(startsAt.getTime())) {
+        setError('Choose when the event starts.')
+        return
+      }
+      body = {
+        type: 'event',
+        title: objectTitle,
+        startsAt: startsAt.toISOString(),
+        endsAt: null,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC',
+        locationText: objectLocation,
+        rsvpRequired: true,
+      }
+    } else {
+      body = {
+        type: 'checklist',
+        title: objectTitle,
+        items: objectItemsText.split('\n').map((text) => text.trim()).filter(Boolean).map((text) => ({ text, assigneeId: objectAssigneeId || null, dueAt: null })),
+      }
+    }
+    setBusy(true)
+    setError('')
+    try {
+      await api(`/api/spaces/${space.id}/channels/${activeChannel.id}/objects`, {
+        method: 'POST',
+        body: JSON.stringify(body),
+      })
+      resetObjectForm()
+      await refreshChannelData(space.id, activeChannel.id)
+    } catch (createError) {
+      setError(createError instanceof Error ? createError.message : 'Unable to create this shared item.')
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  async function refreshChannelData(spaceId: string, targetChannelId: string) {
+    const [messageResult, objectResult] = await Promise.all([
+      api<{ messages: SpaceMessage[] }>(`/api/spaces/${spaceId}/channels/${targetChannelId}/messages`),
+      api<{ objects: SpaceSharedObject[] }>(`/api/spaces/${spaceId}/channels/${targetChannelId}/objects`),
+    ])
+    setMessages(messageResult.messages)
+    setSharedObjects(objectResult.objects)
+  }
+
+  async function respondToObject(object: SpaceSharedObject, response: Record<string, unknown>) {
+    if (!space) return
+    setBusy(true)
+    setError('')
+    try {
+      await api(`/api/spaces/${space.id}/channels/${object.chat_id}/objects/${object.id}/respond`, {
+        method: 'POST',
+        body: JSON.stringify(response),
+      })
+      await refreshChannelData(space.id, object.chat_id)
+    } catch (responseError) {
+      setError(responseError instanceof Error ? responseError.message : 'Unable to save your response.')
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  async function changeObjectState(object: SpaceSharedObject, state: 'closed' | 'cancelled' | 'unpinned') {
+    if (!space) return
+    setBusy(true)
+    setError('')
+    try {
+      await api(`/api/spaces/${space.id}/channels/${object.chat_id}/objects/${object.id}/state`, {
+        method: 'PATCH',
+        body: JSON.stringify({ state }),
+      })
+      await refreshChannelData(space.id, object.chat_id)
+    } catch (stateError) {
+      setError(stateError instanceof Error ? stateError.message : 'Unable to update this shared item.')
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  async function pinDecision(message: SpaceMessage) {
+    if (!space || !activeChannel) return
+    const title = window.prompt('Decision title')
+    if (!title?.trim()) return
+    setBusy(true)
+    setError('')
+    try {
+      await api(`/api/spaces/${space.id}/channels/${activeChannel.id}/messages/${message.id}/decision`, {
+        method: 'POST',
+        body: JSON.stringify({ title: title.trim() }),
+      })
+      await refreshChannelData(space.id, activeChannel.id)
+    } catch (pinError) {
+      setError(pinError instanceof Error ? pinError.message : 'Unable to pin this decision.')
+    } finally {
+      setBusy(false)
+    }
+  }
+
   if (!space) {
     return (
       <section className="spaces-page spaces-overview">
@@ -489,16 +672,32 @@ export function SpacesPage({ onBack, onJoinVoiceRoom }: {
             {mentionNotice && <div className="space-mention-notice" role="status">{mentionNotice}<button type="button" onClick={() => setMentionNotice('')}>Dismiss</button></div>}
             <div className="space-message-list" aria-live="polite">
               {messages.length === 0 && <div className="space-messages-empty"><Hash size={22} aria-hidden="true" /><strong>This is the start of #{activeChannel.name}</strong><p>Share a project update or question with this channel.</p></div>}
-              {messages.map((message) => <article className={`space-message${message.is_mentioned ? ' is-mentioned' : ''}${message.everyone_mentioned ? ' has-everyone-mention' : ''}`} key={message.id}>
-                <div className="space-message-heading"><strong>{message.display_name}</strong><small>@{message.username} · {new Date(message.created_at).toLocaleString()}</small></div>
-                <p>{renderMentionText(message)}</p>
-              </article>)}
+              {messages.map((message) => {
+                const sharedObject = sharedObjects.find((item) => item.message_id === message.id)
+                return <article id={`space-message-${message.id}`} className={`space-message${message.is_mentioned ? ' is-mentioned' : ''}${message.everyone_mentioned ? ' has-everyone-mention' : ''}${highlightedMessageId === message.id ? ' is-update-target' : ''}`} key={message.id}>
+                <div className="space-message-heading"><strong>{message.display_name}</strong><small>@{message.username} · {new Intl.DateTimeFormat(undefined, { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(message.created_at))}</small>
+                  {canPinDecision && !sharedObject && <button type="button" className="space-message-pin" title="Pin as decision" aria-label={`Pin ${message.display_name}’s message as a decision`} onClick={() => void pinDecision(message)}><Sparkles size={13} aria-hidden="true" /></button>}
+                </div>
+                {sharedObject
+                  ? <SharedObjectCard object={sharedObject} userId={userId} canManage={canInvite || sharedObject.created_by === userId} onRespond={(item, response) => void respondToObject(item, response)} onStateChange={(item, state) => void changeObjectState(item, state)} />
+                  : <p>{renderMentionText(message)}</p>}
+              </article>})}
               <div ref={messageEnd} />
             </div>
             <form className="space-message-composer" onSubmit={(event) => void sendMessage(event)}>
               <textarea value={draft} onChange={(event) => setDraft(event.target.value)} maxLength={8000} rows={2} placeholder={activeChannel.can_send ? `Message #${activeChannel.name}` : 'You can view this channel but cannot send messages'} aria-label={`Message #${activeChannel.name}`} disabled={!activeChannel.can_send} />
-              <button className="space-mention-toggle" type="button" onClick={() => setMentionMenuOpen((open) => !open)} disabled={!activeChannel.can_send} aria-expanded={mentionMenuOpen} aria-label="Insert a mention"><AtSign size={15} aria-hidden="true" /></button>
-              <button className="primary-button" type="submit" disabled={busy || !activeChannel.can_send || !draft.trim()} aria-label="Send channel message"><Send size={15} aria-hidden="true" /><span>Send</span></button>
+              <div className="space-composer-toolbar">
+                <div className="space-composer-tools">
+                  <button className="space-mention-toggle" type="button" onClick={() => setMentionMenuOpen((open) => !open)} disabled={!activeChannel.can_send} aria-expanded={mentionMenuOpen} aria-label="Insert a mention" title="Mention someone"><AtSign size={17} aria-hidden="true" /></button>
+                  <button className="space-mention-toggle" type="button" onClick={() => setObjectMenuOpen((open) => !open)} disabled={!activeChannel.can_send} aria-expanded={objectMenuOpen} aria-label="Create a shared item" title="Add a poll, event, or checklist"><Plus size={18} aria-hidden="true" /></button>
+                </div>
+                <button className="space-send-button" type="submit" disabled={busy || !activeChannel.can_send || !draft.trim()} aria-label="Send channel message"><span>Send</span><Send size={16} aria-hidden="true" /></button>
+              </div>
+              {objectMenuOpen && <div className="space-object-menu" role="menu" aria-label="Create a shared item">
+                <button type="button" role="menuitem" onClick={() => { setObjectDialogType('poll'); setObjectMenuOpen(false); setError('') }}>Create poll</button>
+                <button type="button" role="menuitem" onClick={() => { setObjectDialogType('event'); setObjectMenuOpen(false); setError('') }}>Create event</button>
+                <button type="button" role="menuitem" onClick={() => { setObjectDialogType('checklist'); setObjectMenuOpen(false); setError('') }}>Create checklist</button>
+              </div>}
               {mentionMenuOpen && <div className="space-mention-menu" role="listbox" aria-label="Mention someone in this channel">
                 {activeChannel.members.map((member) => <button key={member.id} type="button" role="option" onClick={() => {
                   setDraft((current) => `${current}${current && !/\s$/u.test(current) ? ' ' : ''}@${member.username} `)
@@ -510,13 +709,14 @@ export function SpacesPage({ onBack, onJoinVoiceRoom }: {
                 }}><strong>@everyone</strong><small>Notify everyone who can see this channel</small></button>}
                 {activeChannel.members.length === 0 && !['owner', 'admin', 'moderator'].includes(space.role) && <small>No other channel members to mention yet.</small>}
               </div>}
-              <small>{activeChannel.can_send ? 'Messages in Spaces are visible to channel members and stored by SyncUp.' : 'You can view messages here, but your Space role cannot send in this channel.'}</small>
+              <small className="space-composer-note">{activeChannel.can_send ? 'Messages in Spaces are visible to channel members and stored by SyncUp.' : 'You can view messages here, but your Space role cannot send in this channel.'}</small>
             </form>
+            {sharedObjects.length > 0 && <span className="visually-hidden" aria-live="polite">{sharedObjects.length} shared items in this channel</span>}
             </>}
           </> : <div className="space-no-channel">Choose a channel to get started.</div>}
         </section>
       </div>
-      {error && !channelDialogOpen && !spaceSettingsTab && !channelSettingsTab && <p className="spaces-error space-detail-error" role="alert">{error}</p>}
+      {error && !channelDialogOpen && !spaceSettingsTab && !channelSettingsTab && !objectDialogType && <p className="spaces-error space-detail-error" role="alert">{error}</p>}
       {channelDialogOpen && canCreateChannels && <div className="overlay space-dialog-overlay" role="presentation" onMouseDown={(event) => {
         if (event.target === event.currentTarget) setChannelDialogOpen(false)
       }}>
@@ -552,6 +752,45 @@ export function SpacesPage({ onBack, onJoinVoiceRoom }: {
             <label><span>Category name</span><input value={categoryName} onChange={(event) => setCategoryName(event.target.value)} placeholder="e.g. Project" maxLength={40} autoFocus required /></label>
             {error && <div className="form-error" role="alert">{error}</div>}
             <button className="primary-button" disabled={busy}>{busy ? 'Creating…' : 'Create category'}<Plus size={14} aria-hidden="true" /></button>
+          </form>
+        </section>
+      </div>}
+      {objectDialogType && space && activeChannel && <div className="overlay space-dialog-overlay" role="presentation" onMouseDown={(event) => {
+        if (event.target === event.currentTarget) resetObjectForm()
+      }}>
+        <section className="account-dialog space-dialog space-object-dialog" role="dialog" aria-modal="true" aria-labelledby="shared-object-title">
+          <div className="dialog-heading"><div><p className="eyebrow">#{activeChannel.name}</p><h2 id="shared-object-title">Create {objectDialogType}</h2></div>
+            <button className="icon-button" type="button" onClick={resetObjectForm} aria-label="Close shared item form"><X size={15} aria-hidden="true" /></button>
+          </div>
+          <p className="space-dialog-copy">This item will appear in the channel conversation and Updates.</p>
+          <form className="profile-form" onSubmit={(event) => void createSharedObject(event)}>
+            <label><span>{objectDialogType === 'poll' ? 'Question' : 'Title'}</span>
+              <input name="sharedItemTitle" autoComplete="off" value={objectTitle} onChange={(event) => setObjectTitle(event.target.value)} maxLength={objectDialogType === 'poll' ? 240 : 160} placeholder={objectDialogType === 'poll' ? 'What should the team decide…' : 'Give this item a clear title…'} required />
+            </label>
+            {objectDialogType === 'poll' && <>
+              <fieldset className="space-object-options"><legend>Options</legend>{objectOptions.map((option, index) => <div key={index}>
+                <label><span className="visually-hidden">Option {index + 1}</span><input autoComplete="off" value={option} onChange={(event) => setObjectOptions((current) => current.map((item, itemIndex) => itemIndex === index ? event.target.value : item))} maxLength={100} placeholder={`Option ${index + 1}…`} /></label>
+                {objectOptions.length > 2 && <button type="button" className="icon-button" aria-label={`Remove option ${index + 1}`} onClick={() => setObjectOptions((current) => current.filter((_, itemIndex) => itemIndex !== index))}><X size={14} aria-hidden="true" /></button>}
+              </div>)}
+                {objectOptions.length < 8 && <button type="button" className="space-add-object-option" onClick={() => setObjectOptions((current) => [...current, ''])}><Plus size={13} aria-hidden="true" /> Add option</button>}
+              </fieldset>
+              <label className="profile-checkbox"><input type="checkbox" checked={objectMultiSelect} onChange={(event) => setObjectMultiSelect(event.target.checked)} /><span>Allow multiple choices</span></label>
+              <label className="profile-checkbox"><input type="checkbox" checked={objectAnonymous} onChange={(event) => setObjectAnonymous(event.target.checked)} /><span>Anonymous poll</span></label>
+            </>}
+            {objectDialogType === 'event' && <>
+              <label><span>Starts</span><input type="datetime-local" name="eventStartsAt" value={objectStartsAt} onChange={(event) => setObjectStartsAt(event.target.value)} required /></label>
+              <label><span>Location <small>(optional)</small></span><input name="eventLocation" autoComplete="off" value={objectLocation} onChange={(event) => setObjectLocation(event.target.value)} maxLength={240} placeholder="Add a place or meeting link…" /></label>
+              <small className="space-channel-name-hint">Times use your local timezone: {Intl.DateTimeFormat().resolvedOptions().timeZone}.</small>
+            </>}
+            {objectDialogType === 'checklist' && <>
+              <label><span>Checklist items</span><textarea name="checklistItems" autoComplete="off" value={objectItemsText} onChange={(event) => setObjectItemsText(event.target.value)} rows={6} placeholder={'Write one item per line…\nShare first draft\nReview with the team'} required /></label>
+              <label><span>Assign items to <small>(optional)</small></span><select value={objectAssigneeId} onChange={(event) => setObjectAssigneeId(event.target.value)}>
+                <option value="">No assignee</option>
+                {activeChannel.members.map((member) => <option key={member.id} value={member.id}>{member.display_name}</option>)}
+              </select></label>
+            </>}
+            {error && <div className="form-error" role="alert">{error}</div>}
+            <button className="primary-button" disabled={busy}>{busy ? 'Creating…' : `Create ${objectDialogType}`}</button>
           </form>
         </section>
       </div>}

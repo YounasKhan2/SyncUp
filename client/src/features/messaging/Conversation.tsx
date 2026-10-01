@@ -66,6 +66,8 @@ export function Conversation({
   pending,
   onQueued,
   onCallStarted,
+  callIntent,
+  onCallIntentConsumed,
   onSearchableMessages,
 }: {
   user: User;
@@ -75,6 +77,8 @@ export function Conversation({
   pending: PendingMessage[];
   onQueued: (message: PendingMessage) => void;
   onCallStarted: (call: ActiveCall) => void;
+  callIntent: { id: string; chatId: string; callType: 'audio' | 'video' } | null;
+  onCallIntentConsumed: (id: string) => void;
   onSearchableMessages: (chatId: string, messages: SearchableMessage[]) => void;
 }) {
   const [chat, setChat] = useState<{
@@ -112,6 +116,7 @@ export function Conversation({
   const [voiceDraft, setVoiceDraft] = useState<VoiceDraft | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [callStarting, setCallStarting] = useState(false);
+  const handledCallIntent = useRef<string | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(Boolean(chatId));
   const lastSeq = useRef(0);
@@ -804,6 +809,13 @@ export function Conversation({
       setCallStarting(false);
     }
   }
+
+  useEffect(() => {
+    if (!callIntent || callIntent.chatId !== chatId || !chat || handledCallIntent.current === callIntent.id) return;
+    handledCallIntent.current = callIntent.id;
+    onCallIntentConsumed(callIntent.id);
+    void startCall(callIntent.callType);
+  }, [callIntent, chat, chatId, onCallIntentConsumed]);
 
   async function sendTyping(active: boolean) {
     if (!chatId || !online) return;

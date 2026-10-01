@@ -456,7 +456,7 @@ test('encrypted requests, authorized chats, ordered idempotent delivery, and gro
   const defaultVoicePermission = restrictedMemberSpace.channels.find((channel) => channel.id === voiceChannel.channelId)
   assert.equal(defaultVoicePermission.can_speak, true)
   response = await apiRequest(chris, `/api/spaces/${createdSpace.spaceId}/channels/${feedbackChannel.channelId}/messages`)
-  assert.equal(response.status, 200)
+  assert.equal(response.status, 200, await response.clone().text())
   response = await post(chris, `/api/spaces/${createdSpace.spaceId}/channels/${feedbackChannel.channelId}/messages`, {
     body: 'Role settings should reject this message.',
   })
@@ -591,6 +591,83 @@ test('encrypted requests, authorized chats, ordered idempotent delivery, and gro
   const generalMessages = (await response.json()).messages
   assert.equal(generalMessages.length, 3)
   assert.equal(generalMessages.find((message) => message.body === 'Welcome to the client room.')?.display_name, 'Ava')
+
+  const channelObjectsPath = `/api/spaces/${createdSpace.spaceId}/channels/${generalChannel.id}/objects`
+  response = await post(ava, channelObjectsPath, {
+    type: 'poll', question: 'Which direction?', options: ['Minimal', 'Expressive'], anonymous: true,
+  })
+  assert.equal(response.status, 201, await response.clone().text())
+  const pollId = (await response.json()).objectId
+  response = await apiRequest(chris, channelObjectsPath)
+  const poll = (await response.json()).objects.find((item) => item.id === pollId)
+  assert.deepEqual(poll.payload.options.map((option) => option.text), ['Minimal', 'Expressive'])
+  response = await apiRequest(nadia, '/api/spaces/updates')
+  assert.equal(response.status, 200, await response.clone().text())
+  assert.ok((await response.json()).stacks.needsYou.some((item) => item.id === pollId))
+  response = await post(chris, `${channelObjectsPath}/${pollId}/respond`, {
+    type: 'poll', optionIds: [poll.payload.options[1].id],
+  })
+  assert.equal(response.status, 200, await response.clone().text())
+  response = await apiRequest(nadia, channelObjectsPath)
+  const publicPoll = (await response.json()).objects.find((item) => item.id === pollId)
+  assert.deepEqual(publicPoll.response_counts, { [poll.payload.options[1].id]: 1 })
+  assert.equal(JSON.stringify(publicPoll).includes(chris.id), false)
+
+  response = await post(ava, channelObjectsPath, {
+    type: 'event', title: 'Design review', startsAt: new Date(Date.now() + 30 * 60_000).toISOString(),
+    timezone: 'Mars/Phobos', rsvpRequired: true,
+  })
+  assert.equal(response.status, 400)
+  response = await post(ava, channelObjectsPath, {
+    type: 'event', title: 'Design review', startsAt: new Date(Date.now() + 30 * 60_000).toISOString(),
+    timezone: 'UTC', rsvpRequired: true,
+  })
+  assert.equal(response.status, 201, await response.clone().text())
+  const eventId = (await response.json()).objectId
+  response = await apiRequest(nadia, '/api/spaces/updates')
+  assert.ok((await response.json()).stacks.needsYou.some((item) => item.id === eventId))
+  response = await post(nadia, `${channelObjectsPath}/${eventId}/respond`, { type: 'event', rsvp: 'yes' })
+  assert.equal(response.status, 200, await response.clone().text())
+
+  response = await post(ava, channelObjectsPath, {
+    type: 'checklist', title: 'Launch checklist',
+    items: [{ text: 'Review copy', assigneeId: chris.id }],
+  })
+  assert.equal(response.status, 201, await response.clone().text())
+  const checklistId = (await response.json()).objectId
+  response = await post(ava, channelObjectsPath, {
+    type: 'checklist', title: 'Invalid assignment', items: [{ text: 'Review copy', assigneeId: randomUUID() }],
+  })
+  assert.equal(response.status, 400)
+  response = await apiRequest(chris, channelObjectsPath)
+  const checklist = (await response.json()).objects.find((item) => item.id === checklistId)
+  response = await post(chris, `${channelObjectsPath}/${checklistId}/respond`, {
+    type: 'checklist', itemId: checklist.payload.items[0].id, done: true,
+  })
+  assert.equal(response.status, 200, await response.clone().text())
+  response = await apiRequest(ava, channelObjectsPath)
+  assert.equal((await response.json()).objects.find((item) => item.id === checklistId).state, 'completed')
+
+  response = await post(ava, `/api/spaces/${createdSpace.spaceId}/channels/${generalChannel.id}/messages`, {
+    body: 'Decision source for release planning.',
+  })
+  assert.equal(response.status, 201, await response.clone().text())
+  const sourceMessagesResponse = await apiRequest(ava, `/api/spaces/${createdSpace.spaceId}/channels/${generalChannel.id}/messages`)
+  const sourceMessage = (await sourceMessagesResponse.json()).messages.find((message) => message.body === 'Decision source for release planning.')
+  assert.ok(sourceMessage)
+  response = await post(ava, `/api/spaces/${createdSpace.spaceId}/channels/${generalChannel.id}/messages/${sourceMessage.id}/decision`, {
+    title: 'Ship the minimal direction',
+  })
+  assert.equal(response.status, 201, await response.clone().text())
+  const decisionId = (await response.json()).objectId
+  response = await apiRequest(ava, '/api/spaces/updates')
+  const updates = (await response.json()).stacks
+  assert.ok(updates.happening.some((item) => item.id === eventId) === false)
+  assert.ok(updates.decided.some((item) => item.id === checklistId))
+  assert.ok(updates.decided.some((item) => item.id === decisionId))
+  response = await apiRequest(chris, '/api/spaces/updates?q=release')
+  assert.equal(response.status, 200, await response.clone().text())
+
   response = await post(chris, `/api/spaces/${createdSpace.spaceId}/channels/${privateChannel.channelId}/messages`, { body: 'This must not go through.' })
   assert.equal(response.status, 404)
   response = await apiRequest(ava, '/api/spaces')

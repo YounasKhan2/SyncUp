@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { Phone, Video } from 'lucide-react'
 import { api } from '../../shared/api'
 import { decryptMessage, lockKeyBundle } from '../auth/crypto/crypto'
 import { listAllDrafts, listPendingMessages, removePendingMessage, savePendingMessage } from '../messaging/outbox'
@@ -16,9 +17,13 @@ import { InboxPane } from './InboxPane'
 import { MobileNavigation } from './MobileNavigation'
 import { WorkspaceRail } from './WorkspaceRail'
 import { SpacesPage } from '../spaces/SpacesPage'
+import { UpdatesPage } from '../spaces/UpdatesPage'
 import { countUnreadConversations } from '../../shared/presentation'
 import { applyAppearancePreference, readAppearancePreference, saveAppearancePreference } from '../../shared/appearance'
 import type { AppearancePreference } from '../../shared/appearance'
+
+type CallIntent = { id: string; chatId: string; callType: 'audio' | 'video' }
+
 export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: () => void }) {
   const [accountOpen, setAccountOpen] = useState(false)
   const [appearance, setAppearance] = useState<AppearancePreference>(readAppearancePreference)
@@ -29,8 +34,13 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
   const [filter, setFilter] = useState<'all' | 'unread'>('all')
   const [showRequests, setShowRequests] = useState(false)
   const [showCalls, setShowCalls] = useState(false)
+  const [showUpdates, setShowUpdates] = useState(false)
   const [showSpaces, setShowSpaces] = useState(false)
+  const [updatesTarget, setUpdatesTarget] = useState<{ spaceId: string; channelId: string; messageId: string } | null>(null)
   const [callHistory, setCallHistory] = useState<CallRecord[]>([])
+  const [callIntent, setCallIntent] = useState<CallIntent | null>(null)
+  const [newCallRequested, setNewCallRequested] = useState(false)
+  const [newCallRequestedType, setNewCallRequestedType] = useState<'audio' | 'video'>('audio')
   const [incomingCall, setIncomingCall] = useState<IncomingCall | null>(null)
   const [activeCall, setActiveCall] = useState<ActiveCall | null>(null)
   const [newConversation, setNewConversation] = useState(false)
@@ -347,6 +357,7 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
 
   function openCallHistory() {
     setShowCalls(true)
+    setShowUpdates(false)
     setShowSpaces(false)
     setShowRequests(false)
     if (window.matchMedia('(max-width: 700px)').matches) setActiveChatId(null)
@@ -355,8 +366,32 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
     })
   }
 
+  function startNewCall(callType: 'audio' | 'video' = 'audio') {
+    if (activeCall || incomingCall) {
+      setError('Finish your current call before starting another one.')
+      return
+    }
+    setNewCallRequested(true)
+    setNewCallRequestedType(callType)
+    setNewConversation(true)
+  }
+
+  function redialCall(call: CallRecord, callType: 'audio' | 'video') {
+    if (activeCall || incomingCall) {
+      setError('Finish your current call before starting another one.')
+      return
+    }
+    setCallIntent({ id: crypto.randomUUID(), chatId: call.chat_id, callType })
+    selectChat(call.chat_id)
+  }
+
+  const consumeCallIntent = useCallback((id: string) => {
+    setCallIntent((current) => current?.id === id ? null : current)
+  }, [])
+
   function showChatsHome() {
     setShowCalls(false)
+    setShowUpdates(false)
     setShowSpaces(false)
     setShowRequests(false)
     if (window.matchMedia('(max-width: 700px)').matches) setActiveChatId(null)
@@ -364,28 +399,50 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
 
   function selectChat(chatId: string) {
     setShowCalls(false)
+    setShowUpdates(false)
     setShowSpaces(false)
     setShowRequests(false)
     setActiveChatId(chatId)
   }
 
+  function openUpdates() {
+    setShowUpdates(true)
+    setShowCalls(false)
+    setShowSpaces(false)
+    setShowRequests(false)
+    setActiveChatId(null)
+    setUpdatesTarget(null)
+  }
+
+  function openUpdateTarget(spaceId: string, channelId: string, messageId: string) {
+    setShowUpdates(false)
+    setShowCalls(false)
+    setShowSpaces(true)
+    setShowRequests(false)
+    setActiveChatId(null)
+    setUpdatesTarget({ spaceId, channelId, messageId })
+  }
+
   return (
     <>
     <a className="skip-link" href="#workspace-main">Skip to main content</a>
-    <main id="workspace-main" tabIndex={-1} className={`workspace${activeChatId ? ' has-active-chat' : ''}${showSpaces ? ' has-active-space' : ''}`}>
+    <main id="workspace-main" tabIndex={-1} className={`workspace${activeChatId ? ' has-active-chat' : ''}${showCalls ? ' has-active-calls' : ''}${showSpaces ? ' has-active-space' : ''}${showUpdates ? ' has-active-updates' : ''}`}>
       <WorkspaceRail
         user={currentUser}
         showCalls={showCalls}
+        showUpdates={showUpdates}
         showSpaces={showSpaces}
         unreadConversationCount={unreadConversationCount}
         onShowChats={showChatsHome}
         onShowCalls={openCallHistory}
-        onShowSpaces={() => { setShowCalls(false); setShowRequests(false); setShowSpaces(true); setActiveChatId(null) }}
+        onShowUpdates={openUpdates}
+        onShowSpaces={() => { setShowCalls(false); setShowUpdates(false); setShowRequests(false); setShowSpaces(true); setActiveChatId(null); setUpdatesTarget(null) }}
         onOpenAccount={() => setAccountOpen(true)}
       />
       <InboxPane
         showCalls={showCalls}
         callHistory={callHistory}
+        userId={currentUser.id}
         filter={filter}
         showRequests={showRequests}
         requests={requests}
@@ -396,13 +453,15 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
         online={online}
         onSelectChat={selectChat}
         onSelectCall={selectChat}
+        onCallAgain={redialCall}
+        onNewCall={() => startNewCall('audio')}
         onSelectRequest={() => setShowRequests(false)}
         onSelectFilter={(value) => { setFilter(value); setShowRequests(false) }}
         onShowRequests={() => { setShowRequests(true); setFilter('all') }}
         onNewConversation={() => setNewConversation(true)}
         onOpenSearch={() => setSearchOpen(true)}
       />
-      <Conversation
+      {!showCalls && <Conversation
         key={activeChatId ?? 'welcome'}
         user={currentUser}
         chatId={activeChatId}
@@ -411,18 +470,38 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
         pending={pending}
         onQueued={(message) => setPending((current) => [...current, message])}
         onCallStarted={setActiveCall}
+        callIntent={callIntent}
+        onCallIntentConsumed={consumeCallIntent}
         onSearchableMessages={updateSearchableMessages}
-      />
+      />}
+      {showCalls && <section className="calls-home">
+        <div className="calls-home-content">
+          <span className="calls-home-icon"><Phone size={26} aria-hidden="true" /></span>
+          <p className="eyebrow">PRIVATE CALLS</p>
+          <h2>Hear from your people.</h2>
+          <p>Start an encrypted audio or video call, or choose a recent call to return to that conversation.</p>
+          <div className="calls-home-actions">
+            <button className="calls-home-button" type="button" onClick={() => startNewCall('audio')}><Phone size={16} aria-hidden="true" /> Audio call</button>
+            <button className="calls-home-button is-video" type="button" onClick={() => startNewCall('video')}><Video size={16} aria-hidden="true" /> Video call</button>
+          </div>
+          <small>Calls are end-to-end encrypted.</small>
+        </div>
+      </section>}
       <MobileNavigation
-        section={showSpaces ? 'spaces' : showCalls ? 'calls' : 'chats'}
+        section={showSpaces ? 'spaces' : showUpdates ? 'updates' : showCalls ? 'calls' : 'chats'}
         accountOpen={accountOpen}
         unreadConversationCount={unreadConversationCount}
         onShowChats={showChatsHome}
         onShowCalls={openCallHistory}
-        onShowSpaces={() => { setShowCalls(false); setShowRequests(false); setShowSpaces(true); setActiveChatId(null) }}
+        onShowUpdates={openUpdates}
+        onShowSpaces={() => { setShowCalls(false); setShowUpdates(false); setShowRequests(false); setShowSpaces(true); setActiveChatId(null); setUpdatesTarget(null) }}
         onOpenAccount={() => setAccountOpen(true)}
       />
-      {showSpaces && <SpacesPage onBack={showChatsHome} onJoinVoiceRoom={(call) => {
+      {showUpdates && <UpdatesPage userId={currentUser.id} onOpenTarget={openUpdateTarget} onOpenCall={(call) => {
+        if (call.space_id) openUpdateTarget(call.space_id, call.chat_id, '')
+        else selectChat(call.chat_id)
+      }} />}
+      {showSpaces && <SpacesPage userId={currentUser.id} openTarget={updatesTarget} onBack={showChatsHome} onJoinVoiceRoom={(call) => {
         if (activeCall) {
           setError('Leave your active call before joining a Space voice room.')
           return
@@ -431,10 +510,15 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
       }} />}
       <footer className="workspace-footer"><button type="button" onClick={signOut}>Sign out</button><span>Chats · End-to-end encrypted</span></footer>
       {accountOpen && <AccountPanel user={currentUser} appearance={appearance} onAppearanceChange={updateAppearance} onClose={() => setAccountOpen(false)} onSaved={setCurrentUser} />}
-      {newConversation && <NewConversation user={currentUser} initialUsername={initialUsername} onClose={() => { setNewConversation(false); setInitialUsername('') }} onCreated={(chatId) => {
+      {newConversation && <NewConversation user={currentUser} initialUsername={initialUsername} onClose={() => { setNewConversation(false); setInitialUsername(''); setNewCallRequested(false); setNewCallRequestedType('audio') }} onCreated={(chatId) => {
         setNewConversation(false)
         setInitialUsername('')
         setActiveChatId(chatId)
+        if (newCallRequested) {
+          setCallIntent({ id: crypto.randomUUID(), chatId, callType: newCallRequestedType })
+          setNewCallRequested(false)
+          setNewCallRequestedType('audio')
+        }
         void refreshInbox()
       }} />}
       {searchOpen && <SearchDialog

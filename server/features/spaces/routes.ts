@@ -7,8 +7,10 @@ import { pool } from '../../db.js'
 import type { AuthenticatedRequest } from '../auth/types.js'
 import { publishChatEvent } from '../realtime/routes.js'
 import { messageLimiter } from '../messaging/limits.js'
+import { spaceObjectRoutes } from './objects.js'
 
 export const spaceRoutes = Router()
+spaceRoutes.use(spaceObjectRoutes)
 
 const idSchema = z.uuid()
 const channelNameSchema = z.string().trim().toLowerCase().min(1).max(40).regex(/^[a-z0-9][a-z0-9-]*$/)
@@ -832,6 +834,8 @@ spaceRoutes.get('/spaces/:spaceId/channels/:channelId/messages', async (request:
                   AND (own_mention.mentioned_user_id = $2
                     OR (own_mention.is_everyone AND m.sender_id <> $2))
               ) AS is_mentioned
+              ,(SELECT shared_object.id FROM channel_shared_objects shared_object
+                WHERE shared_object.message_id = m.id) AS shared_object_id
        FROM channel_messages m
        JOIN users u ON u.id = m.sender_id
        JOIN space_channels sc ON sc.chat_id = m.chat_id AND sc.space_id = $1
