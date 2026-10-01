@@ -12,6 +12,10 @@ import { MessageComposer } from './MessageComposer'
 import { MessageList } from './MessageList'
 import { ReportDialog } from './ReportDialog'
 import { GroupMembersDialog } from './GroupMembersDialog'
+import { prepareVideoV2 } from '../media/v2/prepareVideo'
+import { mediaV2UploadManager } from '../media/v2/runtime'
+import type { MediaV2UploadSnapshot } from '../media/v2/uploadManager'
+import type { PendingVideoChoice } from './MessageComposer'
 export function Conversation({ user, chatId, refreshInbox, online, pending, onQueued, onCallStarted }: {
   user: User
   chatId: string | null
@@ -37,6 +41,8 @@ export function Conversation({ user, chatId, refreshInbox, online, pending, onQu
   const [typingUsers, setTypingUsers] = useState<Record<string, string>>({})
   const [stagedAttachments, setStagedAttachments] = useState<StagedAttachment[]>([])
   const [uploading, setUploading] = useState(false)
+  const [videoChoice, setVideoChoice] = useState<PendingVideoChoice | null>(null)
+  const [videoSends, setVideoSends] = useState<MediaV2UploadSnapshot[]>([])
   const [submitting, setSubmitting] = useState(false)
   const [callStarting, setCallStarting] = useState(false)
   const [error, setError] = useState('')
@@ -245,6 +251,26 @@ export function Conversation({ user, chatId, refreshInbox, online, pending, onQu
     return () => window.clearTimeout(timeout)
   }, [chatId, draft])
 
+  useEffect(() => mediaV2UploadManager.subscribe((snapshots) => {
+    setVideoSends(snapshots.filter((item) => item.chatId === chatId && item.status !== 'sent'))
+    for (const item of snapshots) {
+      if (item.chatId !== chatId || item.status !== 'sent') continue
+      void import('../media/v2/jobStore').then(async ({ getMediaV2Job }) => {
+        const job = await getMediaV2Job(item.jobId)
+        if (!job?.keyEnvelope) return
+        setStagedAttachments((current) => current.some((attachment) => attachment.id === job.attachmentId) ? current : [...current, {
+          id: job.attachmentId,
+          filename: job.filename,
+          content_type: job.contentType,
+          size_bytes: job.plaintextSize,
+          nonce: null,
+          key_envelope: job.keyEnvelope!,
+          transport_version: 2,
+        }])
+      })
+    }
+  }), [chatId])
+
   const activePending = useMemo(
     () => pending.filter((message) => message.chatId === chatId),
     [chatId, pending],
@@ -259,6 +285,10 @@ export function Conversation({ user, chatId, refreshInbox, online, pending, onQu
     }
     const image = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'].includes(file.type)
     const video = ['video/mp4', 'video/webm'].includes(file.type)
+    if (video) {
+      setVideoChoice({ file, mode: 'hd' })
+      return
+    }
     const fileType = [
       'application/pdf',
       'application/msword',
@@ -268,8 +298,8 @@ export function Conversation({ user, chatId, refreshInbox, online, pending, onQu
       'application/zip',
       'text/plain',
     ].includes(file.type)
-    if ((!image && !video && !fileType) || file.size === 0 || file.size > (image ? 10 : 25) * 1024 * 1024) {
-      setError('Images must be up to 10 MB. MP4/WebM videos and supported documents are up to 25 MB.')
+    if ((!image && !fileType) || file.size === 0 || file.size > (image ? 10 : 25) * 1024 * 1024) {
+      setError('Images must be up to 10 MB. Supported documents are up to 25 MB.')
       return
     }
     uploadingFileKeys.current.add(fileKey)
@@ -304,6 +334,21 @@ export function Conversation({ user, chatId, refreshInbox, online, pending, onQu
     } finally {
       uploadingFileKeys.current.delete(fileKey)
       setUploading(uploadingFileKeys.current.size > 0)
+    }
+  }
+
+  async function chooseVideoMode(mode: 'standard' | 'hd' | 'original') {
+    if (!videoChoice || !chat || !chatId) return
+    const file = videoChoice.file
+    setVideoChoice(null)
+    setUploading(true)
+    setError('')
+    try {
+      await prepareVideoV2(file, chatId, chat.members, user.id, mode)
+    } catch (videoError) {
+      setError(videoError instanceof Error && /limited to|Choose an MP4|non-empty video/.test(videoError.message) ? videoError.message : 'Couldn’t prepare this video. Try again.')
+    } finally {
+      setUploading(false)
     }
   }
 
@@ -584,7 +629,13 @@ export function Conversation({ user, chatId, refreshInbox, online, pending, onQu
           stagedFileKeys.current.delete(id)
           setStagedAttachments((current) => current.filter((item) => item.id !== id))
         }}
+        videoChoice={videoChoice}
+        videoSends={videoSends}
         onUpload={(file) => void uploadFile(file)}
+        onChooseVideoMode={(mode) => void chooseVideoMode(mode)}
+        onCancelVideoChoice={() => setVideoChoice(null)}
+        onRetryVideo={(jobId) => void mediaV2UploadManager.resume(jobId)}
+        onCancelVideo={(jobId) => void mediaV2UploadManager.cancel(jobId)}
       />
       {reportingMessageId && <ReportDialog messageId={reportingMessageId} onClose={() => setReportingMessageId(null)} />}
       {managingMembers && chat?.kind === 'group' && <GroupMembersDialog

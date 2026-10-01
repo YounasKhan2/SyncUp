@@ -33,6 +33,7 @@ export type MediaV2UploadJob = {
   state: MediaV2JobState
   stagePath: string | null
   sourceFingerprint: string
+  keyEnvelope?: string
   createdAt: number
   updatedAt: number
   lastError: string | null

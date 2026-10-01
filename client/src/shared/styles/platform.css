@@ -517,3 +517,20 @@
 .attachment-video-button small { position: absolute; right: 7px; bottom: 7px; display: flex; align-items: center; gap: 4px; padding: 4px 6px; border-radius: 5px; background: rgba(9,18,13,.72); font-size: 8px; }
 .media-viewer-video { width: min(92vw, 1200px); max-height: calc(100svh - 160px); background: #000; outline: none; }
 @media (max-width: 760px) { .media-viewer-video { width: 100vw; max-height: calc(100svh - 120px); } }
+
+.video-send-choice { display: flex; flex-direction: column; gap: 8px; padding: 10px 12px; border-bottom: 1px solid var(--color-border); background: var(--color-surface-subtle); }
+.video-send-choice > div:first-child { display: flex; min-width: 0; justify-content: space-between; gap: 10px; }
+.video-send-choice strong { overflow: hidden; color: var(--color-text); font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
+.video-send-choice small { color: var(--color-text-muted); font-size: 8px; }
+.video-quality-options { display: flex; flex-wrap: wrap; gap: 5px; }
+.video-quality-options button, .video-send-progress-row button { padding: 5px 8px; border: 1px solid var(--color-border); border-radius: 6px; color: var(--color-text-muted); background: var(--color-surface); font: inherit; font-size: 9px; cursor: pointer; }
+.video-quality-options button.active { color: var(--color-brand-strong); border-color: #b9cbb7; background: #eaf1e8; }
+.video-quality-options .video-choice-cancel { margin-left: auto; }
+.video-send-progress { display: flex; flex-direction: column; gap: 4px; padding: 7px 10px 0; }
+.video-send-progress-row { display: flex; min-height: 30px; align-items: center; gap: 6px; padding: 5px 7px; border-radius: 6px; color: var(--color-text-muted); background: var(--color-surface-muted); font-size: 9px; }
+.video-send-progress-row > span { flex: 1; }
+@media (max-width: 760px) {
+  .video-send-choice { padding: 10px; }
+  .video-quality-options button { flex: 1; min-width: 64px; }
+  .video-quality-options .video-choice-cancel { flex: 0 0 auto; margin-left: 0; }
+}

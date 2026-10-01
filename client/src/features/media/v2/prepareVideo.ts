@@ -16,7 +16,7 @@ const ORIGINAL_LIMIT = 2 * 1024 * MIB
 
 type IntentResponse = { attachmentId: string; uploadSession: { id: string; chunkSize: number; chunkCount: number; totalCiphertextBytes: number; acknowledgedBytes: number } }
 
-export async function prepareVideoV2(file: File, chatId: string, members: ChatMember[], mode: VideoMode) {
+export async function prepareVideoV2(file: File, chatId: string, members: ChatMember[], currentUserId: string, mode: VideoMode) {
   if (file.size <= 0) throw new Error('Choose a non-empty video.')
   const limit = mode === 'original' ? ORIGINAL_LIMIT : STANDARD_HD_LIMIT
   if (file.size > limit) throw new Error(mode === 'original' ? 'Original video is limited to 2 GiB.' : 'Standard and HD video are limited to 1 GiB.')
@@ -75,7 +75,7 @@ export async function prepareVideoV2(file: File, chatId: string, members: ChatMe
     filename: file.name, contentType: file.type, plaintextSize: file.size, ciphertextSize,
     chunkSize: intent.uploadSession.chunkSize, chunkCount: intent.uploadSession.chunkCount,
     acknowledgedBytes: intent.uploadSession.acknowledgedBytes, state: 'queued', stagePath: writer.path,
-    sourceFingerprint: await fingerprintMediaV2Source(file), createdAt: now, updatedAt: now, lastError: null,
+    sourceFingerprint: await fingerprintMediaV2Source(file), keyEnvelope: keyEnvelopes[currentUserId], createdAt: now, updatedAt: now, lastError: null,
   }
   await putMediaV2Job(job)
   await mediaV2UploadManager.track(job)
