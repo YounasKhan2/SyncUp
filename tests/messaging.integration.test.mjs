@@ -339,6 +339,9 @@ test('encrypted requests, authorized chats, ordered idempotent delivery, and gro
   response = await post(ava, `/api/spaces/${createdSpace.spaceId}/categories`, { name: 'Client' })
   assert.equal(response.status, 201, await response.clone().text())
   const clientCategory = (await response.json()).category
+  response = await apiRequest(ava, `/api/spaces/${createdSpace.spaceId}`)
+  assert.equal(response.status, 200, await response.clone().text())
+  assert.ok((await response.json()).space.categories.some((category) => category.id === clientCategory.id))
   response = await post(ava, `/api/spaces/${createdSpace.spaceId}/categories`, { name: 'Client' })
   assert.equal(response.status, 409)
   response = await post(ava, `/api/spaces/${createdSpace.spaceId}/channels`, {

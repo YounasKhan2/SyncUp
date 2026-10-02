@@ -296,7 +296,7 @@ spaceRoutes.get('/spaces/:id', async (request: AuthenticatedRequest, response, n
                 SELECT jsonb_agg(jsonb_build_object('id', category.id, 'name', category.name)
                   ORDER BY category.created_at, category.id)
                 FROM space_channel_categories category
-                WHERE category.space_id = s.id AND EXISTS (
+                WHERE category.space_id = s.id AND (sm.role IN ('owner', 'admin') OR EXISTS (
                   SELECT 1 FROM space_channels visible_channel
                   JOIN chat_members grant_member ON grant_member.chat_id = visible_channel.chat_id
                     AND grant_member.user_id = $2 AND grant_member.left_at IS NULL
@@ -307,7 +307,7 @@ spaceRoutes.get('/spaces/:id', async (request: AuthenticatedRequest, response, n
                         AND permission.chat_id = visible_channel.chat_id
                         AND permission.role = sm.role
                     ), true))
-                )
+                ))
               ), '[]'::jsonb) AS categories,
               COALESCE((
                 SELECT jsonb_agg(jsonb_build_object(
