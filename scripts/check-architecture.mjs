@@ -31,6 +31,10 @@ for (const [directory, config] of [['client/src', 'client/tsconfig.app.json'], [
       else if (ts.isImportTypeNode(node) && ts.isLiteralTypeNode(node.argument)) specifier = node.argument.literal
       if (specifier && ts.isStringLiteralLike(specifier)) {
         const resolved = ts.resolveModuleName(specifier.text, file, parsed.options, ts.sys).resolvedModule
+        const featureApi = /^client\/src\/features\/[^/]+\/api\.ts$/.test(origin)
+        if (featureApi && /^(?:react|react-dom)(?:\/|$)/.test(specifier.text)) {
+          violations.push(`feature API must not import React: ${origin} -> ${specifier.text}`)
+        }
         if (resolved && !resolved.isExternalLibraryImport) {
           edges += 1
           const target = slash(path.relative(root, resolved.resolvedFileName))
@@ -39,6 +43,12 @@ for (const [directory, config] of [['client/src', 'client/tsconfig.app.json'], [
           }
           const fromFeature = origin.match(/^client\/src\/features\/([^/]+)\//)?.[1]
           const toFeature = target.match(/^client\/src\/features\/([^/]+)\//)?.[1]
+          if (/^client\/src\/features\/[^/]+\/api\.ts$/.test(target) && fromFeature !== toFeature) {
+            violations.push(`private feature API must stay within its owner: ${origin} -> ${target}`)
+          }
+          if (featureApi && /\.tsx$/.test(target)) {
+            violations.push(`feature API must not import UI components: ${origin} -> ${target}`)
+          }
           if (fromFeature && toFeature && fromFeature !== toFeature && fromFeature !== 'workspace') {
             debt.add(`${origin} -> ${target}`)
           }
@@ -54,6 +64,6 @@ console.info('Known cross-feature dependencies (informational; no public-API all
 for (const edge of [...debt].sort()) console.info(`  ${edge}`)
 console.info('Workspace composition is excluded from the debt listing, not from shared dependency enforcement.')
 if (violations.length) {
-  console.error('FAIL: shared must not import features:\n' + violations.join('\n'))
+  console.error('FAIL: architecture boundary violations:\n' + violations.join('\n'))
   process.exitCode = 1
-} else console.info('PASS: no shared -> features dependencies.')
+} else console.info('PASS: no shared -> features dependencies; private feature APIs stay within their owner and do not import React/UI.')
