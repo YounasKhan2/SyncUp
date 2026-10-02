@@ -54,14 +54,6 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
   const flushing = useRef(false)
   const unreadConversationCount = countUnreadConversations(chats)
 
-  useEffect(() => {
-    if (appearance !== 'system') return
-    const preference = window.matchMedia('(prefers-color-scheme: dark)')
-    const updateTheme = () => applyAppearancePreference('system')
-    preference.addEventListener('change', updateTheme)
-    return () => preference.removeEventListener('change', updateTheme)
-  }, [appearance])
-
   function updateAppearance(preference: AppearancePreference) {
     saveAppearancePreference(preference)
     setAppearance(preference)
