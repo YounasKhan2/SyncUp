@@ -27,19 +27,19 @@ import type {
   StagedAttachment,
   User,
 } from "../../shared/types";
-import { BrandMark } from "../../shared/components/BrandMark";
 import { ConversationHeader } from "./ConversationHeader";
 import { ChatDetailsScreen } from "./ChatDetailsScreen";
 import { MessageComposer } from "./MessageComposer";
 import { MessageList } from "./MessageList";
 import { ReportDialog } from "./ReportDialog";
+import { useConversationUiState } from "./useConversationUiState";
+import { ConversationWelcome } from "./ConversationWelcome";
 import { prepareVideoV2 } from "../media/v2/prepareVideo";
 import { prepareVoiceV2 } from "../media/v2/prepareVoice";
 import type { VoiceDraft } from "./VoiceRecorder";
 import { mediaV2UploadManager } from "../media/v2/runtime";
 import type { MediaV2UploadSnapshot } from "../media/v2/uploadManager";
 import { createGroupCallKey } from "../calls/groupCallCrypto";
-import { Avatar } from "../../shared/components/Avatar";
 import type { SearchableMessage } from "./SearchDialog";
 
 async function decryptReplyContext(
@@ -100,12 +100,11 @@ export function Conversation({
   const [editingMessage, setEditingMessage] = useState<DisplayMessage | null>(
     null,
   );
-  const [reportingMessageId, setReportingMessageId] = useState<string | null>(
-    null,
-  );
-  const [detailsOpen, setDetailsOpen] = useState(false);
-  const [messageSearchOpen, setMessageSearchOpen] = useState(false);
-  const [messageSearch, setMessageSearch] = useState("");
+  const {
+    reportingMessageId, detailsOpen, messageSearchOpen, messageSearch,
+    setMessageSearch, openReport, closeReport, openDetails, closeDetails,
+    toggleMessageSearch, closeMessageSearch,
+  } = useConversationUiState();
   const [hasOlderMessages, setHasOlderMessages] = useState(false);
   const [loadingOlder, setLoadingOlder] = useState(false);
   const [onlineUsers, setOnlineUsers] = useState<Set<string>>(() => new Set());
@@ -1063,32 +1062,7 @@ export function Conversation({
   }
 
   if (!chatId) {
-    return (
-      <section className="conversation-pane welcome-pane">
-        <div className="welcome-content">
-          <div className="welcome-mark">
-            <BrandMark />
-          </div>
-          <p className="eyebrow">PRIVATE BY DESIGN</p>
-          <h2>
-            Good conversations
-            <br />
-            <em>start with hello.</em>
-          </h2>
-          <p className="welcome-description">
-            Your personal messages are encrypted on your device. Start a direct
-            chat or create a group with people you trust.
-          </p>
-          <div className="welcome-profile">
-            <Avatar name={user.display_name} src={user.avatar_url} className="avatar-card" />
-            <div>
-              <span className="small strong">{user.display_name}</span>
-              <span className="micro muted">@{user.username}</span>
-            </div>
-          </div>
-        </div>
-      </section>
-    );
+    return <ConversationWelcome user={user} />;
   }
 
   const title =
@@ -1150,8 +1124,8 @@ export function Conversation({
         }
         callStarting={callStarting}
         online={online}
-        onOpenDetails={() => setDetailsOpen(true)}
-        onSearchMessages={() => setMessageSearchOpen((open) => !open)}
+        onOpenDetails={openDetails}
+        onSearchMessages={toggleMessageSearch}
         onBack={() => window.dispatchEvent(new Event("syncup-close-chat"))}
         onStartCall={(type) => void startCall(type)}
       />
@@ -1172,10 +1146,7 @@ export function Conversation({
           </span>
           <button
             type="button"
-            onClick={() => {
-              setMessageSearchOpen(false);
-              setMessageSearch("");
-            }}
+            onClick={closeMessageSearch}
             aria-label="Close message search"
           >
             <X size={14} aria-hidden="true" />
@@ -1218,7 +1189,7 @@ export function Conversation({
         onDelete={(message, scope) => void deleteMessage(message, scope)}
         onPin={(message) => void togglePin(message)}
         onCopy={(message) => void copyMessage(message)}
-        onReport={(message) => setReportingMessageId(message.id)}
+        onReport={(message) => openReport(message.id)}
       />
       <MessageComposer
         draft={draft}
@@ -1261,7 +1232,7 @@ export function Conversation({
       {reportingMessageId && (
         <ReportDialog
           messageId={reportingMessageId}
-          onClose={() => setReportingMessageId(null)}
+          onClose={closeReport}
         />
       )}
     </section>
@@ -1271,7 +1242,7 @@ export function Conversation({
       isGroup={chat.kind === "group"}
       members={chat.members}
       currentUserId={user.id}
-      onBack={() => setDetailsOpen(false)}
+      onBack={closeDetails}
       onMembersChanged={() => {
         void loadConversation(chat.id, false);
         refreshInbox();
