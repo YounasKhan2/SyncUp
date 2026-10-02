@@ -4,6 +4,8 @@ SyncUp is a compact React/TypeScript web app with a TypeScript modular-monolith 
 
 ## Architecture
 
+Contributor guardrails: [foundation rules](docs/architecture/foundation-rules.md). Commands, suite inventory, and isolated integration prerequisites: [verification](docs/architecture/verification.md). Run `npm run typecheck`, `npm test`, `npm run check:architecture`, and `npm run build` before completing foundation changes.
+
 - `client/src/App.tsx` only composes the app router. Session/key-unlock selection lives in `client/src/app/AppRouter.tsx`; reusable views and feature behavior live under `client/src/features/<feature>/`, with shared API/types/utilities/components under `client/src/shared/`.
 - Workspace navigation, inbox rows, conversation headers, message lists, composers, attachments, calls, account, and authentication each have their own component modules. UI icons use `lucide-react`.
 - Shared design tokens live in `client/src/shared/styles/tokens.css`; `client/src/App.css` is an import-only entry for the shared platform stylesheet. Global document/reset styles live in `client/src/index.css`.
