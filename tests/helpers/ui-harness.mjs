@@ -20,6 +20,14 @@ export function renderConsumer(path, name, props, { states = [], api = async () 
     '../../shared/components/BrandMark': { BrandMark: () => null },
     '../auth/crypto/crypto': {},
   }
+  // Keep Phase 4 assertions at the transport boundary while executing the real
+  // feature-owned API introduced in Phase 5 (no feature function stub).
+  if (path.includes('/account/')) {
+    mocks['./api'] = load('client/src/features/account/api.ts', { '../../shared/api': mocks['../../shared/api'] })
+  }
+  if (path.includes('/messaging/')) {
+    mocks['./api'] = load('client/src/features/messaging/api.ts', { '../../shared/api': mocks['../../shared/api'] })
+  }
   for (const primitive of ['Button', 'IconButton', 'Dialog']) {
     // Added after characterization; the same tests execute the migrated shell.
     try { mocks[`../../shared/components/${primitive}`] = load(`client/src/shared/components/${primitive}.tsx`, { 'react/jsx-runtime': runtime }) }

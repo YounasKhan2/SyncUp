@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
 import { Flag, X } from 'lucide-react'
-import { api } from '../../shared/api'
+import { submitReport } from './api'
 import { Button } from '../../shared/components/Button'
 import { IconButton } from '../../shared/components/IconButton'
 import { Dialog } from '../../shared/components/Dialog'
@@ -26,10 +26,7 @@ export function ReportDialog({ messageId, onClose }: { messageId: string; onClos
     setSubmitting(true)
     setError('')
     try {
-      await api('/api/reports', {
-        method: 'POST',
-        body: JSON.stringify({ messageId, reason, details }),
-      })
+      await submitReport({ messageId, reason, details })
       onClose()
     } catch (reportError) {
       setError(reportError instanceof Error ? reportError.message : 'Unable to submit this report.')

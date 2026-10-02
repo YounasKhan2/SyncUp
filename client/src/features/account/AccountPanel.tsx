@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
 import { ArrowRight, Camera, Monitor, Trash2, X } from 'lucide-react'
-import { api, apiUpload } from '../../shared/api'
+import { getCurrentUser, listSessions, removeAvatar as removeAccountAvatar, revokeSession as revokeAccountSession, updateProfile, uploadAvatar } from './api'
 import type { Session, User } from '../../shared/types'
 import { Avatar } from '../../shared/components/Avatar'
 import { Button } from '../../shared/components/Button'
@@ -33,14 +33,14 @@ export function AccountPanel({ user, appearance, onAppearanceChange, onClose, on
 
   async function loadSessions() {
     setSessionsError('')
-    const result = await api<{ sessions: Session[]; currentSessionId: string }>('/api/auth/sessions')
+    const result = await listSessions()
     setSessions(result.sessions)
     setCurrentSessionId(result.currentSessionId)
   }
 
   useEffect(() => {
     let mounted = true
-    api<{ sessions: Session[]; currentSessionId: string }>('/api/auth/sessions')
+    listSessions()
       .then((result) => {
         if (mounted) {
           setSessions(result.sessions)
@@ -58,7 +58,7 @@ export function AccountPanel({ user, appearance, onAppearanceChange, onClose, on
   async function revokeSession(sessionId: string) {
     setSessionsError('')
     try {
-      await api<void>(`/api/auth/sessions/${encodeURIComponent(sessionId)}/revoke`, { method: 'POST' })
+      await revokeAccountSession(sessionId)
       await loadSessions()
     } catch (revokeError) {
       setSessionsError(revokeError instanceof Error ? revokeError.message : 'Unable to revoke session.')
@@ -72,15 +72,12 @@ export function AccountPanel({ user, appearance, onAppearanceChange, onClose, on
     setLoading(true)
     const form = new FormData(event.currentTarget)
     try {
-      const result = await api<{ user: User }>('/api/auth/me', {
-        method: 'PATCH',
-        body: JSON.stringify({
-          displayName: String(form.get('displayName') ?? ''),
-          username: String(form.get('username') ?? ''),
-          about: String(form.get('about') ?? ''),
-          discoverable: form.get('discoverable') === 'on',
-          readReceiptsEnabled: form.get('readReceiptsEnabled') === 'on',
-        }),
+      const result = await updateProfile({
+        displayName: String(form.get('displayName') ?? ''),
+        username: String(form.get('username') ?? ''),
+        about: String(form.get('about') ?? ''),
+        discoverable: form.get('discoverable') === 'on',
+        readReceiptsEnabled: form.get('readReceiptsEnabled') === 'on',
       })
       onSaved(result.user)
       setSaved('Profile saved.')
@@ -117,8 +114,8 @@ export function AccountPanel({ user, appearance, onAppearanceChange, onClose, on
     try {
       const bytes = await avatarFile.arrayBuffer()
       const result = await (async () => {
-        await apiUpload('/api/auth/me/avatar', bytes, avatarFile.type)
-        return api<{ user: User }>('/api/auth/me')
+        await uploadAvatar(bytes, avatarFile.type)
+        return getCurrentUser()
       })()
       onSaved(result.user)
       setAvatarFile(null)
@@ -137,7 +134,7 @@ export function AccountPanel({ user, appearance, onAppearanceChange, onClose, on
     setSaved('')
     setAvatarBusy(true)
     try {
-      const result = await api<{ user: User }>('/api/auth/me/avatar', { method: 'DELETE' })
+      const result = await removeAccountAvatar()
       onSaved(result.user)
       setAvatarFile(null)
       setAvatarPreview('')
