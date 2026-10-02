@@ -1,0 +1,235 @@
+{
+  "baseline": "9d23ed92d00209ff3d1a8a0cb3320119b02c3a97",
+  "types": {
+    "KeyBundle": {
+      "declaration": "export type KeyBundle = {\n  publicKey: JsonWebKey\n  encryptedPrivateKey: string\n  privateKeyIv: string\n  vaultSalt: string\n}",
+      "importers": [
+        "client/src/features/auth/AuthScreen.tsx",
+        "client/src/features/auth/crypto/crypto.ts",
+        "client/src/features/auth/UnlockScreen.tsx",
+        "client/src/features/messaging/NewConversation.tsx"
+      ]
+    },
+    "PublicMember": {
+      "declaration": "export type PublicMember = {\n  id: string\n  publicKey: JsonWebKey\n}",
+      "importers": [
+        "client/src/features/auth/crypto/crypto.ts",
+        "client/src/features/calls/groupCallCrypto.ts"
+      ]
+    },
+    "User": {
+      "declaration": "export type User = {\n  id: string\n  email: string\n  username: string\n  display_name: string\n  avatar_url?: string | null\n  about?: string\n  discoverable?: boolean\n  read_receipts_enabled?: boolean\n}",
+      "importers": [
+        "client/src/app/AppRouter.tsx",
+        "client/src/features/account/AccountPanel.tsx",
+        "client/src/features/account/api.ts",
+        "client/src/features/auth/AuthScreen.tsx",
+        "client/src/features/messaging/Conversation.tsx",
+        "client/src/features/messaging/ConversationWelcome.tsx",
+        "client/src/features/messaging/NewConversation.tsx",
+        "client/src/features/workspace/WorkspacePage.tsx",
+        "client/src/features/workspace/WorkspaceRail.tsx",
+        "tests/fixtures/conversation-preview.tsx",
+        "tests/fixtures/spaces-preview.tsx",
+        "tests/fixtures/theme-preview.tsx",
+        "tests/fixtures/ui-primitives-preview.tsx",
+        "tests/fixtures/workspace-preview.tsx"
+      ]
+    },
+    "Session": {
+      "declaration": "export type Session = {\n  id: string\n  device_name: string\n  platform: string\n  user_agent: string\n  created_at: string\n  last_active_at: string\n  expires_at: string\n}",
+      "importers": [
+        "client/src/features/account/AccountPanel.tsx",
+        "client/src/features/account/api.ts"
+      ]
+    },
+    "AuthMode": {
+      "declaration": "export type AuthMode = 'sign-in' | 'sign-up'",
+      "importers": [
+        "client/src/features/auth/AuthScreen.tsx"
+      ]
+    },
+    "ChatKind": {
+      "declaration": "export type ChatKind = 'direct' | 'group'",
+      "importers": [
+        "client/src/features/messaging/Conversation.tsx"
+      ]
+    },
+    "Chat": {
+      "declaration": "export type Chat = {\n  id: string\n  kind: ChatKind\n  title: string | null\n  display_title: string\n  peer_username: string | null\n  peer_avatar_url?: string | null\n  last_seq: string\n  last_read_seq: string\n  unread_count: number\n  last_message_id: string | null\n  last_sender_id: string | null\n  last_body_ciphertext: string | null\n  last_body_nonce: string | null\n  last_key_envelope: string | null\n  last_message_created_at: string | null\n  preview?: string\n}",
+      "importers": [
+        "client/src/features/messaging/SearchDialog.tsx",
+        "client/src/features/workspace/ChatRow.tsx",
+        "client/src/features/workspace/InboxPane.tsx",
+        "client/src/features/workspace/WorkspacePage.tsx",
+        "tests/fixtures/conversation-preview.tsx",
+        "tests/fixtures/workspace-preview.tsx"
+      ]
+    },
+    "ChatMember": {
+      "declaration": "export type ChatMember = PublicMember & {\n  username: string\n  displayName: string\n  role: string\n  avatar_url?: string | null\n}",
+      "importers": [
+        "client/src/features/media/v2/prepareVideo.ts",
+        "client/src/features/media/v2/prepareVoice.ts",
+        "client/src/features/messaging/ChatDetailsScreen.tsx",
+        "client/src/features/messaging/Conversation.tsx",
+        "client/src/features/messaging/MessageList.tsx",
+        "client/src/features/messaging/NewConversation.tsx",
+        "tests/fixtures/conversation-preview.tsx"
+      ]
+    },
+    "EncryptedChatMessage": {
+      "declaration": "export type EncryptedChatMessage = {\n  id: string\n  chat_id: string\n  server_seq: string\n  sender_id: string\n  body_ciphertext: string\n  body_nonce: string\n  key_envelope: string | null\n  reply_to_id: string | null\n  edited_at?: string | null\n  deleted_at?: string | null\n  hidden_by_me?: boolean\n  pinned_at?: string | null\n  pinned_by?: string | null\n  reply_context?: EncryptedMessageReplyContext | null\n  delivery_receipts?: string[]\n  read_by?: string[]\n  created_at: string\n  reactions: { user_id: string; emoji: string }[]\n  attachments: {\n    id: string\n    filename: string\n    content_type: string\n    size_bytes: number\n    nonce: string | null\n    key_envelope: string\n    transport_version?: number\n    duration_ms?: number | null\n    waveform?: number[] | null\n    width?: number | null\n    height?: number | null\n    is_preview?: boolean\n    preview?: StagedAttachment | null\n    poster_attachment_id?: string | null\n  }[]\n}",
+      "importers": [
+        "client/src/features/messaging/Conversation.tsx",
+        "client/src/features/spaces/SpacesPage.tsx"
+      ]
+    },
+    "EncryptedMessageReplyContext": {
+      "declaration": "export type EncryptedMessageReplyContext = {\n  id: string\n  server_seq: string\n  sender_id: string\n  body_ciphertext: string\n  body_nonce: string\n  key_envelope: string | null\n  deleted_at: string | null\n  attachment_types: string[]\n}",
+      "importers": [
+        "client/src/features/messaging/Conversation.tsx"
+      ]
+    },
+    "DisplayMessage": {
+      "declaration": "export type DisplayMessage = EncryptedChatMessage & {\n  text: string\n  pending?: boolean\n  failed?: boolean\n  reply_context?: (EncryptedMessageReplyContext & { text: string }) | null\n}",
+      "importers": [
+        "client/src/features/messaging/Conversation.tsx",
+        "client/src/features/messaging/MessageComposer.tsx",
+        "client/src/features/messaging/MessageList.tsx",
+        "client/src/features/spaces/SpaceLegacyHistoryView.tsx",
+        "client/src/features/spaces/SpacesPage.tsx",
+        "tests/fixtures/conversation-preview.tsx",
+        "tests/fixtures/spaces-preview.tsx"
+      ]
+    },
+    "CallRecord": {
+      "declaration": "export type CallRecord = {\n  id: string\n  chat_id: string\n  call_type: 'audio' | 'video'\n  status: string\n  end_reason: string | null\n  caller_id: string\n  callee_id: string\n  created_at: string\n  accepted_at: string | null\n  ended_at: string | null\n  other_name?: string\n  caller_name?: string\n  callee_name?: string\n  caller_username?: string\n  other_avatar_url?: string | null\n  is_group?: boolean\n  group_title?: string\n  participant_count?: number\n}",
+      "importers": [
+        "client/src/features/messaging/Conversation.tsx",
+        "client/src/features/messaging/MessageList.tsx",
+        "client/src/features/workspace/InboxPane.tsx",
+        "client/src/features/workspace/WorkspacePage.tsx"
+      ]
+    },
+    "IncomingCall": {
+      "declaration": "export type IncomingCall = {\n  id: string\n  chat_id: string\n  call_type: 'audio' | 'video'\n  caller_name: string\n  caller_username: string\n  caller_avatar_url?: string | null\n  is_group?: boolean\n  group_title?: string\n}",
+      "importers": [
+        "client/src/features/workspace/IncomingCallBanner.tsx",
+        "client/src/features/workspace/WorkspacePage.tsx",
+        "tests/fixtures/workspace-preview.tsx"
+      ]
+    },
+    "ActiveCall": {
+      "declaration": "export type ActiveCall = {\n  id: string\n  chatId: string\n  callType: 'audio' | 'video'\n  title: string\n  isGroup?: boolean\n  isHost?: boolean\n  e2eeKey?: Uint8Array\n  isVoiceRoom?: boolean\n  voiceSpaceId?: string\n  voiceChannelId?: string\n  canPublish?: boolean\n}",
+      "importers": [
+        "client/src/features/messaging/Conversation.tsx",
+        "client/src/features/spaces/SpacesPage.tsx",
+        "client/src/features/workspace/WorkspacePage.tsx"
+      ]
+    },
+    "StagedAttachment": {
+      "declaration": "export type StagedAttachment = {\n  id: string\n  filename: string\n  content_type: string\n  size_bytes: number\n  nonce: string | null\n  key_envelope: string\n  transport_version?: number\n  duration_ms?: number | null\n  waveform?: number[] | null\n  width?: number | null\n  height?: number | null\n  is_preview?: boolean\n  preview?: StagedAttachment | null\n  poster_attachment_id?: string | null\n}",
+      "importers": [
+        "client/src/features/media/mediaHydrator.ts",
+        "client/src/features/media/MediaViewer.tsx",
+        "client/src/features/media/v2/jobStore.ts",
+        "client/src/features/media/v2/mediaHydratorV2.ts",
+        "client/src/features/media/v2/prepareVideo.ts",
+        "client/src/features/messaging/Conversation.tsx",
+        "client/src/features/messaging/MessageAttachment.tsx",
+        "client/src/features/messaging/MessageComposer.tsx"
+      ]
+    },
+    "IncomingRequest": {
+      "declaration": "export type IncomingRequest = {\n  id: string\n  chat_id: string\n  from_user: string\n  username: string\n  display_name: string\n  avatar_url: string | null\n  message_id: string\n  server_seq: string\n  body_ciphertext: string\n  body_nonce: string\n  key_envelope: string | null\n  message_created_at: string\n}",
+      "importers": [
+        "client/src/features/messaging/RequestsPanel.tsx",
+        "client/src/features/workspace/InboxPane.tsx",
+        "client/src/features/workspace/WorkspacePage.tsx"
+      ]
+    },
+    "DiscoveredUser": {
+      "declaration": "export type DiscoveredUser = PublicMember & {\n  username: string\n  display_name: string\n  avatar_url: string | null\n}",
+      "importers": [
+        "client/src/features/messaging/ChatDetailsScreen.tsx",
+        "client/src/features/messaging/NewConversation.tsx"
+      ]
+    },
+    "SpaceSummary": {
+      "declaration": "export type SpaceSummary = {\n  id: string\n  name: string\n  description: string\n  icon: SpaceIcon\n  role: 'owner' | 'admin' | 'moderator' | 'member' | 'guest'\n  channel_count: number\n}",
+      "importers": [
+        "client/src/features/spaces/SpacesPage.tsx"
+      ]
+    },
+    "SpaceIcon": {
+      "declaration": "export type SpaceIcon = 'layers' | 'briefcase' | 'rocket' | 'heart' | 'sparkles'",
+      "importers": [
+        "client/src/features/spaces/SpacesPage.tsx"
+      ]
+    },
+    "SpaceCategory": {
+      "declaration": "export type SpaceCategory = {\n  id: string\n  name: string\n}",
+      "importers": [
+        "client/src/features/spaces/SpacesPage.tsx"
+      ]
+    },
+    "SpaceChannel": {
+      "declaration": "export type SpaceChannel = {\n  id: string\n  name: string\n  type: 'discussion' | 'announcement' | 'private' | 'voice'\n  category_id: string\n  category_name: string\n  topic: string\n  can_send: boolean\n  can_speak: boolean\n  has_encrypted_history?: boolean\n  members: SpaceChannelMember[]\n  permissions?: SpaceChannelRolePermission[] | null\n}",
+      "importers": [
+        "client/src/features/spaces/SpacesPage.tsx"
+      ]
+    },
+    "SpaceChannelRolePermission": {
+      "declaration": "export type SpaceChannelRolePermission = {\n  role: 'moderator' | 'member' | 'guest'\n  can_view: boolean\n  can_send: boolean\n  can_speak: boolean\n}",
+      "importers": [
+        "client/src/features/spaces/SpacesPage.tsx"
+      ]
+    },
+    "SpaceChannelMember": {
+      "declaration": "export type SpaceChannelMember = {\n  id: string\n  username: string\n  display_name: string\n}",
+      "importers": [
+        "client/src/features/spaces/SpaceLegacyHistoryView.tsx",
+        "tests/fixtures/spaces-preview.tsx"
+      ]
+    },
+    "SpaceMember": {
+      "declaration": "export type SpaceMember = {\n  id: string\n  username: string\n  display_name: string\n  role: SpaceSummary['role']\n}",
+      "importers": [
+        "client/src/features/spaces/SpacesPage.tsx"
+      ]
+    },
+    "SpaceMessage": {
+      "declaration": "export type SpaceMessage = {\n  id: string\n  chat_id: string\n  server_seq: string\n  sender_id: string\n  display_name: string\n  username: string\n  body: string\n  mentions: SpaceChannelMember[]\n  everyone_mentioned: boolean\n  is_mentioned: boolean\n  created_at: string\n  shared_object_id?: string | null\n}",
+      "importers": [
+        "client/src/features/spaces/SpacesPage.tsx"
+      ]
+    },
+    "SpaceSharedObject": {
+      "declaration": "export type SpaceSharedObject = {\n  id: string\n  chat_id: string\n  message_id: string\n  object_type: 'poll' | 'event' | 'checklist' | 'decision'\n  title: string\n  state: 'open' | 'scheduled' | 'active' | 'completed' | 'closed' | 'cancelled' | 'ended' | 'unpinned'\n  payload: {\n    question?: string\n    options?: { id: string; text: string }[]\n    multiSelect?: boolean\n    closesAt?: string | null\n    anonymous?: boolean\n    startsAt?: string\n    endsAt?: string | null\n    timezone?: string\n    locationText?: string\n    rsvpRequired?: boolean\n    items?: { id: string; text: string; assigneeId?: string | null; dueAt?: string | null; done: boolean }[]\n    quote?: string\n  }\n  created_by: string\n  created_at: string\n  updated_at: string\n  terminal_at: string | null\n  channel_name: string\n  space_id: string\n  space_name: string\n  message_seq: string\n  my_response: { optionIds?: string[]; rsvp?: 'yes' | 'no' | 'maybe' } | null\n  response_counts: Record<string, number>\n}",
+      "importers": [
+        "client/src/features/spaces/SharedObjectCard.tsx",
+        "client/src/features/spaces/SpacesPage.tsx",
+        "client/src/features/spaces/UpdatesPage.tsx"
+      ]
+    }
+  },
+  "css": {
+    "digest": "5b3f9a226487b5045f85076c98b4e284af92d79eb453437888e1368855cd0e44",
+    "rules": 1157,
+    "declarations": 4507,
+    "regionDigest": "4028bcbccd9e7493ad4c3fdf12e1bc116735086a177e8e3968aa65d592c64ee9",
+    "startLine": 106,
+    "endLine": 377,
+    "lines": 1678,
+    "tokensDigest": "ebdf159beeb12fbf09e13130180dabc0dcc96fc833986fe1e3c9b537468fa26d",
+    "primitivesDigest": "c8537a42c94ff98ec2c421d457b729eae191fe37ab8a8e5652243ac7a67b84e1"
+  },
+  "emittedConsumers": {
+    "client/src/features/spaces/SpacesPage.tsx": "4f3105864f5009285cab06ab5e35228bca4d07c3a7c2c48062460be627c0daf4",
+    "client/src/features/spaces/SpaceLegacyHistoryView.tsx": "741775ec03750f691f39e25a2153bd86271fcc35846444eb648ef84502d435d8",
+    "tests/fixtures/spaces-preview.tsx": "536c295e41e62a504361e76c57fa6314b520ec29cc0cbffa30a785a0dae6d2ec",
+    "client/src/features/spaces/SharedObjectCard.tsx": "24542f837effe4e59fd064f7a06f1c2ea87f2fff1a8385433ab0daa0cbf1dca6",
+    "client/src/features/spaces/UpdatesPage.tsx": "95381e2b2a8bd1ef9ff1f6d6bdb2ce3643fb89c58d15cee6764927e7eef2d3e5"
+  }
+}

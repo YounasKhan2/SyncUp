@@ -11,7 +11,8 @@ import { WorkspaceRail } from '../../client/src/features/workspace/WorkspaceRail
 import { MobileNavigation } from '../../client/src/features/workspace/MobileNavigation'
 import { applyAppearancePreference } from '../../client/src/shared/appearance'
 import type { AppearancePreference } from '../../client/src/shared/appearance'
-import type { DisplayMessage, SpaceChannelMember, User } from '../../client/src/shared/types'
+import type { DisplayMessage, User } from '../../client/src/shared/types'
+import type { SpaceChannelMember } from '../../client/src/features/spaces/types'
 
 window.fetch = async () => { throw new Error('Network disabled in isolated Spaces preview') }
 const user: User = { id: 'me', display_name: 'Sam Rivera', username: 'sam', email: 'preview@example.invalid' }
