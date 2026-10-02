@@ -1,2 +1,4 @@
+@import './shared/styles/platform-shell.css';
+@import './features/spaces/spaces.css';
 @import './shared/styles/platform.css';
 @import './shared/styles/primitives.css';

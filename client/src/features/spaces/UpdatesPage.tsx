@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { CalendarDays, CheckSquare, Search, Sparkles } from 'lucide-react'
 import { api } from '../../shared/api'
-import type { SpaceSharedObject } from '../../shared/types'
+import type { SpaceSharedObject } from './types'
 import { SharedObjectCard } from './SharedObjectCard'
 
 type Stacks = { needsYou: SpaceSharedObject[]; happening: SpaceSharedObject[]; decided: SpaceSharedObject[] }

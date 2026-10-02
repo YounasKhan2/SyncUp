@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { CalendarDays, Check, CheckSquare, CircleCheck, Pin, BarChart3, X } from 'lucide-react'
-import type { SpaceSharedObject } from '../../shared/types'
+import type { SpaceSharedObject } from './types'
 
 export function SharedObjectCard({ object, userId, canManage, onRespond, onStateChange }: {
   object: SpaceSharedObject
