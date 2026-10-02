@@ -77,6 +77,7 @@ Purpose: turn the messaging app into a working collaboration product for operato
 - ✅ Space-scoped search across accessible channel messages, files, and shared objects, with author/date/type filters
 - ✅ Channel file gallery/list with permission-checked upload and download
 - ✅ Group membership and invite flow
+- ✅ In-place Group → Space conversion with the same chat ID and conversion-member-only access to earlier encrypted history and attachments
 
 ### Partially implemented / in progress
 
@@ -84,10 +85,10 @@ Purpose: turn the messaging app into a working collaboration product for operato
 - 🟡 Shared objects and Updates are now implemented for Space channels; DM support and some richer assignment behavior remain out of scope
 - 🟡 Guest access is implemented in a slice, but broader production-grade governance still needs finishing
 - 🟡 Billing/workspace seat model is not a complete, production-ready flow
+- 🟡 P1-10 integration coverage is in place but still needs execution against a migrated PostgreSQL-backed API
 
 ### Remaining / not yet done in this phase
 
-- ❌ Group → Space in-place conversion flow
 - ❌ Custom role creation and role reassignment
 - ❌ Email invitations and guest invite pipeline
 - ❌ Mature notification policy controls for each chat and space
@@ -101,7 +102,7 @@ Purpose: turn the messaging app into a working collaboration product for operato
 
 ### Recommended next implementation
 
-Continue with the in-place Group → Space upgrade (P1-10), channel/group call exit criteria (P1-11), and per-chat/Space notification policies (P1-12). Before calling Phase 1 complete, verify the J2, J3, and J5 user journeys and automated guest-isolation checks.
+Run the P1-10 integration coverage against a migrated PostgreSQL-backed API, then continue with channel/group call exit criteria (P1-11) and per-chat/Space notification policies (P1-12). Before calling Phase 1 complete, verify the J2, J3, and J5 user journeys and automated guest-isolation checks.
 
 ---
 

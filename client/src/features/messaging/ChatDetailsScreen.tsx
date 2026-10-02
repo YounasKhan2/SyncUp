@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import type { FormEvent } from 'react'
-import { ArrowLeft, LogOut, UserPlus } from 'lucide-react'
+import { ArrowLeft, Layers3, LogOut, UserPlus, X } from 'lucide-react'
 import { api } from '../../shared/api'
 import type { ChatMember, DiscoveredUser } from '../../shared/types'
 import { Avatar } from '../../shared/components/Avatar'
@@ -14,16 +14,21 @@ type ChatDetailsScreenProps = {
   onBack: () => void
   onMembersChanged: () => void
   onLeave: () => void
+  onConverted: (spaceId: string, channelId: string) => void
 }
 
-export function ChatDetailsScreen({ chatId, title, isGroup, members, currentUserId, onBack, onMembersChanged, onLeave }: ChatDetailsScreenProps) {
+export function ChatDetailsScreen({ chatId, title, isGroup, members, currentUserId, onBack, onMembersChanged, onLeave, onConverted }: ChatDetailsScreenProps) {
   const [username, setUsername] = useState('')
   const [matches, setMatches] = useState<DiscoveredUser[]>([])
   const [selected, setSelected] = useState<DiscoveredUser | null>(null)
   const [searching, setSearching] = useState(false)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
+  const [convertOpen, setConvertOpen] = useState(false)
+  const [spaceName, setSpaceName] = useState(title)
+  const [generalChannelName, setGeneralChannelName] = useState('general')
   const peer = members.find((member) => member.id !== currentUserId)
+  const isOwner = members.some((member) => member.id === currentUserId && member.role === 'owner')
 
   useEffect(() => {
     const query = username.trim().replace(/^@/u, '').toLowerCase()
@@ -81,6 +86,22 @@ export function ChatDetailsScreen({ chatId, title, isGroup, members, currentUser
       onLeave()
     } catch (leaveError) {
       setError(leaveError instanceof Error ? leaveError.message : 'Unable to leave this group.')
+      setBusy(false)
+    }
+  }
+
+  async function convertToSpace(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    setBusy(true)
+    setError('')
+    try {
+      const result = await api<{ spaceId: string; channelId: string }>(`/api/chats/${chatId}/upgrade-to-space`, {
+        method: 'POST',
+        body: JSON.stringify({ name: spaceName, generalChannelName }),
+      })
+      onConverted(result.spaceId, result.channelId)
+    } catch (convertError) {
+      setError(convertError instanceof Error ? convertError.message : 'Unable to convert this group.')
       setBusy(false)
     }
   }
@@ -148,6 +169,13 @@ export function ChatDetailsScreen({ chatId, title, isGroup, members, currentUser
                 <UserPlus size={14} aria-hidden="true" /> {busy ? 'Adding member…' : 'Add member'}
               </button>
             </form>
+            {isOwner && <section className="chat-details-section group-space-upgrade">
+              <h2>Make this a Space</h2>
+              <p>Organize this group into channels and keep the existing conversation as its first channel.</p>
+              <button className="primary-button" type="button" onClick={() => { setSpaceName(title); setError(''); setConvertOpen(true) }} disabled={busy}>
+                <Layers3 size={15} aria-hidden="true" /> Turn group into a Space
+              </button>
+            </section>}
             <div className="chat-details-section">
               {error && <div className="form-error" role="alert">{error}</div>}
               <button className="leave-group-button" type="button" onClick={() => void leave()} disabled={busy}><LogOut size={14} aria-hidden="true" /> Leave group</button>
@@ -160,6 +188,29 @@ export function ChatDetailsScreen({ chatId, title, isGroup, members, currentUser
           </section>
         )}
       </div>
+      {convertOpen && <div className="overlay space-dialog-overlay" role="presentation" onMouseDown={(event) => {
+        if (event.target === event.currentTarget && !busy) setConvertOpen(false)
+      }}>
+        <section className="account-dialog space-dialog group-space-upgrade-dialog" role="dialog" aria-modal="true" aria-labelledby="upgrade-space-title">
+          <header className="dialog-heading">
+            <div><p className="eyebrow">GROUP UPGRADE</p><h2 id="upgrade-space-title">Turn “{title}” into a Space</h2></div>
+            <button className="icon-button" type="button" onClick={() => setConvertOpen(false)} aria-label="Close" disabled={busy}><X size={15} aria-hidden="true" /></button>
+          </header>
+          <p className="space-dialog-copy">This happens in place: the same group and member list continue as a Space, and the current conversation becomes its first channel.</p>
+          <div className="group-space-upgrade-notice">
+            <strong>Your privacy changes going forward</strong>
+            <p>Earlier messages and encrypted attachments stay end-to-end encrypted and are visible only to people in this group now. New channel messages and files are stored by SyncUp and visible to channel members.</p>
+          </div>
+          <form className="profile-form" onSubmit={(event) => void convertToSpace(event)}>
+            <label><span>Space name</span><input value={spaceName} onChange={(event) => setSpaceName(event.target.value)} maxLength={80} required /></label>
+            <label><span>First channel name</span><div className="group-space-channel-input"><span>#</span><input value={generalChannelName} onChange={(event) => setGeneralChannelName(event.target.value.toLowerCase().replace(/\s+/gu, '-').replace(/[^a-z0-9-]/gu, '').slice(0, 40))} pattern="[a-z0-9][a-z0-9-]*" maxLength={40} required /></div></label>
+            {error && <div className="form-error" role="alert">{error}</div>}
+            <button className="primary-button" type="submit" disabled={busy || !spaceName.trim() || !generalChannelName.trim()}>
+              <Layers3 size={15} aria-hidden="true" /> {busy ? 'Converting…' : 'Convert group to Space'}
+            </button>
+          </form>
+        </section>
+      </div>}
     </section>
   )
 }

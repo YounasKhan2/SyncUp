@@ -69,6 +69,7 @@ export function Conversation({
   callIntent,
   onCallIntentConsumed,
   onSearchableMessages,
+  onGroupConverted,
 }: {
   user: User;
   chatId: string | null;
@@ -80,6 +81,7 @@ export function Conversation({
   callIntent: { id: string; chatId: string; callType: 'audio' | 'video' } | null;
   onCallIntentConsumed: (id: string) => void;
   onSearchableMessages: (chatId: string, messages: SearchableMessage[]) => void;
+  onGroupConverted: (spaceId: string, channelId: string) => void;
 }) {
   const [chat, setChat] = useState<{
     id: string;
@@ -1278,6 +1280,7 @@ export function Conversation({
         window.dispatchEvent(new Event("syncup-close-chat"));
         refreshInbox();
       }}
+      onConverted={onGroupConverted}
     />}
     </div>
   );

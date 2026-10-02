@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 import type { FormEvent, ReactNode } from 'react'
 import { ArrowLeft, AtSign, BriefcaseBusiness, CalendarDays, ChevronDown, ChevronRight, Download, FileText, FileUp, Hash, Heart, Image, Layers3, LockKeyhole, Megaphone, Mic, Plus, Rocket, Search, Send, Settings2, Sparkles, Users, Volume2, X } from 'lucide-react'
+import { decryptMessage } from '../auth/crypto/crypto'
+import { MessageAttachment } from '../messaging/MessageAttachment'
 import { api, apiUpload } from '../../shared/api'
-import type { ActiveCall, SpaceCategory, SpaceChannel, SpaceChannelRolePermission, SpaceIcon, SpaceMember, SpaceMessage, SpaceSharedObject, SpaceSummary } from '../../shared/types'
+import type { ActiveCall, DisplayMessage, EncryptedChatMessage, SpaceCategory, SpaceChannel, SpaceChannelRolePermission, SpaceIcon, SpaceMember, SpaceMessage, SpaceSharedObject, SpaceSummary } from '../../shared/types'
 import { SharedObjectCard } from './SharedObjectCard'
 
 type SpaceDetails = {
@@ -88,6 +90,20 @@ function renderMentionText(message: SpaceMessage) {
   return output
 }
 
+async function decodeLegacyMessages(rows: EncryptedChatMessage[]): Promise<DisplayMessage[]> {
+  return Promise.all(rows.map(async (message) => ({
+    ...message,
+    text: message.deleted_at
+      ? ''
+      : await decryptMessage({
+        bodyCiphertext: message.body_ciphertext,
+        bodyNonce: message.body_nonce,
+        keyEnvelope: message.key_envelope,
+      }).catch(() => 'Unable to decrypt this message on this device.'),
+    reply_context: null,
+  })))
+}
+
 export function SpacesPage({ onBack, onJoinVoiceRoom, openTarget, userId }: {
   onBack: () => void
   onJoinVoiceRoom: (call: ActiveCall) => void
@@ -98,6 +114,13 @@ export function SpacesPage({ onBack, onJoinVoiceRoom, openTarget, userId }: {
   const [space, setSpace] = useState<SpaceDetails | null>(null)
   const [channelId, setChannelId] = useState<string | null>(null)
   const [messages, setMessages] = useState<SpaceMessage[]>([])
+  const [legacyHistory, setLegacyHistory] = useState<{
+    channelId: string
+    messages: DisplayMessage[]
+    hasMore: boolean
+    loading: boolean
+    error: string
+  } | null>(null)
   const [sharedObjects, setSharedObjects] = useState<SpaceSharedObject[]>([])
   const [searchOpen, setSearchOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
@@ -148,6 +171,13 @@ export function SpacesPage({ onBack, onJoinVoiceRoom, openTarget, userId }: {
   const messageEnd = useRef<HTMLDivElement>(null)
   const fileInput = useRef<HTMLInputElement>(null)
   const activeChannel = space?.channels.find((channel) => channel.id === channelId) ?? null
+  const legacyMembersById = new Map((activeChannel?.members ?? []).map((member) => [member.id, member]))
+  const legacyChannelId = activeChannel?.has_encrypted_history ? activeChannel.id : null
+  const currentLegacyHistory = legacyHistory?.channelId === legacyChannelId ? legacyHistory : null
+  const legacyMessages = currentLegacyHistory?.messages ?? []
+  const legacyHasMore = currentLegacyHistory?.hasMore ?? false
+  const legacyLoading = Boolean(legacyChannelId && (!currentLegacyHistory || currentLegacyHistory.loading))
+  const legacyError = currentLegacyHistory?.error ?? ''
   const canCreateChannels = space ? ['owner', 'admin'].includes(space.role) : false
   const canInvite = space ? ['owner', 'admin', 'moderator'].includes(space.role) : false
   const canPinDecision = space ? ['owner', 'admin', 'moderator'].includes(space.role) : false
@@ -290,6 +320,48 @@ export function SpacesPage({ onBack, onJoinVoiceRoom, openTarget, userId }: {
     const timer = window.setInterval(() => { void refresh() }, 5000)
     return () => { active = false; window.clearInterval(timer); stream.close() }
   }, [space?.id, channelId, activeChannel?.name, historyCursor])
+
+  useEffect(() => {
+    if (!legacyChannelId) return
+    const controller = new AbortController()
+    void api<{ messages: EncryptedChatMessage[]; hasMore: boolean }>(
+      `/api/chats/${legacyChannelId}/messages?limit=50`,
+      { signal: controller.signal },
+    ).then(async ({ messages: encryptedMessages, hasMore }) => {
+      const decoded = await decodeLegacyMessages(encryptedMessages)
+      if (controller.signal.aborted) return
+      setLegacyHistory({ channelId: legacyChannelId, messages: decoded, hasMore, loading: false, error: '' })
+    }).catch((loadError: unknown) => {
+      if (!controller.signal.aborted) setLegacyHistory({
+        channelId: legacyChannelId,
+        messages: [],
+        hasMore: false,
+        loading: false,
+        error: loadError instanceof Error ? loadError.message : 'Unable to load encrypted group history.',
+      })
+    })
+    return () => controller.abort()
+  }, [legacyChannelId])
+
+  async function loadOlderLegacyMessages() {
+    if (!legacyChannelId || !currentLegacyHistory?.hasMore || currentLegacyHistory.loading || legacyMessages.length === 0) return
+    const requestedChannelId = legacyChannelId
+    setLegacyHistory({ ...currentLegacyHistory, loading: true, error: '' })
+    try {
+      const beforeSeq = legacyMessages[0].server_seq
+      const result = await api<{ messages: EncryptedChatMessage[]; hasMore: boolean }>(
+        `/api/chats/${requestedChannelId}/messages?limit=50&before_seq=${encodeURIComponent(beforeSeq)}`,
+      )
+      const decoded = await decodeLegacyMessages(result.messages)
+      setLegacyHistory((current) => current?.channelId === requestedChannelId
+        ? { ...current, messages: [...decoded, ...current.messages], hasMore: result.hasMore, loading: false }
+        : current)
+    } catch (loadError) {
+      setLegacyHistory((current) => current?.channelId === requestedChannelId
+        ? { ...current, loading: false, error: loadError instanceof Error ? loadError.message : 'Unable to load earlier encrypted history.' }
+        : current)
+    }
+  }
 
   useEffect(() => {
     messageEnd.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
@@ -781,8 +853,39 @@ export function SpacesPage({ onBack, onJoinVoiceRoom, openTarget, userId }: {
               }}><Mic size={14} aria-hidden="true" /> Join voice</button>
             </div> : <>
             {mentionNotice && <div className="space-mention-notice" role="status">{mentionNotice}<button type="button" onClick={() => setMentionNotice('')}>Dismiss</button></div>}
-            <div className="space-message-list" aria-live="polite">
-              {messages.length === 0 && <div className="space-messages-empty"><Hash size={22} aria-hidden="true" /><strong>This is the start of #{activeChannel.name}</strong><p>Share a project update or question with this channel.</p></div>}
+            <div className={`space-message-list${activeChannel.has_encrypted_history ? ' has-legacy-history' : ''}`} aria-live="polite">
+              {activeChannel.has_encrypted_history && <section className="legacy-history-inline" aria-label="Earlier encrypted group history">
+                <header><div><strong><LockKeyhole size={13} aria-hidden="true" /> Earlier encrypted history</strong><p>These messages remain end-to-end encrypted and visible only to original group members.</p></div>
+                  {legacyHasMore && <button type="button" onClick={() => void loadOlderLegacyMessages()} disabled={legacyLoading}>{legacyLoading ? 'Loading…' : 'Load earlier'}</button>}
+                </header>
+                {legacyError && <div className="inline-error" role="alert">{legacyError}</div>}
+                {legacyLoading && legacyMessages.length === 0 && <p className="legacy-history-status" role="status">Loading earlier messages…</p>}
+                {!legacyLoading && legacyMessages.length === 0 && !legacyError && <p className="legacy-history-status">No earlier messages in this group.</p>}
+                {legacyMessages.map((message) => {
+                  const sender = legacyMembersById.get(message.sender_id)
+                  return <article className="space-message legacy-space-message" key={message.id}>
+                    <div className="space-message-heading">
+                      <strong>{sender?.display_name ?? (message.sender_id === userId ? 'You' : 'Group member')}</strong>
+                      {sender?.username && <small>@{sender.username} · {new Intl.DateTimeFormat(undefined, { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(message.created_at))}</small>}
+                      {!sender?.username && <small>{new Intl.DateTimeFormat(undefined, { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(message.created_at))}</small>}
+                    </div>
+                    {message.deleted_at
+                      ? <p>This message was deleted.</p>
+                      : message.text && <p>{message.text}</p>}
+                    {!message.deleted_at && message.attachments?.filter((attachment) => !attachment.is_preview).map((attachment) =>
+                      <MessageAttachment key={attachment.id} attachment={attachment} />,
+                    )}
+                    {message.reactions.length > 0 && <div className="message-reactions" aria-label="Reactions">
+                      {[...new Set(message.reactions.map((reaction) => reaction.emoji))].map((emoji) => {
+                        const count = message.reactions.filter((reaction) => reaction.emoji === emoji).length
+                        return <span key={emoji} aria-label={`${emoji}, ${count} ${count === 1 ? 'reaction' : 'reactions'}`}><span>{emoji}</span><span>{count}</span></span>
+                      })}
+                    </div>}
+                  </article>
+                })}
+              </section>}
+              {messages.length === 0 && legacyMessages.length === 0 && !legacyLoading && <div className="space-messages-empty"><Hash size={22} aria-hidden="true" /><strong>This is the start of #{activeChannel.name}</strong><p>Share a project update or question with this channel.</p></div>}
+              {messages.length === 0 && (legacyMessages.length > 0 || legacyLoading) && <p className="space-channel-after-history">New channel messages will appear here.</p>}
               {messages.map((message) => {
                 const sharedObject = sharedObjects.find((item) => item.message_id === message.id)
                 return <article id={`space-message-${message.id}`} className={`space-message${message.is_mentioned ? ' is-mentioned' : ''}${message.everyone_mentioned ? ' has-everyone-mention' : ''}${highlightedMessageId === message.id ? ' is-update-target' : ''}`} key={message.id}>

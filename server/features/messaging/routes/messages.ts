@@ -56,13 +56,19 @@ messageRoutes.get('/chats/:id/messages', async (request: AuthenticatedRequest, r
                       AND reply_state.user_id = $2 AND reply_state.hidden_at IS NOT NULL
                   )
               ) AS reply_context,
-              CASE WHEN m.sender_id = $2::uuid THEN COALESCE((
+              CASE WHEN m.sender_id = $2::uuid AND EXISTS (
+                SELECT 1 FROM chats receipt_chat
+                WHERE receipt_chat.id = m.chat_id AND receipt_chat.kind IN ('direct', 'group')
+              ) THEN COALESCE((
                 SELECT jsonb_agg(DISTINCT delivery_device.user_id)
                 FROM message_device_deliveries delivery
                 JOIN devices delivery_device ON delivery_device.id = delivery.device_id
                 WHERE delivery.message_id = m.id
               ), '[]'::jsonb) ELSE '[]'::jsonb END AS delivery_receipts,
-              CASE WHEN m.sender_id = $2::uuid THEN COALESCE((
+              CASE WHEN m.sender_id = $2::uuid AND EXISTS (
+                SELECT 1 FROM chats receipt_chat
+                WHERE receipt_chat.id = m.chat_id AND receipt_chat.kind IN ('direct', 'group')
+              ) THEN COALESCE((
                 SELECT jsonb_agg(reader.user_id ORDER BY reader.user_id)
                 FROM chat_members reader
                 JOIN users reader_user ON reader_user.id = reader.user_id
@@ -127,7 +133,26 @@ messageRoutes.get('/chats/:id/messages', async (request: AuthenticatedRequest, r
          )
          AND EXISTS (
            SELECT 1 FROM chats personal_chat WHERE personal_chat.id = m.chat_id
-             AND personal_chat.kind IN ('direct', 'group')
+             AND (
+               personal_chat.kind IN ('direct', 'group')
+               OR (personal_chat.kind = 'channel' AND EXISTS (
+                 SELECT 1 FROM space_conversion_members converted_member
+                 JOIN space_members current_member
+                   ON current_member.space_id = converted_member.space_id
+                     AND current_member.user_id = converted_member.user_id
+                 JOIN space_channels converted_channel
+                   ON converted_channel.space_id = converted_member.space_id
+                     AND converted_channel.chat_id = converted_member.chat_id
+                 WHERE converted_member.chat_id = personal_chat.id
+                   AND converted_member.user_id = $2::uuid
+                   AND (current_member.role IN ('owner', 'admin') OR COALESCE((
+                     SELECT permission.can_view FROM space_channel_role_permissions permission
+                     WHERE permission.space_id = converted_channel.space_id
+                       AND permission.chat_id = converted_channel.chat_id
+                       AND permission.role = current_member.role
+                   ), true))
+               ))
+             )
          )
          AND NOT EXISTS (
            SELECT 1 FROM message_requests mr WHERE mr.chat_id = m.chat_id
@@ -152,6 +177,10 @@ messageRoutes.get('/chats/:id/messages', async (request: AuthenticatedRequest, r
          FROM messages m
          WHERE m.id = ANY($1::uuid[]) AND m.chat_id = $3
            AND m.sender_id <> $4 AND m.deleted_at IS NULL
+           AND EXISTS (
+             SELECT 1 FROM chats receipt_chat
+             WHERE receipt_chat.id = m.chat_id AND receipt_chat.kind IN ('direct', 'group')
+           )
          ON CONFLICT (message_id, device_id) DO NOTHING
          RETURNING message_id`,
         [receivedMessageIds, request.auth!.deviceId, chatId.data, request.auth!.userId],
@@ -332,6 +361,7 @@ messageRoutes.patch('/messages/:id', messageLimiter, async (request: Authenticat
     const message = await client.query<{ chat_id: string; created_at: Date; deleted_at: Date | null }>(
       `SELECT m.chat_id, m.created_at, m.deleted_at FROM messages m
        JOIN chat_members cm ON cm.chat_id = m.chat_id AND cm.user_id = $2 AND cm.left_at IS NULL
+       JOIN chats c ON c.id = m.chat_id AND c.kind IN ('direct', 'group')
        WHERE m.id = $1 AND m.sender_id = $2 FOR UPDATE OF m`,
       [messageId.data, request.auth!.userId],
     )
@@ -405,6 +435,7 @@ messageRoutes.post('/messages/:id/delete', async (request: AuthenticatedRequest,
     }>(
       `SELECT m.chat_id, m.sender_id, m.created_at, m.deleted_at, cm.role
        FROM messages m JOIN chat_members cm ON cm.chat_id = m.chat_id
+       JOIN chats c ON c.id = m.chat_id AND c.kind IN ('direct', 'group')
        WHERE m.id = $1 AND cm.user_id = $2 AND cm.left_at IS NULL
        FOR UPDATE OF m`,
       [messageId.data, request.auth!.userId],
@@ -472,6 +503,9 @@ messageRoutes.post('/messages/:id/pin', async (request: AuthenticatedRequest, re
            pinned_by = CASE WHEN m.pinned_at IS NULL THEN $2 ELSE NULL END
        WHERE m.id = $1 AND m.deleted_at IS NULL
          AND EXISTS (
+           SELECT 1 FROM chats c WHERE c.id = m.chat_id AND c.kind IN ('direct', 'group')
+         )
+         AND EXISTS (
            SELECT 1 FROM chat_members cm
            WHERE cm.chat_id = m.chat_id AND cm.user_id = $2 AND cm.left_at IS NULL
          )
@@ -519,6 +553,7 @@ messageRoutes.post('/chats/:id/read', async (request: AuthenticatedRequest, resp
          JOIN chats c ON c.id = cm.chat_id
          JOIN users u ON u.id = cm.user_id
          WHERE cm.chat_id = $1 AND cm.user_id = $2 AND cm.left_at IS NULL
+           AND c.kind IN ('direct', 'group')
            AND NOT EXISTS (
              SELECT 1 FROM message_requests mr
              WHERE mr.chat_id = cm.chat_id AND mr.to_user = cm.user_id
@@ -566,6 +601,7 @@ messageRoutes.post('/messages/:id/reactions', async (request: AuthenticatedReque
     await client.query('BEGIN')
     const access = await client.query<{ chat_id: string }>(
       `SELECT m.chat_id FROM messages m JOIN chat_members cm ON cm.chat_id = m.chat_id
+       JOIN chats c ON c.id = m.chat_id AND c.kind IN ('direct', 'group')
        WHERE m.id = $1 AND cm.user_id = $2 AND cm.left_at IS NULL
         AND NOT EXISTS (SELECT 1 FROM message_requests mr WHERE mr.chat_id = m.chat_id
           AND mr.to_user = $2 AND mr.state IN ('pending', 'ignored'))

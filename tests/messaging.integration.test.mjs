@@ -1411,6 +1411,131 @@ test('encrypted requests, authorized chats, ordered idempotent delivery, and gro
   })
   assert.equal(response.status, 404)
 
+  response = await post(ava, '/api/chats/groups', { title: 'Conversion history', usernames: [nadia.username] })
+  assert.equal(response.status, 201, await response.clone().text())
+  const conversionGroup = await response.json()
+  response = await apiRequest(ava, `/api/chats/${conversionGroup.chatId}`)
+  const conversionChat = (await response.json()).chat
+  const oldFilePlaintext = encoder.encode('Attachment from before the Space conversion.')
+  const oldFile = await encryptAttachment(oldFilePlaintext, conversionChat.members)
+  response = await post(ava, '/api/uploads/intent', {
+    chatId: conversionGroup.chatId,
+    filename: 'old-notes.txt',
+    contentType: 'text/plain',
+    sizeBytes: oldFilePlaintext.byteLength,
+    nonce: oldFile.nonce,
+    keyEnvelopes: oldFile.keyEnvelopes,
+  })
+  assert.equal(response.status, 201, await response.clone().text())
+  const oldFileIntent = await response.json()
+  response = await apiRequest(ava, `/api/uploads/${oldFileIntent.attachmentId}/content`, {
+    method: 'PUT',
+    headers: { 'content-type': 'application/octet-stream' },
+    body: oldFile.ciphertext,
+  })
+  assert.equal(response.status, 204)
+  response = await post(ava, `/api/uploads/${oldFileIntent.attachmentId}/complete`, {})
+  assert.equal(response.status, 204)
+  const oldEncryptedMessage = await encryptMessage('This message predates the conversion.', conversionChat.members)
+  response = await post(ava, `/api/chats/${conversionGroup.chatId}/messages`, {
+    ...oldEncryptedMessage,
+    attachmentIds: [oldFileIntent.attachmentId],
+    idempotencyKey: randomUUID(),
+  })
+  assert.equal(response.status, 201, await response.clone().text())
+  const preConversionMessage = await response.json()
+
+  response = await post(nadia, `/api/chats/${conversionGroup.chatId}/upgrade-to-space`, {
+    name: 'Converted history',
+  })
+  assert.equal(response.status, 403)
+  response = await post(ava, `/api/chats/${conversionGroup.chatId}/upgrade-to-space`, {
+    name: 'Converted history',
+    generalChannelName: 'general',
+  })
+  assert.equal(response.status, 201, await response.clone().text())
+  const convertedSpace = await response.json()
+  assert.equal(convertedSpace.channelId, conversionGroup.chatId)
+  response = await apiRequest(ava, `/api/spaces/${convertedSpace.spaceId}`)
+  const convertedDetails = (await response.json()).space
+  assert.equal(convertedDetails.channels[0].id, conversionGroup.chatId)
+  assert.equal(convertedDetails.channels[0].has_encrypted_history, true)
+
+  response = await apiRequest(nadia, `/api/chats/${conversionGroup.chatId}/messages`)
+  assert.equal(response.status, 200)
+  let convertedHistory = (await response.json()).messages
+  assert.equal(convertedHistory.length, 1)
+  assert.equal(await decryptMessage(convertedHistory[0], nadia), 'This message predates the conversion.')
+  response = await apiRequest(ava, `/api/messages/${preConversionMessage.messageId}/reactions`, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ emoji: '👍' }),
+  })
+  assert.equal(response.status, 404)
+  response = await apiRequest(ava, `/api/messages/${preConversionMessage.messageId}/delete`, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ scope: 'me' }),
+  })
+  assert.equal(response.status, 404)
+  const attemptedEdit = await encryptMessage('Edits are disabled for preserved history.', conversionChat.members)
+  response = await apiRequest(ava, `/api/messages/${preConversionMessage.messageId}`, {
+    method: 'PATCH',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(attemptedEdit),
+  })
+  assert.equal(response.status, 404)
+  response = await post(ava, `/api/chats/${conversionGroup.chatId}/messages`, {
+    ...(await encryptMessage('Encrypted sending must stop after conversion.', conversionChat.members)),
+    idempotencyKey: randomUUID(),
+  })
+  assert.equal(response.status, 404)
+  response = await apiRequest(nadia, `/api/uploads/${oldFileIntent.attachmentId}`)
+  assert.equal(response.status, 200)
+  const oldFileMetadata = (await response.json()).attachment
+  response = await apiRequest(nadia, oldFileMetadata.downloadUrl)
+  assert.equal(response.status, 200)
+  response = await apiRequest(ava, `/api/spaces/${convertedSpace.spaceId}/channels/${convertedSpace.channelId}/permissions`, {
+    method: 'PATCH',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({
+      permissions: [
+        { role: 'moderator', can_view: true, can_send: true, can_speak: true },
+        { role: 'member', can_view: false, can_send: false, can_speak: false },
+        { role: 'guest', can_view: true, can_send: true, can_speak: true },
+      ],
+    }),
+  })
+  assert.equal(response.status, 200, await response.clone().text())
+  response = await apiRequest(nadia, `/api/chats/${conversionGroup.chatId}/messages`)
+  assert.equal(response.status, 200)
+  assert.deepEqual((await response.json()).messages, [])
+  response = await apiRequest(nadia, `/api/uploads/${oldFileIntent.attachmentId}`)
+  assert.equal(response.status, 404)
+
+  response = await post(ava, `/api/spaces/${convertedSpace.spaceId}/members`, {
+    username: chris.username,
+    role: 'guest',
+  })
+  assert.equal(response.status, 201, await response.clone().text())
+  response = await apiRequest(chris, `/api/spaces/${convertedSpace.spaceId}`)
+  const guestConvertedDetails = (await response.json()).space
+  assert.equal(guestConvertedDetails.channels[0].has_encrypted_history, false)
+  response = await apiRequest(chris, `/api/chats/${conversionGroup.chatId}/messages`)
+  assert.equal(response.status, 200)
+  convertedHistory = (await response.json()).messages
+  assert.deepEqual(convertedHistory, [])
+  response = await apiRequest(chris, `/api/uploads/${oldFileIntent.attachmentId}`)
+  assert.equal(response.status, 404)
+  const postConversionMessage = 'This new channel message is visible to the guest.'
+  response = await post(ava, `/api/spaces/${convertedSpace.spaceId}/channels/${convertedSpace.channelId}/messages`, {
+    body: postConversionMessage,
+  })
+  assert.equal(response.status, 201, await response.clone().text())
+  response = await apiRequest(chris, `/api/spaces/${convertedSpace.spaceId}/channels/${convertedSpace.channelId}/messages`)
+  assert.equal(response.status, 200)
+  assert.ok((await response.json()).messages.some((message) => message.body === postConversionMessage))
+
   response = await post(ava, '/api/blocks', { username: nadia.username })
   assert.equal(response.status, 204)
   response = await apiRequest(ava, '/api/blocks')

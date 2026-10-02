@@ -465,6 +465,25 @@ mediaV2Router.get('/uploads/v2/:attachmentId', limiter, async (request: Authenti
        JOIN messages m ON m.id = ma.message_id AND m.chat_id = a.chat_id
        JOIN chat_members cm ON cm.chat_id = a.chat_id AND cm.user_id = $2 AND cm.left_at IS NULL
        WHERE a.id = $1 AND a.status = 'ready' AND a.transport_version = 2
+         AND (
+           EXISTS (SELECT 1 FROM chats original_chat WHERE original_chat.id = a.chat_id AND original_chat.kind IN ('direct', 'group'))
+           OR EXISTS (
+             SELECT 1 FROM space_conversion_members converted_member
+             JOIN space_members current_member
+               ON current_member.space_id = converted_member.space_id
+                 AND current_member.user_id = converted_member.user_id
+             JOIN space_channels converted_channel
+               ON converted_channel.space_id = converted_member.space_id
+                 AND converted_channel.chat_id = converted_member.chat_id
+             WHERE converted_member.chat_id = a.chat_id AND converted_member.user_id = $2
+               AND (current_member.role IN ('owner', 'admin') OR COALESCE((
+                 SELECT permission.can_view FROM space_channel_role_permissions permission
+                 WHERE permission.space_id = converted_channel.space_id
+                   AND permission.chat_id = converted_channel.chat_id
+                   AND permission.role = current_member.role
+               ), true))
+           )
+         )
          AND NOT EXISTS (
            SELECT 1 FROM message_requests mr WHERE mr.chat_id = a.chat_id
              AND mr.to_user = $2 AND mr.state IN ('pending', 'ignored')
@@ -512,6 +531,25 @@ mediaV2Router.get('/uploads/v2/:attachmentId/content', downloadRangeLimiter, asy
        JOIN messages m ON m.id = ma.message_id AND m.chat_id = a.chat_id
        JOIN chat_members cm ON cm.chat_id = a.chat_id AND cm.user_id = $2 AND cm.left_at IS NULL
        WHERE a.id = $1 AND a.status = 'ready' AND a.transport_version = 2
+         AND (
+           EXISTS (SELECT 1 FROM chats original_chat WHERE original_chat.id = a.chat_id AND original_chat.kind IN ('direct', 'group'))
+           OR EXISTS (
+             SELECT 1 FROM space_conversion_members converted_member
+             JOIN space_members current_member
+               ON current_member.space_id = converted_member.space_id
+                 AND current_member.user_id = converted_member.user_id
+             JOIN space_channels converted_channel
+               ON converted_channel.space_id = converted_member.space_id
+                 AND converted_channel.chat_id = converted_member.chat_id
+             WHERE converted_member.chat_id = a.chat_id AND converted_member.user_id = $2
+               AND (current_member.role IN ('owner', 'admin') OR COALESCE((
+                 SELECT permission.can_view FROM space_channel_role_permissions permission
+                 WHERE permission.space_id = converted_channel.space_id
+                   AND permission.chat_id = converted_channel.chat_id
+                   AND permission.role = current_member.role
+               ), true))
+           )
+         )
          AND NOT EXISTS (
            SELECT 1 FROM message_requests mr WHERE mr.chat_id = a.chat_id
              AND mr.to_user = $2 AND mr.state IN ('pending', 'ignored')

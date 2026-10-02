@@ -153,7 +153,8 @@ realtimeRouter.post('/chats/:id/typing', typingLimiter, async (request: Authenti
     const access = await pool.query<{ display_name: string }>(
       `SELECT u.display_name
        FROM chat_members cm JOIN users u ON u.id = cm.user_id
-       WHERE cm.chat_id = $1 AND cm.user_id = $2 AND cm.left_at IS NULL
+      JOIN chats c ON c.id = cm.chat_id AND c.kind IN ('direct', 'group')
+      WHERE cm.chat_id = $1 AND cm.user_id = $2 AND cm.left_at IS NULL
          AND NOT EXISTS (
            SELECT 1
            FROM space_channels sc

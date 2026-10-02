@@ -473,6 +473,15 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
         callIntent={callIntent}
         onCallIntentConsumed={consumeCallIntent}
         onSearchableMessages={updateSearchableMessages}
+        onGroupConverted={(spaceId, channelId) => {
+          setShowCalls(false)
+          setShowUpdates(false)
+          setShowRequests(false)
+          setShowSpaces(true)
+          setActiveChatId(null)
+          setUpdatesTarget({ spaceId, channelId, messageId: '' })
+          requestInboxRefresh()
+        }}
       />}
       {showCalls && <section className="calls-home">
         <div className="calls-home-content">

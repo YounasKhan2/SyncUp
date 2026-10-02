@@ -38,6 +38,105 @@ function voiceRoomName(channelId: string) {
   return `syncup-space-voice-${channelId}`
 }
 
+spaceRoutes.post('/chats/:id/upgrade-to-space', messageLimiter, async (request: AuthenticatedRequest, response, next) => {
+  const chatId = idSchema.safeParse(request.params.id)
+  const input = z.object({
+    name: z.string().trim().min(1).max(80),
+    description: z.string().trim().max(280).default(''),
+    icon: z.enum(['layers', 'briefcase', 'rocket', 'heart', 'sparkles']).default('layers'),
+    generalChannelName: channelNameSchema.default('general'),
+  }).safeParse(request.body)
+  if (!chatId.success || !input.success) {
+    response.status(400).json({ error: { code: 'validation', message: 'Choose a Space name, icon, and valid #general channel name.' } })
+    return
+  }
+
+  const client = await pool.connect()
+  const spaceId = uuidv7()
+  const categoryId = uuidv7()
+  try {
+    await client.query('BEGIN')
+    const group = await client.query<{ title: string; role: string }>(
+      `SELECT c.title, cm.role
+       FROM chats c
+       JOIN chat_members cm ON cm.chat_id = c.id AND cm.user_id = $2 AND cm.left_at IS NULL
+       WHERE c.id = $1 AND c.kind = 'group'
+       FOR UPDATE OF c, cm`,
+      [chatId.data, request.auth!.userId],
+    )
+    if (!group.rows[0]) {
+      await client.query('ROLLBACK')
+      response.status(404).json({ error: { code: 'not_found', message: 'Group not found or already converted.' } })
+      return
+    }
+    if (group.rows[0].role !== 'owner') {
+      await client.query('ROLLBACK')
+      response.status(403).json({ error: { code: 'forbidden', message: 'Only the group owner can convert this group into a Space.' } })
+      return
+    }
+    const members = await client.query<{ user_id: string; role: string }>(
+      `SELECT user_id, role FROM chat_members
+       WHERE chat_id = $1 AND left_at IS NULL
+       ORDER BY joined_at, user_id FOR UPDATE`,
+      [chatId.data],
+    )
+    if (members.rows.length < 2 || members.rows.length > 32) {
+      await client.query('ROLLBACK')
+      response.status(409).json({ error: { code: 'conflict', message: 'Only groups with 2–32 active members can be converted.' } })
+      return
+    }
+
+    await client.query(
+      `INSERT INTO spaces (id, name, description, icon, template, created_by, converted_from_group)
+       VALUES ($1, $2, $3, $4, 'client-room', $5, true)`,
+      [spaceId, input.data.name, input.data.description, input.data.icon, request.auth!.userId],
+    )
+    await client.query(
+      `INSERT INTO space_channel_categories (id, space_id, name, created_by)
+       VALUES ($1, $2, 'Text Channels', $3)`,
+      [categoryId, spaceId, request.auth!.userId],
+    )
+    await client.query(
+      `INSERT INTO space_members (space_id, user_id, role)
+       SELECT $1, user_id, CASE WHEN role = 'owner' THEN 'owner' ELSE 'member' END
+       FROM chat_members WHERE chat_id = $2 AND left_at IS NULL`,
+      [spaceId, chatId.data],
+    )
+    await client.query(
+      `INSERT INTO space_channels (space_id, chat_id, name, channel_type, category_id, topic)
+       VALUES ($1, $2, $3, 'discussion', $4, 'The group conversation continues here. Earlier messages stay end-to-end encrypted.')`,
+      [spaceId, chatId.data, input.data.generalChannelName, categoryId],
+    )
+    await client.query(
+      `INSERT INTO space_channel_role_permissions (space_id, chat_id, role, can_view, can_send, can_speak, updated_by)
+       SELECT $1, $2, target_role.role, true, true, true, $3
+       FROM (VALUES ('moderator'), ('member'), ('guest')) AS target_role(role)`,
+      [spaceId, chatId.data, request.auth!.userId],
+    )
+    await client.query(
+      `INSERT INTO space_conversion_members (space_id, chat_id, user_id)
+       SELECT $1, $2, user_id FROM chat_members
+       WHERE chat_id = $2 AND left_at IS NULL`,
+      [spaceId, chatId.data],
+    )
+    await client.query(
+      `UPDATE chats SET kind = 'channel', title = $2 WHERE id = $1 AND kind = 'group'`,
+      [chatId.data, `#${input.data.generalChannelName}`],
+    )
+    await client.query('COMMIT')
+    response.status(201).json({ spaceId, channelId: chatId.data })
+  } catch (error) {
+    await client.query('ROLLBACK')
+    if (typeof error === 'object' && error !== null && 'code' in error && error.code === '23505') {
+      response.status(409).json({ error: { code: 'conflict', message: 'A Space with that channel name already exists.' } })
+      return
+    }
+    next(error)
+  } finally {
+    client.release()
+  }
+})
+
 spaceRoutes.get('/spaces', async (request: AuthenticatedRequest, response, next) => {
   try {
     const result = await pool.query(
@@ -131,6 +230,11 @@ spaceRoutes.get('/spaces/:id', async (request: AuthenticatedRequest, response, n
                 SELECT jsonb_agg(jsonb_build_object(
                   'id', sc.chat_id, 'name', sc.name, 'type', sc.channel_type,
                   'category_id', category.id, 'category_name', category.name, 'topic', sc.topic,
+                  'has_encrypted_history', s.converted_from_group AND EXISTS (
+                    SELECT 1 FROM space_conversion_members history_member
+                    WHERE history_member.space_id = sc.space_id
+                      AND history_member.chat_id = sc.chat_id AND history_member.user_id = $2
+                  ),
                   'can_send', sm.role IN ('owner', 'admin') OR COALESCE((
                     SELECT permission.can_send FROM space_channel_role_permissions permission
                     WHERE permission.space_id = sc.space_id AND permission.chat_id = sc.chat_id

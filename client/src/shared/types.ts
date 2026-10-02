@@ -224,6 +224,7 @@ export type SpaceChannel = {
   topic: string
   can_send: boolean
   can_speak: boolean
+  has_encrypted_history?: boolean
   members: SpaceChannelMember[]
   permissions?: SpaceChannelRolePermission[] | null
 }
