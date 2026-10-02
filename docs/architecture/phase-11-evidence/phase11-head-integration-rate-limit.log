@@ -1,0 +1,34 @@
+
+> test:integration
+> node --test tests/messaging.integration.test.mjs
+
+✖ encrypted requests, authorized chats, ordered idempotent delivery, and groups (1340.564ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1510.3851
+
+✖ failing tests:
+
+test at tests\messaging.integration.test.mjs:308:1
+✖ encrypted requests, authorized chats, ordered idempotent delivery, and groups (1340.564ms)
+  AssertionError [ERR_ASSERTION]: {"error":{"code":"rate_limited","message":"Too many authentication attempts."}}
+
+  429 !== 201
+
+      at createAccount (file:///C:/Users/youna/Downloads/SyncUp%20PRD/tests/messaging.integration.test.mjs:250:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///C:/Users/youna/Downloads/SyncUp%20PRD/tests/messaging.integration.test.mjs:319:17)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 429,
+    expected: 201,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
