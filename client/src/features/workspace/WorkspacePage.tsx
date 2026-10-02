@@ -564,6 +564,7 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
         voiceSpaceId={activeCall.voiceSpaceId}
         voiceChannelId={activeCall.voiceChannelId}
         canPublish={activeCall.canPublish}
+        localUser={{ id: currentUser.id, name: currentUser.display_name, avatarUrl: currentUser.avatar_url }}
         onEnd={() => void endActiveCall()}
         onClose={closeFinishedCall}
       />}

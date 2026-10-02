@@ -754,9 +754,10 @@ spaceRoutes.get('/spaces/:spaceId/channels/:channelId/voice', voiceLimiter, asyn
     const roster = await pool.query<{
       user_id: string
       display_name: string
+      avatar_url: string | null
       can_speak: boolean
     }>(
-      `SELECT cm.user_id, u.display_name,
+      `SELECT cm.user_id, u.display_name, u.avatar_url,
               sm.role IN ('owner', 'admin') OR COALESCE(permission.can_speak, true) AS can_speak
        FROM chat_members cm
        JOIN space_channels sc ON sc.chat_id = cm.chat_id AND sc.space_id = $1
@@ -787,7 +788,12 @@ spaceRoutes.get('/spaces/:spaceId/channels/:channelId/voice', voiceLimiter, asyn
             },
           })
         }
-        visibleParticipants.push({ user_id: member.user_id, display_name: member.display_name, can_speak: member.can_speak })
+        visibleParticipants.push({
+          user_id: member.user_id,
+          display_name: member.display_name,
+          avatar_url: member.avatar_url,
+          can_speak: member.can_speak,
+        })
       } else {
         try {
           await service.removeParticipant(roomName, participant.identity, {

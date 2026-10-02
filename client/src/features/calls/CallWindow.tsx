@@ -1,6 +1,7 @@
 import { Mic, MicOff, PhoneOff, Video, VideoOff } from 'lucide-react'
 import type { RemoteParticipant, Room } from 'livekit-client'
 import { useEffect, useRef, useState } from 'react'
+import { Avatar } from '../../shared/components/Avatar'
 
 async function callApi<T>(path: string, options: RequestInit = {}): Promise<T> {
   const run = () => fetch(path, {
@@ -27,7 +28,7 @@ type CallParticipant = {
   cameraEnabled: boolean
 }
 
-export function CallWindow({ callId, title, video, isGroup = false, isHost = false, e2eeKey, isVoiceRoom = false, voiceSpaceId, voiceChannelId, canPublish = true, onEnd, onClose }: {
+export function CallWindow({ callId, title, video, isGroup = false, isHost = false, e2eeKey, isVoiceRoom = false, voiceSpaceId, voiceChannelId, canPublish = true, localUser, onEnd, onClose }: {
   callId: string
   title: string
   video: boolean
@@ -38,6 +39,7 @@ export function CallWindow({ callId, title, video, isGroup = false, isHost = fal
   voiceSpaceId?: string
   voiceChannelId?: string
   canPublish?: boolean
+  localUser?: { id: string; name: string; avatarUrl?: string | null }
   onEnd: () => void
   onClose: () => void
 }) {
@@ -50,10 +52,18 @@ export function CallWindow({ callId, title, video, isGroup = false, isHost = fal
   const [localIdentity, setLocalIdentity] = useState('')
   const [peers, setPeers] = useState<Record<string, CallParticipant>>({})
   const [groupRoster, setGroupRoster] = useState<{ user_id: string; display_name: string; status: string }[]>([])
-  const [voiceRoster, setVoiceRoster] = useState<{ user_id: string; display_name: string; can_speak: boolean }[]>([])
+  const [voiceRoster, setVoiceRoster] = useState<{ user_id: string; display_name: string; avatar_url: string | null; can_speak: boolean }[]>([])
   const [finished, setFinished] = useState(false)
   const [error, setError] = useState('')
   const peer = Object.values(peers)[0] ?? null
+  const voiceParticipants = voiceRoster.some((participant) => participant.user_id === localIdentity) || !localUser
+    ? voiceRoster
+    : [...voiceRoster, {
+      user_id: localUser.id,
+      display_name: localUser.name,
+      avatar_url: localUser.avatarUrl ?? null,
+      can_speak: canPublish,
+    }]
 
   useEffect(() => {
     let cancelled = false
@@ -295,28 +305,36 @@ export function CallWindow({ callId, title, video, isGroup = false, isHost = fal
 
   return (
     <div className="overlay call-overlay" role="presentation">
-      <section className="call-dialog" role="dialog" aria-modal="true" aria-label={isVoiceRoom ? `Voice room ${title}` : `${video ? 'Video' : 'Audio'} call with ${title}`}>
+      <section className={`call-dialog${isVoiceRoom ? ' voice-room-dialog' : ''}`} role="dialog" aria-modal="true" aria-label={isVoiceRoom ? `Voice room ${title}` : `${video ? 'Video' : 'Audio'} call with ${title}`}>
         <header className="call-dialog-header">
           <div><span className="eyebrow">{isVoiceRoom ? 'SPACE VOICE ROOM · NOT END-TO-END ENCRYPTED' : isGroup ? 'GROUP CALL · END-TO-END ENCRYPTED' : '1:1 CALL · NOT END-TO-END ENCRYPTED'}</span><h2>{title}</h2></div>
-          <span className={`call-connection${connected && (isVoiceRoom ? voiceRoster.length > 0 : isGroup ? groupRoster.some((participant) => participant.status === 'joined') : Boolean(peer)) ? ' is-connected' : ''}`}><i />{connected ? isVoiceRoom ? `${Math.max(voiceRoster.length, 1)} in room` : isGroup ? `${groupRoster.filter((participant) => participant.status === 'joined').length} joined` : peer ? `${peer.name} joined` : `Waiting for ${title} to join` : 'Joining call…'}</span>
+          <span className={`call-connection${connected && (isVoiceRoom ? voiceParticipants.length > 0 : isGroup ? groupRoster.some((participant) => participant.status === 'joined') : Boolean(peer)) ? ' is-connected' : ''}`}><i />{connected ? isVoiceRoom ? `${voiceParticipants.length} in room` : isGroup ? `${groupRoster.filter((participant) => participant.status === 'joined').length} joined` : peer ? `${peer.name} joined` : `Waiting for ${title} to join` : 'Joining call…'}</span>
         </header>
-        <div className={`call-media-stage${video ? '' : ' audio-only'}`} ref={mediaStage}>
+        <div className={`call-media-stage${video ? '' : ' audio-only'}${isVoiceRoom ? ' voice-room-stage' : ''}`} ref={mediaStage}>
           {!connected && !error && <p>Connecting to the call service…</p>}
-          {connected && isVoiceRoom && voiceRoster.length <= 1 && !error && <p className="call-waiting">You’re in the room. Others can join anytime.</p>}
+          {connected && isVoiceRoom && voiceParticipants.length <= 1 && !error && <p className="call-waiting call-room-waiting">You’re in the room. Others can join anytime.</p>}
           {connected && isGroup && groupRoster.every((participant) => participant.user_id === localIdentity || participant.status !== 'joined') && !error && <p className="call-waiting">Waiting for group members to join…</p>}
-          {connected && !isGroup && !peer && !error && <p className="call-waiting">Waiting for {title} to join…</p>}
-          {!isGroup && peer && (!video || !peer.cameraEnabled) && (
+          {connected && !isVoiceRoom && !isGroup && !peer && !error && <p className="call-waiting">Waiting for {title} to join…</p>}
+          {!isVoiceRoom && !isGroup && peer && (!video || !peer.cameraEnabled) && (
             <div className="call-peer-status">
               <strong>{peer.name}</strong>
               <span>{!peer.cameraEnabled && <><VideoOff size={13} aria-hidden="true" /> Camera off</>}{!peer.microphoneEnabled && <><MicOff size={13} aria-hidden="true" /> Mic muted</>}</span>
             </div>
           )}
-          {isVoiceRoom && voiceRoster.filter((participant) => participant.user_id !== localIdentity).map((participant) => (
-            <div className="call-group-participant" key={participant.user_id}>
-              <strong>{participant.display_name}</strong>
-              <span>{participant.can_speak ? 'Can speak' : 'Listening'}</span>
-            </div>
-          ))}
+          {isVoiceRoom && voiceParticipants.map((participant) => {
+            const isLocal = participant.user_id === localIdentity
+            const micMuted = isLocal ? muted || !canPublish : peers[participant.user_id]?.microphoneEnabled === false
+            return <article className={`call-voice-participant${isLocal ? ' is-local' : ''}`} key={participant.user_id}>
+              <div className="call-voice-avatar-wrap">
+                <Avatar name={participant.display_name} src={participant.avatar_url} className="call-voice-avatar" />
+                <span className={`call-voice-mic${micMuted ? ' is-muted' : ''}`} aria-label={micMuted ? 'Microphone muted' : participant.can_speak ? 'Microphone available' : 'Listening only'}>
+                  {micMuted || !participant.can_speak ? <MicOff size={13} aria-hidden="true" /> : <Mic size={13} aria-hidden="true" />}
+                </span>
+              </div>
+              <strong>{participant.display_name}{isLocal ? ' (you)' : ''}</strong>
+              <small>{!participant.can_speak ? 'Listening only' : micMuted ? 'Muted' : 'In voice'}</small>
+            </article>
+          })}
           {isGroup && groupRoster.filter((participant) => participant.status === 'joined' && participant.user_id !== localIdentity).map((participant) => (
             <div className="call-group-participant" key={participant.user_id}>
               <strong>{participant.display_name}</strong>
@@ -326,9 +344,6 @@ export function CallWindow({ callId, title, video, isGroup = false, isHost = fal
           {video && !cameraEnabled && <p className="call-local-camera-status"><VideoOff size={13} aria-hidden="true" /> Your camera is off</p>}
           {error && <p className="call-error" role="alert">{error}</p>}
         </div>
-        {isVoiceRoom && <div className="call-participant-list" aria-label="Voice room participants">
-          {voiceRoster.map((participant) => <span key={participant.user_id}>{participant.display_name}{participant.user_id === localIdentity ? ' · you' : ''}{participant.can_speak ? '' : ' · listening'}</span>)}
-        </div>}
         {isGroup && <div className="call-participant-list" aria-label="Group call participants">
           {groupRoster.map((participant) => (
             <span key={participant.user_id}>{participant.display_name} · {participant.status}</span>
