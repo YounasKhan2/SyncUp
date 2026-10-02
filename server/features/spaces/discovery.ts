@@ -7,6 +7,7 @@ import { pool } from '../../db.js'
 import type { AuthenticatedRequest } from '../auth/types.js'
 import { createAppwriteStorage } from '../../shared/appwrite.js'
 import { searchLimiter } from '../messaging/limits.js'
+import { allowedTypes, fileMaxBytes, fileNameSchema, imageMaxBytes } from './file-validation.js'
 
 export const spaceDiscoveryRoutes = Router()
 const fileUploadLimiter = rateLimit({
@@ -18,31 +19,7 @@ const fileUploadLimiter = rateLimit({
   message: { error: { code: 'rate_limited', message: 'Too many file uploads. Try again shortly.' } },
 })
 
-const fileMaxBytes = 25 * 1024 * 1024
-const imageMaxBytes = 10 * 1024 * 1024
-const allowedTypes = new Set([
-  'application/pdf',
-  'application/msword',
-  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-  'application/vnd.ms-excel',
-  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-  'application/vnd.ms-powerpoint',
-  'application/vnd.openxmlformats-officedocument.presentationml.presentation',
-  'application/zip',
-  'text/plain',
-  'text/csv',
-  'image/gif',
-  'image/jpeg',
-  'image/png',
-  'image/webp',
-  'video/mp4',
-  'video/webm',
-])
-
 const idSchema = z.string().uuid()
-const fileNameSchema = z.string().trim().min(1).max(200).refine(
-  (name) => !/[\\/\u0000-\u001f\u007f]/u.test(name) && name !== '.' && name !== '..',
-)
 
 type ChannelAccess = { can_view: boolean; can_send: boolean }
 

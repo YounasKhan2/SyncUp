@@ -12,6 +12,7 @@ function routes(rows, time = now) {
   class Clock extends Date { static now() { return time } }
   load('server/features/spaces/objects.ts', {
     express: { Router: () => router }, uuid: { v7: () => id }, zod: { z },
+    './object-validation.js': load('server/features/spaces/object-validation.ts', { zod: { z } }),
     '../../db.js': { pool: { query: async (sql) => {
       queries.push(sql)
       assert.match(sql.trim(), /^SELECT/)
