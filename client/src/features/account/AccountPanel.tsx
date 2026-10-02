@@ -4,6 +4,9 @@ import { ArrowRight, Camera, Monitor, Trash2, X } from 'lucide-react'
 import { api, apiUpload } from '../../shared/api'
 import type { Session, User } from '../../shared/types'
 import { Avatar } from '../../shared/components/Avatar'
+import { Button } from '../../shared/components/Button'
+import { IconButton } from '../../shared/components/IconButton'
+import { Dialog } from '../../shared/components/Dialog'
 import { SafetySettings } from './SafetySettings'
 import type { AppearancePreference } from '../../shared/appearance'
 export function AccountPanel({ user, appearance, onAppearanceChange, onClose, onSaved }: {
@@ -148,13 +151,12 @@ export function AccountPanel({ user, appearance, onAppearanceChange, onClose, on
   }
 
   return (
-    <div className="overlay" role="presentation" onMouseDown={(event) => {
+    <Dialog aria-labelledby="account-title" onBackdropMouseDown={(event) => {
       if (event.target === event.currentTarget) onClose()
     }}>
-      <section className="account-dialog" role="dialog" aria-modal="true" aria-labelledby="account-title">
         <div className="dialog-heading">
           <div><p className="eyebrow">YOUR ACCOUNT</p><h2 id="account-title">Profile & settings</h2></div>
-          <button className="icon-button" type="button" onClick={onClose} aria-label="Close profile"><X size={15} aria-hidden="true" /></button>
+          <IconButton type="button" onClick={onClose} aria-label="Close profile"><X size={15} aria-hidden="true" /></IconButton>
         </div>
         <form className="profile-form" onSubmit={saveProfile}>
           <div className="profile-avatar-editor">
@@ -212,7 +214,7 @@ export function AccountPanel({ user, appearance, onAppearanceChange, onClose, on
           <label><span>Email</span><input value={user.email} readOnly /></label>
           {error && <div className="form-error" role="alert">{error}</div>}
           {saved && <p className="form-success" role="status">{saved}</p>}
-          <button className="primary-button" type="submit" disabled={loading}>{loading ? 'Saving…' : 'Save profile'}{!loading && <ArrowRight size={14} aria-hidden="true" />}</button>
+          <Button type="submit" disabled={loading}>{loading ? 'Saving…' : 'Save profile'}{!loading && <ArrowRight size={14} aria-hidden="true" />}</Button>
         </form>
         <div className="sessions-section">
           <div className="sessions-heading"><h3>Active sessions</h3><button type="button" onClick={() => void loadSessions()}>Refresh</button></div>
@@ -230,7 +232,6 @@ export function AccountPanel({ user, appearance, onAppearanceChange, onClose, on
           </div>
         </div>
         <SafetySettings />
-      </section>
-    </div>
+    </Dialog>
   )
 }

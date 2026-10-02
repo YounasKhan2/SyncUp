@@ -5,6 +5,7 @@ import { api } from '../../shared/api'
 import type { AuthMode, KeyBundle, User } from '../../shared/types'
 import { createKeyBundle, isKeyBundleUnlocked, unlockKeyBundle } from '../auth/crypto/crypto'
 import { BrandMark } from '../../shared/components/BrandMark'
+import { Button } from '../../shared/components/Button'
 export function AuthScreen({ onSignedIn }: { onSignedIn: (user: User) => void }) {
   const [mode, setMode] = useState<AuthMode>('sign-up')
   const [error, setError] = useState('')
@@ -100,10 +101,10 @@ export function AuthScreen({ onSignedIn }: { onSignedIn: (user: User) => void })
               <input name="password" type="password" autoComplete={mode === 'sign-up' ? 'new-password' : 'current-password'} placeholder={mode === 'sign-up' ? 'At least 10 characters' : 'Your password'} minLength={mode === 'sign-up' ? 10 : 1} maxLength={128} required />
             </label>
             {error && <div className="form-error" role="alert">{error}</div>}
-            <button className="primary-button" type="submit" disabled={loading}>
+            <Button type="submit" disabled={loading}>
               {loading ? 'Please wait…' : mode === 'sign-up' ? 'Create account' : 'Sign in'}
               {!loading && <ArrowRight size={14} aria-hidden="true" />}
-            </button>
+            </Button>
           </form>
           <p className="auth-switch">
             {mode === 'sign-up' ? 'Already have an account?' : 'New to SyncUp?'}
