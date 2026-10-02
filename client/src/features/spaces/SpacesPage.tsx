@@ -2,10 +2,11 @@ import { useEffect, useRef, useState } from 'react'
 import type { FormEvent, ReactNode } from 'react'
 import { ArrowLeft, AtSign, BriefcaseBusiness, CalendarDays, ChevronDown, ChevronRight, Download, FileText, FileUp, Hash, Heart, Image, Layers3, LockKeyhole, Megaphone, Mic, Plus, Rocket, Search, Send, Settings2, Sparkles, Users, Volume2, X } from 'lucide-react'
 import { decryptMessage } from '../auth/crypto/crypto'
-import { MessageAttachment } from '../messaging/MessageAttachment'
 import { api, apiUpload } from '../../shared/api'
 import type { ActiveCall, DisplayMessage, EncryptedChatMessage, SpaceCategory, SpaceChannel, SpaceChannelRolePermission, SpaceIcon, SpaceMember, SpaceMessage, SpaceSharedObject, SpaceSummary } from '../../shared/types'
 import { SharedObjectCard } from './SharedObjectCard'
+import { SpaceVoiceChannelView } from './SpaceVoiceChannelView'
+import { SpaceLegacyHistoryView } from './SpaceLegacyHistoryView'
 
 type SpaceDetails = {
   id: string
@@ -835,11 +836,7 @@ export function SpacesPage({ onBack, onJoinVoiceRoom, openTarget, userId }: {
               }}><Mic size={13} aria-hidden="true" /> Join voice</button>}
             </div>
             </header>
-            {activeChannel.type === 'voice' ? <div className="space-voice-welcome">
-              <span><Volume2 size={25} aria-hidden="true" /></span>
-              <strong>Voice room is always here</strong>
-              <p>Join to talk with people who have access to this channel. Up to 16 people can join.</p>
-              <button className="primary-button" type="button" onClick={() => {
+            {activeChannel.type === 'voice' ? <SpaceVoiceChannelView onJoin={() => {
                 onJoinVoiceRoom({
                   id: activeChannel.id,
                   chatId: activeChannel.id,
@@ -850,40 +847,18 @@ export function SpacesPage({ onBack, onJoinVoiceRoom, openTarget, userId }: {
                   voiceChannelId: activeChannel.id,
                   canPublish: activeChannel.can_speak,
                 })
-              }}><Mic size={14} aria-hidden="true" /> Join voice</button>
-            </div> : <>
+              }} /> : <>
             {mentionNotice && <div className="space-mention-notice" role="status">{mentionNotice}<button type="button" onClick={() => setMentionNotice('')}>Dismiss</button></div>}
             <div className={`space-message-list${activeChannel.has_encrypted_history ? ' has-legacy-history' : ''}`} aria-live="polite">
-              {activeChannel.has_encrypted_history && <section className="legacy-history-inline" aria-label="Earlier encrypted group history">
-                <header><div><strong><LockKeyhole size={13} aria-hidden="true" /> Earlier encrypted history</strong><p>These messages remain end-to-end encrypted and visible only to original group members.</p></div>
-                  {legacyHasMore && <button type="button" onClick={() => void loadOlderLegacyMessages()} disabled={legacyLoading}>{legacyLoading ? 'Loading…' : 'Load earlier'}</button>}
-                </header>
-                {legacyError && <div className="inline-error" role="alert">{legacyError}</div>}
-                {legacyLoading && legacyMessages.length === 0 && <p className="legacy-history-status" role="status">Loading earlier messages…</p>}
-                {!legacyLoading && legacyMessages.length === 0 && !legacyError && <p className="legacy-history-status">No earlier messages in this group.</p>}
-                {legacyMessages.map((message) => {
-                  const sender = legacyMembersById.get(message.sender_id)
-                  return <article className="space-message legacy-space-message" key={message.id}>
-                    <div className="space-message-heading">
-                      <strong>{sender?.display_name ?? (message.sender_id === userId ? 'You' : 'Group member')}</strong>
-                      {sender?.username && <small>@{sender.username} · {new Intl.DateTimeFormat(undefined, { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(message.created_at))}</small>}
-                      {!sender?.username && <small>{new Intl.DateTimeFormat(undefined, { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(message.created_at))}</small>}
-                    </div>
-                    {message.deleted_at
-                      ? <p>This message was deleted.</p>
-                      : message.text && <p>{message.text}</p>}
-                    {!message.deleted_at && message.attachments?.filter((attachment) => !attachment.is_preview).map((attachment) =>
-                      <MessageAttachment key={attachment.id} attachment={attachment} />,
-                    )}
-                    {message.reactions.length > 0 && <div className="message-reactions" aria-label="Reactions">
-                      {[...new Set(message.reactions.map((reaction) => reaction.emoji))].map((emoji) => {
-                        const count = message.reactions.filter((reaction) => reaction.emoji === emoji).length
-                        return <span key={emoji} aria-label={`${emoji}, ${count} ${count === 1 ? 'reaction' : 'reactions'}`}><span>{emoji}</span><span>{count}</span></span>
-                      })}
-                    </div>}
-                  </article>
-                })}
-              </section>}
+              {activeChannel.has_encrypted_history && <SpaceLegacyHistoryView
+                legacyMessages={legacyMessages}
+                legacyMembersById={legacyMembersById}
+                userId={userId}
+                legacyHasMore={legacyHasMore}
+                legacyLoading={legacyLoading}
+                legacyError={legacyError}
+                onLoadEarlier={() => void loadOlderLegacyMessages()}
+              />}
               {messages.length === 0 && legacyMessages.length === 0 && !legacyLoading && <div className="space-messages-empty"><Hash size={22} aria-hidden="true" /><strong>This is the start of #{activeChannel.name}</strong><p>Share a project update or question with this channel.</p></div>}
               {messages.length === 0 && (legacyMessages.length > 0 || legacyLoading) && <p className="space-channel-after-history">New channel messages will appear here.</p>}
               {messages.map((message) => {
