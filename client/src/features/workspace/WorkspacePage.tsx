@@ -1,12 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { Phone, Video } from 'lucide-react'
 import { api } from '../../shared/api'
 import { decryptMessage, lockKeyBundle } from '../auth/crypto/crypto'
 import { listAllDrafts, listPendingMessages, removePendingMessage, savePendingMessage } from '../messaging/outbox'
 import type { PendingMessage } from '../messaging/outbox'
 import type { ActiveCall, CallRecord, Chat, IncomingCall, IncomingRequest, User } from '../../shared/types'
 import { unwrapMediaKey } from '../auth/crypto/crypto'
-import { Avatar } from '../../shared/components/Avatar'
 import { AccountPanel } from '../account/AccountPanel'
 import { NewConversation } from '../messaging/NewConversation'
 import { RequestsPanel } from '../messaging/RequestsPanel'
@@ -16,6 +14,9 @@ import { CallWindow } from '../calls/CallWindow'
 import { InboxPane } from './InboxPane'
 import { MobileNavigation } from './MobileNavigation'
 import { WorkspaceRail } from './WorkspaceRail'
+import { useWorkspaceNavigation } from './useWorkspaceNavigation'
+import { CallsHome } from './CallsHome'
+import { IncomingCallBanner } from './IncomingCallBanner'
 import { SpacesPage } from '../spaces/SpacesPage'
 import { UpdatesPage } from '../spaces/UpdatesPage'
 import { countUnreadConversations } from '../../shared/presentation'
@@ -32,11 +33,12 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
   const [searchableMessages, setSearchableMessages] = useState<Record<string, SearchableMessage[]>>({})
   const [requests, setRequests] = useState<IncomingRequest[]>([])
   const [filter, setFilter] = useState<'all' | 'unread'>('all')
-  const [showRequests, setShowRequests] = useState(false)
-  const [showCalls, setShowCalls] = useState(false)
-  const [showUpdates, setShowUpdates] = useState(false)
-  const [showSpaces, setShowSpaces] = useState(false)
-  const [updatesTarget, setUpdatesTarget] = useState<{ spaceId: string; channelId: string; messageId: string } | null>(null)
+  const {
+    showRequests, setShowRequests, showCalls, setShowCalls, showUpdates, showSpaces,
+    updatesTarget, activeChatId, setActiveChatId,
+    showChatsHome, selectChat, openCalls, openUpdates, openSpaces,
+    openUpdateTarget, openConvertedSpace, selectSearchChat,
+  } = useWorkspaceNavigation()
   const [callHistory, setCallHistory] = useState<CallRecord[]>([])
   const [callIntent, setCallIntent] = useState<CallIntent | null>(null)
   const [newCallRequested, setNewCallRequested] = useState(false)
@@ -46,7 +48,6 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
   const [newConversation, setNewConversation] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
   const [initialUsername, setInitialUsername] = useState('')
-  const [activeChatId, setActiveChatId] = useState<string | null>(null)
   const [pending, setPending] = useState<PendingMessage[]>([])
   const [drafts, setDrafts] = useState<Record<string, string>>({})
   const [online, setOnline] = useState(navigator.onLine)
@@ -348,11 +349,7 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
   }
 
   function openCallHistory() {
-    setShowCalls(true)
-    setShowUpdates(false)
-    setShowSpaces(false)
-    setShowRequests(false)
-    if (window.matchMedia('(max-width: 700px)').matches) setActiveChatId(null)
+    openCalls()
     refreshCallHistory().catch((loadError: unknown) => {
       setError(loadError instanceof Error ? loadError.message : 'Unable to load call history.')
     })
@@ -381,40 +378,6 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
     setCallIntent((current) => current?.id === id ? null : current)
   }, [])
 
-  function showChatsHome() {
-    setShowCalls(false)
-    setShowUpdates(false)
-    setShowSpaces(false)
-    setShowRequests(false)
-    if (window.matchMedia('(max-width: 700px)').matches) setActiveChatId(null)
-  }
-
-  function selectChat(chatId: string) {
-    setShowCalls(false)
-    setShowUpdates(false)
-    setShowSpaces(false)
-    setShowRequests(false)
-    setActiveChatId(chatId)
-  }
-
-  function openUpdates() {
-    setShowUpdates(true)
-    setShowCalls(false)
-    setShowSpaces(false)
-    setShowRequests(false)
-    setActiveChatId(null)
-    setUpdatesTarget(null)
-  }
-
-  function openUpdateTarget(spaceId: string, channelId: string, messageId: string) {
-    setShowUpdates(false)
-    setShowCalls(false)
-    setShowSpaces(true)
-    setShowRequests(false)
-    setActiveChatId(null)
-    setUpdatesTarget({ spaceId, channelId, messageId })
-  }
-
   return (
     <>
     <a className="skip-link" href="#workspace-main">Skip to main content</a>
@@ -428,7 +391,7 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
         onShowChats={showChatsHome}
         onShowCalls={openCallHistory}
         onShowUpdates={openUpdates}
-        onShowSpaces={() => { setShowCalls(false); setShowUpdates(false); setShowRequests(false); setShowSpaces(true); setActiveChatId(null); setUpdatesTarget(null) }}
+        onShowSpaces={openSpaces}
         onOpenAccount={() => setAccountOpen(true)}
       />
       <InboxPane
@@ -466,28 +429,11 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
         onCallIntentConsumed={consumeCallIntent}
         onSearchableMessages={updateSearchableMessages}
         onGroupConverted={(spaceId, channelId) => {
-          setShowCalls(false)
-          setShowUpdates(false)
-          setShowRequests(false)
-          setShowSpaces(true)
-          setActiveChatId(null)
-          setUpdatesTarget({ spaceId, channelId, messageId: '' })
+          openConvertedSpace(spaceId, channelId)
           requestInboxRefresh()
         }}
       />}
-      {showCalls && <section className="calls-home">
-        <div className="calls-home-content">
-          <span className="calls-home-icon"><Phone size={26} aria-hidden="true" /></span>
-          <p className="eyebrow">PRIVATE CALLS</p>
-          <h2>Hear from your people.</h2>
-          <p>Start an encrypted audio or video call, or choose a recent call to return to that conversation.</p>
-          <div className="calls-home-actions">
-            <button className="calls-home-button" type="button" onClick={() => startNewCall('audio')}><Phone size={16} aria-hidden="true" /> Audio call</button>
-            <button className="calls-home-button is-video" type="button" onClick={() => startNewCall('video')}><Video size={16} aria-hidden="true" /> Video call</button>
-          </div>
-          <small>Calls are end-to-end encrypted.</small>
-        </div>
-      </section>}
+      {showCalls && <CallsHome onAudioCall={() => startNewCall('audio')} onVideoCall={() => startNewCall('video')} />}
       <MobileNavigation
         section={showSpaces ? 'spaces' : showUpdates ? 'updates' : showCalls ? 'calls' : 'chats'}
         accountOpen={accountOpen}
@@ -495,7 +441,7 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
         onShowChats={showChatsHome}
         onShowCalls={openCallHistory}
         onShowUpdates={openUpdates}
-        onShowSpaces={() => { setShowCalls(false); setShowUpdates(false); setShowRequests(false); setShowSpaces(true); setActiveChatId(null); setUpdatesTarget(null) }}
+        onShowSpaces={openSpaces}
         onOpenAccount={() => setAccountOpen(true)}
       />
       {showUpdates && <UpdatesPage userId={currentUser.id} onOpenTarget={openUpdateTarget} onOpenCall={(call) => {
@@ -528,9 +474,7 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
         onClose={() => setSearchOpen(false)}
         onSelectChat={(chatId) => {
           setSearchOpen(false)
-          setShowCalls(false)
-          setShowRequests(false)
-          setActiveChatId(chatId)
+          selectSearchChat(chatId)
         }}
         onSelectPerson={(username) => {
           setSearchOpen(false)
@@ -539,12 +483,7 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
         }}
       />}
       {showRequests && <RequestsPanel requests={requests} onAccept={(item) => void acceptRequest(item)} onIgnore={(item) => void ignoreRequest(item)} onClose={() => setShowRequests(false)} />}
-      {incomingCall && !activeCall && <section className="incoming-call-banner" role="alertdialog" aria-modal="true" aria-labelledby="incoming-call-title">
-        <Avatar name={incomingCall.group_title ?? incomingCall.caller_name} src={incomingCall.is_group ? undefined : incomingCall.caller_avatar_url} />
-        <div><strong id="incoming-call-title">{incomingCall.group_title ?? incomingCall.caller_name}</strong><small>{incomingCall.is_group ? `${incomingCall.caller_name} is calling` : `Incoming ${incomingCall.call_type} call`}</small></div>
-        <button type="button" className="answer-call-button" onClick={() => void acceptIncomingCall()}>Answer</button>
-        <button type="button" className="decline-call-button" onClick={() => void declineIncomingCall()}>Decline</button>
-      </section>}
+      {incomingCall && !activeCall && <IncomingCallBanner incomingCall={incomingCall} onAnswer={() => void acceptIncomingCall()} onDecline={() => void declineIncomingCall()} />}
       {activeCall && <CallWindow
         callId={activeCall.id}
         title={activeCall.title}
