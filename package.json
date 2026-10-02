@@ -9,10 +9,15 @@
     "dev": "concurrently -k \"npm:dev:server\" \"npm:dev:client\"",
     "dev:server": "tsx watch server/index.ts",
     "dev:client": "npm run dev --workspace client",
-    "build": "npm run build --workspace client && tsc -p tsconfig.server.json",
+    "build": "npm run build --workspace client && npm run build:server",
+    "build:server": "tsc -p tsconfig.server.json",
     "start": "node dist/server/index.js",
     "test:integration": "node --test tests/messaging.integration.test.mjs",
-    "typecheck": "npm run build",
+    "typecheck": "npm run typecheck:client && npm run typecheck:server",
+    "typecheck:client": "npm run typecheck --workspace client",
+    "typecheck:server": "tsc -p tsconfig.server.json --noEmit --incremental false",
+    "test": "node scripts/test-unit.mjs",
+    "check:architecture": "node scripts/check-architecture.mjs",
     "test:media-v2": "tsx --test tests/media-v2-crypto.test.mts tests/media-v2-scale.test.mts"
   },
   "dependencies": {
