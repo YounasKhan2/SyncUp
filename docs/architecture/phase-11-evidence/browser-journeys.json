@@ -1,0 +1,332 @@
+[
+  {
+    "name": "390x844-calls-known-debt",
+    "url": "http://127.0.0.1:5174/tests/fixtures/workspace-preview.html",
+    "snapshot": "- navigation \"Fixture controls\":\n  - text: Isolated Workspace fixture · no backend\n  - text: Theme\n  - combobox \"Fixture theme\":\n    - option \"light\" [selected]\n    - option \"dark\"\n  - text: Incoming\n  - combobox \"Fixture incoming call\":\n    - option \"none\" [selected]\n    - option \"direct\"\n    - option \"group\"\n  - status \"Fixture callback\": none\n  - status \"Fixture state\": \"{\\\"calls\\\":true,\\\"updates\\\":false,\\\"spaces\\\":false,\\\"requests\\\":false,\\\"chat\\\":null,\\\"target\\\":null}\"\n- link \"Skip to main content\":\n  - /url: \"#workspace-main\"\n- main:\n  - complementary:\n    - heading \"Calls\" [level=1]\n    - button \"Start a new call\":\n    - paragraph: No calls yet\n    - paragraph: Your audio and video call history will appear here.\n    - button \"Start a call\":\n      - text: Start a call\n  - paragraph: PRIVATE CALLS\n  - heading \"Hear from your people.\" [level=2]\n  - paragraph: Start an encrypted audio or video call, or choose a recent call to return to that conversation.\n  - button \"Audio call\":\n    - text: Audio call\n  - button \"Video call\":\n    - text: Video call\n  - generic: Calls are end-to-end encrypted.\n  - navigation \"Main navigation\":\n    - button \"Chats, 1 unread conversations\":\n      - generic: \"1\"\n      - generic: Chats\n    - button \"Calls\":\n      - generic: Calls\n    - button \"Updates\":\n      - generic: Updates\n    - button \"Spaces\":\n      - generic: Spaces\n    - button \"You\":\n      - generic: You",
+    "events": [],
+    "logs": [],
+    "raster": {
+      "height": 844,
+      "width": 390
+    }
+  },
+  {
+    "name": "390x844-auth-signup",
+    "url": "http://127.0.0.1:5174/tests/fixtures/theme-preview.html",
+    "snapshot": "- navigation \"Preview controls\":\n  - text: Isolated preview\n  - combobox \"Preview screen\":\n    - option \"Auth\" [selected]\n    - option \"Unlock\"\n    - option \"Shell\"\n    - option \"Spaces\"\n  - combobox \"Preview theme\":\n    - option \"system\" [selected]\n    - option \"light\"\n    - option \"dark\"\n- main:\n  - generic: SyncUp\n  - paragraph: YOUR WORK, IN GOOD COMPANY\n  - heading \"Create your account\" [level=2]\n  - paragraph: Start with a private account. Invite your people when you’re ready.\n  - generic: Your name\n  - textbox \"Your name\":\n    - /placeholder: Ava Morgan\n  - generic: Username\n  - generic: \"@\"\n  - textbox \"Username @ 3–24 letters, numbers, or underscores\":\n    - /placeholder: yourname\n  - generic: 3–24 letters, numbers, or underscores\n  - generic: Email\n  - textbox \"Email\":\n    - /placeholder: you@example.com\n  - generic: Password\n  - textbox \"Password\":\n    - /placeholder: At least 10 characters\n  - button \"Create account\":\n    - text: Create account\n  - paragraph:\n    - text: Already have an account?\n    - button \"Sign in\"\n  - paragraph:\n    - text: Your account is private. Your chats stay yours.",
+    "events": [],
+    "logs": [],
+    "raster": {
+      "height": 844,
+      "width": 390
+    }
+  },
+  {
+    "name": "390x844-auth-signin",
+    "url": "http://127.0.0.1:5174/tests/fixtures/theme-preview.html",
+    "snapshot": "- navigation \"Preview controls\":\n  - text: Isolated preview\n  - combobox \"Preview screen\":\n    - option \"Auth\" [selected]\n    - option \"Unlock\"\n    - option \"Shell\"\n    - option \"Spaces\"\n  - combobox \"Preview theme\":\n    - option \"system\" [selected]\n    - option \"light\"\n    - option \"dark\"\n- main:\n  - generic: SyncUp\n  - paragraph: WELCOME BACK\n  - heading \"Sign in to SyncUp\" [level=2]\n  - paragraph: Pick up right where your conversations left off.\n  - generic: Email\n  - textbox \"Email\":\n    - /placeholder: you@example.com\n  - generic: Password\n  - textbox \"Password\":\n    - /placeholder: Your password\n  - button \"Sign in\":\n    - text: Sign in\n  - paragraph:\n    - text: New to SyncUp?\n    - button \"Create an account\" [active]\n  - paragraph:\n    - text: Your account is private. Your chats stay yours.",
+    "events": [],
+    "logs": [],
+    "raster": {
+      "height": 844,
+      "width": 390
+    }
+  },
+  {
+    "name": "390x844-unlock-focus",
+    "url": "http://127.0.0.1:5174/tests/fixtures/theme-preview.html",
+    "snapshot": "- navigation \"Preview controls\":\n  - text: Isolated preview\n  - combobox \"Preview screen\":\n    - option \"Auth\"\n    - option \"Unlock\" [selected]\n    - option \"Shell\"\n    - option \"Spaces\"\n  - combobox \"Preview theme\":\n    - option \"system\" [selected]\n    - option \"light\"\n    - option \"dark\"\n- main:\n  - generic: SyncUp\n  - paragraph: UNLOCK THIS DEVICE\n  - heading \"Welcome back\" [level=2]\n  - paragraph: Enter your password to unlock your encrypted conversations on this device.\n  - generic: Password\n  - textbox \"Password\"\n  - button \"Unlock SyncUp\" [active]:\n    - text: Unlock SyncUp",
+    "events": [],
+    "logs": [],
+    "raster": {
+      "height": 844,
+      "width": 390
+    }
+  },
+  {
+    "name": "390x844-theme-light-reload",
+    "url": "http://127.0.0.1:5174/tests/fixtures/theme-preview.html",
+    "snapshot": "- navigation \"Preview controls\":\n  - text: Isolated preview\n  - combobox \"Preview screen\":\n    - option \"Auth\" [selected]\n    - option \"Unlock\"\n    - option \"Shell\"\n    - option \"Spaces\"\n  - combobox \"Preview theme\":\n    - option \"system\" [selected]\n    - option \"light\"\n    - option \"dark\"\n- main:\n  - generic: SyncUp\n  - paragraph: YOUR WORK, IN GOOD COMPANY\n  - heading \"Create your account\" [level=2]\n  - paragraph: Start with a private account. Invite your people when you’re ready.\n  - generic: Your name\n  - textbox \"Your name\":\n    - /placeholder: Ava Morgan\n  - generic: Username\n  - generic: \"@\"\n  - textbox \"Username @ 3–24 letters, numbers, or underscores\":\n    - /placeholder: yourname\n  - generic: 3–24 letters, numbers, or underscores\n  - generic: Email\n  - textbox \"Email\":\n    - /placeholder: you@example.com\n  - generic: Password\n  - textbox \"Password\":\n    - /placeholder: At least 10 characters\n  - button \"Create account\":\n    - text: Create account\n  - paragraph:\n    - text: Already have an account?\n    - button \"Sign in\"\n  - paragraph:\n    - text: Your account is private. Your chats stay yours.",
+    "events": [],
+    "logs": [],
+    "raster": {
+      "height": 844,
+      "width": 390
+    }
+  },
+  {
+    "name": "390x844-theme-dark-reload",
+    "url": "http://127.0.0.1:5174/tests/fixtures/theme-preview.html",
+    "snapshot": "- navigation \"Preview controls\":\n  - text: Isolated preview\n  - combobox \"Preview screen\":\n    - option \"Auth\" [selected]\n    - option \"Unlock\"\n    - option \"Shell\"\n    - option \"Spaces\"\n  - combobox \"Preview theme\":\n    - option \"system\" [selected]\n    - option \"light\"\n    - option \"dark\"\n- main:\n  - generic: SyncUp\n  - paragraph: YOUR WORK, IN GOOD COMPANY\n  - heading \"Create your account\" [level=2]\n  - paragraph: Start with a private account. Invite your people when you’re ready.\n  - generic: Your name\n  - textbox \"Your name\":\n    - /placeholder: Ava Morgan\n  - generic: Username\n  - generic: \"@\"\n  - textbox \"Username @ 3–24 letters, numbers, or underscores\":\n    - /placeholder: yourname\n  - generic: 3–24 letters, numbers, or underscores\n  - generic: Email\n  - textbox \"Email\":\n    - /placeholder: you@example.com\n  - generic: Password\n  - textbox \"Password\":\n    - /placeholder: At least 10 characters\n  - button \"Create account\":\n    - text: Create account\n  - paragraph:\n    - text: Already have an account?\n    - button \"Sign in\"\n  - paragraph:\n    - text: Your account is private. Your chats stay yours.",
+    "events": [],
+    "logs": [],
+    "raster": {
+      "height": 844,
+      "width": 390
+    }
+  },
+  {
+    "name": "390x844-theme-system-reload",
+    "url": "http://127.0.0.1:5174/tests/fixtures/theme-preview.html",
+    "snapshot": "- navigation \"Preview controls\":\n  - text: Isolated preview\n  - combobox \"Preview screen\":\n    - option \"Auth\" [selected]\n    - option \"Unlock\"\n    - option \"Shell\"\n    - option \"Spaces\"\n  - combobox \"Preview theme\":\n    - option \"system\" [selected]\n    - option \"light\"\n    - option \"dark\"\n- main:\n  - generic: SyncUp\n  - paragraph: YOUR WORK, IN GOOD COMPANY\n  - heading \"Create your account\" [level=2]\n  - paragraph: Start with a private account. Invite your people when you’re ready.\n  - generic: Your name\n  - textbox \"Your name\":\n    - /placeholder: Ava Morgan\n  - generic: Username\n  - generic: \"@\"\n  - textbox \"Username @ 3–24 letters, numbers, or underscores\":\n    - /placeholder: yourname\n  - generic: 3–24 letters, numbers, or underscores\n  - generic: Email\n  - textbox \"Email\":\n    - /placeholder: you@example.com\n  - generic: Password\n  - textbox \"Password\":\n    - /placeholder: At least 10 characters\n  - button \"Create account\":\n    - text: Create account\n  - paragraph:\n    - text: Already have an account?\n    - button \"Sign in\"\n  - paragraph:\n    - text: Your account is private. Your chats stay yours.",
+    "events": [],
+    "logs": [],
+    "raster": {
+      "height": 844,
+      "width": 390
+    }
+  },
+  {
+    "name": "390x844-account-profile",
+    "url": "http://127.0.0.1:5174/tests/fixtures/ui-primitives-preview.html",
+    "snapshot": "- navigation \"Preview controls\":\n  - combobox \"Preview screen\":\n    - option \"Auth\"\n    - option \"Unlock\"\n    - option \"Profile\" [selected]\n    - option \"Report\"\n    - option \"Native controls\"\n  - combobox \"Preview theme\":\n    - option \"system\" [selected]\n    - option \"light\"\n    - option \"dark\"\n  - button \"Reopen dialog\"\n  - button \"Finish with error\"\n  - status \"Close count\": \"0\"\n- dialog \"Profile & settings\":\n  - paragraph: YOUR ACCOUNT\n  - heading \"Profile & settings\" [level=2]\n  - button \"Close profile\":\n  - img \"Sam Rivera\":\n    - generic: S\n  - strong: Profile photo\n  - generic: JPEG, PNG, or WebP · up to 2 MB\n  - button \"Choose a profile photo\"\n  - button \"Choose photo\":\n    - text: Choose photo\n  - generic: Display name\n  - textbox \"Display name\": Sam Rivera\n  - generic: Username\n  - generic: \"@\"\n  - textbox \"Username @\": <redacted>\n  - generic: About\n  - textbox \"About\":\n    - /placeholder: A little about you\n  - checkbox \"Username discoverability Let people find you by username and send you a message request.\" [checked]\n  - strong: Username discoverability\n  - generic: Let people find you by username and send you a message request.\n  - checkbox \"Read receipts Let other members know when you have read their messages.\" [checked]\n  - strong: Read receipts\n  - generic: Let other members know when you have read their messages.\n  - generic: Appearance\n  - combobox \"Appearance Saved on this device.\":\n    - option \"Use device setting\" [selected]\n    - option \"Light\"\n    - option \"Dark\"\n  - generic: Saved on this device.\n  - generic: Email\n  - textbox \"Email\": sam@example.test\n  - button \"Save profile\":\n    - text: Save profile\n  - heading \"Active sessions\" [level=3]\n  - button \"Refresh\"\n  - paragraph: Sign out devices you no longer use.\n  - paragraph: No active sessions found.\n  - region \"Safety & privacy\":\n    - heading \"Safety & privacy\" [level=3]:\n      - text: Safety & privacy\n    - generic: Block someone\n    - textbox \"Block someone Block\":\n      - /placeholder: Their username\n    - button \"Block\":\n      - text: Block\n    - paragraph: You haven’t blocked anyone.\n    - generic: Report a user\n    - textbox \"Report a user\":\n      - /placeholder: Their username\n    - generic: Reason\n    - combobox \"Reason\":\n      - option \"Spam\"\n      - option \"Harassment\" [selected]\n      - option \"Threats or violence\"\n      - option \"Inappropriate content\"\n      - option \"Impersonation\"\n      - option \"Other\"\n    - generic: Additional details (optional)\n    - textbox \"Additional details (optional)\"\n    - button \"Submit report\":\n      - text: Submit report",
+    "events": [],
+    "logs": [],
+    "raster": {
+      "height": 844,
+      "width": 390
+    }
+  },
+  {
+    "name": "390x844-account-save-error",
+    "url": "http://127.0.0.1:5174/tests/fixtures/ui-primitives-preview.html",
+    "snapshot": "- navigation \"Preview controls\":\n  - combobox \"Preview screen\":\n    - option \"Auth\"\n    - option \"Unlock\"\n    - option \"Profile\" [selected]\n    - option \"Report\"\n    - option \"Native controls\"\n  - combobox \"Preview theme\":\n    - option \"system\" [selected]\n    - option \"light\"\n    - option \"dark\"\n  - button \"Reopen dialog\"\n  - button \"Finish with error\" [active]\n  - status \"Close count\": \"0\"\n- dialog \"Profile & settings\":\n  - paragraph: YOUR ACCOUNT\n  - heading \"Profile & settings\" [level=2]\n  - button \"Close profile\":\n  - img \"Sam Rivera\":\n    - generic: S\n  - strong: Profile photo\n  - generic: JPEG, PNG, or WebP · up to 2 MB\n  - button \"Choose a profile photo\"\n  - button \"Choose photo\":\n    - text: Choose photo\n  - generic: Display name\n  - textbox \"Display name\": Sam Rivera\n  - generic: Username\n  - generic: \"@\"\n  - textbox \"Username @\": <redacted>\n  - generic: About\n  - textbox \"About\":\n    - /placeholder: A little about you\n  - checkbox \"Username discoverability Let people find you by username and send you a message request.\" [checked]\n  - strong: Username discoverability\n  - generic: Let people find you by username and send you a message request.\n  - checkbox \"Read receipts Let other members know when you have read their messages.\" [checked]\n  - strong: Read receipts\n  - generic: Let other members know when you have read their messages.\n  - generic: Appearance\n  - combobox \"Appearance Saved on this device.\":\n    - option \"Use device setting\" [selected]\n    - option \"Light\"\n    - option \"Dark\"\n  - generic: Saved on this device.\n  - generic: Email\n  - textbox \"Email\": sam@example.test\n  - alert: Something went wrong. Please try again.\n  - button \"Save profile\":\n    - text: Save profile\n  - heading \"Active sessions\" [level=3]\n  - button \"Refresh\"\n  - paragraph: Sign out devices you no longer use.\n  - paragraph: No active sessions found.\n  - region \"Safety & privacy\":\n    - heading \"Safety & privacy\" [level=3]:\n      - text: Safety & privacy\n    - generic: Block someone\n    - textbox \"Block someone Block\":\n      - /placeholder: Their username\n    - button \"Block\":\n      - text: Block\n    - paragraph: You haven’t blocked anyone.\n    - generic: Report a user\n    - textbox \"Report a user\":\n      - /placeholder: Their username\n    - generic: Reason\n    - combobox \"Reason\":\n      - option \"Spam\"\n      - option \"Harassment\" [selected]\n      - option \"Threats or violence\"\n      - option \"Inappropriate content\"\n      - option \"Impersonation\"\n      - option \"Other\"\n    - generic: Additional details (optional)\n    - textbox \"Additional details (optional)\"\n    - button \"Submit report\":\n      - text: Submit report",
+    "events": [],
+    "logs": [],
+    "raster": {
+      "height": 844,
+      "width": 390
+    }
+  },
+  {
+    "name": "390x844-report-dialog",
+    "url": "http://127.0.0.1:5174/tests/fixtures/ui-primitives-preview.html",
+    "snapshot": "- navigation \"Preview controls\":\n  - combobox \"Preview screen\":\n    - option \"Auth\"\n    - option \"Unlock\"\n    - option \"Profile\"\n    - option \"Report\" [selected]\n    - option \"Native controls\"\n  - combobox \"Preview theme\":\n    - option \"system\" [selected]\n    - option \"light\"\n    - option \"dark\"\n  - button \"Reopen dialog\"\n  - button \"Finish with error\"\n  - status \"Close count\": \"1\"\n- dialog \"Report this message\":\n  - paragraph: SAFETY & PRIVACY\n  - heading \"Report this message\" [level=2]\n  - button \"Close report\":\n  - paragraph: Reports are stored for review by SyncUp administrators.\n  - generic: Reason\n  - combobox \"Reason\":\n    - option \"Spam\"\n    - option \"Harassment\" [selected]\n    - option \"Threats or violence\"\n    - option \"Inappropriate content\"\n    - option \"Impersonation\"\n    - option \"Other\"\n  - generic: Additional details (optional)\n  - textbox \"Additional details (optional)\"\n  - button \"Submit report\":\n    - text: Submit report",
+    "events": [],
+    "logs": [],
+    "raster": {
+      "height": 844,
+      "width": 390
+    }
+  },
+  {
+    "name": "390x844-conversation",
+    "url": "http://127.0.0.1:5174/tests/fixtures/conversation-preview.html",
+    "snapshot": "- navigation \"Fixture controls\":\n  - text: Isolated Conversation fixture · no backend\n  - text: Scene\n  - combobox \"Fixture scene\":\n    - option \"welcome\"\n    - option \"conversation\" [selected]\n  - text: Theme\n  - combobox \"Fixture theme\":\n    - option \"light\" [selected]\n    - option \"dark\"\n- main:\n  - region \"Alex Chen\":\n    - button \"Back to chat list\":\n    - button \"Open details for Alex Chen\":\n      - img \"Alex Chen\":\n        - generic: A\n      - generic: Alex Chen\n      - generic: \"@alex · online · encrypted\"\n    - button \"Search messages in this chat\":\n    - button \"Start audio call\":\n    - button \"Start video call\":\n    - article:\n      - img \"Alex Chen\":\n        - generic: A\n      - strong: Alex Chen\n      - generic: \"@alex\"\n      - paragraph: Hello! See you tomorrow.\n      - time: 3:00 PM\n      - button \"Reply\"\n      - button \"Add reaction\":\n      - button \"Copy message\":\n      - button \"Pin message for everyone\":\n        - text: Pin\n      - button \"Delete for me\":\n        - text: Me\n      - button \"Report message\":\n        - text: Report\n    - article:\n      - paragraph: Looking forward to it.\n      - time: 3:01 PM\n      - img \"Sent\":\n      - button \"Reply\"\n      - button \"Add reaction\":\n      - button \"Copy message\":\n      - button \"Pin message for everyone\":\n        - text: Pin\n      - button \"Edit\"\n      - button \"Delete for everyone\":\n        - text: Everyone\n      - button \"Delete for me\":\n        - text: Me\n    - textbox \"Message\":\n      - /placeholder: Message Alex Chen\n    - button \"Open emoji picker\":\n    - generic \"Add media or file\":\n      - button \"Add media or file\"\n      - generic: Attach\n    - button \"Record voice note\":\n    - button \"Send message\" [disabled]:\n      - generic: Send\n  - navigation \"Main navigation\":\n    - button \"Chats, 1 unread conversations\":\n      - generic: \"1\"\n      - generic: Chats\n    - button \"Calls\":\n      - generic: Calls\n    - button \"Updates\":\n      - generic: Updates\n    - button \"Spaces\":\n      - generic: Spaces\n    - button \"You\":\n      - generic: You",
+    "events": [],
+    "logs": [],
+    "raster": {
+      "height": 844,
+      "width": 390
+    }
+  },
+  {
+    "name": "390x844-conversation-search",
+    "url": "http://127.0.0.1:5174/tests/fixtures/conversation-preview.html",
+    "snapshot": "- navigation \"Fixture controls\":\n  - text: Isolated Conversation fixture · no backend\n  - text: Scene\n  - combobox \"Fixture scene\":\n    - option \"welcome\"\n    - option \"conversation\" [selected]\n  - text: Theme\n  - combobox \"Fixture theme\":\n    - option \"light\" [selected]\n    - option \"dark\"\n- main:\n  - region \"Alex Chen\":\n    - button \"Back to chat list\":\n    - button \"Open details for Alex Chen\":\n      - img \"Alex Chen\":\n        - generic: A\n      - generic: Alex Chen\n      - generic: \"@alex · online · encrypted\"\n    - button \"Search messages in this chat\":\n    - button \"Start audio call\":\n    - button \"Start video call\":\n    - textbox \"Search messages in this conversation\" [active]:\n      - /placeholder: Search loaded messages on this device\n      - text: tomorrow\n    - generic: 1 matches\n    - button \"Close message search\":\n    - article:\n      - img \"Alex Chen\":\n        - generic: A\n      - strong: Alex Chen\n      - generic: \"@alex\"\n      - paragraph: Hello! See you tomorrow.\n      - time: 3:00 PM\n      - button \"Reply\"\n      - button \"Add reaction\":\n      - button \"Copy message\":\n      - button \"Pin message for everyone\":\n        - text: Pin\n      - button \"Delete for me\":\n        - text: Me\n      - button \"Report message\":\n        - text: Report\n    - textbox \"Message\":\n      - /placeholder: Message Alex Chen\n    - button \"Open emoji picker\":\n    - generic \"Add media or file\":\n      - button \"Add media or file\"\n      - generic: Attach\n    - button \"Record voice note\":\n    - button \"Send message\" [disabled]:\n      - generic: Send\n  - navigation \"Main navigation\":\n    - button \"Chats, 1 unread conversations\":\n      - generic: \"1\"\n      - generic: Chats\n    - button \"Calls\":\n      - generic: Calls\n    - button \"Updates\":\n      - generic: Updates\n    - button \"Spaces\":\n      - generic: Spaces\n    - button \"You\":\n      - generic: You",
+    "events": [],
+    "logs": [],
+    "raster": {
+      "height": 844,
+      "width": 390
+    }
+  },
+  {
+    "name": "390x844-chats-navigation",
+    "url": "http://127.0.0.1:5174/tests/fixtures/conversation-preview.html",
+    "snapshot": "- navigation \"Fixture controls\":\n  - text: Isolated Conversation fixture · no backend\n  - text: Scene\n  - combobox \"Fixture scene\":\n    - option \"welcome\" [selected]\n    - option \"conversation\"\n  - text: Theme\n  - combobox \"Fixture theme\":\n    - option \"light\" [selected]\n    - option \"dark\"\n- main:\n  - complementary:\n    - heading \"Chats\" [level=1]\n    - button \"New conversation\":\n    - button \"Search people and chats\":\n      - generic: Search people and chats\n    - generic \"Conversation filters\":\n      - button \"All\"\n      - button \"Unread\"\n      - button \"Requests\"\n    - paragraph: DIRECT MESSAGES\n    - button \"Alex Chen Alex Chen See you tomorrow 3:00 PM 1\":\n      - img \"Alex Chen\":\n        - generic: A\n      - strong: Alex Chen\n      - generic: See you tomorrow\n      - text: 3:00 PM\n      - generic: \"1\"\n    - paragraph: GROUPS\n    - generic: Personal messages are end-to-end encrypted.\n  - navigation \"Main navigation\":\n    - button \"Chats, 1 unread conversations\":\n      - generic: \"1\"\n      - generic: Chats\n    - button \"Calls\":\n      - generic: Calls\n    - button \"Updates\":\n      - generic: Updates\n    - button \"Spaces\":\n      - generic: Spaces\n    - button \"You\":\n      - generic: You",
+    "events": [],
+    "logs": [],
+    "raster": {
+      "height": 844,
+      "width": 390
+    }
+  },
+  {
+    "name": "390x844-spaces-voice",
+    "url": "http://127.0.0.1:5174/tests/fixtures/spaces-preview.html",
+    "snapshot": "- navigation \"Fixture controls\":\n  - text: Isolated Spaces fixture · no backend\n  - text: Scene\n  - combobox \"Fixture scene\":\n    - option \"voice\" [selected]\n    - option \"history\"\n    - option \"loading\"\n    - option \"empty\"\n    - option \"error\"\n  - text: Theme\n  - combobox \"Fixture theme\":\n    - option \"light\" [selected]\n    - option \"dark\"\n  - status \"Fixture callback\": none\n- main:\n  - complementary:\n    - strong: Project\n    - generic: Team work\n    - generic: Project\n    - navigation \"Project channels\":\n      - button \"general\":\n        - generic: general\n      - button \"voice\":\n        - generic: voice\n  - region \"Channel voice\":\n    - text: voice\n    - generic: Persistent voice room · up to 16 people\n    - button \"Join voice\":\n      - text: Join voice\n    - strong: Voice room is always here\n    - paragraph: Join to talk with people who have access to this channel. Up to 16 people can join.\n    - button \"Join voice\":\n      - text: Join voice\n  - navigation \"Main navigation\":\n    - button \"Chats\":\n      - generic: Chats\n    - button \"Calls\":\n      - generic: Calls\n    - button \"Updates\":\n      - generic: Updates\n    - button \"Spaces\":\n      - generic: Spaces\n    - button \"You\":\n      - generic: You",
+    "events": [],
+    "logs": [],
+    "raster": {
+      "height": 844,
+      "width": 390
+    }
+  },
+  {
+    "name": "390x844-spaces-history",
+    "url": "http://127.0.0.1:5174/tests/fixtures/spaces-preview.html",
+    "snapshot": "- navigation \"Fixture controls\":\n  - text: Isolated Spaces fixture · no backend\n  - text: Scene\n  - combobox \"Fixture scene\":\n    - option \"voice\"\n    - option \"history\" [selected]\n    - option \"loading\"\n    - option \"empty\"\n    - option \"error\"\n  - text: Theme\n  - combobox \"Fixture theme\":\n    - option \"light\" [selected]\n    - option \"dark\"\n  - status \"Fixture callback\": none\n- main:\n  - complementary:\n    - strong: Project\n    - generic: Team work\n    - generic: Project\n    - navigation \"Project channels\":\n      - button \"general\":\n        - generic: general\n      - button \"voice\":\n        - generic: voice\n  - region \"Channel general\":\n    - text: general\n    - generic: Project updates\n    - region \"Earlier encrypted group history\":\n      - strong:\n        - text: Earlier encrypted history\n      - paragraph: These messages remain end-to-end encrypted and visible only to original group members.\n      - button \"Load earlier\"\n      - article:\n        - strong: Sam Rivera\n        - generic: \"@sam · Oct 2, 2026, 2:00 PM\"\n        - paragraph: Earlier project plans remain here.\n        - generic \"Reactions\":\n          - generic \"👍, 2 reactions\":\n            - generic: 👍\n            - generic: \"2\"\n      - article:\n        - strong: Group member\n        - generic: Oct 2, 2026, 2:00 PM\n        - paragraph: This message was deleted.\n    - paragraph: New channel messages will appear here.\n    - 'textbox \"Message #general\"'\n    - generic: Messages in Spaces are visible to channel members and stored by SyncUp.\n  - navigation \"Main navigation\":\n    - button \"Chats\":\n      - generic: Chats\n    - button \"Calls\":\n      - generic: Calls\n    - button \"Updates\":\n      - generic: Updates\n    - button \"Spaces\":\n      - generic: Spaces\n    - button \"You\":\n      - generic: You",
+    "events": [],
+    "logs": [],
+    "raster": {
+      "height": 844,
+      "width": 390
+    }
+  },
+  {
+    "name": "1440x900-auth-signup",
+    "url": "http://127.0.0.1:5174/tests/fixtures/theme-preview.html",
+    "snapshot": "- navigation \"Preview controls\":\n  - text: Isolated preview\n  - combobox \"Preview screen\":\n    - option \"Auth\" [selected]\n    - option \"Unlock\"\n    - option \"Shell\"\n    - option \"Spaces\"\n  - combobox \"Preview theme\":\n    - option \"system\" [selected]\n    - option \"light\"\n    - option \"dark\"\n- main:\n  - region \"About SyncUp\":\n    - generic: SyncUp\n    - paragraph: A better place to work together\n    - heading \"Good work happens when we’re in sync.\" [level=1]:\n      - text: Good work\n      - text: happens when\n      - emphasis: we’re in sync.\n    - paragraph: A calm, shared space for the conversations and decisions that move work forward.\n    - generic: Private chats. Shared rooms. Less scattered work.\n  - paragraph: YOUR WORK, IN GOOD COMPANY\n  - heading \"Create your account\" [level=2]\n  - paragraph: Start with a private account. Invite your people when you’re ready.\n  - generic: Your name\n  - textbox \"Your name\":\n    - /placeholder: Ava Morgan\n  - generic: Username\n  - generic: \"@\"\n  - textbox \"Username @ 3–24 letters, numbers, or underscores\":\n    - /placeholder: yourname\n  - generic: 3–24 letters, numbers, or underscores\n  - generic: Email\n  - textbox \"Email\":\n    - /placeholder: you@example.com\n  - generic: Password\n  - textbox \"Password\":\n    - /placeholder: At least 10 characters\n  - button \"Create account\":\n    - text: Create account\n  - paragraph:\n    - text: Already have an account?\n    - button \"Sign in\"\n  - paragraph:\n    - text: Your account is private. Your chats stay yours.",
+    "events": [],
+    "logs": [],
+    "raster": {
+      "height": 900,
+      "width": 1440
+    }
+  },
+  {
+    "name": "1440x900-auth-signin",
+    "url": "http://127.0.0.1:5174/tests/fixtures/theme-preview.html",
+    "snapshot": "- navigation \"Preview controls\":\n  - text: Isolated preview\n  - combobox \"Preview screen\":\n    - option \"Auth\" [selected]\n    - option \"Unlock\"\n    - option \"Shell\"\n    - option \"Spaces\"\n  - combobox \"Preview theme\":\n    - option \"system\" [selected]\n    - option \"light\"\n    - option \"dark\"\n- main:\n  - region \"About SyncUp\":\n    - generic: SyncUp\n    - paragraph: A better place to work together\n    - heading \"Good work happens when we’re in sync.\" [level=1]:\n      - text: Good work\n      - text: happens when\n      - emphasis: we’re in sync.\n    - paragraph: A calm, shared space for the conversations and decisions that move work forward.\n    - generic: Private chats. Shared rooms. Less scattered work.\n  - paragraph: WELCOME BACK\n  - heading \"Sign in to SyncUp\" [level=2]\n  - paragraph: Pick up right where your conversations left off.\n  - generic: Email\n  - textbox \"Email\":\n    - /placeholder: you@example.com\n  - generic: Password\n  - textbox \"Password\":\n    - /placeholder: Your password\n  - button \"Sign in\":\n    - text: Sign in\n  - paragraph:\n    - text: New to SyncUp?\n    - button \"Create an account\" [active]\n  - paragraph:\n    - text: Your account is private. Your chats stay yours.",
+    "events": [],
+    "logs": [],
+    "raster": {
+      "height": 900,
+      "width": 1440
+    }
+  },
+  {
+    "name": "1440x900-unlock",
+    "url": "http://127.0.0.1:5174/tests/fixtures/theme-preview.html",
+    "snapshot": "- navigation \"Preview controls\":\n  - text: Isolated preview\n  - combobox \"Preview screen\":\n    - option \"Auth\"\n    - option \"Unlock\" [selected]\n    - option \"Shell\"\n    - option \"Spaces\"\n  - combobox \"Preview theme\":\n    - option \"system\" [selected]\n    - option \"light\"\n    - option \"dark\"\n- main:\n  - region \"SyncUp encryption\":\n    - generic: SyncUp\n    - paragraph: YOUR KEYS, YOUR CONVERSATIONS\n    - heading \"Private by design. Ready when you are.\" [level=1]:\n      - text: Private by\n      - text: design.\n      - emphasis:\n        - text: Ready when\n        - text: you are.\n    - paragraph: Your personal chat key is encrypted with your password and never sent to the server in readable form.\n    - generic: End-to-end encrypted personal chats\n  - paragraph: UNLOCK THIS DEVICE\n  - heading \"Welcome back\" [level=2]\n  - paragraph: Enter your password to unlock your encrypted conversations on this device.\n  - generic: Password\n  - textbox \"Password\"\n  - button \"Unlock SyncUp\":\n    - text: Unlock SyncUp",
+    "events": [],
+    "logs": [],
+    "raster": {
+      "height": 900,
+      "width": 1440
+    }
+  },
+  {
+    "name": "1440x900-account-profile",
+    "url": "http://127.0.0.1:5174/tests/fixtures/ui-primitives-preview.html",
+    "snapshot": "- navigation \"Preview controls\":\n  - combobox \"Preview screen\":\n    - option \"Auth\"\n    - option \"Unlock\"\n    - option \"Profile\" [selected]\n    - option \"Report\"\n    - option \"Native controls\"\n  - combobox \"Preview theme\":\n    - option \"system\" [selected]\n    - option \"light\"\n    - option \"dark\"\n  - button \"Reopen dialog\"\n  - button \"Finish with error\"\n  - status \"Close count\": \"0\"\n- dialog \"Profile & settings\":\n  - paragraph: YOUR ACCOUNT\n  - heading \"Profile & settings\" [level=2]\n  - button \"Close profile\":\n  - img \"Sam Rivera\":\n    - generic: S\n  - strong: Profile photo\n  - generic: JPEG, PNG, or WebP · up to 2 MB\n  - button \"Choose a profile photo\"\n  - button \"Choose photo\":\n    - text: Choose photo\n  - generic: Display name\n  - textbox \"Display name\": Sam Rivera\n  - generic: Username\n  - generic: \"@\"\n  - textbox \"Username @\": <redacted>\n  - generic: About\n  - textbox \"About\":\n    - /placeholder: A little about you\n  - checkbox \"Username discoverability Let people find you by username and send you a message request.\" [checked]\n  - strong: Username discoverability\n  - generic: Let people find you by username and send you a message request.\n  - checkbox \"Read receipts Let other members know when you have read their messages.\" [checked]\n  - strong: Read receipts\n  - generic: Let other members know when you have read their messages.\n  - generic: Appearance\n  - combobox \"Appearance Saved on this device.\":\n    - option \"Use device setting\" [selected]\n    - option \"Light\"\n    - option \"Dark\"\n  - generic: Saved on this device.\n  - generic: Email\n  - textbox \"Email\": sam@example.test\n  - button \"Save profile\":\n    - text: Save profile\n  - heading \"Active sessions\" [level=3]\n  - button \"Refresh\"\n  - paragraph: Sign out devices you no longer use.\n  - paragraph: No active sessions found.\n  - region \"Safety & privacy\":\n    - heading \"Safety & privacy\" [level=3]:\n      - text: Safety & privacy\n    - generic: Block someone\n    - textbox \"Block someone Block\":\n      - /placeholder: Their username\n    - button \"Block\":\n      - text: Block\n    - paragraph: You haven’t blocked anyone.\n    - generic: Report a user\n    - textbox \"Report a user\":\n      - /placeholder: Their username\n    - generic: Reason\n    - combobox \"Reason\":\n      - option \"Spam\"\n      - option \"Harassment\" [selected]\n      - option \"Threats or violence\"\n      - option \"Inappropriate content\"\n      - option \"Impersonation\"\n      - option \"Other\"\n    - generic: Additional details (optional)\n    - textbox \"Additional details (optional)\"\n    - button \"Submit report\":\n      - text: Submit report",
+    "events": [],
+    "logs": [],
+    "raster": {
+      "height": 900,
+      "width": 1440
+    }
+  },
+  {
+    "name": "1440x900-report-dialog",
+    "url": "http://127.0.0.1:5174/tests/fixtures/ui-primitives-preview.html",
+    "snapshot": "- navigation \"Preview controls\":\n  - combobox \"Preview screen\":\n    - option \"Auth\"\n    - option \"Unlock\"\n    - option \"Profile\"\n    - option \"Report\" [selected]\n    - option \"Native controls\"\n  - combobox \"Preview theme\":\n    - option \"system\" [selected]\n    - option \"light\"\n    - option \"dark\"\n  - button \"Reopen dialog\"\n  - button \"Finish with error\"\n  - status \"Close count\": \"0\"\n- dialog \"Report this message\":\n  - paragraph: SAFETY & PRIVACY\n  - heading \"Report this message\" [level=2]\n  - button \"Close report\":\n  - paragraph: Reports are stored for review by SyncUp administrators.\n  - generic: Reason\n  - combobox \"Reason\":\n    - option \"Spam\"\n    - option \"Harassment\" [selected]\n    - option \"Threats or violence\"\n    - option \"Inappropriate content\"\n    - option \"Impersonation\"\n    - option \"Other\"\n  - generic: Additional details (optional)\n  - textbox \"Additional details (optional)\"\n  - button \"Submit report\":\n    - text: Submit report",
+    "events": [],
+    "logs": [],
+    "raster": {
+      "height": 900,
+      "width": 1440
+    }
+  },
+  {
+    "name": "1440x900-calls",
+    "url": "http://127.0.0.1:5174/tests/fixtures/workspace-preview.html",
+    "snapshot": "- navigation \"Fixture controls\":\n  - text: Isolated Workspace fixture · no backend\n  - text: Theme\n  - combobox \"Fixture theme\":\n    - option \"light\" [selected]\n    - option \"dark\"\n  - text: Incoming\n  - combobox \"Fixture incoming call\":\n    - option \"none\" [selected]\n    - option \"direct\"\n    - option \"group\"\n  - status \"Fixture callback\": none\n  - status \"Fixture state\": \"{\\\"calls\\\":true,\\\"updates\\\":false,\\\"spaces\\\":false,\\\"requests\\\":false,\\\"chat\\\":null,\\\"target\\\":null}\"\n- link \"Skip to main content\":\n  - /url: \"#workspace-main\"\n- main:\n  - complementary \"Main navigation\":\n    - button \"Chats, 1 unread conversations\":\n      - generic: \"1\"\n      - generic: Chats\n    - button \"Calls\":\n      - generic: Calls\n    - button \"Updates\":\n      - generic: Updates\n    - button \"Spaces\":\n      - generic: Spaces\n    - button \"Open profile and settings\":\n      - img \"Sam Rivera\":\n        - generic: S\n  - complementary:\n    - heading \"Calls\" [level=1]\n    - button \"Start a new call\":\n    - paragraph: No calls yet\n    - paragraph: Your audio and video call history will appear here.\n    - button \"Start a call\":\n      - text: Start a call\n  - paragraph: PRIVATE CALLS\n  - heading \"Hear from your people.\" [level=2]\n  - paragraph: Start an encrypted audio or video call, or choose a recent call to return to that conversation.\n  - button \"Audio call\":\n    - text: Audio call\n  - button \"Video call\":\n    - text: Video call\n  - generic: Calls are end-to-end encrypted.",
+    "events": [],
+    "logs": [],
+    "raster": {
+      "height": 900,
+      "width": 1440
+    }
+  },
+  {
+    "name": "1440x900-incoming-direct",
+    "url": "http://127.0.0.1:5174/tests/fixtures/workspace-preview.html",
+    "snapshot": "- navigation \"Fixture controls\":\n  - text: Isolated Workspace fixture · no backend\n  - text: Theme\n  - combobox \"Fixture theme\":\n    - option \"light\" [selected]\n    - option \"dark\"\n  - text: Incoming\n  - combobox \"Fixture incoming call\":\n    - option \"none\"\n    - option \"direct\" [selected]\n    - option \"group\"\n  - status \"Fixture callback\": answer callback\n  - status \"Fixture state\": \"{\\\"calls\\\":true,\\\"updates\\\":false,\\\"spaces\\\":false,\\\"requests\\\":false,\\\"chat\\\":null,\\\"target\\\":null}\"\n- link \"Skip to main content\":\n  - /url: \"#workspace-main\"\n- main:\n  - complementary \"Main navigation\":\n    - button \"Chats, 1 unread conversations\":\n      - generic: \"1\"\n      - generic: Chats\n    - button \"Calls\":\n      - generic: Calls\n    - button \"Updates\":\n      - generic: Updates\n    - button \"Spaces\":\n      - generic: Spaces\n    - button \"Open profile and settings\":\n      - img \"Sam Rivera\":\n        - generic: S\n  - complementary:\n    - heading \"Calls\" [level=1]\n    - button \"Start a new call\":\n    - paragraph: No calls yet\n    - paragraph: Your audio and video call history will appear here.\n    - button \"Start a call\":\n      - text: Start a call\n  - paragraph: PRIVATE CALLS\n  - heading \"Hear from your people.\" [level=2]\n  - paragraph: Start an encrypted audio or video call, or choose a recent call to return to that conversation.\n  - button \"Audio call\":\n    - text: Audio call\n  - button \"Video call\":\n    - text: Video call\n  - generic: Calls are end-to-end encrypted.\n  - alertdialog \"Alex Chen\":\n    - img \"Alex Chen\":\n      - generic: A\n    - strong: Alex Chen\n    - generic: Incoming video call\n    - button \"Answer\" [active]\n    - button \"Decline\"",
+    "events": [],
+    "logs": [],
+    "raster": {
+      "height": 900,
+      "width": 1440
+    }
+  },
+  {
+    "name": "1440x900-incoming-group",
+    "url": "http://127.0.0.1:5174/tests/fixtures/workspace-preview.html",
+    "snapshot": "- navigation \"Fixture controls\":\n  - text: Isolated Workspace fixture · no backend\n  - text: Theme\n  - combobox \"Fixture theme\":\n    - option \"light\" [selected]\n    - option \"dark\"\n  - text: Incoming\n  - combobox \"Fixture incoming call\":\n    - option \"none\"\n    - option \"direct\"\n    - option \"group\" [selected]\n  - status \"Fixture callback\": decline callback\n  - status \"Fixture state\": \"{\\\"calls\\\":true,\\\"updates\\\":false,\\\"spaces\\\":false,\\\"requests\\\":false,\\\"chat\\\":null,\\\"target\\\":null}\"\n- link \"Skip to main content\":\n  - /url: \"#workspace-main\"\n- main:\n  - complementary \"Main navigation\":\n    - button \"Chats, 1 unread conversations\":\n      - generic: \"1\"\n      - generic: Chats\n    - button \"Calls\":\n      - generic: Calls\n    - button \"Updates\":\n      - generic: Updates\n    - button \"Spaces\":\n      - generic: Spaces\n    - button \"Open profile and settings\":\n      - img \"Sam Rivera\":\n        - generic: S\n  - complementary:\n    - heading \"Calls\" [level=1]\n    - button \"Start a new call\":\n    - paragraph: No calls yet\n    - paragraph: Your audio and video call history will appear here.\n    - button \"Start a call\":\n      - text: Start a call\n  - paragraph: PRIVATE CALLS\n  - heading \"Hear from your people.\" [level=2]\n  - paragraph: Start an encrypted audio or video call, or choose a recent call to return to that conversation.\n  - button \"Audio call\":\n    - text: Audio call\n  - button \"Video call\":\n    - text: Video call\n  - generic: Calls are end-to-end encrypted.\n  - alertdialog \"Design team\":\n    - img \"Design team\":\n      - generic: D\n    - strong: Design team\n    - generic: Alex Chen is calling\n    - button \"Answer\"\n    - button \"Decline\" [active]",
+    "events": [],
+    "logs": [],
+    "raster": {
+      "height": 900,
+      "width": 1440
+    }
+  },
+  {
+    "name": "1440x900-workspace-inbox",
+    "url": "http://127.0.0.1:5174/tests/fixtures/workspace-preview.html",
+    "snapshot": "- navigation \"Fixture controls\":\n  - text: Isolated Workspace fixture · no backend\n  - text: Theme\n  - combobox \"Fixture theme\":\n    - option \"light\" [selected]\n    - option \"dark\"\n  - text: Incoming\n  - combobox \"Fixture incoming call\":\n    - option \"none\" [selected]\n    - option \"direct\"\n    - option \"group\"\n  - status \"Fixture callback\": decline callback\n  - status \"Fixture state\": \"{\\\"calls\\\":false,\\\"updates\\\":false,\\\"spaces\\\":false,\\\"requests\\\":false,\\\"chat\\\":null,\\\"target\\\":null}\"\n- link \"Skip to main content\":\n  - /url: \"#workspace-main\"\n- main:\n  - complementary \"Main navigation\":\n    - button \"Chats, 1 unread conversations\" [active]:\n      - generic: \"1\"\n      - generic: Chats\n    - button \"Calls\":\n      - generic: Calls\n    - button \"Updates\":\n      - generic: Updates\n    - button \"Spaces\":\n      - generic: Spaces\n    - button \"Open profile and settings\":\n      - img \"Sam Rivera\":\n        - generic: S\n  - complementary:\n    - heading \"Chats\" [level=1]\n    - button \"New conversation\":\n    - button \"Search people and chats Ctrl K\":\n      - generic: Search people and chats\n      - generic: Ctrl K\n    - generic \"Conversation filters\":\n      - button \"All\"\n      - button \"Unread\"\n      - button \"Requests\"\n    - paragraph: DIRECT MESSAGES\n    - button \"Alex Chen Alex Chen See you tomorrow 3:00 PM 1\":\n      - img \"Alex Chen\":\n        - generic: A\n      - strong: Alex Chen\n      - generic: See you tomorrow\n      - text: 3:00 PM\n      - generic: \"1\"\n    - paragraph: GROUPS\n    - generic: Personal messages are end-to-end encrypted.\n  - strong: Conversation fixture\n  - paragraph: Domain views are not exercised in this fixture.",
+    "events": [],
+    "logs": [],
+    "raster": {
+      "height": 900,
+      "width": 1440
+    }
+  },
+  {
+    "name": "1440x900-conversation",
+    "url": "http://127.0.0.1:5174/tests/fixtures/conversation-preview.html",
+    "snapshot": "- navigation \"Fixture controls\":\n  - text: Isolated Conversation fixture · no backend\n  - text: Scene\n  - combobox \"Fixture scene\":\n    - option \"welcome\"\n    - option \"conversation\" [selected]\n  - text: Theme\n  - combobox \"Fixture theme\":\n    - option \"light\" [selected]\n    - option \"dark\"\n- main:\n  - complementary \"Main navigation\":\n    - button \"Chats, 1 unread conversations\":\n      - generic: \"1\"\n      - generic: Chats\n    - button \"Calls\":\n      - generic: Calls\n    - button \"Updates\":\n      - generic: Updates\n    - button \"Spaces\":\n      - generic: Spaces\n    - button \"Open profile and settings\":\n      - img \"Sam Rivera\":\n        - generic: S\n  - complementary:\n    - heading \"Chats\" [level=1]\n    - button \"New conversation\":\n    - button \"Search people and chats Ctrl K\":\n      - generic: Search people and chats\n      - generic: Ctrl K\n    - generic \"Conversation filters\":\n      - button \"All\"\n      - button \"Unread\"\n      - button \"Requests\"\n    - paragraph: DIRECT MESSAGES\n    - button \"Alex Chen Alex Chen See you tomorrow 3:00 PM 1\":\n      - img \"Alex Chen\":\n        - generic: A\n      - strong: Alex Chen\n      - generic: See you tomorrow\n      - text: 3:00 PM\n      - generic: \"1\"\n    - paragraph: GROUPS\n    - generic: Personal messages are end-to-end encrypted.\n  - region \"Alex Chen\":\n    - button \"Open details for Alex Chen\":\n      - img \"Alex Chen\":\n        - generic: A\n      - generic: Alex Chen\n      - generic: \"@alex · online · encrypted\"\n    - button \"Search messages in this chat\":\n    - button \"Start audio call\":\n    - button \"Start video call\":\n    - generic: Synced\n    - article:\n      - img \"Alex Chen\":\n        - generic: A\n      - strong: Alex Chen\n      - generic: \"@alex\"\n      - paragraph: Hello! See you tomorrow.\n      - time: 3:00 PM\n      - button \"Reply\"\n      - button \"Add reaction\":\n      - button \"Copy message\":\n      - button \"Pin message for everyone\":\n        - text: Pin\n      - button \"Delete for me\":\n        - text: Me\n      - button \"Report message\":\n        - text: Report\n    - article:\n      - paragraph: Looking forward to it.\n      - time: 3:01 PM\n      - img \"Sent\":\n      - button \"Reply\"\n      - button \"Add reaction\":\n      - button \"Copy message\":\n      - button \"Pin message for everyone\":\n        - text: Pin\n      - button \"Edit\"\n      - button \"Delete for everyone\":\n        - text: Everyone\n      - button \"Delete for me\":\n        - text: Me\n    - textbox \"Message\":\n      - /placeholder: Message Alex Chen\n    - button \"Open emoji picker\":\n    - generic \"Add media or file\":\n      - button \"Add media or file\"\n      - generic: Attach\n    - button \"Record voice note\":\n    - generic: Enter to send · Shift+Enter for a new line\n    - button \"Send message\" [disabled]:\n      - generic: Send",
+    "events": [],
+    "logs": [],
+    "raster": {
+      "height": 900,
+      "width": 1440
+    }
+  },
+  {
+    "name": "1440x900-spaces-voice",
+    "url": "http://127.0.0.1:5174/tests/fixtures/spaces-preview.html",
+    "snapshot": "- navigation \"Fixture controls\":\n  - text: Isolated Spaces fixture · no backend\n  - text: Scene\n  - combobox \"Fixture scene\":\n    - option \"voice\" [selected]\n    - option \"history\"\n    - option \"loading\"\n    - option \"empty\"\n    - option \"error\"\n  - text: Theme\n  - combobox \"Fixture theme\":\n    - option \"light\" [selected]\n    - option \"dark\"\n  - status \"Fixture callback\": none\n- main:\n  - complementary \"Main navigation\":\n    - button \"Chats\":\n      - generic: Chats\n    - button \"Calls\":\n      - generic: Calls\n    - button \"Updates\":\n      - generic: Updates\n    - button \"Spaces\":\n      - generic: Spaces\n    - button \"Open profile and settings\":\n      - img \"Sam Rivera\":\n        - generic: S\n  - complementary:\n    - strong: Project\n    - generic: Team work\n    - generic: Project\n    - navigation \"Project channels\":\n      - button \"general\":\n        - generic: general\n      - button \"voice\":\n        - generic: voice\n  - region \"Channel voice\":\n    - text: voice\n    - generic: Persistent voice room · up to 16 people\n    - button \"Join voice\":\n      - text: Join voice\n    - strong: Voice room is always here\n    - paragraph: Join to talk with people who have access to this channel. Up to 16 people can join.\n    - button \"Join voice\":\n      - text: Join voice",
+    "events": [],
+    "logs": [],
+    "raster": {
+      "height": 900,
+      "width": 1440
+    }
+  },
+  {
+    "name": "1440x900-spaces-history",
+    "url": "http://127.0.0.1:5174/tests/fixtures/spaces-preview.html",
+    "snapshot": "- navigation \"Fixture controls\":\n  - text: Isolated Spaces fixture · no backend\n  - text: Scene\n  - combobox \"Fixture scene\":\n    - option \"voice\"\n    - option \"history\" [selected]\n    - option \"loading\"\n    - option \"empty\"\n    - option \"error\"\n  - text: Theme\n  - combobox \"Fixture theme\":\n    - option \"light\" [selected]\n    - option \"dark\"\n  - status \"Fixture callback\": none\n- main:\n  - complementary \"Main navigation\":\n    - button \"Chats\":\n      - generic: Chats\n    - button \"Calls\":\n      - generic: Calls\n    - button \"Updates\":\n      - generic: Updates\n    - button \"Spaces\":\n      - generic: Spaces\n    - button \"Open profile and settings\":\n      - img \"Sam Rivera\":\n        - generic: S\n  - complementary:\n    - strong: Project\n    - generic: Team work\n    - generic: Project\n    - navigation \"Project channels\":\n      - button \"general\":\n        - generic: general\n      - button \"voice\":\n        - generic: voice\n  - region \"Channel general\":\n    - text: general\n    - generic: Project updates\n    - region \"Earlier encrypted group history\":\n      - strong:\n        - text: Earlier encrypted history\n      - paragraph: These messages remain end-to-end encrypted and visible only to original group members.\n      - button \"Load earlier\"\n      - article:\n        - strong: Sam Rivera\n        - generic: \"@sam · Oct 2, 2026, 2:00 PM\"\n        - paragraph: Earlier project plans remain here.\n        - generic \"Reactions\":\n          - generic \"👍, 2 reactions\":\n            - generic: 👍\n            - generic: \"2\"\n      - article:\n        - strong: Group member\n        - generic: Oct 2, 2026, 2:00 PM\n        - paragraph: This message was deleted.\n    - paragraph: New channel messages will appear here.\n    - 'textbox \"Message #general\"'\n    - generic: Messages in Spaces are visible to channel members and stored by SyncUp.",
+    "events": [],
+    "logs": [],
+    "raster": {
+      "height": 900,
+      "width": 1440
+    }
+  },
+  {
+    "name": "1440x900-voice-preview-playback",
+    "url": "http://127.0.0.1:5174/tests/fixtures/final-media-preview.html",
+    "snapshot": "- main:\n  - heading \"Final media browser smoke\" [level=1]\n  - paragraph: Isolated controls; no transport or uploaded media.\n  - status \"Browser recording capabilities\": \"{\\\"getUserMedia\\\":true,\\\"MediaRecorder\\\":true,\\\"AudioContext\\\":true}\"\n  - button \"Record voice note\":\n  - group \"Voice message preview\":\n    - button \"Play voice preview\":\n    - generic: 0:02\n    - button \"Delete voice note\":\n    - button \"Send voice note\" [active]:\n  - status \"Fixture action\": send callback only",
+    "events": [],
+    "logs": [],
+    "raster": {
+      "height": 900,
+      "width": 1440
+    }
+  },
+  {
+    "name": "827x517-voice-recorded-local",
+    "url": "http://127.0.0.1:5174/tests/fixtures/final-media-preview.html",
+    "snapshot": "- main:\n  - heading \"Final media browser smoke\" [level=1]\n  - paragraph: Isolated controls; no transport or uploaded media.\n  - status \"Browser recording capabilities\": \"{\\\"getUserMedia\\\":true,\\\"MediaRecorder\\\":true,\\\"AudioContext\\\":true}\"\n  - button \"Record voice note\":\n  - group \"Voice message preview\":\n    - button \"Play voice preview\":\n    - generic: 2:03\n    - button \"Delete voice note\":\n    - button \"Send voice note\":\n  - status \"Fixture action\": recorded draft ready locally",
+    "events": [],
+    "logs": [],
+    "raster": {
+      "height": 517,
+      "width": 827
+    }
+  },
+  {
+    "name": "827x517-voice-discarded-local",
+    "url": "http://127.0.0.1:5174/tests/fixtures/final-media-preview.html",
+    "snapshot": "- main:\n  - heading \"Final media browser smoke\" [level=1]\n  - paragraph: Isolated controls; no transport or uploaded media.\n  - status \"Browser recording capabilities\": \"{\\\"getUserMedia\\\":true,\\\"MediaRecorder\\\":true,\\\"AudioContext\\\":true}\"\n  - button \"Record voice note\":\n  - status \"Fixture action\": deleted locally",
+    "events": [],
+    "logs": [],
+    "raster": {
+      "height": 517,
+      "width": 827
+    }
+  }
+]

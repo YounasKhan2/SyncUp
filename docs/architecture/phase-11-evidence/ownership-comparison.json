@@ -1,0 +1,194 @@
+[
+  {
+    "name": "1440x900-light-list",
+    "byteIdentical": false,
+    "computedIdentical": true,
+    "osDark": false,
+    "events": [],
+    "logs": []
+  },
+  {
+    "name": "1440x900-light-channel",
+    "byteIdentical": false,
+    "computedIdentical": true,
+    "osDark": false,
+    "events": [],
+    "logs": []
+  },
+  {
+    "name": "1440x900-light-settings",
+    "byteIdentical": false,
+    "computedIdentical": true,
+    "osDark": false,
+    "events": [],
+    "logs": []
+  },
+  {
+    "name": "1440x900-light-updates",
+    "byteIdentical": false,
+    "computedIdentical": true,
+    "osDark": false,
+    "events": [],
+    "logs": []
+  },
+  {
+    "name": "1440x900-dark-list",
+    "byteIdentical": false,
+    "computedIdentical": true,
+    "osDark": false,
+    "events": [],
+    "logs": []
+  },
+  {
+    "name": "1440x900-dark-channel",
+    "byteIdentical": false,
+    "computedIdentical": true,
+    "osDark": false,
+    "events": [],
+    "logs": []
+  },
+  {
+    "name": "1440x900-dark-settings",
+    "byteIdentical": false,
+    "computedIdentical": true,
+    "osDark": false,
+    "events": [],
+    "logs": []
+  },
+  {
+    "name": "1440x900-dark-updates",
+    "byteIdentical": false,
+    "computedIdentical": true,
+    "osDark": false,
+    "events": [],
+    "logs": []
+  },
+  {
+    "name": "1440x900-system-list",
+    "byteIdentical": false,
+    "computedIdentical": false,
+    "osDark": false,
+    "events": [],
+    "logs": []
+  },
+  {
+    "name": "1440x900-system-channel",
+    "byteIdentical": false,
+    "computedIdentical": false,
+    "osDark": false,
+    "events": [],
+    "logs": []
+  },
+  {
+    "name": "1440x900-system-settings",
+    "byteIdentical": false,
+    "computedIdentical": false,
+    "osDark": false,
+    "events": [],
+    "logs": []
+  },
+  {
+    "name": "1440x900-system-updates",
+    "byteIdentical": false,
+    "computedIdentical": false,
+    "osDark": false,
+    "events": [],
+    "logs": []
+  },
+  {
+    "name": "390x844-light-list",
+    "byteIdentical": true,
+    "computedIdentical": true,
+    "osDark": false,
+    "events": [],
+    "logs": []
+  },
+  {
+    "name": "390x844-light-channel",
+    "byteIdentical": true,
+    "computedIdentical": true,
+    "osDark": false,
+    "events": [],
+    "logs": []
+  },
+  {
+    "name": "390x844-light-settings",
+    "byteIdentical": true,
+    "computedIdentical": true,
+    "osDark": false,
+    "events": [],
+    "logs": []
+  },
+  {
+    "name": "390x844-light-updates",
+    "byteIdentical": true,
+    "computedIdentical": true,
+    "osDark": false,
+    "events": [],
+    "logs": []
+  },
+  {
+    "name": "390x844-dark-list",
+    "byteIdentical": true,
+    "computedIdentical": true,
+    "osDark": false,
+    "events": [],
+    "logs": []
+  },
+  {
+    "name": "390x844-dark-channel",
+    "byteIdentical": true,
+    "computedIdentical": true,
+    "osDark": false,
+    "events": [],
+    "logs": []
+  },
+  {
+    "name": "390x844-dark-settings",
+    "byteIdentical": true,
+    "computedIdentical": true,
+    "osDark": false,
+    "events": [],
+    "logs": []
+  },
+  {
+    "name": "390x844-dark-updates",
+    "byteIdentical": true,
+    "computedIdentical": true,
+    "osDark": false,
+    "events": [],
+    "logs": []
+  },
+  {
+    "name": "390x844-system-list",
+    "byteIdentical": false,
+    "computedIdentical": false,
+    "osDark": false,
+    "events": [],
+    "logs": []
+  },
+  {
+    "name": "390x844-system-channel",
+    "byteIdentical": false,
+    "computedIdentical": false,
+    "osDark": false,
+    "events": [],
+    "logs": []
+  },
+  {
+    "name": "390x844-system-settings",
+    "byteIdentical": false,
+    "computedIdentical": false,
+    "osDark": false,
+    "events": [],
+    "logs": []
+  },
+  {
+    "name": "390x844-system-updates",
+    "byteIdentical": false,
+    "computedIdentical": false,
+    "osDark": false,
+    "events": [],
+    "logs": []
+  }
+]

@@ -1,0 +1,23 @@
+
+> test:media-v2
+> tsx --test tests/media-v2-crypto.test.mts tests/media-v2-scale.test.mts
+
+✔ media-v2 deterministic record round-trip and framing (15.4163ms)
+✔ media-v2 rejects ciphertext tampering (1.8121ms)
+✔ media-v2 rejects attachment substitution through AAD (1.7706ms)
+✔ media-v2 rejects reordered records before decryption (2.8303ms)
+✔ media-v2 rejects malformed framing (2.3711ms)
+✔ manifest stays bounded at 100 MiB (2.2379ms)
+✔ manifest stays bounded at 500 MiB (0.2081ms)
+✔ manifest stays bounded at 1024 MiB (0.1193ms)
+✔ manifest stays bounded at 2048 MiB (0.1295ms)
+✔ video sends retain source quality and voice source limits are frozen (0.2299ms)
+✔ invalid manifest sizes fail closed (0.3284ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 274.8644

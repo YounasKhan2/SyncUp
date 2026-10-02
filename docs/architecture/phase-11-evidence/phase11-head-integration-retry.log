@@ -1,0 +1,27 @@
+
+> test:integration
+> node --test tests/messaging.integration.test.mjs
+
+PASS all-member group-call ringing, encrypted key access, decline, and host end
+PASS group-call teardown when a member leaves
+PASS message request isolation and E2EE delivery
+PASS encrypted message controls and per-user pins
+PASS user/message reports and direct-message blocking
+PASS server authorization, transactional sequence assignment, and idempotent replay
+PASS authorized realtime delivery of sequence-only hints
+PASS authenticated typing updates and unauthorized activity rejection
+PASS permission-checked people/chat search without server-side message plaintext
+PASS group invites, member departures, and owner succession
+PASS read cursor, reaction toggle path, and mutual-contact group creation
+PASS backward chat-history pagination for scrollback
+PASS encrypted object-storage upload, recipient download, and decryption
+PASS authorized 1:1 call lifecycle, LiveKit tokens, and call history
+✔ encrypted requests, authorized chats, ordered idempotent delivery, and groups (21594.6799ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 21804.5074
