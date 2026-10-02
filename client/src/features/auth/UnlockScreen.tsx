@@ -5,6 +5,7 @@ import { api } from '../../shared/api'
 import { createKeyBundle, unlockKeyBundle } from '../auth/crypto/crypto'
 import type { KeyBundle } from '../../shared/types'
 import { BrandMark } from '../../shared/components/BrandMark'
+import { Button } from '../../shared/components/Button'
 export function UnlockScreen({ onUnlocked }: { onUnlocked: () => void }) {
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
@@ -56,9 +57,9 @@ export function UnlockScreen({ onUnlocked }: { onUnlocked: () => void }) {
           <form className="auth-form" onSubmit={unlock}>
             <label><span>Password</span><input type="password" autoComplete="current-password" value={password} onChange={(event) => setPassword(event.target.value)} required /></label>
             {error && <div className="form-error" role="alert">{error}</div>}
-            <button className="primary-button" type="submit" disabled={loading}>
+            <Button type="submit" disabled={loading}>
               {loading ? 'Unlocking…' : 'Unlock SyncUp'}{!loading && <ArrowRight size={14} aria-hidden="true" />}
-            </button>
+            </Button>
           </form>
         </div>
       </section>
