@@ -1,0 +1,15 @@
+{
+  "base": "b27a48aab156d02ad39331eb18bb8ad1f0e0a358",
+  "side": "head",
+  "bootstrapSHA256": "89cd3a99fb0b9595db623aaccf90c3d7f1aab8df46f4d3f33d2b660c5cc2cfba",
+  "fixtureSHA256": "82fe393f5acaf4fdcc2851248c38bc73a284eee9e3c282027a05d303e0f0c699",
+  "htmlSHA256": "f8a15aaabe0823bf0b46e3cb76881b81ef64a374c5d175ad22c089503d83704a",
+  "productionSources": {
+    "client/src/features/account/AccountPanel.tsx": "8f268e1926dba143fefd1c11a07ac17a076c770ca578b58b88be712bd03c65a9",
+    "client/src/features/account/SafetySettings.tsx": "68d5e6088d250ec82deaae2842b521184ed28e15d48aa250cbffe326b7f69df3",
+    "client/src/features/account/api.ts": "b6e7179719faa94d9a367a44ed9b229dfe790d66d18fe78523eba9b3c9ed4d0c",
+    "client/src/features/spaces/UpdatesPage.tsx": "f9581eaa310b5f7ea7bf856417515ca29d62ec3088e8d523d8032296ae152cd9",
+    "client/src/features/account/components/AccountSessionsSection.tsx": "d1579420e4bab93eebe7a96ccd5d40928cff588268ceffe8383934f874eadc7a",
+    "client/src/features/spaces/components/UpdateItem.tsx": "c8fcffc78349ff659260461e0fddb633fd34726e5a1af0a1f9f9c0d47db846b7"
+  }
+}

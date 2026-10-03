@@ -1,0 +1,46 @@
+[
+  {
+    "file": "client/src/features/account/AccountPanel.tsx",
+    "beforeLines": 234,
+    "afterLines": 231,
+    "state": 9,
+    "effects": 2,
+    "refs": 1,
+    "namedFunctions": 6,
+    "exactRuntimeParity": true,
+    "exactFullRestoredSource": true
+  },
+  {
+    "file": "client/src/features/account/SafetySettings.tsx",
+    "beforeLines": 118,
+    "afterLines": 118,
+    "state": 8,
+    "effects": 1,
+    "refs": 0,
+    "namedFunctions": 3,
+    "exactRuntimeParity": true,
+    "exactFullRestoredSource": true
+  },
+  {
+    "file": "client/src/features/account/api.ts",
+    "beforeLines": 35,
+    "afterLines": 35,
+    "state": 0,
+    "effects": 0,
+    "refs": 0,
+    "namedFunctions": 6,
+    "exactRuntimeParity": true,
+    "exactFullRestoredSource": true
+  },
+  {
+    "file": "client/src/features/spaces/UpdatesPage.tsx",
+    "beforeLines": 106,
+    "afterLines": 105,
+    "state": 6,
+    "effects": 1,
+    "refs": 0,
+    "namedFunctions": 3,
+    "exactRuntimeParity": true,
+    "exactFullRestoredSource": true
+  }
+]

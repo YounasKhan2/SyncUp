@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { CalendarDays, CheckSquare, Search, Sparkles } from 'lucide-react'
 import { api } from '../../shared/api'
 import type { SpaceSharedObject } from './types'
-import { SharedObjectCard } from './SharedObjectCard'
+import { UpdateItem } from './components/UpdateItem'
 
 type Stacks = { needsYou: SpaceSharedObject[]; happening: SpaceSharedObject[]; decided: SpaceSharedObject[] }
 type ActiveCall = { id: string; chat_id: string; call_type: 'audio' | 'video'; status: string; created_at: string; title: string; space_id: string | null; channel_name: string | null }
@@ -94,11 +94,10 @@ export function UpdatesPage({ userId, onOpenTarget, onOpenCall }: {
           </article>)}
           {stacks[id].length === 0 && !(id === 'happening' && visibleCalls.length)
             ? <p className="updates-empty">{empty}</p>
-          : <div className="updates-grid">{stacks[id].map((object) => <article className="updates-item" key={object.id}>
-            <div className="updates-item-context"><strong>{object.space_name}</strong><span>#{object.channel_name}</span></div>
-            <SharedObjectCard object={object} userId={userId} canManage={false} onRespond={(item, data) => void respond(item, data)} onStateChange={(item, state) => void changeState(item, state)} />
-            <button className="updates-open-source" type="button" onClick={() => onOpenTarget(object.space_id, object.chat_id, object.message_id)}>Open in channel</button>
-          </article>)}</div>}
+          : <div className="updates-grid">{stacks[id].map((object) => <UpdateItem key={object.id} object={object} userId={userId}
+            onRespond={(item, data) => void respond(item, data)}
+            onStateChange={(item, state) => void changeState(item, state)}
+            onOpen={() => onOpenTarget(object.space_id, object.chat_id, object.message_id)} />)}</div>}
       </section>)}
     </div>
     {busy && <p className="updates-saving" role="status">Saving your update…</p>}

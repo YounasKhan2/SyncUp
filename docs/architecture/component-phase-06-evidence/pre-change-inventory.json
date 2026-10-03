@@ -1,0 +1,1981 @@
+{
+  "base": "b27a48aab156d02ad39331eb18bb8ad1f0e0a358",
+  "files": [
+    {
+      "path": "client/src/features/account/AccountPanel.tsx",
+      "lineCount": 234,
+      "exports": [
+        "AccountPanel"
+      ],
+      "props": [
+        "{ user, appearance, onAppearanceChange, onClose, onSaved }: {\n  user: User\n  appearance: AppearancePreference\n  onAppearanceChange: (preference: AppearancePreference) => void\n  onClose: () => void\n  onSaved: (user: User) => void\n}"
+      ],
+      "state": [
+        "[error, setError] = useState('')",
+        "[saved, setSaved] = useState('')",
+        "[loading, setLoading] = useState(false)",
+        "[sessions, setSessions] = useState<Session[]>([])",
+        "[currentSessionId, setCurrentSessionId] = useState('')",
+        "[sessionsError, setSessionsError] = useState('')",
+        "[avatarFile, setAvatarFile] = useState<File | null>(null)",
+        "[avatarPreview, setAvatarPreview] = useState('')",
+        "[avatarBusy, setAvatarBusy] = useState(false)"
+      ],
+      "effects": [
+        "useEffect(() => () => {\n    if (avatarPreview) URL.revokeObjectURL(avatarPreview)\n  }, [avatarPreview])",
+        "useEffect(() => {\n    let mounted = true\n    listSessions()\n      .then((result) => {\n        if (mounted) {\n          setSessions(result.sessions)\n          setCurrentSessionId(result.currentSessionId)\n        }\n      })\n      .catch((sessionsLoadError: unknown) => {\n        if (mounted) {\n          setSessionsError(sessionsLoadError instanceof Error ? sessionsLoadError.message : 'Unable to load sessions.')\n        }\n      })\n    return () => { mounted = false }\n  }, [])"
+      ],
+      "refs": [
+        "avatarInput = useRef<HTMLInputElement>(null)"
+      ],
+      "timers": [],
+      "listeners": [],
+      "storage": [
+        "URL.revokeObjectURL(avatarPreview)",
+        "URL.createObjectURL(file)"
+      ],
+      "apiCalls": [
+        "listSessions()",
+        "listSessions()",
+        "revokeAccountSession(sessionId)",
+        "updateProfile({\n        displayName: String(form.get('displayName') ?? ''),\n        username: String(form.get('username') ?? ''),\n        about: String(form.get('about') ?? ''),\n        discoverable: form.get('discoverable') === 'on',\n        readReceiptsEnabled: form.get('readReceiptsEnabled') === 'on',\n      })",
+        "uploadAvatar(bytes, avatarFile.type)",
+        "getCurrentUser()",
+        "removeAccountAvatar()"
+      ],
+      "functions": [
+        "export function AccountPanel({ user, appearance, onAppearanceChange, onClose, onSaved }: {\n  user: User\n  appearance: AppearancePreference\n  onAppearanceChange: (preference: AppearancePreference) => void\n  onClose: () => void\n  onSaved: (user: User) => void\n}) {\n  const [error, setError] = useState('')\n  const [saved, setSaved] = useState('')\n  const [loading, setLoading] = useState(false)\n  const [sessions, setSessions] = useState<Session[]>([])\n  const [currentSessionId, setCurrentSessionId] = useState('')\n  const [sessionsError, setSessionsError] = useState('')\n  const [avatarFile, setAvatarFile] = useState<File | null>(null)\n  const [avatarPreview, setAvatarPreview] = useState('')\n  const [avatarBusy, setAvatarBusy] = useState(false)\n  const avatarInput = useRef<HTMLInputElement>(null)\n\n  useEffect(() => () => {\n    if (avatarPreview) URL.revokeObjectURL(avatarPreview)\n  }, [avatarPreview])\n\n  async function loadSessions() {\n    setSessionsError('')\n    const result = await listSessions()\n    setSessions(result.sessions)\n    setCurrentSessionId(result.currentSessionId)\n  }\n\n  useEffect(() => {\n    let mounted = true\n    listSessions()\n      .then((result) => {\n        if (mounted) {\n          setSessions(result.sessions)\n          setCurrentSessionId(result.currentSessionId)\n        }\n      })\n      .catch((sessionsLoadError: unknown) => {\n        if (mounted) {\n          setSessionsError(sessionsLoadError instanceof Error ? sessionsLoadError.message : 'Unable to load sessions.')\n        }\n      })\n    return () => { mounted = false }\n  }, [])\n\n  async function revokeSession(sessionId: string) {\n    setSessionsError('')\n    try {\n      await revokeAccountSession(sessionId)\n      await loadSessions()\n    } catch (revokeError) {\n      setSessionsError(revokeError instanceof Error ? revokeError.message : 'Unable to revoke session.')\n    }\n  }\n\n  async function saveProfile(event: FormEvent<HTMLFormElement>) {\n    event.preventDefault()\n    setError('')\n    setSaved('')\n    setLoading(true)\n    const form = new FormData(event.currentTarget)\n    try {\n      const result = await updateProfile({\n        displayName: String(form.get('displayName') ?? ''),\n        username: String(form.get('username') ?? ''),\n        about: String(form.get('about') ?? ''),\n        discoverable: form.get('discoverable') === 'on',\n        readReceiptsEnabled: form.get('readReceiptsEnabled') === 'on',\n      })\n      onSaved(result.user)\n      setSaved('Profile saved.')\n    } catch (saveError) {\n      setError(saveError instanceof Error ? saveError.message : 'Unable to save changes.')\n    } finally {\n      setLoading(false)\n    }\n  }\n\n  function selectAvatar(file: File | undefined) {\n    setError('')\n    setSaved('')\n    if (!file) return\n    if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {\n      setError('Choose a JPEG, PNG, or WebP image.')\n      if (avatarInput.current) avatarInput.current.value = ''\n      return\n    }\n    if (file.size > 2 * 1024 * 1024) {\n      setError('Profile photos must be 2 MB or smaller.')\n      if (avatarInput.current) avatarInput.current.value = ''\n      return\n    }\n    setAvatarPreview(URL.createObjectURL(file))\n    setAvatarFile(file)\n  }\n\n  async function saveAvatar() {\n    if (!avatarFile) return\n    setError('')\n    setSaved('')\n    setAvatarBusy(true)\n    try {\n      const bytes = await avatarFile.arrayBuffer()\n      const result = await (async () => {\n        await uploadAvatar(bytes, avatarFile.type)\n        return getCurrentUser()\n      })()\n      onSaved(result.user)\n      setAvatarFile(null)\n      setAvatarPreview('')\n      if (avatarInput.current) avatarInput.current.value = ''\n      setSaved('Profile photo updated.')\n    } catch (uploadError) {\n      setError(uploadError instanceof Error ? uploadError.message : 'Unable to upload your profile photo.')\n    } finally {\n      setAvatarBusy(false)\n    }\n  }\n\n  async function removeAvatar() {\n    setError('')\n    setSaved('')\n    setAvatarBusy(true)\n    try {\n      const result = await removeAccountAvatar()\n      onSaved(result.user)\n      setAvatarFile(null)\n      setAvatarPreview('')\n      if (avatarInput.current) avatarInput.current.value = ''\n      setSaved('Profile photo removed.')\n    } catch (removeError) {\n      setError(removeError instanceof Error ? removeError.message : 'Unable to remove your profile photo.')\n    } finally {\n      setAvatarBusy(false)\n    }\n  }\n\n  return (\n    <Dialog aria-labelledby=\"account-title\" onBackdropMouseDown={(event) => {\n      if (event.target === event.currentTarget) onClose()\n    }}>\n        <div className=\"dialog-heading\">\n          <div><p className=\"eyebrow\">YOUR ACCOUNT</p><h2 id=\"account-title\">Profile & settings</h2></div>\n          <IconButton type=\"button\" onClick={onClose} aria-label=\"Close profile\"><X size={15} aria-hidden=\"true\" /></IconButton>\n        </div>\n        <form className=\"profile-form\" onSubmit={saveProfile}>\n          <div className=\"profile-avatar-editor\">\n            <Avatar name={user.display_name} src={avatarPreview || user.avatar_url} className=\"profile-avatar\" />\n            <div className=\"profile-avatar-actions\">\n              <strong>Profile photo</strong>\n              <span>JPEG, PNG, or WebP · up to 2 MB</span>\n              <div>\n                <input\n                  ref={avatarInput}\n                  className=\"visually-hidden\"\n                  type=\"file\"\n                  accept=\"image/jpeg,image/png,image/webp\"\n                  aria-label=\"Choose a profile photo\"\n                  onChange={(event) => selectAvatar(event.currentTarget.files?.[0])}\n                />\n                <button type=\"button\" className=\"secondary-button\" disabled={avatarBusy} onClick={() => avatarInput.current?.click()}>\n                  <Camera size={13} aria-hidden=\"true\" /> Choose photo\n                </button>\n                {avatarFile && <button type=\"button\" className=\"secondary-button\" disabled={avatarBusy} onClick={() => void saveAvatar()}>\n                  {avatarBusy ? 'Uploading…' : 'Upload photo'}\n                </button>}\n                {!avatarFile && user.avatar_url && <button type=\"button\" className=\"secondary-button\" disabled={avatarBusy} onClick={() => void removeAvatar()}>\n                  <Trash2 size={13} aria-hidden=\"true\" /> Remove\n                </button>}\n              </div>\n            </div>\n          </div>\n          <label><span>Display name</span><input name=\"displayName\" defaultValue={user.display_name} maxLength={60} required /></label>\n          <label><span>Username</span><div className=\"username-input\"><span>@</span><input name=\"username\" defaultValue={user.username} minLength={3} maxLength={24} pattern=\"[A-Za-z0-9_]+\" required /></div></label>\n          <label><span>About</span><textarea name=\"about\" defaultValue={user.about ?? ''} rows={3} maxLength={160} placeholder=\"A little about you\" /></label>\n          <label className=\"profile-checkbox\">\n            <input type=\"checkbox\" name=\"discoverable\" defaultChecked={user.discoverable ?? true} />\n            <span><strong>Username discoverability</strong><small>Let people find you by username and send you a message request.</small></span>\n          </label>\n          <label className=\"profile-checkbox\">\n            <input type=\"checkbox\" name=\"readReceiptsEnabled\" defaultChecked={user.read_receipts_enabled ?? true} />\n            <span><strong>Read receipts</strong><small>Let other members know when you have read their messages.</small></span>\n          </label>\n          <label><span>Appearance</span><select value={appearance} onChange={(event) => {\n            const preference = event.currentTarget.value\n            try {\n              if (preference === 'system' || preference === 'light' || preference === 'dark') {\n                onAppearanceChange(preference)\n              }\n              setError('')\n            } catch (appearanceError) {\n              setError(appearanceError instanceof Error ? appearanceError.message : 'Unable to save appearance preference.')\n            }\n          }}>\n            <option value=\"system\">Use device setting</option>\n            <option value=\"light\">Light</option>\n            <option value=\"dark\">Dark</option>\n          </select><small className=\"appearance-caption\">Saved on this device.</small></label>\n          <label><span>Email</span><input value={user.email} readOnly /></label>\n          {error && <div className=\"form-error\" role=\"alert\">{error}</div>}\n          {saved && <p className=\"form-success\" role=\"status\">{saved}</p>}\n          <Button type=\"submit\" disabled={loading}>{loading ? 'Saving…' : 'Save profile'}{!loading && <ArrowRight size={14} aria-hidden=\"true\" />}</Button>\n        </form>\n        <div className=\"sessions-section\">\n          <div className=\"sessions-heading\"><h3>Active sessions</h3><button type=\"button\" onClick={() => void loadSessions()}>Refresh</button></div>\n          <p className=\"sessions-caption\">Sign out devices you no longer use.</p>\n          {sessionsError && <div className=\"form-error\" role=\"alert\">{sessionsError}</div>}\n          <div className=\"session-list\">\n            {sessions.map((session) => (\n              <div className=\"session-row\" key={session.id}>\n                <span className=\"session-device\" aria-hidden=\"true\"><Monitor size={14} /></span>\n                <div><span className=\"small strong\">{session.device_name}{session.id === currentSessionId ? ' · This device' : ''}</span><span className=\"micro muted\">Active {new Date(session.last_active_at).toLocaleString()}</span></div>\n                {session.id !== currentSessionId && <button type=\"button\" onClick={() => void revokeSession(session.id)}>Revoke</button>}\n              </div>\n            ))}\n            {sessions.length === 0 && !sessionsError && <p className=\"sessions-caption\">No active sessions found.</p>}\n          </div>\n        </div>\n        <SafetySettings />\n    </Dialog>\n  )\n}",
+        "async function loadSessions() {\n    setSessionsError('')\n    const result = await listSessions()\n    setSessions(result.sessions)\n    setCurrentSessionId(result.currentSessionId)\n  }",
+        "async function revokeSession(sessionId: string) {\n    setSessionsError('')\n    try {\n      await revokeAccountSession(sessionId)\n      await loadSessions()\n    } catch (revokeError) {\n      setSessionsError(revokeError instanceof Error ? revokeError.message : 'Unable to revoke session.')\n    }\n  }",
+        "async function saveProfile(event: FormEvent<HTMLFormElement>) {\n    event.preventDefault()\n    setError('')\n    setSaved('')\n    setLoading(true)\n    const form = new FormData(event.currentTarget)\n    try {\n      const result = await updateProfile({\n        displayName: String(form.get('displayName') ?? ''),\n        username: String(form.get('username') ?? ''),\n        about: String(form.get('about') ?? ''),\n        discoverable: form.get('discoverable') === 'on',\n        readReceiptsEnabled: form.get('readReceiptsEnabled') === 'on',\n      })\n      onSaved(result.user)\n      setSaved('Profile saved.')\n    } catch (saveError) {\n      setError(saveError instanceof Error ? saveError.message : 'Unable to save changes.')\n    } finally {\n      setLoading(false)\n    }\n  }",
+        "function selectAvatar(file: File | undefined) {\n    setError('')\n    setSaved('')\n    if (!file) return\n    if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {\n      setError('Choose a JPEG, PNG, or WebP image.')\n      if (avatarInput.current) avatarInput.current.value = ''\n      return\n    }\n    if (file.size > 2 * 1024 * 1024) {\n      setError('Profile photos must be 2 MB or smaller.')\n      if (avatarInput.current) avatarInput.current.value = ''\n      return\n    }\n    setAvatarPreview(URL.createObjectURL(file))\n    setAvatarFile(file)\n  }",
+        "async function saveAvatar() {\n    if (!avatarFile) return\n    setError('')\n    setSaved('')\n    setAvatarBusy(true)\n    try {\n      const bytes = await avatarFile.arrayBuffer()\n      const result = await (async () => {\n        await uploadAvatar(bytes, avatarFile.type)\n        return getCurrentUser()\n      })()\n      onSaved(result.user)\n      setAvatarFile(null)\n      setAvatarPreview('')\n      if (avatarInput.current) avatarInput.current.value = ''\n      setSaved('Profile photo updated.')\n    } catch (uploadError) {\n      setError(uploadError instanceof Error ? uploadError.message : 'Unable to upload your profile photo.')\n    } finally {\n      setAvatarBusy(false)\n    }\n  }",
+        "async function removeAvatar() {\n    setError('')\n    setSaved('')\n    setAvatarBusy(true)\n    try {\n      const result = await removeAccountAvatar()\n      onSaved(result.user)\n      setAvatarFile(null)\n      setAvatarPreview('')\n      if (avatarInput.current) avatarInput.current.value = ''\n      setSaved('Profile photo removed.')\n    } catch (removeError) {\n      setError(removeError instanceof Error ? removeError.message : 'Unable to remove your profile photo.')\n    } finally {\n      setAvatarBusy(false)\n    }\n  }"
+      ],
+      "dom": [
+        {
+          "tag": "Dialog",
+          "attributes": "aria-labelledby=\"account-title\" onBackdropMouseDown={(event) => {\n      if (event.target === event.currentTarget) onClose()\n    }}"
+        },
+        {
+          "tag": "div",
+          "attributes": "className=\"dialog-heading\""
+        },
+        {
+          "tag": "div",
+          "attributes": ""
+        },
+        {
+          "tag": "p",
+          "attributes": "className=\"eyebrow\""
+        },
+        {
+          "tag": "h2",
+          "attributes": "id=\"account-title\""
+        },
+        {
+          "tag": "IconButton",
+          "attributes": "type=\"button\" onClick={onClose} aria-label=\"Close profile\""
+        },
+        {
+          "tag": "X",
+          "attributes": "size={15} aria-hidden=\"true\""
+        },
+        {
+          "tag": "form",
+          "attributes": "className=\"profile-form\" onSubmit={saveProfile}"
+        },
+        {
+          "tag": "div",
+          "attributes": "className=\"profile-avatar-editor\""
+        },
+        {
+          "tag": "Avatar",
+          "attributes": "name={user.display_name} src={avatarPreview || user.avatar_url} className=\"profile-avatar\""
+        },
+        {
+          "tag": "div",
+          "attributes": "className=\"profile-avatar-actions\""
+        },
+        {
+          "tag": "strong",
+          "attributes": ""
+        },
+        {
+          "tag": "span",
+          "attributes": ""
+        },
+        {
+          "tag": "div",
+          "attributes": ""
+        },
+        {
+          "tag": "input",
+          "attributes": "ref={avatarInput}\n                  className=\"visually-hidden\"\n                  type=\"file\"\n                  accept=\"image/jpeg,image/png,image/webp\"\n                  aria-label=\"Choose a profile photo\"\n                  onChange={(event) => selectAvatar(event.currentTarget.files?.[0])}"
+        },
+        {
+          "tag": "button",
+          "attributes": "type=\"button\" className=\"secondary-button\" disabled={avatarBusy} onClick={() => avatarInput.current?.click()}"
+        },
+        {
+          "tag": "Camera",
+          "attributes": "size={13} aria-hidden=\"true\""
+        },
+        {
+          "tag": "button",
+          "attributes": "type=\"button\" className=\"secondary-button\" disabled={avatarBusy} onClick={() => void saveAvatar()}"
+        },
+        {
+          "tag": "button",
+          "attributes": "type=\"button\" className=\"secondary-button\" disabled={avatarBusy} onClick={() => void removeAvatar()}"
+        },
+        {
+          "tag": "Trash2",
+          "attributes": "size={13} aria-hidden=\"true\""
+        },
+        {
+          "tag": "label",
+          "attributes": ""
+        },
+        {
+          "tag": "span",
+          "attributes": ""
+        },
+        {
+          "tag": "input",
+          "attributes": "name=\"displayName\" defaultValue={user.display_name} maxLength={60} required"
+        },
+        {
+          "tag": "label",
+          "attributes": ""
+        },
+        {
+          "tag": "span",
+          "attributes": ""
+        },
+        {
+          "tag": "div",
+          "attributes": "className=\"username-input\""
+        },
+        {
+          "tag": "span",
+          "attributes": ""
+        },
+        {
+          "tag": "input",
+          "attributes": "name=\"username\" defaultValue={user.username} minLength={3} maxLength={24} pattern=\"[A-Za-z0-9_]+\" required"
+        },
+        {
+          "tag": "label",
+          "attributes": ""
+        },
+        {
+          "tag": "span",
+          "attributes": ""
+        },
+        {
+          "tag": "textarea",
+          "attributes": "name=\"about\" defaultValue={user.about ?? ''} rows={3} maxLength={160} placeholder=\"A little about you\""
+        },
+        {
+          "tag": "label",
+          "attributes": "className=\"profile-checkbox\""
+        },
+        {
+          "tag": "input",
+          "attributes": "type=\"checkbox\" name=\"discoverable\" defaultChecked={user.discoverable ?? true}"
+        },
+        {
+          "tag": "span",
+          "attributes": ""
+        },
+        {
+          "tag": "strong",
+          "attributes": ""
+        },
+        {
+          "tag": "small",
+          "attributes": ""
+        },
+        {
+          "tag": "label",
+          "attributes": "className=\"profile-checkbox\""
+        },
+        {
+          "tag": "input",
+          "attributes": "type=\"checkbox\" name=\"readReceiptsEnabled\" defaultChecked={user.read_receipts_enabled ?? true}"
+        },
+        {
+          "tag": "span",
+          "attributes": ""
+        },
+        {
+          "tag": "strong",
+          "attributes": ""
+        },
+        {
+          "tag": "small",
+          "attributes": ""
+        },
+        {
+          "tag": "label",
+          "attributes": ""
+        },
+        {
+          "tag": "span",
+          "attributes": ""
+        },
+        {
+          "tag": "select",
+          "attributes": "value={appearance} onChange={(event) => {\n            const preference = event.currentTarget.value\n            try {\n              if (preference === 'system' || preference === 'light' || preference === 'dark') {\n                onAppearanceChange(preference)\n              }\n              setError('')\n            } catch (appearanceError) {\n              setError(appearanceError instanceof Error ? appearanceError.message : 'Unable to save appearance preference.')\n            }\n          }}"
+        },
+        {
+          "tag": "option",
+          "attributes": "value=\"system\""
+        },
+        {
+          "tag": "option",
+          "attributes": "value=\"light\""
+        },
+        {
+          "tag": "option",
+          "attributes": "value=\"dark\""
+        },
+        {
+          "tag": "small",
+          "attributes": "className=\"appearance-caption\""
+        },
+        {
+          "tag": "label",
+          "attributes": ""
+        },
+        {
+          "tag": "span",
+          "attributes": ""
+        },
+        {
+          "tag": "input",
+          "attributes": "value={user.email} readOnly"
+        },
+        {
+          "tag": "div",
+          "attributes": "className=\"form-error\" role=\"alert\""
+        },
+        {
+          "tag": "p",
+          "attributes": "className=\"form-success\" role=\"status\""
+        },
+        {
+          "tag": "Button",
+          "attributes": "type=\"submit\" disabled={loading}"
+        },
+        {
+          "tag": "ArrowRight",
+          "attributes": "size={14} aria-hidden=\"true\""
+        },
+        {
+          "tag": "div",
+          "attributes": "className=\"sessions-section\""
+        },
+        {
+          "tag": "div",
+          "attributes": "className=\"sessions-heading\""
+        },
+        {
+          "tag": "h3",
+          "attributes": ""
+        },
+        {
+          "tag": "button",
+          "attributes": "type=\"button\" onClick={() => void loadSessions()}"
+        },
+        {
+          "tag": "p",
+          "attributes": "className=\"sessions-caption\""
+        },
+        {
+          "tag": "div",
+          "attributes": "className=\"form-error\" role=\"alert\""
+        },
+        {
+          "tag": "div",
+          "attributes": "className=\"session-list\""
+        },
+        {
+          "tag": "div",
+          "attributes": "className=\"session-row\" key={session.id}"
+        },
+        {
+          "tag": "span",
+          "attributes": "className=\"session-device\" aria-hidden=\"true\""
+        },
+        {
+          "tag": "Monitor",
+          "attributes": "size={14}"
+        },
+        {
+          "tag": "div",
+          "attributes": ""
+        },
+        {
+          "tag": "span",
+          "attributes": "className=\"small strong\""
+        },
+        {
+          "tag": "span",
+          "attributes": "className=\"micro muted\""
+        },
+        {
+          "tag": "button",
+          "attributes": "type=\"button\" onClick={() => void revokeSession(session.id)}"
+        },
+        {
+          "tag": "p",
+          "attributes": "className=\"sessions-caption\""
+        },
+        {
+          "tag": "SafetySettings",
+          "attributes": ""
+        }
+      ]
+    },
+    {
+      "path": "client/src/features/account/SafetySettings.tsx",
+      "lineCount": 118,
+      "exports": [
+        "SafetySettings"
+      ],
+      "props": [],
+      "state": [
+        "[blockedUsers, setBlockedUsers] = useState<BlockedUser[]>([])",
+        "[username, setUsername] = useState('')",
+        "[reportUsername, setReportUsername] = useState('')",
+        "[reportReason, setReportReason] = useState<(typeof reasons)[number][0]>('harassment')",
+        "[reportDetails, setReportDetails] = useState('')",
+        "[error, setError] = useState('')",
+        "[notice, setNotice] = useState('')",
+        "[loading, setLoading] = useState(false)"
+      ],
+      "effects": [
+        "useEffect(() => {\n    let active = true\n    api<{ blockedUsers: BlockedUser[] }>('/api/blocks')\n      .then((result) => { if (active) setBlockedUsers(result.blockedUsers) })\n      .catch((loadError: unknown) => {\n        if (active) setError(loadError instanceof Error ? loadError.message : 'Unable to load blocked users.')\n      })\n    return () => { active = false }\n  }, [])"
+      ],
+      "refs": [],
+      "timers": [],
+      "listeners": [],
+      "storage": [],
+      "apiCalls": [
+        "api<{ blockedUsers: BlockedUser[] }>('/api/blocks')",
+        "api<{ blockedUsers: BlockedUser[] }>('/api/blocks')",
+        "api<void>('/api/blocks', {\n        method: 'POST',\n        body: JSON.stringify({ username }),\n      })",
+        "api<void>(`/api/blocks/${encodeURIComponent(user.id)}`, { method: 'DELETE' })",
+        "api('/api/reports', {\n        method: 'POST',\n        body: JSON.stringify({ username: reportUsername, reason: reportReason, details: reportDetails }),\n      })"
+      ],
+      "functions": [
+        "export function SafetySettings() {\n  const [blockedUsers, setBlockedUsers] = useState<BlockedUser[]>([])\n  const [username, setUsername] = useState('')\n  const [reportUsername, setReportUsername] = useState('')\n  const [reportReason, setReportReason] = useState<(typeof reasons)[number][0]>('harassment')\n  const [reportDetails, setReportDetails] = useState('')\n  const [error, setError] = useState('')\n  const [notice, setNotice] = useState('')\n  const [loading, setLoading] = useState(false)\n\n  const refreshBlocks = useCallback(async () => {\n    const result = await api<{ blockedUsers: BlockedUser[] }>('/api/blocks')\n    setBlockedUsers(result.blockedUsers)\n  }, [])\n\n  useEffect(() => {\n    let active = true\n    api<{ blockedUsers: BlockedUser[] }>('/api/blocks')\n      .then((result) => { if (active) setBlockedUsers(result.blockedUsers) })\n      .catch((loadError: unknown) => {\n        if (active) setError(loadError instanceof Error ? loadError.message : 'Unable to load blocked users.')\n      })\n    return () => { active = false }\n  }, [])\n\n  async function blockUser(event: FormEvent<HTMLFormElement>) {\n    event.preventDefault()\n    setError('')\n    setNotice('')\n    setLoading(true)\n    try {\n      await api<void>('/api/blocks', {\n        method: 'POST',\n        body: JSON.stringify({ username }),\n      })\n      setUsername('')\n      setNotice('User blocked. Direct messages and pending requests are closed.')\n      await refreshBlocks()\n    } catch (blockError) {\n      setError(blockError instanceof Error ? blockError.message : 'Unable to block this user.')\n    } finally {\n      setLoading(false)\n    }\n  }\n\n  async function unblockUser(user: BlockedUser) {\n    setError('')\n    setNotice('')\n    try {\n      await api<void>(`/api/blocks/${encodeURIComponent(user.id)}`, { method: 'DELETE' })\n      setNotice(`@${user.username} unblocked.`)\n      await refreshBlocks()\n    } catch (unblockError) {\n      setError(unblockError instanceof Error ? unblockError.message : 'Unable to unblock this user.')\n    }\n  }\n\n  async function reportUser(event: FormEvent<HTMLFormElement>) {\n    event.preventDefault()\n    setError('')\n    setNotice('')\n    setLoading(true)\n    try {\n      await api('/api/reports', {\n        method: 'POST',\n        body: JSON.stringify({ username: reportUsername, reason: reportReason, details: reportDetails }),\n      })\n      setReportUsername('')\n      setReportDetails('')\n      setNotice('Report submitted for review.')\n    } catch (reportError) {\n      setError(reportError instanceof Error ? reportError.message : 'Unable to submit this report.')\n    } finally {\n      setLoading(false)\n    }\n  }\n\n  return (\n    <section className=\"safety-settings\" aria-labelledby=\"safety-title\">\n      <div className=\"sessions-heading\"><h3 id=\"safety-title\"><ShieldBan size={14} aria-hidden=\"true\" /> Safety & privacy</h3></div>\n      {error && <div className=\"form-error\" role=\"alert\">{error}</div>}\n      {notice && <p className=\"form-success\" role=\"status\">{notice}</p>}\n      <form className=\"safety-form\" onSubmit={blockUser}>\n        <label><span>Block someone</span><div className=\"safety-inline-form\"><input value={username} onChange={(event) => setUsername(event.target.value)} placeholder=\"Their username\" minLength={3} maxLength={24} pattern=\"[A-Za-z0-9_]+\" required /><button type=\"submit\" disabled={loading}><UserRoundX size={13} aria-hidden=\"true\" /> Block</button></div></label>\n      </form>\n      {blockedUsers.length > 0\n        ? <div className=\"blocked-user-list\">{blockedUsers.map((user) => (\n          <div className=\"blocked-user-row\" key={user.id}>\n            <span><strong>{user.display_name}</strong><small>@{user.username}</small></span>\n            <button type=\"button\" onClick={() => void unblockUser(user)}>Unblock</button>\n          </div>\n        ))}</div>\n        : <p className=\"sessions-caption\">You haven’t blocked anyone.</p>}\n      <form className=\"safety-form\" onSubmit={reportUser}>\n        <label><span>Report a user</span><input value={reportUsername} onChange={(event) => setReportUsername(event.target.value)} placeholder=\"Their username\" minLength={3} maxLength={24} pattern=\"[A-Za-z0-9_]+\" required /></label>\n        <label><span>Reason</span><select value={reportReason} onChange={(event) => setReportReason(event.target.value as (typeof reasons)[number][0])}>{reasons.map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label>\n        <label><span>Additional details (optional)</span><textarea value={reportDetails} onChange={(event) => setReportDetails(event.target.value)} rows={2} maxLength={1000} /></label>\n        <button className=\"secondary-button\" type=\"submit\" disabled={loading}><Flag size={13} aria-hidden=\"true\" /> Submit report</button>\n      </form>\n    </section>\n  )\n}",
+        "async function blockUser(event: FormEvent<HTMLFormElement>) {\n    event.preventDefault()\n    setError('')\n    setNotice('')\n    setLoading(true)\n    try {\n      await api<void>('/api/blocks', {\n        method: 'POST',\n        body: JSON.stringify({ username }),\n      })\n      setUsername('')\n      setNotice('User blocked. Direct messages and pending requests are closed.')\n      await refreshBlocks()\n    } catch (blockError) {\n      setError(blockError instanceof Error ? blockError.message : 'Unable to block this user.')\n    } finally {\n      setLoading(false)\n    }\n  }",
+        "async function unblockUser(user: BlockedUser) {\n    setError('')\n    setNotice('')\n    try {\n      await api<void>(`/api/blocks/${encodeURIComponent(user.id)}`, { method: 'DELETE' })\n      setNotice(`@${user.username} unblocked.`)\n      await refreshBlocks()\n    } catch (unblockError) {\n      setError(unblockError instanceof Error ? unblockError.message : 'Unable to unblock this user.')\n    }\n  }",
+        "async function reportUser(event: FormEvent<HTMLFormElement>) {\n    event.preventDefault()\n    setError('')\n    setNotice('')\n    setLoading(true)\n    try {\n      await api('/api/reports', {\n        method: 'POST',\n        body: JSON.stringify({ username: reportUsername, reason: reportReason, details: reportDetails }),\n      })\n      setReportUsername('')\n      setReportDetails('')\n      setNotice('Report submitted for review.')\n    } catch (reportError) {\n      setError(reportError instanceof Error ? reportError.message : 'Unable to submit this report.')\n    } finally {\n      setLoading(false)\n    }\n  }"
+      ],
+      "dom": [
+        {
+          "tag": "section",
+          "attributes": "className=\"safety-settings\" aria-labelledby=\"safety-title\""
+        },
+        {
+          "tag": "div",
+          "attributes": "className=\"sessions-heading\""
+        },
+        {
+          "tag": "h3",
+          "attributes": "id=\"safety-title\""
+        },
+        {
+          "tag": "ShieldBan",
+          "attributes": "size={14} aria-hidden=\"true\""
+        },
+        {
+          "tag": "div",
+          "attributes": "className=\"form-error\" role=\"alert\""
+        },
+        {
+          "tag": "p",
+          "attributes": "className=\"form-success\" role=\"status\""
+        },
+        {
+          "tag": "form",
+          "attributes": "className=\"safety-form\" onSubmit={blockUser}"
+        },
+        {
+          "tag": "label",
+          "attributes": ""
+        },
+        {
+          "tag": "span",
+          "attributes": ""
+        },
+        {
+          "tag": "div",
+          "attributes": "className=\"safety-inline-form\""
+        },
+        {
+          "tag": "input",
+          "attributes": "value={username} onChange={(event) => setUsername(event.target.value)} placeholder=\"Their username\" minLength={3} maxLength={24} pattern=\"[A-Za-z0-9_]+\" required"
+        },
+        {
+          "tag": "button",
+          "attributes": "type=\"submit\" disabled={loading}"
+        },
+        {
+          "tag": "UserRoundX",
+          "attributes": "size={13} aria-hidden=\"true\""
+        },
+        {
+          "tag": "div",
+          "attributes": "className=\"blocked-user-list\""
+        },
+        {
+          "tag": "div",
+          "attributes": "className=\"blocked-user-row\" key={user.id}"
+        },
+        {
+          "tag": "span",
+          "attributes": ""
+        },
+        {
+          "tag": "strong",
+          "attributes": ""
+        },
+        {
+          "tag": "small",
+          "attributes": ""
+        },
+        {
+          "tag": "button",
+          "attributes": "type=\"button\" onClick={() => void unblockUser(user)}"
+        },
+        {
+          "tag": "p",
+          "attributes": "className=\"sessions-caption\""
+        },
+        {
+          "tag": "form",
+          "attributes": "className=\"safety-form\" onSubmit={reportUser}"
+        },
+        {
+          "tag": "label",
+          "attributes": ""
+        },
+        {
+          "tag": "span",
+          "attributes": ""
+        },
+        {
+          "tag": "input",
+          "attributes": "value={reportUsername} onChange={(event) => setReportUsername(event.target.value)} placeholder=\"Their username\" minLength={3} maxLength={24} pattern=\"[A-Za-z0-9_]+\" required"
+        },
+        {
+          "tag": "label",
+          "attributes": ""
+        },
+        {
+          "tag": "span",
+          "attributes": ""
+        },
+        {
+          "tag": "select",
+          "attributes": "value={reportReason} onChange={(event) => setReportReason(event.target.value as (typeof reasons)[number][0])}"
+        },
+        {
+          "tag": "option",
+          "attributes": "key={value} value={value}"
+        },
+        {
+          "tag": "label",
+          "attributes": ""
+        },
+        {
+          "tag": "span",
+          "attributes": ""
+        },
+        {
+          "tag": "textarea",
+          "attributes": "value={reportDetails} onChange={(event) => setReportDetails(event.target.value)} rows={2} maxLength={1000}"
+        },
+        {
+          "tag": "button",
+          "attributes": "className=\"secondary-button\" type=\"submit\" disabled={loading}"
+        },
+        {
+          "tag": "Flag",
+          "attributes": "size={13} aria-hidden=\"true\""
+        }
+      ]
+    },
+    {
+      "path": "client/src/features/account/api.ts",
+      "lineCount": 35,
+      "exports": [
+        "listSessions",
+        "revokeSession",
+        "updateProfile",
+        "getCurrentUser",
+        "uploadAvatar",
+        "removeAvatar"
+      ],
+      "props": [
+        "sessionId: string",
+        "input: UpdateProfileInput",
+        "bytes: ArrayBuffer",
+        "contentType: string"
+      ],
+      "state": [],
+      "effects": [],
+      "refs": [],
+      "timers": [],
+      "listeners": [],
+      "storage": [],
+      "apiCalls": [
+        "api<SessionsResponse>('/api/auth/sessions')",
+        "api<void>(`/api/auth/sessions/${encodeURIComponent(sessionId)}/revoke`, { method: 'POST' })",
+        "api<{ user: User }>('/api/auth/me', { method: 'PATCH', body: JSON.stringify(input) })",
+        "api<{ user: User }>('/api/auth/me')",
+        "apiUpload('/api/auth/me/avatar', bytes, contentType)",
+        "api<{ user: User }>('/api/auth/me/avatar', { method: 'DELETE' })"
+      ],
+      "functions": [
+        "export function listSessions() {\n  return api<SessionsResponse>('/api/auth/sessions')\n}",
+        "export function revokeSession(sessionId: string) {\n  return api<void>(`/api/auth/sessions/${encodeURIComponent(sessionId)}/revoke`, { method: 'POST' })\n}",
+        "export function updateProfile(input: UpdateProfileInput) {\n  return api<{ user: User }>('/api/auth/me', { method: 'PATCH', body: JSON.stringify(input) })\n}",
+        "export function getCurrentUser() {\n  return api<{ user: User }>('/api/auth/me')\n}",
+        "export function uploadAvatar(bytes: ArrayBuffer, contentType: string) {\n  return apiUpload('/api/auth/me/avatar', bytes, contentType)\n}",
+        "export function removeAvatar() {\n  return api<{ user: User }>('/api/auth/me/avatar', { method: 'DELETE' })\n}"
+      ],
+      "dom": []
+    },
+    {
+      "path": "client/src/features/spaces/UpdatesPage.tsx",
+      "lineCount": 106,
+      "exports": [
+        "UpdatesPage"
+      ],
+      "props": [
+        "{ userId, onOpenTarget, onOpenCall }: {\n  userId: string\n  onOpenTarget: (spaceId: string, channelId: string, messageId: string) => void\n  onOpenCall: (call: ActiveCall) => void\n}"
+      ],
+      "state": [
+        "[stacks, setStacks] = useState<Stacks>({ needsYou: [], happening: [], decided: [] })",
+        "[activeCalls, setActiveCalls] = useState<ActiveCall[]>([])",
+        "[query, setQuery] = useState('')",
+        "[filter, setFilter] = useState<'all' | 'spaces'>('all')",
+        "[error, setError] = useState('')",
+        "[busy, setBusy] = useState(false)"
+      ],
+      "effects": [
+        "useEffect(() => {\n    let active = true\n    api<{ stacks: Stacks; activeCalls: ActiveCall[] }>('/api/spaces/updates')\n      .then(({ stacks: result, activeCalls: calls }) => { if (active) { setStacks(result); setActiveCalls(calls) } })\n      .catch((loadError: unknown) => { if (active) setError(loadError instanceof Error ? loadError.message : 'Unable to load Updates.') })\n    return () => { active = false }\n  }, [])"
+      ],
+      "refs": [],
+      "timers": [],
+      "listeners": [],
+      "storage": [],
+      "apiCalls": [
+        "api<{ stacks: Stacks; activeCalls: ActiveCall[] }>(`/api/spaces/updates${search.trim() ? `?q=${encodeURIComponent(search.trim())}` : ''}`)",
+        "api<{ stacks: Stacks; activeCalls: ActiveCall[] }>('/api/spaces/updates')",
+        "api(`/api/spaces/${object.space_id}/channels/${object.chat_id}/objects/${object.id}/respond`, {\n        method: 'POST',\n        body: JSON.stringify(data),\n      })",
+        "api(`/api/spaces/${object.space_id}/channels/${object.chat_id}/objects/${object.id}/state`, {\n        method: 'PATCH',\n        body: JSON.stringify({ state }),\n      })"
+      ],
+      "functions": [
+        "export function UpdatesPage({ userId, onOpenTarget, onOpenCall }: {\n  userId: string\n  onOpenTarget: (spaceId: string, channelId: string, messageId: string) => void\n  onOpenCall: (call: ActiveCall) => void\n}) {\n  const [stacks, setStacks] = useState<Stacks>({ needsYou: [], happening: [], decided: [] })\n  const [activeCalls, setActiveCalls] = useState<ActiveCall[]>([])\n  const [query, setQuery] = useState('')\n  const [filter, setFilter] = useState<'all' | 'spaces'>('all')\n  const [error, setError] = useState('')\n  const [busy, setBusy] = useState(false)\n\n  async function loadUpdates(search = query) {\n    const result = await api<{ stacks: Stacks; activeCalls: ActiveCall[] }>(`/api/spaces/updates${search.trim() ? `?q=${encodeURIComponent(search.trim())}` : ''}`)\n    setStacks(result.stacks)\n    setActiveCalls(result.activeCalls)\n  }\n\n  useEffect(() => {\n    let active = true\n    api<{ stacks: Stacks; activeCalls: ActiveCall[] }>('/api/spaces/updates')\n      .then(({ stacks: result, activeCalls: calls }) => { if (active) { setStacks(result); setActiveCalls(calls) } })\n      .catch((loadError: unknown) => { if (active) setError(loadError instanceof Error ? loadError.message : 'Unable to load Updates.') })\n    return () => { active = false }\n  }, [])\n\n  async function respond(object: SpaceSharedObject, data: Record<string, unknown>) {\n    setBusy(true)\n    setError('')\n    try {\n      await api(`/api/spaces/${object.space_id}/channels/${object.chat_id}/objects/${object.id}/respond`, {\n        method: 'POST',\n        body: JSON.stringify(data),\n      })\n      await loadUpdates()\n    } catch (saveError) {\n      setError(saveError instanceof Error ? saveError.message : 'Unable to save your response.')\n    } finally {\n      setBusy(false)\n    }\n  }\n\n  async function changeState(object: SpaceSharedObject, state: 'closed' | 'cancelled' | 'unpinned') {\n    setBusy(true)\n    setError('')\n    try {\n      await api(`/api/spaces/${object.space_id}/channels/${object.chat_id}/objects/${object.id}/state`, {\n        method: 'PATCH',\n        body: JSON.stringify({ state }),\n      })\n      await loadUpdates()\n    } catch (saveError) {\n      setError(saveError instanceof Error ? saveError.message : 'Unable to update this shared item.')\n    } finally {\n      setBusy(false)\n    }\n  }\n\n  const sections: { id: keyof Stacks; title: string; description: string; icon: typeof Sparkles; empty: string }[] = [\n    { id: 'needsYou', title: 'Needs You', description: 'Things waiting on your vote, RSVP, or checklist update.', icon: Sparkles, empty: 'You’re all caught up.' },\n    { id: 'happening', title: 'Happening', description: 'Events taking place right now.', icon: CalendarDays, empty: 'Nothing is happening right now.' },\n    { id: 'decided', title: 'Decided', description: 'Closed polls, completed checklists, and pinned decisions.', icon: CheckSquare, empty: 'Decisions and completed items will show up here.' },\n  ]\n  const visibleCalls = filter === 'spaces' ? activeCalls.filter((call) => call.space_id) : activeCalls\n\n  return <section className=\"updates-page\">\n    <header className=\"updates-header\">\n      <div><p className=\"eyebrow\">YOUR WORKSPACE</p><h1>Updates</h1><p>Keep track of the things your conversations need from you.</p></div>\n      <label className=\"updates-search\"><Search size={16} aria-hidden=\"true\" /><input type=\"search\" name=\"updatesSearch\" autoComplete=\"off\" value={query} onChange={(event) => setQuery(event.target.value)} onKeyDown={(event) => {\n        if (event.key === 'Enter') void loadUpdates()\n      }} placeholder=\"Search updates…\" aria-label=\"Search updates\" /><button type=\"button\" onClick={() => void loadUpdates()}>Search</button></label>\n    </header>\n    <div className=\"updates-filters\" aria-label=\"Filter Updates\">\n      <button type=\"button\" aria-pressed={filter === 'all'} className={filter === 'all' ? 'is-active' : ''} onClick={() => setFilter('all')}>All</button>\n      <button type=\"button\" aria-pressed={filter === 'spaces'} className={filter === 'spaces' ? 'is-active' : ''} onClick={() => setFilter('spaces')}>Spaces</button>\n    </div>\n    {error && <p className=\"spaces-error\" role=\"alert\">{error}</p>}\n    <div className=\"updates-sections\">\n      {sections.map(({ id, title, description, icon: Icon, empty }) => <section className=\"updates-section\" key={id} aria-labelledby={`updates-${id}`}>\n          <header><span><Icon size={17} aria-hidden=\"true\" /></span><div><h2 id={`updates-${id}`}>{title}</h2><p>{description}</p></div><b>{stacks[id].length + (id === 'happening' ? visibleCalls.length : 0)}</b></header>\n          {id === 'happening' && visibleCalls.map((call) => <article className=\"updates-live-call\" key={call.id}>\n            <span className=\"updates-live-indicator\" aria-hidden=\"true\" />\n            <div><strong>{call.title}</strong><small>{call.call_type === 'video' ? 'Video' : 'Audio'} call · {call.status === 'ringing' ? 'Ringing' : 'In progress'}</small></div>\n            <button type=\"button\" onClick={() => onOpenCall(call)}>{call.space_id ? 'Open channel' : 'Open chat'}</button>\n          </article>)}\n          {stacks[id].length === 0 && !(id === 'happening' && visibleCalls.length)\n            ? <p className=\"updates-empty\">{empty}</p>\n          : <div className=\"updates-grid\">{stacks[id].map((object) => <article className=\"updates-item\" key={object.id}>\n            <div className=\"updates-item-context\"><strong>{object.space_name}</strong><span>#{object.channel_name}</span></div>\n            <SharedObjectCard object={object} userId={userId} canManage={false} onRespond={(item, data) => void respond(item, data)} onStateChange={(item, state) => void changeState(item, state)} />\n            <button className=\"updates-open-source\" type=\"button\" onClick={() => onOpenTarget(object.space_id, object.chat_id, object.message_id)}>Open in channel</button>\n          </article>)}</div>}\n      </section>)}\n    </div>\n    {busy && <p className=\"updates-saving\" role=\"status\">Saving your update…</p>}\n  </section>\n}",
+        "async function loadUpdates(search = query) {\n    const result = await api<{ stacks: Stacks; activeCalls: ActiveCall[] }>(`/api/spaces/updates${search.trim() ? `?q=${encodeURIComponent(search.trim())}` : ''}`)\n    setStacks(result.stacks)\n    setActiveCalls(result.activeCalls)\n  }",
+        "async function respond(object: SpaceSharedObject, data: Record<string, unknown>) {\n    setBusy(true)\n    setError('')\n    try {\n      await api(`/api/spaces/${object.space_id}/channels/${object.chat_id}/objects/${object.id}/respond`, {\n        method: 'POST',\n        body: JSON.stringify(data),\n      })\n      await loadUpdates()\n    } catch (saveError) {\n      setError(saveError instanceof Error ? saveError.message : 'Unable to save your response.')\n    } finally {\n      setBusy(false)\n    }\n  }",
+        "async function changeState(object: SpaceSharedObject, state: 'closed' | 'cancelled' | 'unpinned') {\n    setBusy(true)\n    setError('')\n    try {\n      await api(`/api/spaces/${object.space_id}/channels/${object.chat_id}/objects/${object.id}/state`, {\n        method: 'PATCH',\n        body: JSON.stringify({ state }),\n      })\n      await loadUpdates()\n    } catch (saveError) {\n      setError(saveError instanceof Error ? saveError.message : 'Unable to update this shared item.')\n    } finally {\n      setBusy(false)\n    }\n  }"
+      ],
+      "dom": [
+        {
+          "tag": "section",
+          "attributes": "className=\"updates-page\""
+        },
+        {
+          "tag": "header",
+          "attributes": "className=\"updates-header\""
+        },
+        {
+          "tag": "div",
+          "attributes": ""
+        },
+        {
+          "tag": "p",
+          "attributes": "className=\"eyebrow\""
+        },
+        {
+          "tag": "h1",
+          "attributes": ""
+        },
+        {
+          "tag": "p",
+          "attributes": ""
+        },
+        {
+          "tag": "label",
+          "attributes": "className=\"updates-search\""
+        },
+        {
+          "tag": "Search",
+          "attributes": "size={16} aria-hidden=\"true\""
+        },
+        {
+          "tag": "input",
+          "attributes": "type=\"search\" name=\"updatesSearch\" autoComplete=\"off\" value={query} onChange={(event) => setQuery(event.target.value)} onKeyDown={(event) => {\n        if (event.key === 'Enter') void loadUpdates()\n      }} placeholder=\"Search updates…\" aria-label=\"Search updates\""
+        },
+        {
+          "tag": "button",
+          "attributes": "type=\"button\" onClick={() => void loadUpdates()}"
+        },
+        {
+          "tag": "div",
+          "attributes": "className=\"updates-filters\" aria-label=\"Filter Updates\""
+        },
+        {
+          "tag": "button",
+          "attributes": "type=\"button\" aria-pressed={filter === 'all'} className={filter === 'all' ? 'is-active' : ''} onClick={() => setFilter('all')}"
+        },
+        {
+          "tag": "button",
+          "attributes": "type=\"button\" aria-pressed={filter === 'spaces'} className={filter === 'spaces' ? 'is-active' : ''} onClick={() => setFilter('spaces')}"
+        },
+        {
+          "tag": "p",
+          "attributes": "className=\"spaces-error\" role=\"alert\""
+        },
+        {
+          "tag": "div",
+          "attributes": "className=\"updates-sections\""
+        },
+        {
+          "tag": "section",
+          "attributes": "className=\"updates-section\" key={id} aria-labelledby={`updates-${id}`}"
+        },
+        {
+          "tag": "header",
+          "attributes": ""
+        },
+        {
+          "tag": "span",
+          "attributes": ""
+        },
+        {
+          "tag": "Icon",
+          "attributes": "size={17} aria-hidden=\"true\""
+        },
+        {
+          "tag": "div",
+          "attributes": ""
+        },
+        {
+          "tag": "h2",
+          "attributes": "id={`updates-${id}`}"
+        },
+        {
+          "tag": "p",
+          "attributes": ""
+        },
+        {
+          "tag": "b",
+          "attributes": ""
+        },
+        {
+          "tag": "article",
+          "attributes": "className=\"updates-live-call\" key={call.id}"
+        },
+        {
+          "tag": "span",
+          "attributes": "className=\"updates-live-indicator\" aria-hidden=\"true\""
+        },
+        {
+          "tag": "div",
+          "attributes": ""
+        },
+        {
+          "tag": "strong",
+          "attributes": ""
+        },
+        {
+          "tag": "small",
+          "attributes": ""
+        },
+        {
+          "tag": "button",
+          "attributes": "type=\"button\" onClick={() => onOpenCall(call)}"
+        },
+        {
+          "tag": "p",
+          "attributes": "className=\"updates-empty\""
+        },
+        {
+          "tag": "div",
+          "attributes": "className=\"updates-grid\""
+        },
+        {
+          "tag": "article",
+          "attributes": "className=\"updates-item\" key={object.id}"
+        },
+        {
+          "tag": "div",
+          "attributes": "className=\"updates-item-context\""
+        },
+        {
+          "tag": "strong",
+          "attributes": ""
+        },
+        {
+          "tag": "span",
+          "attributes": ""
+        },
+        {
+          "tag": "SharedObjectCard",
+          "attributes": "object={object} userId={userId} canManage={false} onRespond={(item, data) => void respond(item, data)} onStateChange={(item, state) => void changeState(item, state)}"
+        },
+        {
+          "tag": "button",
+          "attributes": "className=\"updates-open-source\" type=\"button\" onClick={() => onOpenTarget(object.space_id, object.chat_id, object.message_id)}"
+        },
+        {
+          "tag": "p",
+          "attributes": "className=\"updates-saving\" role=\"status\""
+        }
+      ]
+    }
+  ],
+  "selectors": [
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".profile-trigger",
+      "rule": ".profile-trigger { padding: 0; border: 0; background: transparent; cursor: pointer; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".profile-avatar-editor",
+      "rule": ".profile-avatar-editor { display: flex; align-items: center; gap: 14px; padding: 2px 0 4px; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".profile-avatar",
+      "rule": ".profile-avatar { width: 64px; height: 64px; color: #47644c; background: #dce7d7; font-size: var(--type-heading); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".profile-avatar-actions",
+      "rule": ".profile-avatar-actions { display: flex; min-width: 0; flex-direction: column; align-items: flex-start; gap: 6px; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".profile-avatar-actions > strong",
+      "rule": ".profile-avatar-actions > strong { color: #3e4a43; font-size: var(--type-body-xs); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".profile-avatar-actions > span",
+      "rule": ".profile-avatar-actions > span { color: #929b94; font-size: var(--type-small); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".profile-avatar-actions > div",
+      "rule": ".profile-avatar-actions > div { display: flex; flex-wrap: wrap; gap: 6px; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".account-menu-button",
+      "rule": ".account-menu-button { display: flex; align-items: center; gap: 8px; padding: 4px 7px; border: 0; border-radius: 7px; color: #5b685f; background: transparent; font: inherit; font-size: var(--type-label); cursor: pointer; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".account-menu-button:hover",
+      "rule": ".account-menu-button:hover { background: var(--color-surface-muted); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".welcome-profile",
+      "rule": ".welcome-profile { display: flex; width: min(350px, 100%); align-items: center; gap: 10px; padding: 11px 12px; border: 1px solid #e9ece6; border-radius: 9px; background: var(--color-canvas); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".welcome-profile > div",
+      "rule": ".welcome-profile > div { display: flex; flex-direction: column; gap: 3px; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".welcome-profile button",
+      "rule": ".welcome-profile button { margin-left: auto; padding: 6px 8px; border: 0; border-radius: 5px; color: #45654a; background: #f1f4ee; font: inherit; font-size: var(--type-small); font-weight: 600; cursor: pointer; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".overlay",
+      "rule": ".overlay { position: fixed; z-index: 15; inset: 0; display: grid; place-items: center; padding: 20px; background: rgba(16, 35, 27, .34); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".account-dialog",
+      "rule": ".account-dialog { width: min(430px, 100%); max-height: calc(100svh - 40px); overflow-y: auto; box-sizing: border-box; padding: 24px; border: 1px solid #e8ece5; border-radius: 14px; background: var(--color-canvas); box-shadow: 0 18px 50px rgba(17, 38, 28, .18); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".dialog-heading",
+      "rule": ".dialog-heading { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 20px; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".dialog-heading .eyebrow",
+      "rule": ".dialog-heading .eyebrow { margin-bottom: 5px; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".account-dialog h2",
+      "rule": ".account-dialog h2 { font-size: var(--type-heading); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".search-overlay",
+      "rule": ".search-overlay { z-index: 15; align-items: start; padding-top: min(18vh, 140px); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".search-dialog",
+      "rule": ".search-dialog { display: flex; width: min(560px, 100%); flex-direction: column; gap: 13px; padding: 19px; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".search-dialog .dialog-heading",
+      "rule": ".search-dialog .dialog-heading { margin-bottom: 0; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".profile-form",
+      "rule": ".profile-form { gap: 14px; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".profile-form textarea",
+      "rule": ".profile-form textarea { min-height: 75px; resize: vertical; padding-top: 10px; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".profile-form input[readonly]",
+      "rule": ".profile-form input[readonly] { color: #879189; background: #f7f8f5; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".profile-form .profile-checkbox",
+      "rule": ".profile-form .profile-checkbox { flex-direction: row; align-items: flex-start; gap: 9px; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".profile-form .profile-checkbox > input",
+      "rule": ".profile-form .profile-checkbox > input { width: 14px; min-height: 14px; margin: 1px 0 0; padding: 0; accent-color: #5f805f; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".profile-form .profile-checkbox > span",
+      "rule": ".profile-form .profile-checkbox > span { display: flex; flex-direction: column; gap: 4px; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".profile-form .profile-checkbox > span > strong",
+      "rule": ".profile-form .profile-checkbox > span > strong { color: #3e4a43; font-size: var(--type-body-xs); font-weight: 600; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".profile-form .profile-checkbox > span > small",
+      "rule": ".profile-form .profile-checkbox > span > small { color: #929b94; font-size: var(--type-small); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".sessions-section",
+      "rule": ".sessions-section { margin-top: 23px; padding-top: 17px; border-top: 1px solid #e9ece6; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".sessions-heading",
+      "rule": ".sessions-heading { display: flex; align-items: center; justify-content: space-between; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".sessions-heading h3",
+      "rule": ".sessions-heading h3 { margin: 0; color: #3b4940; font-size: var(--type-body); font-weight: 600; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".sessions-heading button, .session-row > button",
+      "rule": ".sessions-heading button, .session-row > button { padding: 5px 7px; border: 0; border-radius: 5px; color: #45654a; background: #f1f4ee; font: inherit; font-size: var(--type-small); cursor: pointer; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".sessions-caption",
+      "rule": ".sessions-caption { margin: 5px 0 10px; color: #89948d; font-size: var(--type-label); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".session-list",
+      "rule": ".session-list { display: flex; flex-direction: column; gap: 7px; max-height: 160px; overflow-y: auto; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".session-row",
+      "rule": ".session-row { display: flex; align-items: center; gap: 9px; padding: 8px; border: 1px solid #ecefe9; border-radius: 8px; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".session-device",
+      "rule": ".session-device { display: grid; width: 27px; height: 27px; flex: 0 0 auto; place-items: center; border-radius: 7px; color: #56745c; background: #f0f4ed; font-size: var(--type-body-lg); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".session-row > div",
+      "rule": ".session-row > div { display: flex; min-width: 0; flex-direction: column; gap: 3px; overflow: hidden; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".session-row > div > span",
+      "rule": ".session-row > div > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".session-row > button",
+      "rule": ".session-row > button { margin-left: auto; color: #8b4e45; background: #fbf0ec; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".safety-settings",
+      "rule": ".safety-settings { display: flex; flex-direction: column; gap: 9px; margin-top: 18px; padding-top: 15px; border-top: 1px solid var(--color-border); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".safety-settings h3",
+      "rule": ".safety-settings h3 { display: flex; align-items: center; gap: 6px; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".safety-form",
+      "rule": ".safety-form { display: flex; flex-direction: column; gap: 10px; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".safety-form label",
+      "rule": ".safety-form label { display: flex; flex-direction: column; gap: 5px; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".safety-form label > span",
+      "rule": ".safety-form label > span { color: #3e4a43; font-size: var(--type-label); font-weight: 600; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".safety-form input, .safety-form select, .safety-form textarea",
+      "rule": ".safety-form input, .safety-form select, .safety-form textarea {\r\n  width: 100%; min-height: 34px; border: 1px solid var(--color-border); border-radius: 7px; outline: none;\r\n  padding: 7px 9px; color: var(--color-text); background: var(--color-surface); font: inherit; font-size: var(--type-label);\r\n}",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".safety-form textarea",
+      "rule": ".safety-form textarea { resize: vertical; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".safety-form input:focus, .safety-form select:focus, .safety-form textarea:focus",
+      "rule": ".safety-form input:focus, .safety-form select:focus, .safety-form textarea:focus { border-color: var(--color-focus); box-shadow: 0 0 0 2px rgba(93, 128, 91, .12); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".safety-inline-form",
+      "rule": ".safety-inline-form { display: flex; gap: 6px; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".safety-inline-form button, .secondary-button",
+      "rule": ".safety-inline-form button, .secondary-button {\r\n  display: inline-flex; min-height: 32px; align-items: center; justify-content: center; gap: 5px;\r\n  padding: 5px 9px; border: 0; border-radius: 6px; color: #51645a; background: var(--color-surface-muted);\r\n  font: inherit; font-size: var(--type-small); font-weight: 600; cursor: pointer;\r\n}",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".safety-inline-form button:disabled, .secondary-button:disabled",
+      "rule": ".safety-inline-form button:disabled, .secondary-button:disabled { cursor: wait; opacity: .55; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".report-dialog",
+      "rule": ".report-dialog { max-height: calc(100svh - 40px); overflow-y: auto; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".new-chat-dialog .profile-form textarea",
+      "rule": ".new-chat-dialog .profile-form textarea { min-height: 76px; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".workspace.has-active-updates",
+      "rule": ".workspace.has-active-updates { grid-template-columns: minmax(0, 1fr); }",
+      "ancestors": [
+        "@media (max-width: 700px)"
+      ]
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".workspace.has-active-updates .inbox-pane,\r\n  .workspace.has-active-updates .conversation-pane",
+      "rule": ".workspace.has-active-updates .inbox-pane,\r\n  .workspace.has-active-updates .conversation-pane { display: none; }",
+      "ancestors": [
+        "@media (max-width: 700px)"
+      ]
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".workspace.has-active-updates .updates-page",
+      "rule": ".workspace.has-active-updates .updates-page { grid-column: 1; grid-row: 1; }",
+      "ancestors": [
+        "@media (max-width: 700px)"
+      ]
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".space-dialog",
+      "rule": ".space-dialog { padding: 18px; }",
+      "ancestors": [
+        "@media (max-width: 700px)"
+      ]
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".space-settings-dialog",
+      "rule": ".space-settings-dialog { height: calc(100dvh - 16px); max-height: calc(100dvh - 16px); padding: 0; border-radius: 12px; }",
+      "ancestors": [
+        "@media (max-width: 700px)"
+      ]
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".space-channel-settings-dialog",
+      "rule": ".space-channel-settings-dialog { padding: 18px; }",
+      "ancestors": [
+        "@media (max-width: 700px)"
+      ]
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".updates-page",
+      "rule": ".updates-page { padding: 18px 13px; }",
+      "ancestors": [
+        "@media (max-width: 700px)"
+      ]
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".updates-header",
+      "rule": ".updates-header { align-items: stretch; flex-direction: column; gap: 13px; margin-bottom: 16px; }",
+      "ancestors": [
+        "@media (max-width: 700px)"
+      ]
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".updates-search",
+      "rule": ".updates-search { min-width: 0; width: 100%; box-sizing: border-box; }",
+      "ancestors": [
+        "@media (max-width: 700px)"
+      ]
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".updates-sections",
+      "rule": ".updates-sections { gap: 18px; }",
+      "ancestors": [
+        "@media (max-width: 700px)"
+      ]
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".updates-section > header > span",
+      "rule": ".updates-section > header > span { width: 31px; height: 31px; }",
+      "ancestors": [
+        "@media (max-width: 700px)"
+      ]
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".shared-object-card",
+      "rule": ".shared-object-card { padding: 11px; }",
+      "ancestors": [
+        "@media (max-width: 700px)"
+      ]
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".account-menu-button > span:not(.avatar):not(.chevron)",
+      "rule": ".account-menu-button > span:not(.avatar):not(.chevron) { display: none; }",
+      "ancestors": [
+        "@media (max-width: 420px)"
+      ]
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".chat-details-screen .form-error",
+      "rule": ".chat-details-screen .form-error { font-size: var(--type-label); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".call-overlay",
+      "rule": ".call-overlay { z-index: 25; background: rgba(14, 30, 23, .58); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".call-dialog",
+      "rule": ".call-dialog {\r\n  display: flex; width: min(740px, 100%); max-height: min(650px, calc(100svh - 32px));\r\n  flex-direction: column; overflow: hidden; border: 1px solid #e3e9e1; border-radius: 15px;\r\n  background: var(--color-canvas); box-shadow: 0 20px 70px rgba(10, 26, 17, .32);\r\n}",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".call-dialog-header",
+      "rule": ".call-dialog-header { display: flex; min-height: 64px; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 17px; border-bottom: 1px solid #e8ece5; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".call-dialog-header .eyebrow",
+      "rule": ".call-dialog-header .eyebrow { margin-bottom: 4px; font-size: var(--type-caption); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".call-dialog-header h2",
+      "rule": ".call-dialog-header h2 { margin: 0; color: var(--color-text); font-size: var(--type-subtitle); font-weight: 600; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".voice-room-dialog",
+      "rule": ".voice-room-dialog { width: min(1080px, calc(100vw - 32px)); height: min(760px, calc(100dvh - 32px)); max-height: none; border-color: #2d3b33; background: #111a15; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".voice-room-dialog .call-dialog-header",
+      "rule": ".voice-room-dialog .call-dialog-header { border-color: #2b3930; background: #111a15; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".voice-room-dialog .call-dialog-header .eyebrow",
+      "rule": ".voice-room-dialog .call-dialog-header .eyebrow { color: #9abda2; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".voice-room-dialog .call-dialog-header h2",
+      "rule": ".voice-room-dialog .call-dialog-header h2 { color: #f0f4f0; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".voice-room-dialog .call-connection",
+      "rule": ".voice-room-dialog .call-connection { color: #bbc8bd; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".voice-room-dialog .call-controls",
+      "rule": ".voice-room-dialog .call-controls { border-color: #2b3930; background: #111a15; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".voice-room-dialog .call-controls button",
+      "rule": ".voice-room-dialog .call-controls button { min-height: 38px; padding: 8px 13px; border: 1px solid #36453b; border-radius: 9px; color: #eef3ef; background: #26352b; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".voice-room-dialog .call-controls button:hover:not(:disabled)",
+      "rule": ".voice-room-dialog .call-controls button:hover:not(:disabled) { background: #34483a; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".voice-room-dialog .call-controls .call-end-button",
+      "rule": ".voice-room-dialog .call-controls .call-end-button { border-color: #b44848; color: #fff; background: #b44848; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".voice-room-dialog .call-controls .call-end-button:hover:not(:disabled)",
+      "rule": ".voice-room-dialog .call-controls .call-end-button:hover:not(:disabled) { background: #963838; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".call-dialog",
+      "rule": ".call-dialog { max-height: calc(100svh - 24px); }",
+      "ancestors": [
+        "@media (max-width: 700px)"
+      ]
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".voice-room-dialog",
+      "rule": ".voice-room-dialog { width: calc(100vw - 16px); height: calc(100dvh - 16px); min-height: 0; border-radius: 12px; }",
+      "ancestors": [
+        "@media (max-width: 700px)"
+      ]
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".voice-room-dialog .call-dialog-header",
+      "rule": ".voice-room-dialog .call-dialog-header { padding: 10px 12px; }",
+      "ancestors": [
+        "@media (max-width: 700px)"
+      ]
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".attachment-video-overlay",
+      "rule": ".attachment-video-overlay { position: absolute; z-index: 1; inset: 0; pointer-events: none; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".attachment-v2-video-ready .attachment-video-overlay > small",
+      "rule": ".attachment-v2-video-ready .attachment-video-overlay > small { position: absolute; bottom: 9px; left: 50%; display: flex; align-items: center; gap: 4px; margin: 0; padding: 4px 7px; border-radius: 5px; color: #fff; background: rgba(9,18,13,.78); font-size: var(--type-caption); line-height: 1.2; transform: translateX(-50%); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".attachment-v2-video-ready .attachment-video-overlay > strong",
+      "rule": ".attachment-v2-video-ready .attachment-video-overlay > strong { position: absolute; bottom: 31px; left: 50%; max-width: 90%; padding: 3px 6px; border-radius: 4px; color: #fff; background: rgba(9,18,13,.78); font-size: var(--type-label); font-weight: 600; text-align: center; transform: translateX(-50%); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .auth-page,\r\n:root[data-theme=\"dark\"] .auth-panel,\r\n:root[data-theme=\"dark\"] .workspace,\r\n:root[data-theme=\"dark\"] .inbox-pane,\r\n:root[data-theme=\"dark\"] .conversation-pane,\r\n:root[data-theme=\"dark\"] .chat-details-screen,\r\n:root[data-theme=\"dark\"] .chat-details-header,\r\n:root[data-theme=\"dark\"] .mobile-bottom-nav,\r\n:root[data-theme=\"dark\"] .account-dialog,\r\n:root[data-theme=\"dark\"] .search-dialog,\r\n:root[data-theme=\"dark\"] .request-list-panel,\r\n:root[data-theme=\"dark\"] .chat-details-section,\r\n:root[data-theme=\"dark\"] .chat-details-back:hover",
+      "rule": ":root[data-theme=\"dark\"] .auth-page,\r\n:root[data-theme=\"dark\"] .auth-panel,\r\n:root[data-theme=\"dark\"] .workspace,\r\n:root[data-theme=\"dark\"] .inbox-pane,\r\n:root[data-theme=\"dark\"] .conversation-pane,\r\n:root[data-theme=\"dark\"] .chat-details-screen,\r\n:root[data-theme=\"dark\"] .chat-details-header,\r\n:root[data-theme=\"dark\"] .mobile-bottom-nav,\r\n:root[data-theme=\"dark\"] .account-dialog,\r\n:root[data-theme=\"dark\"] .search-dialog,\r\n:root[data-theme=\"dark\"] .request-list-panel,\r\n:root[data-theme=\"dark\"] .chat-details-section,\r\n:root[data-theme=\"dark\"] .chat-details-back:hover { background-color: var(--color-canvas); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .inbox-pane,\r\n:root[data-theme=\"dark\"] .conversation-header,\r\n:root[data-theme=\"dark\"] .chat-details-header,\r\n:root[data-theme=\"dark\"] .chat-details-identity,\r\n:root[data-theme=\"dark\"] .account-dialog,\r\n:root[data-theme=\"dark\"] .chat-details-section,\r\n:root[data-theme=\"dark\"] .chat-details-members li,\r\n:root[data-theme=\"dark\"] .session-row,\r\n:root[data-theme=\"dark\"] .call-dialog,\r\n:root[data-theme=\"dark\"] .call-dialog-header,\r\n:root[data-theme=\"dark\"] .call-controls,\r\n:root[data-theme=\"dark\"] .global-search-input",
+      "rule": ":root[data-theme=\"dark\"] .inbox-pane,\r\n:root[data-theme=\"dark\"] .conversation-header,\r\n:root[data-theme=\"dark\"] .chat-details-header,\r\n:root[data-theme=\"dark\"] .chat-details-identity,\r\n:root[data-theme=\"dark\"] .account-dialog,\r\n:root[data-theme=\"dark\"] .chat-details-section,\r\n:root[data-theme=\"dark\"] .chat-details-members li,\r\n:root[data-theme=\"dark\"] .session-row,\r\n:root[data-theme=\"dark\"] .call-dialog,\r\n:root[data-theme=\"dark\"] .call-dialog-header,\r\n:root[data-theme=\"dark\"] .call-controls,\r\n:root[data-theme=\"dark\"] .global-search-input { border-color: var(--color-border); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .auth-panel h2,\r\n:root[data-theme=\"dark\"] .account-dialog h2,\r\n:root[data-theme=\"dark\"] .pane-heading h1,\r\n:root[data-theme=\"dark\"] .conversation-heading,\r\n:root[data-theme=\"dark\"] .welcome-content h2,\r\n:root[data-theme=\"dark\"] .chat-row-copy strong,\r\n:root[data-theme=\"dark\"] .request-list-header h2,\r\n:root[data-theme=\"dark\"] .request-card-content strong,\r\n:root[data-theme=\"dark\"] .chat-details-header h1,\r\n:root[data-theme=\"dark\"] .chat-details-identity h2,\r\n:root[data-theme=\"dark\"] .chat-details-section h2,\r\n:root[data-theme=\"dark\"] .chat-details-members strong,\r\n:root[data-theme=\"dark\"] .sessions-heading h3,\r\n:root[data-theme=\"dark\"] .profile-avatar-actions > strong,\r\n:root[data-theme=\"dark\"] .profile-form label > span,\r\n:root[data-theme=\"dark\"] .profile-form .profile-checkbox > span > strong,\r\n:root[data-theme=\"dark\"] .safety-form label > span,\r\n:root[data-theme=\"dark\"] .call-dialog-header h2,\r\n:root[data-theme=\"dark\"] .incoming-call-banner strong",
+      "rule": ":root[data-theme=\"dark\"] .auth-panel h2,\r\n:root[data-theme=\"dark\"] .account-dialog h2,\r\n:root[data-theme=\"dark\"] .pane-heading h1,\r\n:root[data-theme=\"dark\"] .conversation-heading,\r\n:root[data-theme=\"dark\"] .welcome-content h2,\r\n:root[data-theme=\"dark\"] .chat-row-copy strong,\r\n:root[data-theme=\"dark\"] .request-list-header h2,\r\n:root[data-theme=\"dark\"] .request-card-content strong,\r\n:root[data-theme=\"dark\"] .chat-details-header h1,\r\n:root[data-theme=\"dark\"] .chat-details-identity h2,\r\n:root[data-theme=\"dark\"] .chat-details-section h2,\r\n:root[data-theme=\"dark\"] .chat-details-members strong,\r\n:root[data-theme=\"dark\"] .sessions-heading h3,\r\n:root[data-theme=\"dark\"] .profile-avatar-actions > strong,\r\n:root[data-theme=\"dark\"] .profile-form label > span,\r\n:root[data-theme=\"dark\"] .profile-form .profile-checkbox > span > strong,\r\n:root[data-theme=\"dark\"] .safety-form label > span,\r\n:root[data-theme=\"dark\"] .call-dialog-header h2,\r\n:root[data-theme=\"dark\"] .incoming-call-banner strong { color: var(--color-text); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .auth-form input,\r\n:root[data-theme=\"dark\"] .profile-form input,\r\n:root[data-theme=\"dark\"] .profile-form textarea,\r\n:root[data-theme=\"dark\"] .profile-form select,\r\n:root[data-theme=\"dark\"] .safety-form input,\r\n:root[data-theme=\"dark\"] .safety-form select,\r\n:root[data-theme=\"dark\"] .safety-form textarea,\r\n:root[data-theme=\"dark\"] .global-search-input,\r\n:root[data-theme=\"dark\"] .conversation-search-bar,\r\n:root[data-theme=\"dark\"] .username-input,\r\n:root[data-theme=\"dark\"] .message-composer",
+      "rule": ":root[data-theme=\"dark\"] .auth-form input,\r\n:root[data-theme=\"dark\"] .profile-form input,\r\n:root[data-theme=\"dark\"] .profile-form textarea,\r\n:root[data-theme=\"dark\"] .profile-form select,\r\n:root[data-theme=\"dark\"] .safety-form input,\r\n:root[data-theme=\"dark\"] .safety-form select,\r\n:root[data-theme=\"dark\"] .safety-form textarea,\r\n:root[data-theme=\"dark\"] .global-search-input,\r\n:root[data-theme=\"dark\"] .conversation-search-bar,\r\n:root[data-theme=\"dark\"] .username-input,\r\n:root[data-theme=\"dark\"] .message-composer { color: var(--color-text); background-color: var(--color-surface); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .profile-form input[readonly]",
+      "rule": ":root[data-theme=\"dark\"] .profile-form input[readonly] { color: var(--color-text-secondary); background: var(--color-surface-muted); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .auth-form input::placeholder,\r\n:root[data-theme=\"dark\"] .profile-form input::placeholder,\r\n:root[data-theme=\"dark\"] .profile-form textarea::placeholder,\r\n:root[data-theme=\"dark\"] .message-composer textarea::placeholder",
+      "rule": ":root[data-theme=\"dark\"] .auth-form input::placeholder,\r\n:root[data-theme=\"dark\"] .profile-form input::placeholder,\r\n:root[data-theme=\"dark\"] .profile-form textarea::placeholder,\r\n:root[data-theme=\"dark\"] .message-composer textarea::placeholder { color: #9eaaa1; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .message-mine .message-bubble,\r\n:root[data-theme=\"dark\"] .welcome-profile,\r\n:root[data-theme=\"dark\"] .chat-avatar,\r\n:root[data-theme=\"dark\"] .profile-avatar,\r\n:root[data-theme=\"dark\"] .avatar-you,\r\n:root[data-theme=\"dark\"] .avatar-card",
+      "rule": ":root[data-theme=\"dark\"] .message-mine .message-bubble,\r\n:root[data-theme=\"dark\"] .welcome-profile,\r\n:root[data-theme=\"dark\"] .chat-avatar,\r\n:root[data-theme=\"dark\"] .profile-avatar,\r\n:root[data-theme=\"dark\"] .avatar-you,\r\n:root[data-theme=\"dark\"] .avatar-card { background-color: #304237; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .reply-quote,\r\n:root[data-theme=\"dark\"] .media-pending-bubble,\r\n:root[data-theme=\"dark\"] .media-pending-preview > svg,\r\n:root[data-theme=\"dark\"] .media-pending-voice-icon,\r\n:root[data-theme=\"dark\"] .session-device,\r\n:root[data-theme=\"dark\"] .blocked-user-row,\r\n:root[data-theme=\"dark\"] .chat-details-members li",
+      "rule": ":root[data-theme=\"dark\"] .reply-quote,\r\n:root[data-theme=\"dark\"] .media-pending-bubble,\r\n:root[data-theme=\"dark\"] .media-pending-preview > svg,\r\n:root[data-theme=\"dark\"] .media-pending-voice-icon,\r\n:root[data-theme=\"dark\"] .session-device,\r\n:root[data-theme=\"dark\"] .blocked-user-row,\r\n:root[data-theme=\"dark\"] .chat-details-members li { background-color: var(--color-surface-muted); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .media-pending-bubble,\r\n:root[data-theme=\"dark\"] .chat-details-identity,\r\n:root[data-theme=\"dark\"] .sessions-section,\r\n:root[data-theme=\"dark\"] .composer-reply,\r\n:root[data-theme=\"dark\"] .search-privacy-note,\r\n:root[data-theme=\"dark\"] .mobile-bottom-nav",
+      "rule": ":root[data-theme=\"dark\"] .media-pending-bubble,\r\n:root[data-theme=\"dark\"] .chat-details-identity,\r\n:root[data-theme=\"dark\"] .sessions-section,\r\n:root[data-theme=\"dark\"] .composer-reply,\r\n:root[data-theme=\"dark\"] .search-privacy-note,\r\n:root[data-theme=\"dark\"] .mobile-bottom-nav { border-color: var(--color-border); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .chat-row-copy small,\r\n:root[data-theme=\"dark\"] .message-meta strong,\r\n:root[data-theme=\"dark\"] .chat-details-identity p,\r\n:root[data-theme=\"dark\"] .chat-details-identity small,\r\n:root[data-theme=\"dark\"] .chat-details-security p,\r\n:root[data-theme=\"dark\"] .request-card-content p,\r\n:root[data-theme=\"dark\"] .profile-avatar-actions > span,\r\n:root[data-theme=\"dark\"] .profile-form .profile-checkbox > span > small,\r\n:root[data-theme=\"dark\"] .search-result strong,\r\n:root[data-theme=\"dark\"] .search-message-result .search-message-snippet",
+      "rule": ":root[data-theme=\"dark\"] .chat-row-copy small,\r\n:root[data-theme=\"dark\"] .message-meta strong,\r\n:root[data-theme=\"dark\"] .chat-details-identity p,\r\n:root[data-theme=\"dark\"] .chat-details-identity small,\r\n:root[data-theme=\"dark\"] .chat-details-security p,\r\n:root[data-theme=\"dark\"] .request-card-content p,\r\n:root[data-theme=\"dark\"] .profile-avatar-actions > span,\r\n:root[data-theme=\"dark\"] .profile-form .profile-checkbox > span > small,\r\n:root[data-theme=\"dark\"] .search-result strong,\r\n:root[data-theme=\"dark\"] .search-message-result .search-message-snippet { color: var(--color-text-secondary); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .call-dialog",
+      "rule": ":root[data-theme=\"dark\"] .call-dialog { border-color: var(--color-border); background: var(--color-canvas); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .call-controls button,\r\n:root[data-theme=\"dark\"] .incoming-call-banner > button:not(.answer-call-button):not(.decline-call-button),\r\n:root[data-theme=\"dark\"] .secondary-button,\r\n:root[data-theme=\"dark\"] .safety-inline-form button,\r\n:root[data-theme=\"dark\"] .sessions-heading button,\r\n:root[data-theme=\"dark\"] .session-row > button",
+      "rule": ":root[data-theme=\"dark\"] .call-controls button,\r\n:root[data-theme=\"dark\"] .incoming-call-banner > button:not(.answer-call-button):not(.decline-call-button),\r\n:root[data-theme=\"dark\"] .secondary-button,\r\n:root[data-theme=\"dark\"] .safety-inline-form button,\r\n:root[data-theme=\"dark\"] .sessions-heading button,\r\n:root[data-theme=\"dark\"] .session-row > button { color: var(--color-text); background: var(--color-surface-muted); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .form-error,\r\n:root[data-theme=\"dark\"] .list-error,\r\n:root[data-theme=\"dark\"] .inline-error",
+      "rule": ":root[data-theme=\"dark\"] .form-error,\r\n:root[data-theme=\"dark\"] .list-error,\r\n:root[data-theme=\"dark\"] .inline-error { color: #ffc0b5; border-color: #75443d; background: #382724; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .spaces-create-hint strong,\r\n:root[data-theme=\"dark\"] .space-dialog-copy strong",
+      "rule": ":root[data-theme=\"dark\"] .spaces-create-hint strong,\r\n:root[data-theme=\"dark\"] .space-dialog-copy strong { color: #b7d6b8; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .spaces-create-form input,\r\n:root[data-theme=\"dark\"] .spaces-create-form textarea,\r\n:root[data-theme=\"dark\"] .space-dialog .profile-form input,\r\n:root[data-theme=\"dark\"] .space-dialog .profile-form select,\r\n:root[data-theme=\"dark\"] .space-dialog .profile-form textarea",
+      "rule": ":root[data-theme=\"dark\"] .spaces-create-form input,\r\n:root[data-theme=\"dark\"] .spaces-create-form textarea,\r\n:root[data-theme=\"dark\"] .space-dialog .profile-form input,\r\n:root[data-theme=\"dark\"] .space-dialog .profile-form select,\r\n:root[data-theme=\"dark\"] .space-dialog .profile-form textarea { border-color: var(--color-border); color: var(--color-text); background: var(--color-canvas); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .updates-page",
+      "rule": ":root[data-theme=\"dark\"] .updates-page { color: var(--color-text); background: var(--color-canvas); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .updates-search,\r\n:root[data-theme=\"dark\"] .updates-live-call,\r\n:root[data-theme=\"dark\"] .updates-item,\r\n:root[data-theme=\"dark\"] .shared-object-card",
+      "rule": ":root[data-theme=\"dark\"] .updates-search,\r\n:root[data-theme=\"dark\"] .updates-live-call,\r\n:root[data-theme=\"dark\"] .updates-item,\r\n:root[data-theme=\"dark\"] .shared-object-card { border-color: var(--color-border); background: var(--color-surface); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .updates-live-call button",
+      "rule": ":root[data-theme=\"dark\"] .updates-live-call button { color: var(--color-text); border-color: var(--color-border); background: var(--color-surface-muted); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .updates-search input",
+      "rule": ":root[data-theme=\"dark\"] .updates-search input { color: var(--color-text); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .updates-search button,\r\n:root[data-theme=\"dark\"] .updates-filters button.is-active",
+      "rule": ":root[data-theme=\"dark\"] .updates-search button,\r\n:root[data-theme=\"dark\"] .updates-filters button.is-active { color: #d8ebd8; background: #304237; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .updates-filters button",
+      "rule": ":root[data-theme=\"dark\"] .updates-filters button { color: var(--color-text-secondary); border-color: var(--color-border); background: var(--color-surface); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .updates-empty,\r\n:root[data-theme=\"dark\"] .space-object-options,\r\n:root[data-theme=\"dark\"] .shared-poll-options > label",
+      "rule": ":root[data-theme=\"dark\"] .updates-empty,\r\n:root[data-theme=\"dark\"] .space-object-options,\r\n:root[data-theme=\"dark\"] .shared-poll-options > label { border-color: var(--color-border); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .shared-object-icon,\r\n:root[data-theme=\"dark\"] .updates-section > header > span",
+      "rule": ":root[data-theme=\"dark\"] .shared-object-icon,\r\n:root[data-theme=\"dark\"] .updates-section > header > span { color: #d8ebd8; background: #304237; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .shared-object-card blockquote",
+      "rule": ":root[data-theme=\"dark\"] .shared-object-card blockquote { background: var(--color-surface-muted); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".space-discovery-dialog",
+      "rule": ".space-discovery-dialog {\r\n  display: flex;\r\n  width: min(720px, calc(100vw - 30px));\r\n  max-height: min(780px, calc(100dvh - 32px));\r\n  min-width: 0;\r\n  box-sizing: border-box;\r\n  flex-direction: column;\r\n  gap: 16px;\r\n  overflow: hidden;\r\n}",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root:is([data-theme], :not([data-theme])) .account-dialog,\r\n:root:is([data-theme], :not([data-theme])) .search-dialog,\r\n:root:is([data-theme], :not([data-theme])) .username-search-results,\r\n:root:is([data-theme], :not([data-theme])) .emoji-picker-popover,\r\n:root:is([data-theme], :not([data-theme])) .reaction-picker-popover,\r\n:root:is([data-theme], :not([data-theme])) .space-object-menu",
+      "rule": ":root:is([data-theme], :not([data-theme])) .account-dialog,\r\n:root:is([data-theme], :not([data-theme])) .search-dialog,\r\n:root:is([data-theme], :not([data-theme])) .username-search-results,\r\n:root:is([data-theme], :not([data-theme])) .emoji-picker-popover,\r\n:root:is([data-theme], :not([data-theme])) .reaction-picker-popover,\r\n:root:is([data-theme], :not([data-theme])) .space-object-menu { background: var(--color-bg-elevated); border-color: var(--color-border); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root:is([data-theme], :not([data-theme])) .story-copy h1,\r\n:root:is([data-theme], :not([data-theme])) .auth-panel h2,\r\n:root:is([data-theme], :not([data-theme])) .account-dialog h2,\r\n:root:is([data-theme], :not([data-theme])) .pane-heading h1,\r\n:root:is([data-theme], :not([data-theme])) .conversation-heading,\r\n:root:is([data-theme], :not([data-theme])) .chat-row-copy strong,\r\n:root:is([data-theme], :not([data-theme])) .welcome-content h2,\r\n:root:is([data-theme], :not([data-theme])) .space-server-header strong,\r\n:root:is([data-theme], :not([data-theme])) .space-channel-header > div > span,\r\n:root:is([data-theme], :not([data-theme])) .spaces-intro h2,\r\n:root:is([data-theme], :not([data-theme])) .spaces-list h2,\r\n:root:is([data-theme], :not([data-theme])) .profile-form label > span,\r\n:root:is([data-theme], :not([data-theme])) .auth-form label > span",
+      "rule": ":root:is([data-theme], :not([data-theme])) .story-copy h1,\r\n:root:is([data-theme], :not([data-theme])) .auth-panel h2,\r\n:root:is([data-theme], :not([data-theme])) .account-dialog h2,\r\n:root:is([data-theme], :not([data-theme])) .pane-heading h1,\r\n:root:is([data-theme], :not([data-theme])) .conversation-heading,\r\n:root:is([data-theme], :not([data-theme])) .chat-row-copy strong,\r\n:root:is([data-theme], :not([data-theme])) .welcome-content h2,\r\n:root:is([data-theme], :not([data-theme])) .space-server-header strong,\r\n:root:is([data-theme], :not([data-theme])) .space-channel-header > div > span,\r\n:root:is([data-theme], :not([data-theme])) .spaces-intro h2,\r\n:root:is([data-theme], :not([data-theme])) .spaces-list h2,\r\n:root:is([data-theme], :not([data-theme])) .profile-form label > span,\r\n:root:is([data-theme], :not([data-theme])) .auth-form label > span { color: var(--color-text-primary); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root:is([data-theme], :not([data-theme])) .eyebrow,\r\n:root:is([data-theme], :not([data-theme])) .story-copy .eyebrow,\r\n:root:is([data-theme], :not([data-theme])) .story-subtitle,\r\n:root:is([data-theme], :not([data-theme])) .story-note,\r\n:root:is([data-theme], :not([data-theme])) .form-intro,\r\n:root:is([data-theme], :not([data-theme])) .auth-form label small,\r\n:root:is([data-theme], :not([data-theme])) .auth-switch,\r\n:root:is([data-theme], :not([data-theme])) .privacy-note,\r\n:root:is([data-theme], :not([data-theme])) .username-input > span,\r\n:root:is([data-theme], :not([data-theme])) .chat-row-copy small,\r\n:root:is([data-theme], :not([data-theme])) .chat-row-meta,\r\n:root:is([data-theme], :not([data-theme])) .list-section-label,\r\n:root:is([data-theme], :not([data-theme])) .inbox-footnote,\r\n:root:is([data-theme], :not([data-theme])) .empty-title,\r\n:root:is([data-theme], :not([data-theme])) .composer-hint,\r\n:root:is([data-theme], :not([data-theme])) .message-time,\r\n:root:is([data-theme], :not([data-theme])) .message-edited,\r\n:root:is([data-theme], :not([data-theme])) .message-meta strong,\r\n:root:is([data-theme], :not([data-theme])) .conversation-identity-button,\r\n:root:is([data-theme], :not([data-theme])) .profile-avatar-actions > span",
+      "rule": ":root:is([data-theme], :not([data-theme])) .eyebrow,\r\n:root:is([data-theme], :not([data-theme])) .story-copy .eyebrow,\r\n:root:is([data-theme], :not([data-theme])) .story-subtitle,\r\n:root:is([data-theme], :not([data-theme])) .story-note,\r\n:root:is([data-theme], :not([data-theme])) .form-intro,\r\n:root:is([data-theme], :not([data-theme])) .auth-form label small,\r\n:root:is([data-theme], :not([data-theme])) .auth-switch,\r\n:root:is([data-theme], :not([data-theme])) .privacy-note,\r\n:root:is([data-theme], :not([data-theme])) .username-input > span,\r\n:root:is([data-theme], :not([data-theme])) .chat-row-copy small,\r\n:root:is([data-theme], :not([data-theme])) .chat-row-meta,\r\n:root:is([data-theme], :not([data-theme])) .list-section-label,\r\n:root:is([data-theme], :not([data-theme])) .inbox-footnote,\r\n:root:is([data-theme], :not([data-theme])) .empty-title,\r\n:root:is([data-theme], :not([data-theme])) .composer-hint,\r\n:root:is([data-theme], :not([data-theme])) .message-time,\r\n:root:is([data-theme], :not([data-theme])) .message-edited,\r\n:root:is([data-theme], :not([data-theme])) .message-meta strong,\r\n:root:is([data-theme], :not([data-theme])) .conversation-identity-button,\r\n:root:is([data-theme], :not([data-theme])) .profile-avatar-actions > span { color: var(--color-text-secondary); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root:is([data-theme], :not([data-theme])) .auth-form input,\r\n:root:is([data-theme], :not([data-theme])) .profile-form input,\r\n:root:is([data-theme], :not([data-theme])) .profile-form textarea,\r\n:root:is([data-theme], :not([data-theme])) .profile-form select,\r\n:root:is([data-theme], :not([data-theme])) .username-input",
+      "rule": ":root:is([data-theme], :not([data-theme])) .auth-form input,\r\n:root:is([data-theme], :not([data-theme])) .profile-form input,\r\n:root:is([data-theme], :not([data-theme])) .profile-form textarea,\r\n:root:is([data-theme], :not([data-theme])) .profile-form select,\r\n:root:is([data-theme], :not([data-theme])) .username-input { color: var(--color-text-primary); background: var(--color-bg-surface); border-color: var(--color-border); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root:is([data-theme], :not([data-theme])) .auth-form input::placeholder,\r\n:root:is([data-theme], :not([data-theme])) .profile-form input::placeholder,\r\n:root:is([data-theme], :not([data-theme])) .profile-form textarea::placeholder,\r\n:root:is([data-theme], :not([data-theme])) .message-composer textarea::placeholder",
+      "rule": ":root:is([data-theme], :not([data-theme])) .auth-form input::placeholder,\r\n:root:is([data-theme], :not([data-theme])) .profile-form input::placeholder,\r\n:root:is([data-theme], :not([data-theme])) .profile-form textarea::placeholder,\r\n:root:is([data-theme], :not([data-theme])) .message-composer textarea::placeholder { color: var(--color-text-secondary); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root:is([data-theme], :not([data-theme])) .form-error,\r\n:root:is([data-theme], :not([data-theme])) .list-error,\r\n:root:is([data-theme], :not([data-theme])) .inline-error",
+      "rule": ":root:is([data-theme], :not([data-theme])) .form-error,\r\n:root:is([data-theme], :not([data-theme])) .list-error,\r\n:root:is([data-theme], :not([data-theme])) .inline-error { color: var(--color-text-primary); border-color: var(--color-danger); background: var(--color-danger-soft); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root:is([data-theme], :not([data-theme])) .auth-form input:focus,\r\n:root:is([data-theme], :not([data-theme])) .profile-form input:focus,\r\n:root:is([data-theme], :not([data-theme])) .profile-form textarea:focus,\r\n:root:is([data-theme], :not([data-theme])) .username-input:focus-within,\r\n:root:is([data-theme], :not([data-theme])) .message-composer:focus-within",
+      "rule": ":root:is([data-theme], :not([data-theme])) .auth-form input:focus,\r\n:root:is([data-theme], :not([data-theme])) .profile-form input:focus,\r\n:root:is([data-theme], :not([data-theme])) .profile-form textarea:focus,\r\n:root:is([data-theme], :not([data-theme])) .username-input:focus-within,\r\n:root:is([data-theme], :not([data-theme])) .message-composer:focus-within { border-color: var(--color-focus-ring); box-shadow: 0 0 0 2px var(--color-focus-ring); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root:is([data-theme], :not([data-theme])) .overlay",
+      "rule": ":root:is([data-theme], :not([data-theme])) .overlay { background: var(--color-overlay); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root:is([data-theme], :not([data-theme])) .muted,\r\n:root:is([data-theme], :not([data-theme])) .welcome-description,\r\n:root:is([data-theme], :not([data-theme])) .workspace-footer,\r\n:root:is([data-theme], :not([data-theme])) .workspace-footer button,\r\n:root:is([data-theme], :not([data-theme])) .profile-form .profile-checkbox > span > small,\r\n:root:is([data-theme], :not([data-theme])) .sessions-caption",
+      "rule": ":root:is([data-theme], :not([data-theme])) .muted,\r\n:root:is([data-theme], :not([data-theme])) .welcome-description,\r\n:root:is([data-theme], :not([data-theme])) .workspace-footer,\r\n:root:is([data-theme], :not([data-theme])) .workspace-footer button,\r\n:root:is([data-theme], :not([data-theme])) .profile-form .profile-checkbox > span > small,\r\n:root:is([data-theme], :not([data-theme])) .sessions-caption { color: var(--color-text-secondary); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root:is([data-theme], :not([data-theme])) .profile-form .profile-checkbox > input",
+      "rule": ":root:is([data-theme], :not([data-theme])) .profile-form .profile-checkbox > input { accent-color: var(--color-primary); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root:is([data-theme], :not([data-theme])) .avatar-you,\r\n:root:is([data-theme], :not([data-theme])) .chat-avatar,\r\n:root:is([data-theme], :not([data-theme])) .profile-avatar",
+      "rule": ":root:is([data-theme], :not([data-theme])) .avatar-you,\r\n:root:is([data-theme], :not([data-theme])) .chat-avatar,\r\n:root:is([data-theme], :not([data-theme])) .profile-avatar { color: var(--color-text-primary); background: var(--color-primary-soft); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform-shell.css",
+      "selector": ".auth-panel h2, .account-dialog h2",
+      "rule": ".auth-panel h2, .account-dialog h2 { margin: 0; color: #25362e; font-size: var(--type-display); font-weight: 650; letter-spacing: -.8px; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform-shell.css",
+      "selector": ".auth-form, .profile-form",
+      "rule": ".auth-form, .profile-form { display: flex; flex-direction: column; gap: 17px; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform-shell.css",
+      "selector": ".auth-form label, .profile-form label",
+      "rule": ".auth-form label, .profile-form label { display: flex; min-width: 0; flex-direction: column; gap: 7px; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform-shell.css",
+      "selector": ".auth-form label > span, .profile-form label > span",
+      "rule": ".auth-form label > span, .profile-form label > span { color: #3e4a43; font-size: var(--type-body-xs); font-weight: 600; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform-shell.css",
+      "selector": ".auth-form input, .profile-form input, .profile-form textarea, .profile-form select",
+      "rule": ".auth-form input, .profile-form input, .profile-form textarea, .profile-form select {\r\n  width: 100%; min-height: 42px; box-sizing: border-box; border: 1px solid var(--color-border); border-radius: 8px;\r\n  outline: none; padding: 0 12px; color: #29372f; background: var(--color-surface); font: inherit; font-size: var(--type-body);\r\n  transition: border-color .15s ease, box-shadow .15s ease;\r\n}",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform-shell.css",
+      "selector": ".auth-form input:focus, .profile-form input:focus, .profile-form textarea:focus",
+      "rule": ".auth-form input:focus, .profile-form input:focus, .profile-form textarea:focus { border-color: #7e9a7c; box-shadow: 0 0 0 3px rgba(93, 128, 91, .12); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform-shell.css",
+      "selector": ".auth-form input::placeholder, .profile-form input::placeholder, .profile-form textarea::placeholder",
+      "rule": ".auth-form input::placeholder, .profile-form input::placeholder, .profile-form textarea::placeholder { color: #aab2ac; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform-shell.css",
+      "selector": ".form-error",
+      "rule": ".form-error { padding: 10px 11px; border: 1px solid #f1d0c8; border-radius: 7px; color: #963f35; background: var(--color-danger-soft); font-size: var(--type-body-xs); line-height: 1.5; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform-shell.css",
+      "selector": ".workspace.has-active-space .inbox-pane,\r\n.workspace.has-active-space .conversation-pane,\r\n.workspace.has-active-updates .inbox-pane,\r\n.workspace.has-active-updates .conversation-pane",
+      "rule": ".workspace.has-active-space .inbox-pane,\r\n.workspace.has-active-space .conversation-pane,\r\n.workspace.has-active-updates .inbox-pane,\r\n.workspace.has-active-updates .conversation-pane { display: none; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/shared/styles/platform-shell.css",
+      "selector": ".workspace.has-active-updates",
+      "rule": ".workspace.has-active-updates { grid-template-columns: 72px minmax(0, 1fr); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".updates-page",
+      "rule": ".updates-page { display: flex; min-width: 0; min-height: 0; grid-column: 2 / -1; grid-row: 1; flex-direction: column; overflow-y: auto; padding: clamp(20px, 4vw, 42px); color: var(--color-text); background: var(--color-canvas); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".group-space-upgrade-dialog",
+      "rule": ".group-space-upgrade-dialog { display: flex; flex-direction: column; gap: 10px; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".space-dialog-overlay",
+      "rule": ".space-dialog-overlay { z-index: 45; overscroll-behavior: contain; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".space-dialog",
+      "rule": ".space-dialog { width: min(440px, calc(100vw - 30px)); max-height: min(760px, calc(100dvh - 32px)); overflow-y: auto; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".space-dialog-copy",
+      "rule": ".space-dialog-copy { margin: -5px 0 18px; color: var(--color-text-secondary); font-size: var(--type-label); line-height: 1.55; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".space-dialog-copy strong",
+      "rule": ".space-dialog-copy strong { color: #42634a; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".space-dialog-members",
+      "rule": ".space-dialog-members { display: flex; max-height: 190px; flex-direction: column; gap: 4px; overflow-y: auto; margin: 12px 0 18px; padding: 9px; border: 1px solid var(--color-border); border-radius: 8px; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".space-dialog-members > div, .space-dialog-members > div > span",
+      "rule": ".space-dialog-members > div, .space-dialog-members > div > span { display: flex; align-items: center; justify-content: space-between; gap: 10px; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".space-dialog-members > div",
+      "rule": ".space-dialog-members > div { min-width: 0; min-height: 35px; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".space-dialog-members > div > span",
+      "rule": ".space-dialog-members > div > span { min-width: 0; flex: 1; align-items: flex-start; flex-direction: column; gap: 2px; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".space-dialog-members strong",
+      "rule": ".space-dialog-members strong { max-width: 100%; overflow: hidden; color: var(--color-text); font-size: var(--type-label); text-overflow: ellipsis; white-space: nowrap; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".space-dialog-members small",
+      "rule": ".space-dialog-members small { color: var(--color-text-secondary); font-size: var(--type-small); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".space-invite-dialog-form",
+      "rule": ".space-invite-dialog-form { margin-top: 0; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".space-invite-dialog-form .space-channel-grants",
+      "rule": ".space-invite-dialog-form .space-channel-grants { max-height: 150px; overflow-y: auto; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".space-settings-dialog",
+      "rule": ".space-settings-dialog { container-type: inline-size; display: flex; width: min(850px, 100%); height: min(680px, calc(100dvh - 40px)); flex-direction: column; overflow: hidden; padding: 0; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".space-settings-content .profile-form",
+      "rule": ".space-settings-content .profile-form { max-width: 520px; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".space-settings-content .space-dialog-members",
+      "rule": ".space-settings-content .space-dialog-members { max-height: 180px; margin-top: 0; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".space-channel-settings-dialog",
+      "rule": ".space-channel-settings-dialog { width: min(560px, 100%); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".space-object-dialog",
+      "rule": ".space-object-dialog { width: min(500px, calc(100vw - 30px)); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".space-message.is-update-target",
+      "rule": ".space-message.is-update-target { border-radius: 8px; outline: 2px solid #93bd8d; outline-offset: 6px; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".shared-object-card",
+      "rule": ".shared-object-card { width: min(100%, 480px); margin-top: 8px; padding: 13px; border: 1px solid var(--color-border); border-radius: 10px; background: var(--color-surface); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".shared-object-heading",
+      "rule": ".shared-object-heading { display: flex; align-items: center; gap: 8px; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".shared-object-heading > span:nth-child(2)",
+      "rule": ".shared-object-heading > span:nth-child(2) { display: flex; min-width: 0; flex: 1; flex-direction: column; gap: 2px; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".shared-object-heading > span:nth-child(2) strong",
+      "rule": ".shared-object-heading > span:nth-child(2) strong { color: var(--color-text); font-size: var(--type-label); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".shared-object-heading > span:nth-child(2) small",
+      "rule": ".shared-object-heading > span:nth-child(2) small { color: var(--color-text-secondary); font-size: var(--type-caption); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".shared-object-icon",
+      "rule": ".shared-object-icon { display: grid; width: 31px; height: 31px; flex: 0 0 auto; place-items: center; border-radius: 8px; color: #42634a; background: #e9f0e7; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".shared-object-action",
+      "rule": ".shared-object-action { display: grid; width: 30px; height: 30px; place-items: center; border: 0; border-radius: 6px; color: var(--color-text-secondary); background: transparent; cursor: pointer; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".shared-object-action:hover",
+      "rule": ".shared-object-action:hover { color: var(--color-text); background: var(--color-surface-muted); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".shared-object-card h3",
+      "rule": ".shared-object-card h3 { margin: 10px 0; color: var(--color-text); font-size: var(--type-body); line-height: 1.35; text-wrap: pretty; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".shared-object-footer",
+      "rule": ".shared-object-footer { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 10px; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".shared-object-footer > small",
+      "rule": ".shared-object-footer > small { color: var(--color-text-secondary); font-size: var(--type-small); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".shared-object-detail",
+      "rule": ".shared-object-detail { display: flex; align-items: center; gap: 6px; margin: 8px 0; color: var(--color-text-secondary); font-size: var(--type-label); overflow-wrap: anywhere; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".shared-object-card blockquote",
+      "rule": ".shared-object-card blockquote { margin: 8px 0 0; padding: 8px 10px; border-left: 3px solid #88a486; border-radius: 0 6px 6px 0; color: var(--color-text-secondary); background: var(--color-surface-subtle); font-size: var(--type-label); line-height: 1.5; overflow-wrap: anywhere; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".shared-object-completed",
+      "rule": ".shared-object-completed { display: flex; align-items: center; gap: 5px; margin: 10px 0 0; color: #398153; font-size: var(--type-small); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".updates-header",
+      "rule": ".updates-header { display: flex; max-width: 1180px; align-items: flex-end; justify-content: space-between; gap: 20px; margin: 0 auto 22px; width: 100%; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".updates-header .eyebrow",
+      "rule": ".updates-header .eyebrow { margin: 0 0 5px; color: var(--color-text-secondary); font-size: var(--type-small); letter-spacing: .08em; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".updates-header h1",
+      "rule": ".updates-header h1 { margin: 0; color: var(--color-text); font-size: var(--type-display); text-wrap: balance; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".updates-header > div > p:last-child",
+      "rule": ".updates-header > div > p:last-child { margin: 6px 0 0; color: var(--color-text-secondary); font-size: var(--type-label); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".updates-search",
+      "rule": ".updates-search { display: flex; min-width: min(340px, 40%); min-height: 39px; align-items: center; gap: 7px; padding: 0 9px; border: 1px solid var(--color-border); border-radius: 8px; color: var(--color-text-secondary); background: var(--color-surface); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".updates-search:focus-within",
+      "rule": ".updates-search:focus-within { border-color: #8ba289; box-shadow: 0 0 0 3px rgb(93 128 91 / 10%); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".updates-search input",
+      "rule": ".updates-search input { width: 100%; min-width: 0; border: 0; outline: 0; color: var(--color-text); background: transparent; font: inherit; font-size: var(--type-label); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".updates-search button",
+      "rule": ".updates-search button { padding: 5px 7px; border: 0; border-radius: 5px; color: #315a40; background: #edf3ec; font: inherit; font-size: var(--type-small); cursor: pointer; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".updates-filters",
+      "rule": ".updates-filters { display: flex; max-width: 1180px; gap: 7px; width: 100%; margin: 0 auto 20px; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".updates-filters button",
+      "rule": ".updates-filters button { min-height: 30px; padding: 5px 12px; border: 1px solid var(--color-border); border-radius: 18px; color: var(--color-text-secondary); background: var(--color-surface); font: inherit; font-size: var(--type-small); cursor: pointer; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".updates-filters button:hover, .updates-filters button.is-active",
+      "rule": ".updates-filters button:hover, .updates-filters button.is-active { color: #315a40; border-color: #d8e5d5; background: #e9f2e7; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".updates-sections",
+      "rule": ".updates-sections { display: flex; max-width: 1180px; flex-direction: column; gap: 24px; width: 100%; margin: 0 auto; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".updates-section > header",
+      "rule": ".updates-section > header { display: flex; align-items: center; gap: 10px; margin-bottom: 11px; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".updates-section > header > span",
+      "rule": ".updates-section > header > span { display: grid; width: 34px; height: 34px; place-items: center; border-radius: 9px; color: #42634a; background: #e9f0e7; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".updates-section > header > div",
+      "rule": ".updates-section > header > div { min-width: 0; flex: 1; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".updates-section > header h2",
+      "rule": ".updates-section > header h2 { margin: 0; color: var(--color-text); font-size: var(--type-body); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".updates-section > header p",
+      "rule": ".updates-section > header p { margin: 3px 0 0; color: var(--color-text-secondary); font-size: var(--type-small); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".updates-section > header b",
+      "rule": ".updates-section > header b { color: var(--color-text-secondary); font-size: var(--type-small); font-variant-numeric: tabular-nums; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".updates-empty",
+      "rule": ".updates-empty { margin: 0; padding: 14px 16px; border: 1px dashed var(--color-border); border-radius: 8px; color: var(--color-text-secondary); font-size: var(--type-label); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".updates-grid",
+      "rule": ".updates-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 11px; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".updates-live-call",
+      "rule": ".updates-live-call { display: flex; min-height: 58px; align-items: center; gap: 11px; margin-bottom: 10px; padding: 10px 13px; border: 1px solid var(--color-border); border-radius: 10px; background: var(--color-surface-subtle); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".updates-live-indicator",
+      "rule": ".updates-live-indicator { width: 9px; height: 9px; flex: 0 0 auto; border-radius: 50%; background: #36a66b; box-shadow: 0 0 0 4px rgb(54 166 107 / 13%); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".updates-live-call > div",
+      "rule": ".updates-live-call > div { display: flex; min-width: 0; flex: 1; flex-direction: column; gap: 3px; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".updates-live-call strong",
+      "rule": ".updates-live-call strong { overflow: hidden; color: var(--color-text); font-size: var(--type-label); text-overflow: ellipsis; white-space: nowrap; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".updates-live-call small",
+      "rule": ".updates-live-call small { color: var(--color-text-secondary); font-size: var(--type-small); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".updates-live-call button",
+      "rule": ".updates-live-call button { min-height: 36px; padding: 6px 11px; border: 1px solid var(--color-border); border-radius: 8px; color: var(--color-text); background: var(--color-surface); font: inherit; font-size: var(--type-small); font-weight: 600; cursor: pointer; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".updates-live-call button:hover",
+      "rule": ".updates-live-call button:hover { border-color: #b7cfb9; background: #eef5ed; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".updates-item",
+      "rule": ".updates-item { min-width: 0; padding: 11px; border: 1px solid var(--color-border); border-radius: 10px; background: var(--color-surface-subtle); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".updates-item-context",
+      "rule": ".updates-item-context { display: flex; align-items: center; gap: 6px; overflow: hidden; color: var(--color-text-secondary); font-size: var(--type-small); }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".updates-item-context strong",
+      "rule": ".updates-item-context strong { overflow: hidden; color: var(--color-text); text-overflow: ellipsis; white-space: nowrap; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".updates-open-source",
+      "rule": ".updates-open-source { margin-top: 9px; padding: 4px 2px; border: 0; color: #42634a; background: transparent; font: inherit; font-size: var(--type-small); font-weight: 600; cursor: pointer; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".updates-open-source:hover",
+      "rule": ".updates-open-source:hover { text-decoration: underline; }",
+      "ancestors": []
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".updates-saving",
+      "rule": ".updates-saving { position: fixed; right: 20px; bottom: 18px; padding: 9px 12px; border: 1px solid var(--color-border); border-radius: 8px; color: var(--color-text); background: var(--color-canvas); box-shadow: 0 6px 20px rgb(0 0 0 / 10%); font-size: var(--type-small); }",
+      "ancestors": []
+    }
+  ]
+}

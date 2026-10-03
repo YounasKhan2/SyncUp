@@ -1,3 +1,4 @@
+import { restoreAccountUpdates } from './account-updates-parity.mjs'
 import fs from 'node:fs'
 import path from 'node:path'
 import { createHash } from 'node:crypto'
@@ -21,6 +22,7 @@ export function headerRegion(tree) {
   return result
 }
 export function canonical(file, text, files) {
+  text = restoreAccountUpdates(file, text)
   if (file.endsWith('/SpacesPage.tsx')) text = restoreSpacesDialogs(text)
   const tree = parse(file, text), edits = []
   const targets = new Map(Object.entries(files).map(([old, value]) => [value.relocatedPath.replace(/\.tsx?$/u, ''), old.replace(/\.tsx?$/u, '')]))

@@ -1,6 +1,7 @@
+import { AccountSessionsSection } from './components/AccountSessionsSection'
 import { useEffect, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
-import { ArrowRight, Camera, Monitor, Trash2, X } from 'lucide-react'
+import { ArrowRight, Camera, Trash2, X } from 'lucide-react'
 import { getCurrentUser, listSessions, removeAvatar as removeAccountAvatar, revokeSession as revokeAccountSession, updateProfile, uploadAvatar } from './api'
 import type { Session, User } from '../../shared/types'
 import { Avatar } from '../../shared/components/Avatar'
@@ -213,21 +214,17 @@ export function AccountPanel({ user, appearance, onAppearanceChange, onClose, on
           {saved && <p className="form-success" role="status">{saved}</p>}
           <Button type="submit" disabled={loading}>{loading ? 'Saving…' : 'Save profile'}{!loading && <ArrowRight size={14} aria-hidden="true" />}</Button>
         </form>
-        <div className="sessions-section">
-          <div className="sessions-heading"><h3>Active sessions</h3><button type="button" onClick={() => void loadSessions()}>Refresh</button></div>
-          <p className="sessions-caption">Sign out devices you no longer use.</p>
-          {sessionsError && <div className="form-error" role="alert">{sessionsError}</div>}
-          <div className="session-list">
-            {sessions.map((session) => (
-              <div className="session-row" key={session.id}>
-                <span className="session-device" aria-hidden="true"><Monitor size={14} /></span>
-                <div><span className="small strong">{session.device_name}{session.id === currentSessionId ? ' · This device' : ''}</span><span className="micro muted">Active {new Date(session.last_active_at).toLocaleString()}</span></div>
-                {session.id !== currentSessionId && <button type="button" onClick={() => void revokeSession(session.id)}>Revoke</button>}
-              </div>
-            ))}
-            {sessions.length === 0 && !sessionsError && <p className="sessions-caption">No active sessions found.</p>}
-          </div>
-        </div>
+        <AccountSessionsSection
+          rows={sessions.map((session) => ({
+            id: session.id,
+            deviceName: session.device_name,
+            activeLabel: new Date(session.last_active_at).toLocaleString(),
+            isCurrent: session.id === currentSessionId,
+            onRevoke: () => void revokeSession(session.id),
+          }))}
+          error={sessionsError}
+          onRefresh={() => void loadSessions()}
+        />
         <SafetySettings />
     </Dialog>
   )

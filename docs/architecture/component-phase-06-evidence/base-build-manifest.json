@@ -1,0 +1,13 @@
+{
+  "base": "b27a48aab156d02ad39331eb18bb8ad1f0e0a358",
+  "side": "base",
+  "bootstrapSHA256": "89cd3a99fb0b9595db623aaccf90c3d7f1aab8df46f4d3f33d2b660c5cc2cfba",
+  "fixtureSHA256": "82fe393f5acaf4fdcc2851248c38bc73a284eee9e3c282027a05d303e0f0c699",
+  "htmlSHA256": "f8a15aaabe0823bf0b46e3cb76881b81ef64a374c5d175ad22c089503d83704a",
+  "productionSources": {
+    "client/src/features/account/AccountPanel.tsx": "06dcbee4d82fc00db3a3df77fd04166f9a00bf73c4ada413754992e4bc7414ec",
+    "client/src/features/account/SafetySettings.tsx": "68d5e6088d250ec82deaae2842b521184ed28e15d48aa250cbffe326b7f69df3",
+    "client/src/features/account/api.ts": "2dbd8cc1d1ab603f457831fb5b020db38ef072989db1d7f3fa06e3a51e1f39db",
+    "client/src/features/spaces/UpdatesPage.tsx": "3ba0fda214b73fa1e2394908c66c633eb4745e2ad170e1cee05ceddb2afa4f0f"
+  }
+}
