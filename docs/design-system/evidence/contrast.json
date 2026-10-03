@@ -1,0 +1,1529 @@
+{
+  "method": "WCAG sRGB relative luminance, no rounding before pass/fail; opaque approved fills only; gradients/opacity/actual rendered states require later composed-pixel checks",
+  "pairs": [
+    {
+      "mode": "light",
+      "foreground": "text-primary",
+      "background": "canvas",
+      "ratio": 13.983579216036805,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "text-secondary",
+      "background": "canvas",
+      "ratio": 4.904563606020437,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "text-muted",
+      "background": "canvas",
+      "ratio": 3.288221048577044,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "brand",
+      "background": "canvas",
+      "ratio": 5.758285239009591,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "success",
+      "background": "canvas",
+      "ratio": 4.955784310182627,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "warning",
+      "background": "canvas",
+      "ratio": 4.041087012315491,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "danger",
+      "background": "canvas",
+      "ratio": 4.579171692484287,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "info",
+      "background": "canvas",
+      "ratio": 4.6459015108039905,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "focus",
+      "background": "canvas",
+      "ratio": 3.662050411441044,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "border",
+      "background": "canvas",
+      "ratio": 1.339305309630249,
+      "textAA": false,
+      "nonTextAA": false
+    },
+    {
+      "mode": "light",
+      "foreground": "text-primary",
+      "background": "sidebar",
+      "ratio": 13.03094849527046,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "text-secondary",
+      "background": "sidebar",
+      "ratio": 4.570440425476691,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "text-muted",
+      "background": "sidebar",
+      "ratio": 3.0642111338656073,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "brand",
+      "background": "sidebar",
+      "ratio": 5.366002309663079,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "success",
+      "background": "sidebar",
+      "ratio": 4.618171721414395,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "warning",
+      "background": "sidebar",
+      "ratio": 3.765788136845417,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "danger",
+      "background": "sidebar",
+      "ratio": 4.267215821778354,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "info",
+      "background": "sidebar",
+      "ratio": 4.329399674151827,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "focus",
+      "background": "sidebar",
+      "ratio": 3.412573387780824,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "border",
+      "background": "sidebar",
+      "ratio": 1.2480651941542298,
+      "textAA": false,
+      "nonTextAA": false
+    },
+    {
+      "mode": "light",
+      "foreground": "text-primary",
+      "background": "surface",
+      "ratio": 14.720967428735591,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "text-secondary",
+      "background": "surface",
+      "ratio": 5.163193198318475,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "text-muted",
+      "background": "surface",
+      "ratio": 3.4616169584874363,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "brand",
+      "background": "surface",
+      "ratio": 6.061933653696835,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "success",
+      "background": "surface",
+      "ratio": 5.217114895045717,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "warning",
+      "background": "surface",
+      "ratio": 4.254183379371088,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "danger",
+      "background": "surface",
+      "ratio": 4.8206425761397,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "info",
+      "background": "surface",
+      "ratio": 4.890891220412636,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "focus",
+      "background": "surface",
+      "ratio": 3.8551592547483793,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "border",
+      "background": "surface",
+      "ratio": 1.4099301427483426,
+      "textAA": false,
+      "nonTextAA": false
+    },
+    {
+      "mode": "light",
+      "foreground": "text-primary",
+      "background": "elevated",
+      "ratio": 15.257000763154567,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "text-secondary",
+      "background": "elevated",
+      "ratio": 5.35120011292801,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "text-muted",
+      "background": "elevated",
+      "ratio": 3.5876645222580916,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "brand",
+      "background": "elevated",
+      "ratio": 6.282666328036894,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "success",
+      "background": "elevated",
+      "ratio": 5.407085255810142,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "warning",
+      "background": "elevated",
+      "ratio": 4.409090596788247,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "danger",
+      "background": "elevated",
+      "ratio": 4.996176224090457,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "info",
+      "background": "elevated",
+      "ratio": 5.068982826270054,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "focus",
+      "background": "elevated",
+      "ratio": 3.9955368406674348,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "border",
+      "background": "elevated",
+      "ratio": 1.4612698090694527,
+      "textAA": false,
+      "nonTextAA": false
+    },
+    {
+      "mode": "light",
+      "foreground": "text-primary",
+      "background": "hover",
+      "ratio": 12.363994406214442,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "text-secondary",
+      "background": "hover",
+      "ratio": 4.336514711499311,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "text-muted",
+      "background": "hover",
+      "ratio": 2.9073777194595576,
+      "textAA": false,
+      "nonTextAA": false
+    },
+    {
+      "mode": "light",
+      "foreground": "brand",
+      "background": "hover",
+      "ratio": 5.091357898044633,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "success",
+      "background": "hover",
+      "ratio": 4.38180300929201,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "warning",
+      "background": "hover",
+      "ratio": 3.573046388437826,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "danger",
+      "background": "hover",
+      "ratio": 4.0488098444811085,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "info",
+      "background": "hover",
+      "ratio": 4.107810983437459,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "focus",
+      "background": "hover",
+      "ratio": 3.2379099873376216,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "border",
+      "background": "hover",
+      "ratio": 1.1841863303131384,
+      "textAA": false,
+      "nonTextAA": false
+    },
+    {
+      "mode": "light",
+      "foreground": "text-primary",
+      "background": "selected",
+      "ratio": 11.699533315018723,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "text-secondary",
+      "background": "selected",
+      "ratio": 4.103463385000746,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "text-muted",
+      "background": "selected",
+      "ratio": 2.7511305303618956,
+      "textAA": false,
+      "nonTextAA": false
+    },
+    {
+      "mode": "light",
+      "foreground": "brand",
+      "background": "selected",
+      "ratio": 4.817740075724825,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "success",
+      "background": "selected",
+      "ratio": 4.146317816295203,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "warning",
+      "background": "selected",
+      "ratio": 3.3810250865710914,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "danger",
+      "background": "selected",
+      "ratio": 3.831220243667662,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "info",
+      "background": "selected",
+      "ratio": 3.8870505658244654,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "focus",
+      "background": "selected",
+      "ratio": 3.0638994586448476,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "border",
+      "background": "selected",
+      "ratio": 1.120546238335789,
+      "textAA": false,
+      "nonTextAA": false
+    },
+    {
+      "mode": "light",
+      "foreground": "text-primary",
+      "background": "message-incoming",
+      "ratio": 12.711538865497916,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "text-secondary",
+      "background": "message-incoming",
+      "ratio": 4.458411536349486,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "text-muted",
+      "background": "message-incoming",
+      "ratio": 2.989102361532715,
+      "textAA": false,
+      "nonTextAA": false
+    },
+    {
+      "mode": "light",
+      "foreground": "brand",
+      "background": "message-incoming",
+      "ratio": 5.234472911652629,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "success",
+      "background": "message-incoming",
+      "ratio": 4.504972861001558,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "warning",
+      "background": "message-incoming",
+      "ratio": 3.6734825771213346,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "danger",
+      "background": "message-incoming",
+      "ratio": 4.162619458260498,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "info",
+      "background": "message-incoming",
+      "ratio": 4.223279083807993,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "focus",
+      "background": "message-incoming",
+      "ratio": 3.328925693005703,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "border",
+      "background": "message-incoming",
+      "ratio": 1.2174730970600325,
+      "textAA": false,
+      "nonTextAA": false
+    },
+    {
+      "mode": "light",
+      "foreground": "text-primary",
+      "background": "message-outgoing",
+      "ratio": 10.500132905807488,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "text-secondary",
+      "background": "message-outgoing",
+      "ratio": 3.6827888563137585,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "text-muted",
+      "background": "message-outgoing",
+      "ratio": 2.469093034073584,
+      "textAA": false,
+      "nonTextAA": false
+    },
+    {
+      "mode": "light",
+      "foreground": "brand",
+      "background": "message-outgoing",
+      "ratio": 4.323840083074694,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "success",
+      "background": "message-outgoing",
+      "ratio": 3.721249982247471,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "warning",
+      "background": "message-outgoing",
+      "ratio": 3.0344127249326034,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "danger",
+      "background": "message-outgoing",
+      "ratio": 3.438455250030307,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "info",
+      "background": "message-outgoing",
+      "ratio": 3.488562018141129,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "focus",
+      "background": "message-outgoing",
+      "ratio": 2.7497978474495275,
+      "textAA": false,
+      "nonTextAA": false
+    },
+    {
+      "mode": "light",
+      "foreground": "border",
+      "background": "message-outgoing",
+      "ratio": 1.005671261649772,
+      "textAA": false,
+      "nonTextAA": false
+    },
+    {
+      "mode": "light",
+      "foreground": "text-primary",
+      "background": "brand-soft",
+      "ratio": 11.87744938056402,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "text-secondary",
+      "background": "brand-soft",
+      "ratio": 4.165865195475641,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "text-muted",
+      "background": "brand-soft",
+      "ratio": 2.7929672691944782,
+      "textAA": false,
+      "nonTextAA": false
+    },
+    {
+      "mode": "light",
+      "foreground": "brand",
+      "background": "brand-soft",
+      "ratio": 4.891003968908713,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "success",
+      "background": "brand-soft",
+      "ratio": 4.209371318730948,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "warning",
+      "background": "brand-soft",
+      "ratio": 3.4324406998879478,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "danger",
+      "background": "brand-soft",
+      "ratio": 3.889482023316243,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "info",
+      "background": "brand-soft",
+      "ratio": 3.946161363206387,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "focus",
+      "background": "brand-soft",
+      "ratio": 3.110492508318777,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "border",
+      "background": "brand-soft",
+      "ratio": 1.1375865058933303,
+      "textAA": false,
+      "nonTextAA": false
+    },
+    {
+      "mode": "light",
+      "foreground": "#FFFCF8",
+      "background": "brand",
+      "ratio": 6.282666328036894,
+      "textAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "#FFFCF8",
+      "background": "brand-hover",
+      "ratio": 7.959354139199756,
+      "textAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "#FFFCF8",
+      "background": "success",
+      "ratio": 5.407085255810142,
+      "textAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "#FFFFFF",
+      "background": "warning",
+      "ratio": 4.5096726990660265,
+      "textAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "#FFFCF8",
+      "background": "danger",
+      "ratio": 4.996176224090457,
+      "textAA": true
+    },
+    {
+      "mode": "light",
+      "foreground": "#FFFCF8",
+      "background": "info",
+      "ratio": 5.068982826270054,
+      "textAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "text-primary",
+      "background": "canvas",
+      "ratio": 15.522627148749082,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "text-secondary",
+      "background": "canvas",
+      "ratio": 8.328866000088798,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "text-muted",
+      "background": "canvas",
+      "ratio": 5.098813321791494,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "brand",
+      "background": "canvas",
+      "ratio": 7.630294338566638,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "success",
+      "background": "canvas",
+      "ratio": 8.820360592540938,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "warning",
+      "background": "canvas",
+      "ratio": 9.022439445364371,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "danger",
+      "background": "canvas",
+      "ratio": 7.198716190871833,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "info",
+      "background": "canvas",
+      "ratio": 7.6450322098035315,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "focus",
+      "background": "canvas",
+      "ratio": 8.803727441333596,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "border",
+      "background": "canvas",
+      "ratio": 1.5719004887891885,
+      "textAA": false,
+      "nonTextAA": false
+    },
+    {
+      "mode": "dark",
+      "foreground": "text-primary",
+      "background": "sidebar",
+      "ratio": 14.731239417681351,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "text-secondary",
+      "background": "sidebar",
+      "ratio": 7.904236695847046,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "text-muted",
+      "background": "sidebar",
+      "ratio": 4.838861300319685,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "brand",
+      "background": "sidebar",
+      "ratio": 7.241280206737553,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "success",
+      "background": "sidebar",
+      "ratio": 8.370673494497568,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "warning",
+      "background": "sidebar",
+      "ratio": 8.562449792006092,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "danger",
+      "background": "sidebar",
+      "ratio": 6.831705141884954,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "info",
+      "background": "sidebar",
+      "ratio": 7.255266699334274,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "focus",
+      "background": "sidebar",
+      "ratio": 8.3548883486999,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "border",
+      "background": "sidebar",
+      "ratio": 1.4917605260517994,
+      "textAA": false,
+      "nonTextAA": false
+    },
+    {
+      "mode": "dark",
+      "foreground": "text-primary",
+      "background": "surface",
+      "ratio": 14.096266883864734,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "text-secondary",
+      "background": "surface",
+      "ratio": 7.563533985074169,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "text-muted",
+      "background": "surface",
+      "ratio": 4.6302879458629445,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "brand",
+      "background": "surface",
+      "ratio": 6.929153446009638,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "success",
+      "background": "surface",
+      "ratio": 8.009865580930354,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "warning",
+      "background": "surface",
+      "ratio": 8.19337558949317,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "danger",
+      "background": "surface",
+      "ratio": 6.5372326266243554,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "info",
+      "background": "surface",
+      "ratio": 6.942537067497449,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "focus",
+      "background": "surface",
+      "ratio": 7.994760835046068,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "border",
+      "background": "surface",
+      "ratio": 1.427459964896178,
+      "textAA": false,
+      "nonTextAA": false
+    },
+    {
+      "mode": "dark",
+      "foreground": "text-primary",
+      "background": "elevated",
+      "ratio": 12.88969255654596,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "text-secondary",
+      "background": "elevated",
+      "ratio": 6.916130952386162,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "text-muted",
+      "background": "elevated",
+      "ratio": 4.233957015865676,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "brand",
+      "background": "elevated",
+      "ratio": 6.336050411930628,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "success",
+      "background": "elevated",
+      "ratio": 7.324258657136417,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "warning",
+      "background": "elevated",
+      "ratio": 7.492061069712143,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "danger",
+      "background": "elevated",
+      "ratio": 5.977676176396798,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "info",
+      "background": "elevated",
+      "ratio": 6.348288458194389,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "focus",
+      "background": "elevated",
+      "ratio": 7.310446806651658,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "border",
+      "background": "elevated",
+      "ratio": 1.3052760873412945,
+      "textAA": false,
+      "nonTextAA": false
+    },
+    {
+      "mode": "dark",
+      "foreground": "text-primary",
+      "background": "hover",
+      "ratio": 11.839619926144431,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "text-secondary",
+      "background": "hover",
+      "ratio": 6.352700925679639,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "text-muted",
+      "background": "hover",
+      "ratio": 3.889033165963669,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "brand",
+      "background": "hover",
+      "ratio": 5.819877268682627,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "success",
+      "background": "hover",
+      "ratio": 6.727580069179362,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "warning",
+      "background": "hover",
+      "ratio": 6.8817122782193465,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "danger",
+      "background": "hover",
+      "ratio": 5.490698374660961,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "info",
+      "background": "hover",
+      "ratio": 5.831118329380225,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "focus",
+      "background": "hover",
+      "ratio": 6.71489341590979,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "border",
+      "background": "hover",
+      "ratio": 1.1989403707660673,
+      "textAA": false,
+      "nonTextAA": false
+    },
+    {
+      "mode": "dark",
+      "foreground": "text-primary",
+      "background": "selected",
+      "ratio": 11.751918550795244,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "text-secondary",
+      "background": "selected",
+      "ratio": 6.30564362047562,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "text-muted",
+      "background": "selected",
+      "ratio": 3.8602253529121318,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "brand",
+      "background": "selected",
+      "ratio": 5.776766827299299,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "success",
+      "background": "selected",
+      "ratio": 6.677745866010734,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "warning",
+      "background": "selected",
+      "ratio": 6.830736348643728,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "danger",
+      "background": "selected",
+      "ratio": 5.450026308995916,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "info",
+      "background": "selected",
+      "ratio": 5.787924620418232,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "focus",
+      "background": "selected",
+      "ratio": 6.665153188472416,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "border",
+      "background": "selected",
+      "ratio": 1.1900592816657611,
+      "textAA": false,
+      "nonTextAA": false
+    },
+    {
+      "mode": "dark",
+      "foreground": "text-primary",
+      "background": "message-incoming",
+      "ratio": 12.7876689422079,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "text-secondary",
+      "background": "message-incoming",
+      "ratio": 6.8613888649467345,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "text-muted",
+      "background": "message-incoming",
+      "ratio": 4.200444688413674,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "brand",
+      "background": "message-incoming",
+      "ratio": 6.285899738373636,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "success",
+      "background": "message-incoming",
+      "ratio": 7.266286185157758,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "warning",
+      "background": "message-incoming",
+      "ratio": 7.432760419536019,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "danger",
+      "background": "message-incoming",
+      "ratio": 5.930362082116962,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "info",
+      "background": "message-incoming",
+      "ratio": 6.298040918889298,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "focus",
+      "background": "message-incoming",
+      "ratio": 7.2525836572888,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "border",
+      "background": "message-incoming",
+      "ratio": 1.2949446551868502,
+      "textAA": false,
+      "nonTextAA": false
+    },
+    {
+      "mode": "dark",
+      "foreground": "text-primary",
+      "background": "message-outgoing",
+      "ratio": 9.534172270380871,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "text-secondary",
+      "background": "message-outgoing",
+      "ratio": 5.115683221713145,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "text-muted",
+      "background": "message-outgoing",
+      "ratio": 3.1317485190250536,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "brand",
+      "background": "message-outgoing",
+      "ratio": 4.686612646202016,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "success",
+      "background": "message-outgoing",
+      "ratio": 5.4175647311699375,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "warning",
+      "background": "message-outgoing",
+      "ratio": 5.541683836560859,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "danger",
+      "background": "message-outgoing",
+      "ratio": 4.421532491352986,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "info",
+      "background": "message-outgoing",
+      "ratio": 4.695664812560501,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "focus",
+      "background": "message-outgoing",
+      "ratio": 5.407348462526078,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "border",
+      "background": "message-outgoing",
+      "ratio": 1.0357553425372752,
+      "textAA": false,
+      "nonTextAA": false
+    },
+    {
+      "mode": "dark",
+      "foreground": "text-primary",
+      "background": "brand-soft",
+      "ratio": 11.17404789773506,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "text-secondary",
+      "background": "brand-soft",
+      "ratio": 5.995579661031104,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "text-muted",
+      "background": "brand-soft",
+      "ratio": 3.670408606309862,
+      "textAA": false,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "brand",
+      "background": "brand-soft",
+      "ratio": 5.492709036680765,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "success",
+      "background": "brand-soft",
+      "ratio": 6.349384726688471,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "warning",
+      "background": "brand-soft",
+      "ratio": 6.494852292128924,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "danger",
+      "background": "brand-soft",
+      "ratio": 5.182035150891648,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "info",
+      "background": "brand-soft",
+      "ratio": 5.50331817375103,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "focus",
+      "background": "brand-soft",
+      "ratio": 6.337411261984328,
+      "textAA": true,
+      "nonTextAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "border",
+      "background": "brand-soft",
+      "ratio": 1.1315411485367672,
+      "textAA": false,
+      "nonTextAA": false
+    },
+    {
+      "mode": "dark",
+      "foreground": "#272228",
+      "background": "brand",
+      "ratio": 6.569403991223184,
+      "textAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "#272228",
+      "background": "brand-hover",
+      "ratio": 7.7187547282663385,
+      "textAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "#272228",
+      "background": "success",
+      "ratio": 7.594007453656249,
+      "textAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "#272228",
+      "background": "warning",
+      "ratio": 7.767989945467888,
+      "textAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "#272228",
+      "background": "danger",
+      "ratio": 6.1978310111795905,
+      "textAA": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "#272228",
+      "background": "info",
+      "ratio": 6.58209275863238,
+      "textAA": true
+    }
+  ]
+}

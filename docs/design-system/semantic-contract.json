@@ -1,0 +1,279 @@
+{
+  "version": 1,
+  "status": "Proposed final foundation; documentation-only, no production consumer wired",
+  "base": "0c74acf8f54a7dc1a8a235eae43dea9893d264fd",
+  "palettes": {
+    "light": {
+      "canvas": "#F5F2EE",
+      "sidebar": "#EEEAE5",
+      "surface": "#FAF8F5",
+      "elevated": "#FFFCF8",
+      "hover": "#E9E4E0",
+      "border": "#D9D2CD",
+      "text-primary": "#272228",
+      "text-secondary": "#6F676D",
+      "text-muted": "#8C8389",
+      "brand": "#76546F",
+      "brand-hover": "#64465E",
+      "brand-soft": "#EADDE6",
+      "selected": "#E7DCE3",
+      "message-incoming": "#ECE7E3",
+      "message-outgoing": "#DED0D9",
+      "focus": "#98728F",
+      "success": "#35745A",
+      "warning": "#A7682A",
+      "danger": "#B34D55",
+      "info": "#536F91"
+    },
+    "dark": {
+      "canvas": "#17151A",
+      "sidebar": "#1D1A20",
+      "surface": "#211E24",
+      "elevated": "#29252C",
+      "hover": "#302B33",
+      "border": "#3D3741",
+      "text-primary": "#F1ECEF",
+      "text-secondary": "#B7ADB4",
+      "text-muted": "#8F858D",
+      "brand": "#C99ABD",
+      "brand-hover": "#D6A9CA",
+      "brand-soft": "#3C2C38",
+      "selected": "#352A33",
+      "message-incoming": "#29262B",
+      "message-outgoing": "#4A3545",
+      "focus": "#D5A7C9",
+      "success": "#67C79B",
+      "warning": "#E6AC65",
+      "danger": "#ED858D",
+      "info": "#83ACD8"
+    }
+  },
+  "aliases": {
+    "canvas": "--color-bg-app",
+    "sidebar": "--color-bg-navigation",
+    "surface": "--color-bg-surface",
+    "elevated": "--color-bg-elevated",
+    "hover": "--color-bg-hover",
+    "border-strong": "--color-text-secondary",
+    "text-inverse": "--color-on-primary",
+    "brand": "--color-primary",
+    "brand-hover": "--color-primary-hover",
+    "brand-soft": "--color-primary-soft",
+    "focus": "--color-focus-ring"
+  },
+  "companions": {
+    "brand-foreground": {
+      "light": "#FFFCF8",
+      "dark": "#272228"
+    },
+    "success-foreground": {
+      "light": "#FFFCF8",
+      "dark": "#272228"
+    },
+    "danger-foreground": {
+      "light": "#FFFCF8",
+      "dark": "#272228"
+    },
+    "info-foreground": {
+      "light": "#FFFCF8",
+      "dark": "#272228"
+    },
+    "warning-foreground": {
+      "light": "#FFFFFF",
+      "dark": "#272228"
+    },
+    "status-soft-foreground": "text-primary",
+    "status-text": "text-primary; semantic accent provided by icon/border when accent fails 4.5:1"
+  },
+  "states": {
+    "default": "surface / text-primary / border",
+    "hover": "hover / text-primary; brand-hover for primary action",
+    "active": "selected / text-primary plus pressed semantics",
+    "selected": "selected / text-primary plus selected marker/ARIA",
+    "disabled": "hover / text-secondary; native disabled semantics, no universal opacity token",
+    "focus": "focus ring on surface; contrast-checked inverse separator on brand/colored fills",
+    "loading": "retain action foreground/fill; status copy/spinner, parent-owned busy semantics",
+    "error": "danger-soft / text-primary / danger border plus text",
+    "success": "success-soft / text-primary / success icon",
+    "warning": "warning-soft / text-primary / warning icon"
+  },
+  "typography": {
+    "display": {
+      "family": "var(--font-sans)",
+      "size": "1.5rem",
+      "lineHeight": 1.2,
+      "weight": 650,
+      "tracking": "-.025em",
+      "transform": "none",
+      "rationale": "existing display-xs compact page/empty-state heading"
+    },
+    "h1": {
+      "family": "var(--font-sans)",
+      "size": "1.125rem",
+      "lineHeight": 1.3,
+      "weight": 650,
+      "tracking": "-.015em",
+      "transform": "none",
+      "rationale": "existing title: main workspace heading"
+    },
+    "h2": {
+      "family": "var(--font-sans)",
+      "size": "1rem",
+      "lineHeight": 1.35,
+      "weight": 600,
+      "tracking": "-.01em",
+      "transform": "none",
+      "rationale": "existing title-xs: panel/section heading"
+    },
+    "h3": {
+      "family": "var(--font-sans)",
+      "size": ".9375rem",
+      "lineHeight": 1.4,
+      "weight": 600,
+      "tracking": "0",
+      "transform": "none",
+      "rationale": "existing subtitle: subordinate heading"
+    },
+    "body-lg": {
+      "family": "var(--font-sans)",
+      "size": ".875rem",
+      "lineHeight": 1.5,
+      "weight": 400,
+      "tracking": "0",
+      "transform": "none",
+      "rationale": "existing control: introductory readable paragraph"
+    },
+    "body": {
+      "family": "var(--font-sans)",
+      "size": ".8125rem",
+      "lineHeight": 1.5,
+      "weight": 400,
+      "tracking": "0",
+      "transform": "none",
+      "rationale": "existing body-lg: ordinary communication text"
+    },
+    "body-sm": {
+      "family": "var(--font-sans)",
+      "size": ".75rem",
+      "lineHeight": 1.5,
+      "weight": 400,
+      "tracking": "0",
+      "transform": "none",
+      "rationale": "existing body: compact supporting rows"
+    },
+    "label": {
+      "family": "var(--font-sans)",
+      "size": ".75rem",
+      "lineHeight": 1.4,
+      "weight": 600,
+      "tracking": "0",
+      "transform": "none",
+      "rationale": "body-sized readable form/action labels"
+    },
+    "caption": {
+      "family": "var(--font-sans)",
+      "size": ".6875rem",
+      "lineHeight": 1.4,
+      "weight": 400,
+      "tracking": "0",
+      "transform": "none",
+      "rationale": "existing body-xs: small informative metadata; replaces sub-11px targets later"
+    },
+    "overline": {
+      "family": "var(--font-sans)",
+      "size": ".6875rem",
+      "lineHeight": 1.4,
+      "weight": 700,
+      "tracking": ".06em",
+      "transform": "uppercase",
+      "rationale": "existing body-xs size with compact section distinction"
+    }
+  },
+  "spacingPx": {
+    "1": 2,
+    "2": 4,
+    "3": 6,
+    "4": 8,
+    "5": 12,
+    "6": 16,
+    "7": 24,
+    "8": 32,
+    "9": 48
+  },
+  "spacingRoles": {
+    "inline": 4,
+    "inline-roomy": 8,
+    "control-inline": 12,
+    "control-block": 8,
+    "row": 8,
+    "panel": 24,
+    "section": 24,
+    "shell": 16
+  },
+  "radiusPx": {
+    "xs": 4,
+    "sm": 6,
+    "md": 8,
+    "lg": 10,
+    "xl": 14,
+    "full": 9999
+  },
+  "elevation": {
+    "none": "none; optional decorative border",
+    "raised": "0 2px 8px rgb(var(--ds-shadow-rgb) / 8%)",
+    "overlay": "0 8px 24px rgb(var(--ds-shadow-rgb) / 12%)",
+    "modal": "0 18px 50px rgb(var(--ds-shadow-rgb) / 18%)"
+  },
+  "motion": {
+    "durationsMs": {
+      "fast": 100,
+      "normal": 150,
+      "slow": 250
+    },
+    "easing": {
+      "standard": "cubic-bezier(.2,0,0,1)",
+      "enter": "cubic-bezier(0,0,.2,1)",
+      "exit": "cubic-bezier(.4,0,1,1)"
+    },
+    "reduced": "No non-essential transform/animation; functional progress remains accessible via status text"
+  },
+  "controlsPx": {
+    "compactButton": 30,
+    "standardButton": 44,
+    "iconButton": 30,
+    "textInput": 42,
+    "composerIcon": 30,
+    "navigationRow": 48,
+    "listRow": 50,
+    "touchTargetMin": 44
+  },
+  "breakpointsPx": {
+    "narrow-phone": 420,
+    "voice-compact": 620,
+    "two-pane": 701,
+    "media-wide": 761,
+    "workspace-wide": 1100
+  },
+  "layers": {
+    "base": 0,
+    "sticky": 1,
+    "popover": 12,
+    "dropdown": 13,
+    "overlay": 15,
+    "modal": 45,
+    "toast": 50,
+    "call-overlay": 60,
+    "media": 70,
+    "a11y": 100
+  },
+  "layerPolicy": "Future target only; current incoming-call 9/30, call 25, space-dialog 45 and media/skip-link 100 collision ordering preserved until dedicated migration.",
+  "shadowRGB": {
+    "light": "39 34 40",
+    "dark": "0 0 0"
+  },
+  "naming": {
+    "canonical": "--ds-color-<role>; --ds-type-<role>-<field>; --ds-space-<step>; --ds-radius-<role>; --ds-layer-<role>",
+    "legacy": "Existing --color-*, --type-* and other names stay intact until a separately verified alias migration",
+    "tailwind": "@theme inline maps --color-<role> to var(--ds-color-<role>); never self-alias the same custom property"
+  }
+}
