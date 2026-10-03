@@ -1,5 +1,5 @@
-import { Avatar } from '../../shared/components/Avatar'
-import type { IncomingCall } from '../../shared/types'
+import { Avatar } from '../../../shared/components/Avatar'
+import type { IncomingCall } from '../../../shared/types'
 
 type IncomingCallBannerProps = {
   incomingCall: IncomingCall

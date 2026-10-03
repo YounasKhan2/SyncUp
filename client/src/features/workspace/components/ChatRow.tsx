@@ -1,6 +1,6 @@
 import { PenLine } from 'lucide-react'
-import type { Chat } from '../../shared/types'
-import { Avatar } from '../../shared/components/Avatar'
+import type { Chat } from '../../../shared/types'
+import { Avatar } from '../../../shared/components/Avatar'
 
 export function ChatRow({ chat, draft, selected, onSelect }: { chat: Chat; draft?: string; selected: boolean; onSelect: (chatId: string) => void }) {
   const previewText = draft

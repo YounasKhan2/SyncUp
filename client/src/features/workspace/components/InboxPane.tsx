@@ -1,7 +1,7 @@
 import { ArrowDownLeft, ArrowUpRight, Clock3, Phone, PhoneMissed, PhoneOutgoing, Plus, Search, Video } from 'lucide-react'
-import type { CallRecord, Chat, IncomingRequest } from '../../shared/types'
+import type { CallRecord, Chat, IncomingRequest } from '../../../shared/types'
 import { ChatRow } from './ChatRow'
-import { Avatar } from '../../shared/components/Avatar'
+import { Avatar } from '../../../shared/components/Avatar'
 
 type InboxPaneProps = {
   showCalls: boolean

@@ -53,7 +53,11 @@ test('Ownership: every selected baseline consumer imports the contract directly 
 
 test('Ownership: selected consumer emitted JavaScript remains identical after type-import migration', () => {
   for (const [file, hash] of Object.entries(baseline.emittedConsumers)) {
-    const js = ts.transpileModule(read(file), { fileName: file, compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022, jsx: ts.JsxEmit.ReactJSX } }).outputText
+    // Phase 02 relocates Workspace presentation imports in the Spaces fixture.
+    // Canonicalize only those approved paths; preserve the frozen Phase 10 hash.
+    const input = ['WorkspaceRail', 'MobileNavigation'].reduce((text, name) =>
+      text.replaceAll(`/features/workspace/components/${name}`, `/features/workspace/${name}`), read(file))
+    const js = ts.transpileModule(input, { fileName: file, compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022, jsx: ts.JsxEmit.ReactJSX } }).outputText
     assert.equal(digest(js), hash, file)
   }
 })

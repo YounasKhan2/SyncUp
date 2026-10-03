@@ -1,7 +1,7 @@
 import { Layers3, MessageSquare, Phone, Sparkles } from 'lucide-react'
-import { BrandMark } from '../../shared/components/BrandMark'
-import type { User } from '../../shared/types'
-import { Avatar } from '../../shared/components/Avatar'
+import { BrandMark } from '../../../shared/components/BrandMark'
+import type { User } from '../../../shared/types'
+import { Avatar } from '../../../shared/components/Avatar'
 
 type WorkspaceRailProps = {
   user: User

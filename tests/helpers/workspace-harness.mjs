@@ -51,11 +51,12 @@ export function workspace({ seed = {}, narrow = false, api, pageSource } = {}) {
     '../../shared/presentation': { countUnreadConversations: () => 0 },
     '../../shared/appearance': { readAppearancePreference: () => 'system', saveAppearancePreference() {}, applyAppearancePreference() {} },
     '../../shared/components/Avatar': component('Avatar'),
+    '../../../shared/components/Avatar': component('Avatar'),
   }
   for (const [directory, name] of [['account', 'AccountPanel'], ['messaging', 'NewConversation'], ['messaging', 'RequestsPanel'], ['messaging', 'SearchDialog'], ['messaging', 'Conversation'], ['calls', 'CallWindow'], ['spaces', 'SpacesPage'], ['spaces', 'UpdatesPage']]) {
     mocks[`../${directory}/${name}`] = component(name)
   }
-  for (const name of ['InboxPane', 'MobileNavigation', 'WorkspaceRail']) mocks[`./${name}`] = component(name)
+  for (const name of ['InboxPane', 'MobileNavigation', 'WorkspaceRail']) mocks[`./components/${name}`] = component(name)
   function transformed(path, text = source(path)) {
     const tree = ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX)
     const edits = []
@@ -72,8 +73,9 @@ export function workspace({ seed = {}, narrow = false, api, pageSource } = {}) {
   }
   // Optional during baseline characterization; actual modules execute once added.
   for (const [name, extension] of [['useWorkspaceNavigation', 'ts'], ['CallsHome', 'tsx'], ['IncomingCallBanner', 'tsx']]) {
-    const path = `${base}${name}.${extension}`
-    try { mocks[`./${name}`] = load(path, mocks, globals, transformed(path)) }
+    const category = name === 'useWorkspaceNavigation' ? 'hooks' : 'components'
+    const path = `${base}${category}/${name}.${extension}`
+    try { mocks[`./${category}/${name}`] = load(path, mocks, globals, transformed(path)) }
     catch (error) { if (error.code !== 'ENOENT') throw error }
   }
   const page = load(`${base}WorkspacePage.tsx`, mocks, globals, transformed(`${base}WorkspacePage.tsx`, pageSource))
