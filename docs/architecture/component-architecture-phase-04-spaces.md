@@ -95,3 +95,7 @@ After external review, a bounded separate audit of Spaces dialog presentation ma
 ## Verification gate appendix
 
 Precommit: typecheck exit 0; npm test exit 0, 212/212, zero failures/skips, 37647.6376 ms; architecture exit 0, 270/21/0; build exit 0 with the same two warnings; Media V2 exit 0, 11/11, zero failures/skips, 545.9547 ms. Integration retry exit 0, 1/1 passed, zero failures/skips, 43560.582 ms. verification-ledger.json records all successful and failed/skipped attempts; verification-logs.ndjson.gz preserves logs. All six commands repeat on committed HEAD; those exact results belong in the PR/final report.
+
+## Evidence-only correction supplement
+
+See [Phase 04 visual verification correction](component-architecture-phase-04-visual-correction.md) for deterministic theme setup, exact structural comparisons, decoded pixel results, unchanged-build repeats, preserved raw artifacts and the six new final gate results. The original evidence above remains historical and unchanged.

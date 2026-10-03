@@ -1,4 +1,5 @@
 import './helpers/spaces-presentation-characterization.mjs'
+import './helpers/spaces-visual-verification.mjs'
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { spacesPage, space, channel, message, legacy, settle } from './helpers/spaces-harness.mjs'
