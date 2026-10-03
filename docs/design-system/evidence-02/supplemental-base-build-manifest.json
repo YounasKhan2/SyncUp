@@ -1,0 +1,38 @@
+[
+  {
+    "family": "workspace",
+    "fixture": "workspace-preview",
+    "base": "d9324b16475783681aece801fcb5b0a7935ad77d",
+    "archiveSHA256": "5ab68a50da6b20fe1cac6761e3e161a3947014c2bba64b50963b2c773380dbaf",
+    "fixtureSHA256": "a6e9fe31d98e11cb18481975b3a4a111ca0606a64dbc6b096958004da6dbe857",
+    "bootstrapSHA256": "89cd3a99fb0b9595db623aaccf90c3d7f1aab8df46f4d3f33d2b660c5cc2cfba",
+    "htmlSHA256": "79a50ab5f11de539b5782ffe9bde65683647088e10859a0902eac165161f1a0f"
+  },
+  {
+    "family": "conversation",
+    "fixture": "conversation-preview",
+    "base": "d9324b16475783681aece801fcb5b0a7935ad77d",
+    "archiveSHA256": "5ab68a50da6b20fe1cac6761e3e161a3947014c2bba64b50963b2c773380dbaf",
+    "fixtureSHA256": "562595efd4f82a749e0cfe2c52f28f55515c44a262e603a932087456c75656b8",
+    "bootstrapSHA256": "89cd3a99fb0b9595db623aaccf90c3d7f1aab8df46f4d3f33d2b660c5cc2cfba",
+    "htmlSHA256": "79a50ab5f11de539b5782ffe9bde65683647088e10859a0902eac165161f1a0f"
+  },
+  {
+    "family": "account-updates",
+    "fixture": "account-updates-preview",
+    "base": "d9324b16475783681aece801fcb5b0a7935ad77d",
+    "archiveSHA256": "5ab68a50da6b20fe1cac6761e3e161a3947014c2bba64b50963b2c773380dbaf",
+    "fixtureSHA256": "5b1ba9d7f80298645c3e89fa0500ca7a95b0db0569f23d414cff3be190eddb8c",
+    "bootstrapSHA256": "89cd3a99fb0b9595db623aaccf90c3d7f1aab8df46f4d3f33d2b660c5cc2cfba",
+    "htmlSHA256": "79a50ab5f11de539b5782ffe9bde65683647088e10859a0902eac165161f1a0f"
+  },
+  {
+    "family": "spaces",
+    "fixture": "spaces-dialog-preview",
+    "base": "d9324b16475783681aece801fcb5b0a7935ad77d",
+    "archiveSHA256": "5ab68a50da6b20fe1cac6761e3e161a3947014c2bba64b50963b2c773380dbaf",
+    "fixtureSHA256": "fdc57aceb21b69854ee87e3496b325b22ff8f8c9c517495597e99663f7a446dc",
+    "bootstrapSHA256": "89cd3a99fb0b9595db623aaccf90c3d7f1aab8df46f4d3f33d2b660c5cc2cfba",
+    "htmlSHA256": "79a50ab5f11de539b5782ffe9bde65683647088e10859a0902eac165161f1a0f"
+  }
+]

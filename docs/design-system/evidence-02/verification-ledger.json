@@ -1,0 +1,87 @@
+[
+  {
+    "command": "typecheck",
+    "exit": 0,
+    "log": ".git/design02/baseline-typecheck.log",
+    "stage": "baseline",
+    "durationMs": null
+  },
+  {
+    "command": "test",
+    "exit": 0,
+    "log": ".git/design02/baseline-test.log",
+    "stage": "baseline",
+    "durationMs": 42164.3884
+  },
+  {
+    "command": "check:architecture",
+    "exit": 0,
+    "log": ".git/design02/baseline-check-architecture.log",
+    "stage": "baseline",
+    "durationMs": null
+  },
+  {
+    "command": "build",
+    "exit": 0,
+    "log": ".git/design02/baseline-build.log",
+    "stage": "baseline",
+    "durationMs": null
+  },
+  {
+    "command": "test:media-v2",
+    "exit": 0,
+    "log": ".git/design02/baseline-test-media-v2.log",
+    "stage": "baseline",
+    "durationMs": 208.2227
+  },
+  {
+    "command": "test:integration",
+    "exit": 0,
+    "log": ".git/design02/baseline-test-integration.log",
+    "stage": "baseline",
+    "durationMs": 26856.5076
+  },
+  {
+    "command": "typecheck",
+    "exit": 0,
+    "log": ".git/design02/candidate-typecheck.log",
+    "stage": "candidate",
+    "durationMs": null
+  },
+  {
+    "command": "test",
+    "exit": 0,
+    "log": ".git/design02/candidate-test.log",
+    "stage": "candidate",
+    "durationMs": 50695.1671
+  },
+  {
+    "command": "check:architecture",
+    "exit": 0,
+    "log": ".git/design02/candidate-check-architecture.log",
+    "stage": "candidate",
+    "durationMs": null
+  },
+  {
+    "command": "build",
+    "exit": 0,
+    "log": ".git/design02/candidate-build.log",
+    "stage": "candidate",
+    "durationMs": null
+  },
+  {
+    "command": "test:media-v2",
+    "exit": 0,
+    "log": ".git/design02/candidate-test-media-v2.log",
+    "stage": "candidate",
+    "durationMs": 209.8076
+  },
+  {
+    "command": "test:integration",
+    "exit": 0,
+    "log": ".git/design02/candidate-integration-retry.log",
+    "note": "Earlier attempt hit unchanged 15-minute/10-attempt auth limiter. Retried successfully after normal expiry; no reset or config change.",
+    "stage": "candidate",
+    "durationMs": 45849.4926
+  }
+]

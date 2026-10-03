@@ -1,3 +1,4 @@
+import {execFileSync} from 'node:child_process'
 import { restoreAccountUpdates } from './helpers/account-updates-parity.mjs'
 import test from 'node:test'
 import assert from 'node:assert/strict'
@@ -115,8 +116,26 @@ test('Ownership: complete CSS rule/declaration inventory retains multiplicity, m
   assert.equal(digest(css.toString()), baseline.css.digest)
 })
 
-test('Ownership: tokens, primitives and token-before-App import graph remain frozen', () => {
-  assert.equal(digest(read('client/src/shared/styles/tokens.css')), baseline.css.tokensDigest)
+test('Ownership: legacy token values, primitives and token-before-App import graph remain frozen', () => {
+  // Phase 02 authorizes canonical infrastructure, while every historical legacy
+  // variable and non-custom root declaration must still resolve identically.
+  const original = execFileSync('git', ['show', 'd9324b16475783681aece801fcb5b0a7935ad77d:client/src/shared/styles/tokens.css'], {encoding:'utf8'})
+  assert.equal(digest(original), baseline.css.tokensDigest)
+  const declarations = (input, selector) => {
+    const values = {}; const css = postcss.parse(input)
+    css.walkRules(':root', rule => rule.walkDecls(d => {values[d.prop] = d.value}))
+    if (selector !== ':root') css.walkRules(selector, rule => rule.walkDecls(d => {values[d.prop] = d.value}))
+    return values
+  }
+  const resolve = (name, values, seen = []) => {
+    assert.ok(!seen.includes(name), 'Token cycle: '+name)
+    assert.ok(name in values, 'Missing token: '+name)
+    return values[name].replace(/var\((--[\w-]+)\)/g, (_, ref) => resolve(ref, values, [...seen, name]))
+  }
+  for (const selector of [':root', ':root[data-theme="dark"]', ':root:not([data-theme])']) {
+    const old = declarations(original, selector), current = declarations(read('client/src/shared/styles/tokens.css'), selector)
+    for (const [name, value] of Object.entries(old)) assert.equal(name.startsWith('--') ? resolve(name,current) : current[name], name.startsWith('--') ? resolve(name,old) : value, selector+' '+name)
+  }
   assert.equal(digest(read('client/src/shared/styles/primitives.css')), baseline.css.primitivesDigest)
   assert.equal(cssImports('client/src/index.css')[0], 'client/src/shared/styles/tokens.css')
   assert.ok(read('client/src/main.tsx').indexOf("import './index.css'") < read('client/src/main.tsx').indexOf("import App from './App.tsx'"))

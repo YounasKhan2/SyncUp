@@ -1,0 +1,5831 @@
+{
+  "base": "d9324b16475783681aece801fcb5b0a7935ad77d",
+  "historicalRasterBase": "0c74acf8f54a7dc1a8a235eae43dea9893d264fd",
+  "cases": 64,
+  "headFinalScreenshots": 192,
+  "completeElementObservationsPerSide": 10584,
+  "comparedExistingComputedProperties": 5704776,
+  "addedInfrastructureVariables": [
+    "--ds-breakpoint-media-wide",
+    "--ds-breakpoint-narrow-phone",
+    "--ds-breakpoint-two-pane",
+    "--ds-breakpoint-voice-compact",
+    "--ds-breakpoint-workspace-wide",
+    "--ds-color-border",
+    "--ds-color-border-strong",
+    "--ds-color-brand",
+    "--ds-color-brand-foreground",
+    "--ds-color-brand-hover",
+    "--ds-color-brand-soft",
+    "--ds-color-canvas",
+    "--ds-color-danger",
+    "--ds-color-danger-foreground",
+    "--ds-color-danger-soft",
+    "--ds-color-elevated",
+    "--ds-color-focus",
+    "--ds-color-hover",
+    "--ds-color-info",
+    "--ds-color-info-foreground",
+    "--ds-color-info-soft",
+    "--ds-color-message-incoming",
+    "--ds-color-message-outgoing",
+    "--ds-color-overlay",
+    "--ds-color-selected",
+    "--ds-color-sidebar",
+    "--ds-color-status-soft-foreground",
+    "--ds-color-success",
+    "--ds-color-success-foreground",
+    "--ds-color-success-soft",
+    "--ds-color-surface",
+    "--ds-color-text-inverse",
+    "--ds-color-text-muted",
+    "--ds-color-text-primary",
+    "--ds-color-text-secondary",
+    "--ds-color-warning",
+    "--ds-color-warning-foreground",
+    "--ds-color-warning-soft",
+    "--ds-control-compact-button",
+    "--ds-control-composer-icon",
+    "--ds-control-icon-button",
+    "--ds-control-list-row",
+    "--ds-control-navigation-row",
+    "--ds-control-standard-button",
+    "--ds-control-text-input",
+    "--ds-control-touch-target-min",
+    "--ds-duration-fast",
+    "--ds-duration-normal",
+    "--ds-duration-slow",
+    "--ds-ease-enter",
+    "--ds-ease-exit",
+    "--ds-ease-standard",
+    "--ds-elevation-modal",
+    "--ds-elevation-none",
+    "--ds-elevation-overlay",
+    "--ds-elevation-raised",
+    "--ds-layer-a11y",
+    "--ds-layer-base",
+    "--ds-layer-call-overlay",
+    "--ds-layer-dropdown",
+    "--ds-layer-media",
+    "--ds-layer-modal",
+    "--ds-layer-overlay",
+    "--ds-layer-popover",
+    "--ds-layer-sticky",
+    "--ds-layer-toast",
+    "--ds-radius-full",
+    "--ds-radius-lg",
+    "--ds-radius-md",
+    "--ds-radius-sm",
+    "--ds-radius-xl",
+    "--ds-radius-xs",
+    "--ds-shadow-rgb",
+    "--ds-space-1",
+    "--ds-space-2",
+    "--ds-space-3",
+    "--ds-space-4",
+    "--ds-space-5",
+    "--ds-space-6",
+    "--ds-space-7",
+    "--ds-space-8",
+    "--ds-space-9",
+    "--ds-space-control-block",
+    "--ds-space-control-inline",
+    "--ds-space-inline",
+    "--ds-space-inline-roomy",
+    "--ds-space-panel",
+    "--ds-space-row",
+    "--ds-space-section",
+    "--ds-space-shell",
+    "--ds-type-body-family",
+    "--ds-type-body-lg-family",
+    "--ds-type-body-lg-line-height",
+    "--ds-type-body-lg-size",
+    "--ds-type-body-lg-tracking",
+    "--ds-type-body-lg-transform",
+    "--ds-type-body-lg-weight",
+    "--ds-type-body-line-height",
+    "--ds-type-body-size",
+    "--ds-type-body-sm-family",
+    "--ds-type-body-sm-line-height",
+    "--ds-type-body-sm-size",
+    "--ds-type-body-sm-tracking",
+    "--ds-type-body-sm-transform",
+    "--ds-type-body-sm-weight",
+    "--ds-type-body-tracking",
+    "--ds-type-body-transform",
+    "--ds-type-body-weight",
+    "--ds-type-caption-family",
+    "--ds-type-caption-line-height",
+    "--ds-type-caption-size",
+    "--ds-type-caption-tracking",
+    "--ds-type-caption-transform",
+    "--ds-type-caption-weight",
+    "--ds-type-display-family",
+    "--ds-type-display-line-height",
+    "--ds-type-display-size",
+    "--ds-type-display-tracking",
+    "--ds-type-display-transform",
+    "--ds-type-display-weight",
+    "--ds-type-h1-family",
+    "--ds-type-h1-line-height",
+    "--ds-type-h1-size",
+    "--ds-type-h1-tracking",
+    "--ds-type-h1-transform",
+    "--ds-type-h1-weight",
+    "--ds-type-h2-family",
+    "--ds-type-h2-line-height",
+    "--ds-type-h2-size",
+    "--ds-type-h2-tracking",
+    "--ds-type-h2-transform",
+    "--ds-type-h2-weight",
+    "--ds-type-h3-family",
+    "--ds-type-h3-line-height",
+    "--ds-type-h3-size",
+    "--ds-type-h3-tracking",
+    "--ds-type-h3-transform",
+    "--ds-type-h3-weight",
+    "--ds-type-label-family",
+    "--ds-type-label-line-height",
+    "--ds-type-label-size",
+    "--ds-type-label-tracking",
+    "--ds-type-label-transform",
+    "--ds-type-label-weight",
+    "--ds-type-overline-family",
+    "--ds-type-overline-line-height",
+    "--ds-type-overline-size",
+    "--ds-type-overline-tracking",
+    "--ds-type-overline-transform",
+    "--ds-type-overline-weight",
+    "--ui-color-border",
+    "--ui-color-brand",
+    "--ui-color-brand-foreground",
+    "--ui-color-brand-hover",
+    "--ui-color-brand-soft",
+    "--ui-color-canvas",
+    "--ui-color-danger",
+    "--ui-color-danger-foreground",
+    "--ui-color-danger-soft",
+    "--ui-color-elevated",
+    "--ui-color-focus",
+    "--ui-color-hover",
+    "--ui-color-info",
+    "--ui-color-info-foreground",
+    "--ui-color-info-soft",
+    "--ui-color-message-incoming",
+    "--ui-color-message-outgoing",
+    "--ui-color-overlay",
+    "--ui-color-selected",
+    "--ui-color-sidebar",
+    "--ui-color-status-soft-foreground",
+    "--ui-color-success",
+    "--ui-color-success-foreground",
+    "--ui-color-success-soft",
+    "--ui-color-surface",
+    "--ui-color-warning",
+    "--ui-color-warning-foreground",
+    "--ui-color-warning-soft",
+    "--ui-ease-enter",
+    "--ui-ease-exit",
+    "--ui-ease-standard",
+    "--ui-radius-full",
+    "--ui-radius-lg",
+    "--ui-radius-md",
+    "--ui-radius-sm",
+    "--ui-radius-xl",
+    "--ui-radius-xs"
+  ],
+  "comparisons": 576,
+  "byteEqual": 480,
+  "pixelEqual": 480,
+  "differences": [
+    {
+      "category": "historical-to-head",
+      "left": "mobile-dark-light-account-updates-account-sessions-1.jpg",
+      "right": "mobile-dark-light-account-updates-account-sessions-1.jpg",
+      "leftPath": ".git/design02/historical/mobile-dark-light-account-updates-account-sessions-1.jpg",
+      "rightPath": ".git/design02/captures/mobile-dark-light-account-updates-account-sessions-1.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "b1f57a3b959172394c1cbdddea57de8b0399970a32e75c086049004018d026c8",
+      "rightSHA256": "745aca7b3aad9cc6edd6e1f9c5d87e1a6a437e5bab18a730d2b7c93972ef1f1b",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 143785,
+      "changedPercent": 43.68240369425204,
+      "bbox": [
+        2,
+        15,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "ui-dialog account-dialog",
+          "changedPixels": 120481,
+          "bounds": [
+            19.997373580932617,
+            19.997373580932617,
+            349.92120361328125,
+            803.6895751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 191
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-dark-light-account-updates-account-sessions-2.jpg",
+      "right": "mobile-dark-light-account-updates-account-sessions-2.jpg",
+      "leftPath": ".git/design02/historical/mobile-dark-light-account-updates-account-sessions-2.jpg",
+      "rightPath": ".git/design02/captures/mobile-dark-light-account-updates-account-sessions-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "b1f57a3b959172394c1cbdddea57de8b0399970a32e75c086049004018d026c8",
+      "rightSHA256": "745aca7b3aad9cc6edd6e1f9c5d87e1a6a437e5bab18a730d2b7c93972ef1f1b",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 143785,
+      "changedPercent": 43.68240369425204,
+      "bbox": [
+        2,
+        15,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "ui-dialog account-dialog",
+          "changedPixels": 120481,
+          "bounds": [
+            19.997373580932617,
+            19.997373580932617,
+            349.92120361328125,
+            803.6895751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 191
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-dark-light-account-updates-account-sessions-3.jpg",
+      "right": "mobile-dark-light-account-updates-account-sessions-3.jpg",
+      "leftPath": ".git/design02/historical/mobile-dark-light-account-updates-account-sessions-3.jpg",
+      "rightPath": ".git/design02/captures/mobile-dark-light-account-updates-account-sessions-3.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "b1f57a3b959172394c1cbdddea57de8b0399970a32e75c086049004018d026c8",
+      "rightSHA256": "745aca7b3aad9cc6edd6e1f9c5d87e1a6a437e5bab18a730d2b7c93972ef1f1b",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 143785,
+      "changedPercent": 43.68240369425204,
+      "bbox": [
+        2,
+        15,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "ui-dialog account-dialog",
+          "changedPixels": 120481,
+          "bounds": [
+            19.997373580932617,
+            19.997373580932617,
+            349.92120361328125,
+            803.6895751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 191
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-dark-light-account-updates-updates-items-1.jpg",
+      "right": "mobile-dark-light-account-updates-updates-items-1.jpg",
+      "leftPath": ".git/design02/historical/mobile-dark-light-account-updates-updates-items-1.jpg",
+      "rightPath": ".git/design02/captures/mobile-dark-light-account-updates-updates-items-1.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "0acff5497b7a5dbc66c2de908e8f72add7e243b048089fa934abc5baf55839b4",
+      "rightSHA256": "eb201452461dde8a424b2431f45916049f2fb7db1eaadc6c1488bedeae5d04f5",
+      "raster": [
+        377,
+        816
+      ],
+      "changedPixels": 117208,
+      "changedPercent": 38.1000676132522,
+      "bbox": [
+        0,
+        15,
+        368,
+        816
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          377,
+          816
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "product-root",
+          "changedPixels": 117208,
+          "bounds": [
+            0,
+            0,
+            377.3109130859375,
+            1477.9017333984375
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 223
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-dark-light-account-updates-updates-items-2.jpg",
+      "right": "mobile-dark-light-account-updates-updates-items-2.jpg",
+      "leftPath": ".git/design02/historical/mobile-dark-light-account-updates-updates-items-2.jpg",
+      "rightPath": ".git/design02/captures/mobile-dark-light-account-updates-updates-items-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "0acff5497b7a5dbc66c2de908e8f72add7e243b048089fa934abc5baf55839b4",
+      "rightSHA256": "eb201452461dde8a424b2431f45916049f2fb7db1eaadc6c1488bedeae5d04f5",
+      "raster": [
+        377,
+        816
+      ],
+      "changedPixels": 117208,
+      "changedPercent": 38.1000676132522,
+      "bbox": [
+        0,
+        15,
+        368,
+        816
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          377,
+          816
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "product-root",
+          "changedPixels": 117208,
+          "bounds": [
+            0,
+            0,
+            377.3109130859375,
+            1477.9017333984375
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 223
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-dark-light-account-updates-updates-items-3.jpg",
+      "right": "mobile-dark-light-account-updates-updates-items-3.jpg",
+      "leftPath": ".git/design02/historical/mobile-dark-light-account-updates-updates-items-3.jpg",
+      "rightPath": ".git/design02/captures/mobile-dark-light-account-updates-updates-items-3.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "0acff5497b7a5dbc66c2de908e8f72add7e243b048089fa934abc5baf55839b4",
+      "rightSHA256": "eb201452461dde8a424b2431f45916049f2fb7db1eaadc6c1488bedeae5d04f5",
+      "raster": [
+        377,
+        816
+      ],
+      "changedPixels": 117208,
+      "changedPercent": 38.1000676132522,
+      "bbox": [
+        0,
+        15,
+        368,
+        816
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          377,
+          816
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "product-root",
+          "changedPixels": 117208,
+          "bounds": [
+            0,
+            0,
+            377.3109130859375,
+            1477.9017333984375
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 223
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-dark-light-conversation-conversation-1.jpg",
+      "right": "mobile-dark-light-conversation-conversation-1.jpg",
+      "leftPath": ".git/design02/historical/mobile-dark-light-conversation-conversation-1.jpg",
+      "rightPath": ".git/design02/captures/mobile-dark-light-conversation-conversation-1.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "54e6b60504060cecce503af5a620cd063076ca7f1251ab04eb8320e8cd33f0c5",
+      "rightSHA256": "252641770608ed84e498acb4794a3abf5eee2ce204ba6f78e55b8d407f15010d",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 58528,
+      "changedPercent": 17.78101834973873,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          672,
+          390,
+          844
+        ],
+        [
+          0,
+          0,
+          390,
+          256
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-chat",
+          "changedPixels": 58528,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 58528,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 174
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-dark-light-conversation-conversation-2.jpg",
+      "right": "mobile-dark-light-conversation-conversation-2.jpg",
+      "leftPath": ".git/design02/historical/mobile-dark-light-conversation-conversation-2.jpg",
+      "rightPath": ".git/design02/captures/mobile-dark-light-conversation-conversation-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "54e6b60504060cecce503af5a620cd063076ca7f1251ab04eb8320e8cd33f0c5",
+      "rightSHA256": "252641770608ed84e498acb4794a3abf5eee2ce204ba6f78e55b8d407f15010d",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 58528,
+      "changedPercent": 17.78101834973873,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          672,
+          390,
+          844
+        ],
+        [
+          0,
+          0,
+          390,
+          256
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-chat",
+          "changedPixels": 58528,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 58528,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 174
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-dark-light-conversation-conversation-3.jpg",
+      "right": "mobile-dark-light-conversation-conversation-3.jpg",
+      "leftPath": ".git/design02/historical/mobile-dark-light-conversation-conversation-3.jpg",
+      "rightPath": ".git/design02/captures/mobile-dark-light-conversation-conversation-3.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "54e6b60504060cecce503af5a620cd063076ca7f1251ab04eb8320e8cd33f0c5",
+      "rightSHA256": "252641770608ed84e498acb4794a3abf5eee2ce204ba6f78e55b8d407f15010d",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 58528,
+      "changedPercent": 17.78101834973873,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          672,
+          390,
+          844
+        ],
+        [
+          0,
+          0,
+          390,
+          256
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-chat",
+          "changedPixels": 58528,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 58528,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 174
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-dark-light-conversation-report-1.jpg",
+      "right": "mobile-dark-light-conversation-report-1.jpg",
+      "leftPath": ".git/design02/historical/mobile-dark-light-conversation-report-1.jpg",
+      "rightPath": ".git/design02/captures/mobile-dark-light-conversation-report-1.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "0ec434c8ef41a61b63b7d9852f86bf235b0268d262b2da2960fa118e5df30bce",
+      "rightSHA256": "bba2b0287df816666fe73b5e509e35e365250f050838c73c6bfa4e699eb9a3ca",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 95111,
+      "changedPercent": 28.895066229189453,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-chat",
+          "changedPixels": 95111,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 95111,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 159
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-dark-light-conversation-report-2.jpg",
+      "right": "mobile-dark-light-conversation-report-2.jpg",
+      "leftPath": ".git/design02/historical/mobile-dark-light-conversation-report-2.jpg",
+      "rightPath": ".git/design02/captures/mobile-dark-light-conversation-report-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "0ec434c8ef41a61b63b7d9852f86bf235b0268d262b2da2960fa118e5df30bce",
+      "rightSHA256": "bba2b0287df816666fe73b5e509e35e365250f050838c73c6bfa4e699eb9a3ca",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 95111,
+      "changedPercent": 28.895066229189453,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-chat",
+          "changedPixels": 95111,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 95111,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 159
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-dark-light-conversation-report-3.jpg",
+      "right": "mobile-dark-light-conversation-report-3.jpg",
+      "leftPath": ".git/design02/historical/mobile-dark-light-conversation-report-3.jpg",
+      "rightPath": ".git/design02/captures/mobile-dark-light-conversation-report-3.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "0ec434c8ef41a61b63b7d9852f86bf235b0268d262b2da2960fa118e5df30bce",
+      "rightSHA256": "bba2b0287df816666fe73b5e509e35e365250f050838c73c6bfa4e699eb9a3ca",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 95111,
+      "changedPercent": 28.895066229189453,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-chat",
+          "changedPixels": 95111,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 95111,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 159
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-dark-light-spaces-text-1.jpg",
+      "right": "mobile-dark-light-spaces-text-1.jpg",
+      "leftPath": ".git/design02/historical/mobile-dark-light-spaces-text-1.jpg",
+      "rightPath": ".git/design02/captures/mobile-dark-light-spaces-text-1.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "d0c75f6d282eb2826371e2c3db1f743330011d6bffcf560e00b637ab1eb89eda",
+      "rightSHA256": "987c2497ef606d63188526ddacf90fca6fafb9aff9436bdeadf1f211e981c9ce",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 61069,
+      "changedPercent": 18.55298335156155,
+      "bbox": [
+        0,
+        0,
+        390,
+        448
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          448
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "space-sidebar",
+          "changedPixels": 19073,
+          "bounds": [
+            0,
+            0,
+            140.3623809814453,
+            441.1239318847656
+          ]
+        },
+        {
+          "label": "space-channel-header",
+          "changedPixels": 8793,
+          "bounds": [
+            140.3623809814453,
+            0,
+            249.55355834960935,
+            54.98949432373047
+          ]
+        },
+        {
+          "label": "space-message-list",
+          "changedPixels": 14596,
+          "bounds": [
+            140.3623809814453,
+            54.98949432373047,
+            249.55355834960935,
+            220.95587158203125
+          ]
+        },
+        {
+          "label": "space-message-composer",
+          "changedPixels": 16823,
+          "bounds": [
+            148.35870361328125,
+            275.94537353515625,
+            233.5609130859375,
+            150.18380737304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 60621,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            441.1239318847656
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 197
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-dark-light-spaces-text-2.jpg",
+      "right": "mobile-dark-light-spaces-text-2.jpg",
+      "leftPath": ".git/design02/historical/mobile-dark-light-spaces-text-2.jpg",
+      "rightPath": ".git/design02/captures/mobile-dark-light-spaces-text-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "d0c75f6d282eb2826371e2c3db1f743330011d6bffcf560e00b637ab1eb89eda",
+      "rightSHA256": "987c2497ef606d63188526ddacf90fca6fafb9aff9436bdeadf1f211e981c9ce",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 61069,
+      "changedPercent": 18.55298335156155,
+      "bbox": [
+        0,
+        0,
+        390,
+        448
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          448
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "space-sidebar",
+          "changedPixels": 19073,
+          "bounds": [
+            0,
+            0,
+            140.3623809814453,
+            441.1239318847656
+          ]
+        },
+        {
+          "label": "space-channel-header",
+          "changedPixels": 8793,
+          "bounds": [
+            140.3623809814453,
+            0,
+            249.55355834960935,
+            54.98949432373047
+          ]
+        },
+        {
+          "label": "space-message-list",
+          "changedPixels": 14596,
+          "bounds": [
+            140.3623809814453,
+            54.98949432373047,
+            249.55355834960935,
+            220.95587158203125
+          ]
+        },
+        {
+          "label": "space-message-composer",
+          "changedPixels": 16823,
+          "bounds": [
+            148.35870361328125,
+            275.94537353515625,
+            233.5609130859375,
+            150.18380737304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 60621,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            441.1239318847656
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 197
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-dark-light-spaces-text-3.jpg",
+      "right": "mobile-dark-light-spaces-text-3.jpg",
+      "leftPath": ".git/design02/historical/mobile-dark-light-spaces-text-3.jpg",
+      "rightPath": ".git/design02/captures/mobile-dark-light-spaces-text-3.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "d0c75f6d282eb2826371e2c3db1f743330011d6bffcf560e00b637ab1eb89eda",
+      "rightSHA256": "987c2497ef606d63188526ddacf90fca6fafb9aff9436bdeadf1f211e981c9ce",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 61069,
+      "changedPercent": 18.55298335156155,
+      "bbox": [
+        0,
+        0,
+        390,
+        448
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          448
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "space-sidebar",
+          "changedPixels": 19073,
+          "bounds": [
+            0,
+            0,
+            140.3623809814453,
+            441.1239318847656
+          ]
+        },
+        {
+          "label": "space-channel-header",
+          "changedPixels": 8793,
+          "bounds": [
+            140.3623809814453,
+            0,
+            249.55355834960935,
+            54.98949432373047
+          ]
+        },
+        {
+          "label": "space-message-list",
+          "changedPixels": 14596,
+          "bounds": [
+            140.3623809814453,
+            54.98949432373047,
+            249.55355834960935,
+            220.95587158203125
+          ]
+        },
+        {
+          "label": "space-message-composer",
+          "changedPixels": 16823,
+          "bounds": [
+            148.35870361328125,
+            275.94537353515625,
+            233.5609130859375,
+            150.18380737304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 60621,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            441.1239318847656
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 197
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-dark-light-workspace-calls-1.jpg",
+      "right": "mobile-dark-light-workspace-calls-1.jpg",
+      "leftPath": ".git/design02/historical/mobile-dark-light-workspace-calls-1.jpg",
+      "rightPath": ".git/design02/captures/mobile-dark-light-workspace-calls-1.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "7063ade92a5b0cf607b5ef188c46b930776a44dbeecc814bcf76f69ce8e76a32",
+      "rightSHA256": "bd55603dad5965127494083bf29b3d2a78de14c52e5d44eb778b5a9666633d85",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 48407,
+      "changedPercent": 14.706221898165026,
+      "bbox": [
+        0,
+        0,
+        369,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          384,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-calls",
+          "changedPixels": 48407,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 48407,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 237
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-dark-light-workspace-calls-2.jpg",
+      "right": "mobile-dark-light-workspace-calls-2.jpg",
+      "leftPath": ".git/design02/historical/mobile-dark-light-workspace-calls-2.jpg",
+      "rightPath": ".git/design02/captures/mobile-dark-light-workspace-calls-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "7063ade92a5b0cf607b5ef188c46b930776a44dbeecc814bcf76f69ce8e76a32",
+      "rightSHA256": "bd55603dad5965127494083bf29b3d2a78de14c52e5d44eb778b5a9666633d85",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 48407,
+      "changedPercent": 14.706221898165026,
+      "bbox": [
+        0,
+        0,
+        369,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          384,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-calls",
+          "changedPixels": 48407,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 48407,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 237
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-dark-light-workspace-calls-3.jpg",
+      "right": "mobile-dark-light-workspace-calls-3.jpg",
+      "leftPath": ".git/design02/historical/mobile-dark-light-workspace-calls-3.jpg",
+      "rightPath": ".git/design02/captures/mobile-dark-light-workspace-calls-3.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "7063ade92a5b0cf607b5ef188c46b930776a44dbeecc814bcf76f69ce8e76a32",
+      "rightSHA256": "bd55603dad5965127494083bf29b3d2a78de14c52e5d44eb778b5a9666633d85",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 48407,
+      "changedPercent": 14.706221898165026,
+      "bbox": [
+        0,
+        0,
+        369,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          384,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-calls",
+          "changedPixels": 48407,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 48407,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 237
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-dark-light-workspace-direct-1.jpg",
+      "right": "mobile-dark-light-workspace-direct-1.jpg",
+      "leftPath": ".git/design02/historical/mobile-dark-light-workspace-direct-1.jpg",
+      "rightPath": ".git/design02/captures/mobile-dark-light-workspace-direct-1.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "30a702d5a4e12d904cfb1c653ecafaee0c65d30279e16b38ab6201a5451deeb4",
+      "rightSHA256": "01ccaf04c1bd423082abf2e5fb1c08cacf1567500fe537268ed6e4e94841b2a0",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 26980,
+      "changedPercent": 8.196621703730708,
+      "bbox": [
+        47,
+        271,
+        344,
+        577
+      ],
+      "connected32pxTileRegions": [
+        [
+          32,
+          256,
+          352,
+          608
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace",
+          "changedPixels": 26980,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 26980,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 182
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-dark-light-workspace-direct-2.jpg",
+      "right": "mobile-dark-light-workspace-direct-2.jpg",
+      "leftPath": ".git/design02/historical/mobile-dark-light-workspace-direct-2.jpg",
+      "rightPath": ".git/design02/captures/mobile-dark-light-workspace-direct-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "30a702d5a4e12d904cfb1c653ecafaee0c65d30279e16b38ab6201a5451deeb4",
+      "rightSHA256": "01ccaf04c1bd423082abf2e5fb1c08cacf1567500fe537268ed6e4e94841b2a0",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 26980,
+      "changedPercent": 8.196621703730708,
+      "bbox": [
+        47,
+        271,
+        344,
+        577
+      ],
+      "connected32pxTileRegions": [
+        [
+          32,
+          256,
+          352,
+          608
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace",
+          "changedPixels": 26980,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 26980,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 182
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-dark-light-workspace-direct-3.jpg",
+      "right": "mobile-dark-light-workspace-direct-3.jpg",
+      "leftPath": ".git/design02/historical/mobile-dark-light-workspace-direct-3.jpg",
+      "rightPath": ".git/design02/captures/mobile-dark-light-workspace-direct-3.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "30a702d5a4e12d904cfb1c653ecafaee0c65d30279e16b38ab6201a5451deeb4",
+      "rightSHA256": "01ccaf04c1bd423082abf2e5fb1c08cacf1567500fe537268ed6e4e94841b2a0",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 26980,
+      "changedPercent": 8.196621703730708,
+      "bbox": [
+        47,
+        271,
+        344,
+        577
+      ],
+      "connected32pxTileRegions": [
+        [
+          32,
+          256,
+          352,
+          608
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace",
+          "changedPixels": 26980,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 26980,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 182
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-dark-light-workspace-inbox-1.jpg",
+      "right": "mobile-dark-light-workspace-inbox-1.jpg",
+      "leftPath": ".git/design02/historical/mobile-dark-light-workspace-inbox-1.jpg",
+      "rightPath": ".git/design02/captures/mobile-dark-light-workspace-inbox-1.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "21196509d94679e19558b4ff43bd73ecdbacf8a37a856bf21cf7acfc6b25f302",
+      "rightSHA256": "971deba7d200177c649c642bc4d3e2d3b3e495833615f0fcd7faf9ec0411639d",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 41288,
+      "changedPercent": 12.543443917851501,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace",
+          "changedPixels": 41288,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 41288,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 217
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-dark-light-workspace-inbox-2.jpg",
+      "right": "mobile-dark-light-workspace-inbox-2.jpg",
+      "leftPath": ".git/design02/historical/mobile-dark-light-workspace-inbox-2.jpg",
+      "rightPath": ".git/design02/captures/mobile-dark-light-workspace-inbox-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "21196509d94679e19558b4ff43bd73ecdbacf8a37a856bf21cf7acfc6b25f302",
+      "rightSHA256": "971deba7d200177c649c642bc4d3e2d3b3e495833615f0fcd7faf9ec0411639d",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 41288,
+      "changedPercent": 12.543443917851501,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace",
+          "changedPixels": 41288,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 41288,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 217
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-dark-light-workspace-inbox-3.jpg",
+      "right": "mobile-dark-light-workspace-inbox-3.jpg",
+      "leftPath": ".git/design02/historical/mobile-dark-light-workspace-inbox-3.jpg",
+      "rightPath": ".git/design02/captures/mobile-dark-light-workspace-inbox-3.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "21196509d94679e19558b4ff43bd73ecdbacf8a37a856bf21cf7acfc6b25f302",
+      "rightSHA256": "971deba7d200177c649c642bc4d3e2d3b3e495833615f0fcd7faf9ec0411639d",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 41288,
+      "changedPercent": 12.543443917851501,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace",
+          "changedPixels": 41288,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 41288,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 217
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-light-light-account-updates-account-sessions-1.jpg",
+      "right": "mobile-light-light-account-updates-account-sessions-1.jpg",
+      "leftPath": ".git/design02/historical/mobile-light-light-account-updates-account-sessions-1.jpg",
+      "rightPath": ".git/design02/captures/mobile-light-light-account-updates-account-sessions-1.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "58e9393b120c66bac8ee76097cb6f5874a8b86c07ab66fe4ccae8792b6e50eef",
+      "rightSHA256": "1244c423c0501fad262caaa37d0812f2e599b3093091203c7031bdb0a105854a",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 150558,
+      "changedPercent": 45.74006562158221,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "ui-dialog account-dialog",
+          "changedPixels": 113002,
+          "bounds": [
+            19.997373580932617,
+            19.997373580932617,
+            349.92120361328125,
+            803.6895751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 208
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-light-light-account-updates-account-sessions-2.jpg",
+      "right": "mobile-light-light-account-updates-account-sessions-2.jpg",
+      "leftPath": ".git/design02/historical/mobile-light-light-account-updates-account-sessions-2.jpg",
+      "rightPath": ".git/design02/captures/mobile-light-light-account-updates-account-sessions-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "58e9393b120c66bac8ee76097cb6f5874a8b86c07ab66fe4ccae8792b6e50eef",
+      "rightSHA256": "1244c423c0501fad262caaa37d0812f2e599b3093091203c7031bdb0a105854a",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 150558,
+      "changedPercent": 45.74006562158221,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "ui-dialog account-dialog",
+          "changedPixels": 113002,
+          "bounds": [
+            19.997373580932617,
+            19.997373580932617,
+            349.92120361328125,
+            803.6895751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 208
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-light-light-account-updates-account-sessions-3.jpg",
+      "right": "mobile-light-light-account-updates-account-sessions-3.jpg",
+      "leftPath": ".git/design02/historical/mobile-light-light-account-updates-account-sessions-3.jpg",
+      "rightPath": ".git/design02/captures/mobile-light-light-account-updates-account-sessions-3.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "58e9393b120c66bac8ee76097cb6f5874a8b86c07ab66fe4ccae8792b6e50eef",
+      "rightSHA256": "1244c423c0501fad262caaa37d0812f2e599b3093091203c7031bdb0a105854a",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 150558,
+      "changedPercent": 45.74006562158221,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "ui-dialog account-dialog",
+          "changedPixels": 113002,
+          "bounds": [
+            19.997373580932617,
+            19.997373580932617,
+            349.92120361328125,
+            803.6895751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 208
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-light-light-account-updates-updates-items-1.jpg",
+      "right": "mobile-light-light-account-updates-updates-items-1.jpg",
+      "leftPath": ".git/design02/historical/mobile-light-light-account-updates-updates-items-1.jpg",
+      "rightPath": ".git/design02/captures/mobile-light-light-account-updates-updates-items-1.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "a3f8ad45219476e2681bddadaf9dcf15f23999a96c4ce42076f2dac76f2ff78c",
+      "rightSHA256": "be7a29b2a1abaa05e30cb6dcf70e2911999d54dd66c73ffadf6995d47a59333c",
+      "raster": [
+        377,
+        816
+      ],
+      "changedPixels": 117518,
+      "changedPercent": 38.200837364123366,
+      "bbox": [
+        0,
+        15,
+        369,
+        816
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          377,
+          816
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "product-root",
+          "changedPixels": 117518,
+          "bounds": [
+            0,
+            0,
+            377.3109130859375,
+            1477.9017333984375
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 230
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-light-light-account-updates-updates-items-2.jpg",
+      "right": "mobile-light-light-account-updates-updates-items-2.jpg",
+      "leftPath": ".git/design02/historical/mobile-light-light-account-updates-updates-items-2.jpg",
+      "rightPath": ".git/design02/captures/mobile-light-light-account-updates-updates-items-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "a3f8ad45219476e2681bddadaf9dcf15f23999a96c4ce42076f2dac76f2ff78c",
+      "rightSHA256": "be7a29b2a1abaa05e30cb6dcf70e2911999d54dd66c73ffadf6995d47a59333c",
+      "raster": [
+        377,
+        816
+      ],
+      "changedPixels": 117518,
+      "changedPercent": 38.200837364123366,
+      "bbox": [
+        0,
+        15,
+        369,
+        816
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          377,
+          816
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "product-root",
+          "changedPixels": 117518,
+          "bounds": [
+            0,
+            0,
+            377.3109130859375,
+            1477.9017333984375
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 230
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-light-light-account-updates-updates-items-3.jpg",
+      "right": "mobile-light-light-account-updates-updates-items-3.jpg",
+      "leftPath": ".git/design02/historical/mobile-light-light-account-updates-updates-items-3.jpg",
+      "rightPath": ".git/design02/captures/mobile-light-light-account-updates-updates-items-3.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "a3f8ad45219476e2681bddadaf9dcf15f23999a96c4ce42076f2dac76f2ff78c",
+      "rightSHA256": "be7a29b2a1abaa05e30cb6dcf70e2911999d54dd66c73ffadf6995d47a59333c",
+      "raster": [
+        377,
+        816
+      ],
+      "changedPixels": 117518,
+      "changedPercent": 38.200837364123366,
+      "bbox": [
+        0,
+        15,
+        369,
+        816
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          377,
+          816
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "product-root",
+          "changedPixels": 117518,
+          "bounds": [
+            0,
+            0,
+            377.3109130859375,
+            1477.9017333984375
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 230
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-light-light-conversation-conversation-1.jpg",
+      "right": "mobile-light-light-conversation-conversation-1.jpg",
+      "leftPath": ".git/design02/historical/mobile-light-light-conversation-conversation-1.jpg",
+      "rightPath": ".git/design02/captures/mobile-light-light-conversation-conversation-1.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "246ebfdfe7a5e860fe00fd1ead7466a381a52e3fa9bed297642646b8df7bf88b",
+      "rightSHA256": "11df171f976cceed2a9587ff43063e429820bd4776fd43a0a373b120f01c81cc",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 54170,
+      "changedPercent": 16.457042167942642,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          672,
+          390,
+          844
+        ],
+        [
+          0,
+          0,
+          390,
+          224
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-chat",
+          "changedPixels": 54170,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 54170,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 164
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-light-light-conversation-conversation-2.jpg",
+      "right": "mobile-light-light-conversation-conversation-2.jpg",
+      "leftPath": ".git/design02/historical/mobile-light-light-conversation-conversation-2.jpg",
+      "rightPath": ".git/design02/captures/mobile-light-light-conversation-conversation-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "246ebfdfe7a5e860fe00fd1ead7466a381a52e3fa9bed297642646b8df7bf88b",
+      "rightSHA256": "11df171f976cceed2a9587ff43063e429820bd4776fd43a0a373b120f01c81cc",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 54170,
+      "changedPercent": 16.457042167942642,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          672,
+          390,
+          844
+        ],
+        [
+          0,
+          0,
+          390,
+          224
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-chat",
+          "changedPixels": 54170,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 54170,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 164
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-light-light-conversation-conversation-3.jpg",
+      "right": "mobile-light-light-conversation-conversation-3.jpg",
+      "leftPath": ".git/design02/historical/mobile-light-light-conversation-conversation-3.jpg",
+      "rightPath": ".git/design02/captures/mobile-light-light-conversation-conversation-3.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "246ebfdfe7a5e860fe00fd1ead7466a381a52e3fa9bed297642646b8df7bf88b",
+      "rightSHA256": "11df171f976cceed2a9587ff43063e429820bd4776fd43a0a373b120f01c81cc",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 54170,
+      "changedPercent": 16.457042167942642,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          672,
+          390,
+          844
+        ],
+        [
+          0,
+          0,
+          390,
+          224
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-chat",
+          "changedPixels": 54170,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 54170,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 164
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-light-light-conversation-report-1.jpg",
+      "right": "mobile-light-light-conversation-report-1.jpg",
+      "leftPath": ".git/design02/historical/mobile-light-light-conversation-report-1.jpg",
+      "rightPath": ".git/design02/captures/mobile-light-light-conversation-report-1.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "2f00dfeef6142b37294549a876fddd6a805a9e4b5f2b5c6d27611e4786d85355",
+      "rightSHA256": "6614c12c24493c9e466fd681c3b23dc33745ce31661f10e92de622c95a1aa76d",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 121392,
+      "changedPercent": 36.87932920160409,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-chat",
+          "changedPixels": 121392,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 121392,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 129
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-light-light-conversation-report-2.jpg",
+      "right": "mobile-light-light-conversation-report-2.jpg",
+      "leftPath": ".git/design02/historical/mobile-light-light-conversation-report-2.jpg",
+      "rightPath": ".git/design02/captures/mobile-light-light-conversation-report-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "2f00dfeef6142b37294549a876fddd6a805a9e4b5f2b5c6d27611e4786d85355",
+      "rightSHA256": "6614c12c24493c9e466fd681c3b23dc33745ce31661f10e92de622c95a1aa76d",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 121392,
+      "changedPercent": 36.87932920160409,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-chat",
+          "changedPixels": 121392,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 121392,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 129
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-light-light-conversation-report-3.jpg",
+      "right": "mobile-light-light-conversation-report-3.jpg",
+      "leftPath": ".git/design02/historical/mobile-light-light-conversation-report-3.jpg",
+      "rightPath": ".git/design02/captures/mobile-light-light-conversation-report-3.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "2f00dfeef6142b37294549a876fddd6a805a9e4b5f2b5c6d27611e4786d85355",
+      "rightSHA256": "6614c12c24493c9e466fd681c3b23dc33745ce31661f10e92de622c95a1aa76d",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 121392,
+      "changedPercent": 36.87932920160409,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-chat",
+          "changedPixels": 121392,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 121392,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 129
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-light-light-spaces-text-1.jpg",
+      "right": "mobile-light-light-spaces-text-1.jpg",
+      "leftPath": ".git/design02/historical/mobile-light-light-spaces-text-1.jpg",
+      "rightPath": ".git/design02/captures/mobile-light-light-spaces-text-1.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "a1286dafbde6bf3d15b0ebe27f62c83059639eae768c9d424a15eb9d3861d262",
+      "rightSHA256": "5e4d850520444e8d993206ae629ee7e41a262352eab0c806c01be4f2f1e3a100",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 56085,
+      "changedPercent": 17.038826102807146,
+      "bbox": [
+        0,
+        0,
+        390,
+        448
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          448
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "space-sidebar",
+          "changedPixels": 16846,
+          "bounds": [
+            0,
+            0,
+            140.3623809814453,
+            441.1239318847656
+          ]
+        },
+        {
+          "label": "space-channel-header",
+          "changedPixels": 9216,
+          "bounds": [
+            140.3623809814453,
+            0,
+            249.55355834960935,
+            54.98949432373047
+          ]
+        },
+        {
+          "label": "space-message-list",
+          "changedPixels": 13716,
+          "bounds": [
+            140.3623809814453,
+            54.98949432373047,
+            249.55355834960935,
+            220.95587158203125
+          ]
+        },
+        {
+          "label": "space-message-composer",
+          "changedPixels": 14089,
+          "bounds": [
+            148.35870361328125,
+            275.94537353515625,
+            233.5609130859375,
+            150.18380737304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 55782,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            441.1239318847656
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 173
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-light-light-spaces-text-2.jpg",
+      "right": "mobile-light-light-spaces-text-2.jpg",
+      "leftPath": ".git/design02/historical/mobile-light-light-spaces-text-2.jpg",
+      "rightPath": ".git/design02/captures/mobile-light-light-spaces-text-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "a1286dafbde6bf3d15b0ebe27f62c83059639eae768c9d424a15eb9d3861d262",
+      "rightSHA256": "5e4d850520444e8d993206ae629ee7e41a262352eab0c806c01be4f2f1e3a100",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 56085,
+      "changedPercent": 17.038826102807146,
+      "bbox": [
+        0,
+        0,
+        390,
+        448
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          448
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "space-sidebar",
+          "changedPixels": 16846,
+          "bounds": [
+            0,
+            0,
+            140.3623809814453,
+            441.1239318847656
+          ]
+        },
+        {
+          "label": "space-channel-header",
+          "changedPixels": 9216,
+          "bounds": [
+            140.3623809814453,
+            0,
+            249.55355834960935,
+            54.98949432373047
+          ]
+        },
+        {
+          "label": "space-message-list",
+          "changedPixels": 13716,
+          "bounds": [
+            140.3623809814453,
+            54.98949432373047,
+            249.55355834960935,
+            220.95587158203125
+          ]
+        },
+        {
+          "label": "space-message-composer",
+          "changedPixels": 14089,
+          "bounds": [
+            148.35870361328125,
+            275.94537353515625,
+            233.5609130859375,
+            150.18380737304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 55782,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            441.1239318847656
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 173
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-light-light-spaces-text-3.jpg",
+      "right": "mobile-light-light-spaces-text-3.jpg",
+      "leftPath": ".git/design02/historical/mobile-light-light-spaces-text-3.jpg",
+      "rightPath": ".git/design02/captures/mobile-light-light-spaces-text-3.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "a1286dafbde6bf3d15b0ebe27f62c83059639eae768c9d424a15eb9d3861d262",
+      "rightSHA256": "5e4d850520444e8d993206ae629ee7e41a262352eab0c806c01be4f2f1e3a100",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 56085,
+      "changedPercent": 17.038826102807146,
+      "bbox": [
+        0,
+        0,
+        390,
+        448
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          448
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "space-sidebar",
+          "changedPixels": 16846,
+          "bounds": [
+            0,
+            0,
+            140.3623809814453,
+            441.1239318847656
+          ]
+        },
+        {
+          "label": "space-channel-header",
+          "changedPixels": 9216,
+          "bounds": [
+            140.3623809814453,
+            0,
+            249.55355834960935,
+            54.98949432373047
+          ]
+        },
+        {
+          "label": "space-message-list",
+          "changedPixels": 13716,
+          "bounds": [
+            140.3623809814453,
+            54.98949432373047,
+            249.55355834960935,
+            220.95587158203125
+          ]
+        },
+        {
+          "label": "space-message-composer",
+          "changedPixels": 14089,
+          "bounds": [
+            148.35870361328125,
+            275.94537353515625,
+            233.5609130859375,
+            150.18380737304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 55782,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            441.1239318847656
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 173
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-light-light-workspace-calls-1.jpg",
+      "right": "mobile-light-light-workspace-calls-1.jpg",
+      "leftPath": ".git/design02/historical/mobile-light-light-workspace-calls-1.jpg",
+      "rightPath": ".git/design02/captures/mobile-light-light-workspace-calls-1.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "14389dc831385067c1b93acaf3374710babc48be2cd1c1d5ad15bd61e559f83c",
+      "rightSHA256": "5df8913a82cd417ee0e57264e203b32de1cc400c731315d77b6da149170d3f1e",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 45504,
+      "changedPercent": 13.824279985417427,
+      "bbox": [
+        0,
+        0,
+        360,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          384,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-calls",
+          "changedPixels": 45504,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 45504,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 221
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-light-light-workspace-calls-2.jpg",
+      "right": "mobile-light-light-workspace-calls-2.jpg",
+      "leftPath": ".git/design02/historical/mobile-light-light-workspace-calls-2.jpg",
+      "rightPath": ".git/design02/captures/mobile-light-light-workspace-calls-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "14389dc831385067c1b93acaf3374710babc48be2cd1c1d5ad15bd61e559f83c",
+      "rightSHA256": "5df8913a82cd417ee0e57264e203b32de1cc400c731315d77b6da149170d3f1e",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 45504,
+      "changedPercent": 13.824279985417427,
+      "bbox": [
+        0,
+        0,
+        360,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          384,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-calls",
+          "changedPixels": 45504,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 45504,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 221
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-light-light-workspace-calls-3.jpg",
+      "right": "mobile-light-light-workspace-calls-3.jpg",
+      "leftPath": ".git/design02/historical/mobile-light-light-workspace-calls-3.jpg",
+      "rightPath": ".git/design02/captures/mobile-light-light-workspace-calls-3.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "14389dc831385067c1b93acaf3374710babc48be2cd1c1d5ad15bd61e559f83c",
+      "rightSHA256": "5df8913a82cd417ee0e57264e203b32de1cc400c731315d77b6da149170d3f1e",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 45504,
+      "changedPercent": 13.824279985417427,
+      "bbox": [
+        0,
+        0,
+        360,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          384,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-calls",
+          "changedPixels": 45504,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 45504,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 221
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-light-light-workspace-direct-1.jpg",
+      "right": "mobile-light-light-workspace-direct-1.jpg",
+      "leftPath": ".git/design02/historical/mobile-light-light-workspace-direct-1.jpg",
+      "rightPath": ".git/design02/captures/mobile-light-light-workspace-direct-1.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "c3ac3b3b9297a386f3b178b907aa0881031ca41097f4783b218f2f571608bc73",
+      "rightSHA256": "70f97e6da2ea5a83a9d75eecbd4c1a1f44f39dc4fb1b620c1e54ae1d74352c03",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 29935,
+      "changedPercent": 9.094361404787945,
+      "bbox": [
+        16,
+        16,
+        390,
+        832
+      ],
+      "connected32pxTileRegions": [
+        [
+          32,
+          256,
+          352,
+          608
+        ],
+        [
+          0,
+          736,
+          224,
+          832
+        ],
+        [
+          0,
+          0,
+          192,
+          256
+        ],
+        [
+          320,
+          160,
+          390,
+          768
+        ],
+        [
+          320,
+          96,
+          384,
+          128
+        ],
+        [
+          256,
+          800,
+          288,
+          832
+        ],
+        [
+          352,
+          0,
+          384,
+          32
+        ],
+        [
+          320,
+          800,
+          352,
+          832
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace",
+          "changedPixels": 29935,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 29935,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 169
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-light-light-workspace-direct-2.jpg",
+      "right": "mobile-light-light-workspace-direct-2.jpg",
+      "leftPath": ".git/design02/historical/mobile-light-light-workspace-direct-2.jpg",
+      "rightPath": ".git/design02/captures/mobile-light-light-workspace-direct-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "c3ac3b3b9297a386f3b178b907aa0881031ca41097f4783b218f2f571608bc73",
+      "rightSHA256": "70f97e6da2ea5a83a9d75eecbd4c1a1f44f39dc4fb1b620c1e54ae1d74352c03",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 29935,
+      "changedPercent": 9.094361404787945,
+      "bbox": [
+        16,
+        16,
+        390,
+        832
+      ],
+      "connected32pxTileRegions": [
+        [
+          32,
+          256,
+          352,
+          608
+        ],
+        [
+          0,
+          736,
+          224,
+          832
+        ],
+        [
+          0,
+          0,
+          192,
+          256
+        ],
+        [
+          320,
+          160,
+          390,
+          768
+        ],
+        [
+          320,
+          96,
+          384,
+          128
+        ],
+        [
+          256,
+          800,
+          288,
+          832
+        ],
+        [
+          352,
+          0,
+          384,
+          32
+        ],
+        [
+          320,
+          800,
+          352,
+          832
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace",
+          "changedPixels": 29935,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 29935,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 169
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-light-light-workspace-direct-3.jpg",
+      "right": "mobile-light-light-workspace-direct-3.jpg",
+      "leftPath": ".git/design02/historical/mobile-light-light-workspace-direct-3.jpg",
+      "rightPath": ".git/design02/captures/mobile-light-light-workspace-direct-3.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "c3ac3b3b9297a386f3b178b907aa0881031ca41097f4783b218f2f571608bc73",
+      "rightSHA256": "70f97e6da2ea5a83a9d75eecbd4c1a1f44f39dc4fb1b620c1e54ae1d74352c03",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 29935,
+      "changedPercent": 9.094361404787945,
+      "bbox": [
+        16,
+        16,
+        390,
+        832
+      ],
+      "connected32pxTileRegions": [
+        [
+          32,
+          256,
+          352,
+          608
+        ],
+        [
+          0,
+          736,
+          224,
+          832
+        ],
+        [
+          0,
+          0,
+          192,
+          256
+        ],
+        [
+          320,
+          160,
+          390,
+          768
+        ],
+        [
+          320,
+          96,
+          384,
+          128
+        ],
+        [
+          256,
+          800,
+          288,
+          832
+        ],
+        [
+          352,
+          0,
+          384,
+          32
+        ],
+        [
+          320,
+          800,
+          352,
+          832
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace",
+          "changedPixels": 29935,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 29935,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 169
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-light-light-workspace-inbox-1.jpg",
+      "right": "mobile-light-light-workspace-inbox-1.jpg",
+      "leftPath": ".git/design02/historical/mobile-light-light-workspace-inbox-1.jpg",
+      "rightPath": ".git/design02/captures/mobile-light-light-workspace-inbox-1.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "bb09c1a3acddd03ddce3e849a0c637ac60b8dc9f85e3885d767d4f3a191d2631",
+      "rightSHA256": "ed726f51dec0bf9a43214f20db4823483c484b8c1c22fd3db63d0c3ddfb8d22b",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 47133,
+      "changedPercent": 14.319176084578928,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace",
+          "changedPixels": 47133,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 47133,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 198
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-light-light-workspace-inbox-2.jpg",
+      "right": "mobile-light-light-workspace-inbox-2.jpg",
+      "leftPath": ".git/design02/historical/mobile-light-light-workspace-inbox-2.jpg",
+      "rightPath": ".git/design02/captures/mobile-light-light-workspace-inbox-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "bb09c1a3acddd03ddce3e849a0c637ac60b8dc9f85e3885d767d4f3a191d2631",
+      "rightSHA256": "ed726f51dec0bf9a43214f20db4823483c484b8c1c22fd3db63d0c3ddfb8d22b",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 47133,
+      "changedPercent": 14.319176084578928,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace",
+          "changedPixels": 47133,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 47133,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 198
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-light-light-workspace-inbox-3.jpg",
+      "right": "mobile-light-light-workspace-inbox-3.jpg",
+      "leftPath": ".git/design02/historical/mobile-light-light-workspace-inbox-3.jpg",
+      "rightPath": ".git/design02/captures/mobile-light-light-workspace-inbox-3.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "bb09c1a3acddd03ddce3e849a0c637ac60b8dc9f85e3885d767d4f3a191d2631",
+      "rightSHA256": "ed726f51dec0bf9a43214f20db4823483c484b8c1c22fd3db63d0c3ddfb8d22b",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 47133,
+      "changedPercent": 14.319176084578928,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace",
+          "changedPixels": 47133,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 47133,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 198
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-dark-account-updates-account-sessions-1.jpg",
+      "right": "mobile-system-dark-account-updates-account-sessions-1.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-dark-account-updates-account-sessions-1.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-dark-account-updates-account-sessions-1.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "96a946209322cd85e6c59ff3f5b9c1b7eb8f73cb466384ff533f8c47fc874444",
+      "rightSHA256": "3e8b880ccabcf77379a9094b223b591663dbfe225b05829d1b5b4196ba347073",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 145372,
+      "changedPercent": 44.164540041317295,
+      "bbox": [
+        2,
+        15,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "ui-dialog account-dialog",
+          "changedPixels": 122068,
+          "bounds": [
+            19.997373580932617,
+            19.997373580932617,
+            349.92120361328125,
+            803.6895751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 214
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-dark-account-updates-account-sessions-2.jpg",
+      "right": "mobile-system-dark-account-updates-account-sessions-2.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-dark-account-updates-account-sessions-2.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-dark-account-updates-account-sessions-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "96a946209322cd85e6c59ff3f5b9c1b7eb8f73cb466384ff533f8c47fc874444",
+      "rightSHA256": "3e8b880ccabcf77379a9094b223b591663dbfe225b05829d1b5b4196ba347073",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 145372,
+      "changedPercent": 44.164540041317295,
+      "bbox": [
+        2,
+        15,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "ui-dialog account-dialog",
+          "changedPixels": 122068,
+          "bounds": [
+            19.997373580932617,
+            19.997373580932617,
+            349.92120361328125,
+            803.6895751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 214
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-dark-account-updates-account-sessions-3.jpg",
+      "right": "mobile-system-dark-account-updates-account-sessions-3.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-dark-account-updates-account-sessions-3.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-dark-account-updates-account-sessions-3.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "96a946209322cd85e6c59ff3f5b9c1b7eb8f73cb466384ff533f8c47fc874444",
+      "rightSHA256": "3e8b880ccabcf77379a9094b223b591663dbfe225b05829d1b5b4196ba347073",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 145372,
+      "changedPercent": 44.164540041317295,
+      "bbox": [
+        2,
+        15,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "ui-dialog account-dialog",
+          "changedPixels": 122068,
+          "bounds": [
+            19.997373580932617,
+            19.997373580932617,
+            349.92120361328125,
+            803.6895751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 214
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-dark-account-updates-updates-items-1.jpg",
+      "right": "mobile-system-dark-account-updates-updates-items-1.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-dark-account-updates-updates-items-1.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-dark-account-updates-updates-items-1.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "0acff5497b7a5dbc66c2de908e8f72add7e243b048089fa934abc5baf55839b4",
+      "rightSHA256": "eb201452461dde8a424b2431f45916049f2fb7db1eaadc6c1488bedeae5d04f5",
+      "raster": [
+        377,
+        816
+      ],
+      "changedPixels": 117208,
+      "changedPercent": 38.1000676132522,
+      "bbox": [
+        0,
+        15,
+        368,
+        816
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          377,
+          816
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "product-root",
+          "changedPixels": 117208,
+          "bounds": [
+            0,
+            0,
+            377.3109130859375,
+            1477.9017333984375
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 223
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-dark-account-updates-updates-items-2.jpg",
+      "right": "mobile-system-dark-account-updates-updates-items-2.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-dark-account-updates-updates-items-2.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-dark-account-updates-updates-items-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "0acff5497b7a5dbc66c2de908e8f72add7e243b048089fa934abc5baf55839b4",
+      "rightSHA256": "eb201452461dde8a424b2431f45916049f2fb7db1eaadc6c1488bedeae5d04f5",
+      "raster": [
+        377,
+        816
+      ],
+      "changedPixels": 117208,
+      "changedPercent": 38.1000676132522,
+      "bbox": [
+        0,
+        15,
+        368,
+        816
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          377,
+          816
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "product-root",
+          "changedPixels": 117208,
+          "bounds": [
+            0,
+            0,
+            377.3109130859375,
+            1477.9017333984375
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 223
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-dark-account-updates-updates-items-3.jpg",
+      "right": "mobile-system-dark-account-updates-updates-items-3.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-dark-account-updates-updates-items-3.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-dark-account-updates-updates-items-3.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "0acff5497b7a5dbc66c2de908e8f72add7e243b048089fa934abc5baf55839b4",
+      "rightSHA256": "eb201452461dde8a424b2431f45916049f2fb7db1eaadc6c1488bedeae5d04f5",
+      "raster": [
+        377,
+        816
+      ],
+      "changedPixels": 117208,
+      "changedPercent": 38.1000676132522,
+      "bbox": [
+        0,
+        15,
+        368,
+        816
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          377,
+          816
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "product-root",
+          "changedPixels": 117208,
+          "bounds": [
+            0,
+            0,
+            377.3109130859375,
+            1477.9017333984375
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 223
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-dark-conversation-conversation-1.jpg",
+      "right": "mobile-system-dark-conversation-conversation-1.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-dark-conversation-conversation-1.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-dark-conversation-conversation-1.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "54e6b60504060cecce503af5a620cd063076ca7f1251ab04eb8320e8cd33f0c5",
+      "rightSHA256": "252641770608ed84e498acb4794a3abf5eee2ce204ba6f78e55b8d407f15010d",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 58528,
+      "changedPercent": 17.78101834973873,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          672,
+          390,
+          844
+        ],
+        [
+          0,
+          0,
+          390,
+          256
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-chat",
+          "changedPixels": 58528,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 58528,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 174
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-dark-conversation-conversation-2.jpg",
+      "right": "mobile-system-dark-conversation-conversation-2.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-dark-conversation-conversation-2.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-dark-conversation-conversation-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "54e6b60504060cecce503af5a620cd063076ca7f1251ab04eb8320e8cd33f0c5",
+      "rightSHA256": "252641770608ed84e498acb4794a3abf5eee2ce204ba6f78e55b8d407f15010d",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 58528,
+      "changedPercent": 17.78101834973873,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          672,
+          390,
+          844
+        ],
+        [
+          0,
+          0,
+          390,
+          256
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-chat",
+          "changedPixels": 58528,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 58528,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 174
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-dark-conversation-conversation-3.jpg",
+      "right": "mobile-system-dark-conversation-conversation-3.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-dark-conversation-conversation-3.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-dark-conversation-conversation-3.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "54e6b60504060cecce503af5a620cd063076ca7f1251ab04eb8320e8cd33f0c5",
+      "rightSHA256": "252641770608ed84e498acb4794a3abf5eee2ce204ba6f78e55b8d407f15010d",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 58528,
+      "changedPercent": 17.78101834973873,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          672,
+          390,
+          844
+        ],
+        [
+          0,
+          0,
+          390,
+          256
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-chat",
+          "changedPixels": 58528,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 58528,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 174
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-dark-conversation-report-1.jpg",
+      "right": "mobile-system-dark-conversation-report-1.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-dark-conversation-report-1.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-dark-conversation-report-1.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "0ec434c8ef41a61b63b7d9852f86bf235b0268d262b2da2960fa118e5df30bce",
+      "rightSHA256": "bba2b0287df816666fe73b5e509e35e365250f050838c73c6bfa4e699eb9a3ca",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 95111,
+      "changedPercent": 28.895066229189453,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-chat",
+          "changedPixels": 95111,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 95111,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 159
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-dark-conversation-report-2.jpg",
+      "right": "mobile-system-dark-conversation-report-2.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-dark-conversation-report-2.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-dark-conversation-report-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "0ec434c8ef41a61b63b7d9852f86bf235b0268d262b2da2960fa118e5df30bce",
+      "rightSHA256": "bba2b0287df816666fe73b5e509e35e365250f050838c73c6bfa4e699eb9a3ca",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 95111,
+      "changedPercent": 28.895066229189453,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-chat",
+          "changedPixels": 95111,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 95111,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 159
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-dark-conversation-report-3.jpg",
+      "right": "mobile-system-dark-conversation-report-3.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-dark-conversation-report-3.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-dark-conversation-report-3.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "0ec434c8ef41a61b63b7d9852f86bf235b0268d262b2da2960fa118e5df30bce",
+      "rightSHA256": "bba2b0287df816666fe73b5e509e35e365250f050838c73c6bfa4e699eb9a3ca",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 95111,
+      "changedPercent": 28.895066229189453,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-chat",
+          "changedPixels": 95111,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 95111,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 159
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-dark-spaces-text-1.jpg",
+      "right": "mobile-system-dark-spaces-text-1.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-dark-spaces-text-1.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-dark-spaces-text-1.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "d0c75f6d282eb2826371e2c3db1f743330011d6bffcf560e00b637ab1eb89eda",
+      "rightSHA256": "987c2497ef606d63188526ddacf90fca6fafb9aff9436bdeadf1f211e981c9ce",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 61069,
+      "changedPercent": 18.55298335156155,
+      "bbox": [
+        0,
+        0,
+        390,
+        448
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          448
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "space-sidebar",
+          "changedPixels": 19073,
+          "bounds": [
+            0,
+            0,
+            140.3623809814453,
+            441.1239318847656
+          ]
+        },
+        {
+          "label": "space-channel-header",
+          "changedPixels": 8793,
+          "bounds": [
+            140.3623809814453,
+            0,
+            249.55355834960935,
+            54.98949432373047
+          ]
+        },
+        {
+          "label": "space-message-list",
+          "changedPixels": 14596,
+          "bounds": [
+            140.3623809814453,
+            54.98949432373047,
+            249.55355834960935,
+            220.95587158203125
+          ]
+        },
+        {
+          "label": "space-message-composer",
+          "changedPixels": 16823,
+          "bounds": [
+            148.35870361328125,
+            275.94537353515625,
+            233.5609130859375,
+            150.18380737304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 60621,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            441.1239318847656
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 197
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-dark-spaces-text-2.jpg",
+      "right": "mobile-system-dark-spaces-text-2.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-dark-spaces-text-2.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-dark-spaces-text-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "d0c75f6d282eb2826371e2c3db1f743330011d6bffcf560e00b637ab1eb89eda",
+      "rightSHA256": "987c2497ef606d63188526ddacf90fca6fafb9aff9436bdeadf1f211e981c9ce",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 61069,
+      "changedPercent": 18.55298335156155,
+      "bbox": [
+        0,
+        0,
+        390,
+        448
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          448
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "space-sidebar",
+          "changedPixels": 19073,
+          "bounds": [
+            0,
+            0,
+            140.3623809814453,
+            441.1239318847656
+          ]
+        },
+        {
+          "label": "space-channel-header",
+          "changedPixels": 8793,
+          "bounds": [
+            140.3623809814453,
+            0,
+            249.55355834960935,
+            54.98949432373047
+          ]
+        },
+        {
+          "label": "space-message-list",
+          "changedPixels": 14596,
+          "bounds": [
+            140.3623809814453,
+            54.98949432373047,
+            249.55355834960935,
+            220.95587158203125
+          ]
+        },
+        {
+          "label": "space-message-composer",
+          "changedPixels": 16823,
+          "bounds": [
+            148.35870361328125,
+            275.94537353515625,
+            233.5609130859375,
+            150.18380737304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 60621,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            441.1239318847656
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 197
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-dark-spaces-text-3.jpg",
+      "right": "mobile-system-dark-spaces-text-3.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-dark-spaces-text-3.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-dark-spaces-text-3.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "d0c75f6d282eb2826371e2c3db1f743330011d6bffcf560e00b637ab1eb89eda",
+      "rightSHA256": "987c2497ef606d63188526ddacf90fca6fafb9aff9436bdeadf1f211e981c9ce",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 61069,
+      "changedPercent": 18.55298335156155,
+      "bbox": [
+        0,
+        0,
+        390,
+        448
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          448
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "space-sidebar",
+          "changedPixels": 19073,
+          "bounds": [
+            0,
+            0,
+            140.3623809814453,
+            441.1239318847656
+          ]
+        },
+        {
+          "label": "space-channel-header",
+          "changedPixels": 8793,
+          "bounds": [
+            140.3623809814453,
+            0,
+            249.55355834960935,
+            54.98949432373047
+          ]
+        },
+        {
+          "label": "space-message-list",
+          "changedPixels": 14596,
+          "bounds": [
+            140.3623809814453,
+            54.98949432373047,
+            249.55355834960935,
+            220.95587158203125
+          ]
+        },
+        {
+          "label": "space-message-composer",
+          "changedPixels": 16823,
+          "bounds": [
+            148.35870361328125,
+            275.94537353515625,
+            233.5609130859375,
+            150.18380737304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 60621,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            441.1239318847656
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 197
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-dark-workspace-calls-1.jpg",
+      "right": "mobile-system-dark-workspace-calls-1.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-dark-workspace-calls-1.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-dark-workspace-calls-1.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "7063ade92a5b0cf607b5ef188c46b930776a44dbeecc814bcf76f69ce8e76a32",
+      "rightSHA256": "bd55603dad5965127494083bf29b3d2a78de14c52e5d44eb778b5a9666633d85",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 48407,
+      "changedPercent": 14.706221898165026,
+      "bbox": [
+        0,
+        0,
+        369,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          384,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-calls",
+          "changedPixels": 48407,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 48407,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 237
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-dark-workspace-calls-2.jpg",
+      "right": "mobile-system-dark-workspace-calls-2.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-dark-workspace-calls-2.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-dark-workspace-calls-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "7063ade92a5b0cf607b5ef188c46b930776a44dbeecc814bcf76f69ce8e76a32",
+      "rightSHA256": "bd55603dad5965127494083bf29b3d2a78de14c52e5d44eb778b5a9666633d85",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 48407,
+      "changedPercent": 14.706221898165026,
+      "bbox": [
+        0,
+        0,
+        369,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          384,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-calls",
+          "changedPixels": 48407,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 48407,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 237
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-dark-workspace-calls-3.jpg",
+      "right": "mobile-system-dark-workspace-calls-3.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-dark-workspace-calls-3.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-dark-workspace-calls-3.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "7063ade92a5b0cf607b5ef188c46b930776a44dbeecc814bcf76f69ce8e76a32",
+      "rightSHA256": "bd55603dad5965127494083bf29b3d2a78de14c52e5d44eb778b5a9666633d85",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 48407,
+      "changedPercent": 14.706221898165026,
+      "bbox": [
+        0,
+        0,
+        369,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          384,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-calls",
+          "changedPixels": 48407,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 48407,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 237
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-dark-workspace-direct-1.jpg",
+      "right": "mobile-system-dark-workspace-direct-1.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-dark-workspace-direct-1.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-dark-workspace-direct-1.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "30a702d5a4e12d904cfb1c653ecafaee0c65d30279e16b38ab6201a5451deeb4",
+      "rightSHA256": "01ccaf04c1bd423082abf2e5fb1c08cacf1567500fe537268ed6e4e94841b2a0",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 26980,
+      "changedPercent": 8.196621703730708,
+      "bbox": [
+        47,
+        271,
+        344,
+        577
+      ],
+      "connected32pxTileRegions": [
+        [
+          32,
+          256,
+          352,
+          608
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace",
+          "changedPixels": 26980,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 26980,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 182
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-dark-workspace-direct-2.jpg",
+      "right": "mobile-system-dark-workspace-direct-2.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-dark-workspace-direct-2.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-dark-workspace-direct-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "30a702d5a4e12d904cfb1c653ecafaee0c65d30279e16b38ab6201a5451deeb4",
+      "rightSHA256": "01ccaf04c1bd423082abf2e5fb1c08cacf1567500fe537268ed6e4e94841b2a0",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 26980,
+      "changedPercent": 8.196621703730708,
+      "bbox": [
+        47,
+        271,
+        344,
+        577
+      ],
+      "connected32pxTileRegions": [
+        [
+          32,
+          256,
+          352,
+          608
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace",
+          "changedPixels": 26980,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 26980,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 182
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-dark-workspace-direct-3.jpg",
+      "right": "mobile-system-dark-workspace-direct-3.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-dark-workspace-direct-3.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-dark-workspace-direct-3.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "30a702d5a4e12d904cfb1c653ecafaee0c65d30279e16b38ab6201a5451deeb4",
+      "rightSHA256": "01ccaf04c1bd423082abf2e5fb1c08cacf1567500fe537268ed6e4e94841b2a0",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 26980,
+      "changedPercent": 8.196621703730708,
+      "bbox": [
+        47,
+        271,
+        344,
+        577
+      ],
+      "connected32pxTileRegions": [
+        [
+          32,
+          256,
+          352,
+          608
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace",
+          "changedPixels": 26980,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 26980,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 182
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-dark-workspace-inbox-1.jpg",
+      "right": "mobile-system-dark-workspace-inbox-1.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-dark-workspace-inbox-1.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-dark-workspace-inbox-1.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "21196509d94679e19558b4ff43bd73ecdbacf8a37a856bf21cf7acfc6b25f302",
+      "rightSHA256": "971deba7d200177c649c642bc4d3e2d3b3e495833615f0fcd7faf9ec0411639d",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 41288,
+      "changedPercent": 12.543443917851501,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace",
+          "changedPixels": 41288,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 41288,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 217
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-dark-workspace-inbox-2.jpg",
+      "right": "mobile-system-dark-workspace-inbox-2.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-dark-workspace-inbox-2.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-dark-workspace-inbox-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "21196509d94679e19558b4ff43bd73ecdbacf8a37a856bf21cf7acfc6b25f302",
+      "rightSHA256": "971deba7d200177c649c642bc4d3e2d3b3e495833615f0fcd7faf9ec0411639d",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 41288,
+      "changedPercent": 12.543443917851501,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace",
+          "changedPixels": 41288,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 41288,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 217
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-dark-workspace-inbox-3.jpg",
+      "right": "mobile-system-dark-workspace-inbox-3.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-dark-workspace-inbox-3.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-dark-workspace-inbox-3.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "21196509d94679e19558b4ff43bd73ecdbacf8a37a856bf21cf7acfc6b25f302",
+      "rightSHA256": "971deba7d200177c649c642bc4d3e2d3b3e495833615f0fcd7faf9ec0411639d",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 41288,
+      "changedPercent": 12.543443917851501,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace",
+          "changedPixels": 41288,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 41288,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 217
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-light-account-updates-account-sessions-1.jpg",
+      "right": "mobile-system-light-account-updates-account-sessions-1.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-light-account-updates-account-sessions-1.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-light-account-updates-account-sessions-1.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "a29e692dd958d201754a7eff63960f333e60b7526517368959eb93334156d247",
+      "rightSHA256": "dfb912cc375e6cc37a31cc9fd5e0232a141012a9a33933f15695ed4bda0e3efc",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 151567,
+      "changedPercent": 46.04660347551343,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "ui-dialog account-dialog",
+          "changedPixels": 114011,
+          "bounds": [
+            19.997373580932617,
+            19.997373580932617,
+            349.92120361328125,
+            803.6895751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 208
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-light-account-updates-account-sessions-2.jpg",
+      "right": "mobile-system-light-account-updates-account-sessions-2.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-light-account-updates-account-sessions-2.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-light-account-updates-account-sessions-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "a29e692dd958d201754a7eff63960f333e60b7526517368959eb93334156d247",
+      "rightSHA256": "dfb912cc375e6cc37a31cc9fd5e0232a141012a9a33933f15695ed4bda0e3efc",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 151567,
+      "changedPercent": 46.04660347551343,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "ui-dialog account-dialog",
+          "changedPixels": 114011,
+          "bounds": [
+            19.997373580932617,
+            19.997373580932617,
+            349.92120361328125,
+            803.6895751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 208
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-light-account-updates-account-sessions-3.jpg",
+      "right": "mobile-system-light-account-updates-account-sessions-3.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-light-account-updates-account-sessions-3.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-light-account-updates-account-sessions-3.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "a29e692dd958d201754a7eff63960f333e60b7526517368959eb93334156d247",
+      "rightSHA256": "dfb912cc375e6cc37a31cc9fd5e0232a141012a9a33933f15695ed4bda0e3efc",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 151567,
+      "changedPercent": 46.04660347551343,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "ui-dialog account-dialog",
+          "changedPixels": 114011,
+          "bounds": [
+            19.997373580932617,
+            19.997373580932617,
+            349.92120361328125,
+            803.6895751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 208
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-light-account-updates-updates-items-1.jpg",
+      "right": "mobile-system-light-account-updates-updates-items-1.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-light-account-updates-updates-items-1.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-light-account-updates-updates-items-1.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "a3f8ad45219476e2681bddadaf9dcf15f23999a96c4ce42076f2dac76f2ff78c",
+      "rightSHA256": "be7a29b2a1abaa05e30cb6dcf70e2911999d54dd66c73ffadf6995d47a59333c",
+      "raster": [
+        377,
+        816
+      ],
+      "changedPixels": 117518,
+      "changedPercent": 38.200837364123366,
+      "bbox": [
+        0,
+        15,
+        369,
+        816
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          377,
+          816
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "product-root",
+          "changedPixels": 117518,
+          "bounds": [
+            0,
+            0,
+            377.3109130859375,
+            1477.9017333984375
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 230
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-light-account-updates-updates-items-2.jpg",
+      "right": "mobile-system-light-account-updates-updates-items-2.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-light-account-updates-updates-items-2.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-light-account-updates-updates-items-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "a3f8ad45219476e2681bddadaf9dcf15f23999a96c4ce42076f2dac76f2ff78c",
+      "rightSHA256": "be7a29b2a1abaa05e30cb6dcf70e2911999d54dd66c73ffadf6995d47a59333c",
+      "raster": [
+        377,
+        816
+      ],
+      "changedPixels": 117518,
+      "changedPercent": 38.200837364123366,
+      "bbox": [
+        0,
+        15,
+        369,
+        816
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          377,
+          816
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "product-root",
+          "changedPixels": 117518,
+          "bounds": [
+            0,
+            0,
+            377.3109130859375,
+            1477.9017333984375
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 230
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-light-account-updates-updates-items-3.jpg",
+      "right": "mobile-system-light-account-updates-updates-items-3.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-light-account-updates-updates-items-3.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-light-account-updates-updates-items-3.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "a3f8ad45219476e2681bddadaf9dcf15f23999a96c4ce42076f2dac76f2ff78c",
+      "rightSHA256": "be7a29b2a1abaa05e30cb6dcf70e2911999d54dd66c73ffadf6995d47a59333c",
+      "raster": [
+        377,
+        816
+      ],
+      "changedPixels": 117518,
+      "changedPercent": 38.200837364123366,
+      "bbox": [
+        0,
+        15,
+        369,
+        816
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          377,
+          816
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "product-root",
+          "changedPixels": 117518,
+          "bounds": [
+            0,
+            0,
+            377.3109130859375,
+            1477.9017333984375
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 230
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-light-conversation-conversation-1.jpg",
+      "right": "mobile-system-light-conversation-conversation-1.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-light-conversation-conversation-1.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-light-conversation-conversation-1.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "246ebfdfe7a5e860fe00fd1ead7466a381a52e3fa9bed297642646b8df7bf88b",
+      "rightSHA256": "11df171f976cceed2a9587ff43063e429820bd4776fd43a0a373b120f01c81cc",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 54170,
+      "changedPercent": 16.457042167942642,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          672,
+          390,
+          844
+        ],
+        [
+          0,
+          0,
+          390,
+          224
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-chat",
+          "changedPixels": 54170,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 54170,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 164
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-light-conversation-conversation-2.jpg",
+      "right": "mobile-system-light-conversation-conversation-2.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-light-conversation-conversation-2.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-light-conversation-conversation-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "246ebfdfe7a5e860fe00fd1ead7466a381a52e3fa9bed297642646b8df7bf88b",
+      "rightSHA256": "11df171f976cceed2a9587ff43063e429820bd4776fd43a0a373b120f01c81cc",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 54170,
+      "changedPercent": 16.457042167942642,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          672,
+          390,
+          844
+        ],
+        [
+          0,
+          0,
+          390,
+          224
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-chat",
+          "changedPixels": 54170,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 54170,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 164
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-light-conversation-conversation-3.jpg",
+      "right": "mobile-system-light-conversation-conversation-3.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-light-conversation-conversation-3.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-light-conversation-conversation-3.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "246ebfdfe7a5e860fe00fd1ead7466a381a52e3fa9bed297642646b8df7bf88b",
+      "rightSHA256": "11df171f976cceed2a9587ff43063e429820bd4776fd43a0a373b120f01c81cc",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 54170,
+      "changedPercent": 16.457042167942642,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          672,
+          390,
+          844
+        ],
+        [
+          0,
+          0,
+          390,
+          224
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-chat",
+          "changedPixels": 54170,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 54170,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 164
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-light-conversation-report-1.jpg",
+      "right": "mobile-system-light-conversation-report-1.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-light-conversation-report-1.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-light-conversation-report-1.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "2f00dfeef6142b37294549a876fddd6a805a9e4b5f2b5c6d27611e4786d85355",
+      "rightSHA256": "6614c12c24493c9e466fd681c3b23dc33745ce31661f10e92de622c95a1aa76d",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 121392,
+      "changedPercent": 36.87932920160409,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-chat",
+          "changedPixels": 121392,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 121392,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 129
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-light-conversation-report-2.jpg",
+      "right": "mobile-system-light-conversation-report-2.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-light-conversation-report-2.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-light-conversation-report-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "2f00dfeef6142b37294549a876fddd6a805a9e4b5f2b5c6d27611e4786d85355",
+      "rightSHA256": "6614c12c24493c9e466fd681c3b23dc33745ce31661f10e92de622c95a1aa76d",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 121392,
+      "changedPercent": 36.87932920160409,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-chat",
+          "changedPixels": 121392,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 121392,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 129
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-light-conversation-report-3.jpg",
+      "right": "mobile-system-light-conversation-report-3.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-light-conversation-report-3.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-light-conversation-report-3.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "2f00dfeef6142b37294549a876fddd6a805a9e4b5f2b5c6d27611e4786d85355",
+      "rightSHA256": "6614c12c24493c9e466fd681c3b23dc33745ce31661f10e92de622c95a1aa76d",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 121392,
+      "changedPercent": 36.87932920160409,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-chat",
+          "changedPixels": 121392,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 121392,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 129
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-light-spaces-text-1.jpg",
+      "right": "mobile-system-light-spaces-text-1.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-light-spaces-text-1.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-light-spaces-text-1.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "a1286dafbde6bf3d15b0ebe27f62c83059639eae768c9d424a15eb9d3861d262",
+      "rightSHA256": "5e4d850520444e8d993206ae629ee7e41a262352eab0c806c01be4f2f1e3a100",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 56085,
+      "changedPercent": 17.038826102807146,
+      "bbox": [
+        0,
+        0,
+        390,
+        448
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          448
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "space-sidebar",
+          "changedPixels": 16846,
+          "bounds": [
+            0,
+            0,
+            140.3623809814453,
+            441.1239318847656
+          ]
+        },
+        {
+          "label": "space-channel-header",
+          "changedPixels": 9216,
+          "bounds": [
+            140.3623809814453,
+            0,
+            249.55355834960935,
+            54.98949432373047
+          ]
+        },
+        {
+          "label": "space-message-list",
+          "changedPixels": 13716,
+          "bounds": [
+            140.3623809814453,
+            54.98949432373047,
+            249.55355834960935,
+            220.95587158203125
+          ]
+        },
+        {
+          "label": "space-message-composer",
+          "changedPixels": 14089,
+          "bounds": [
+            148.35870361328125,
+            275.94537353515625,
+            233.5609130859375,
+            150.18380737304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 55782,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            441.1239318847656
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 173
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-light-spaces-text-2.jpg",
+      "right": "mobile-system-light-spaces-text-2.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-light-spaces-text-2.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-light-spaces-text-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "a1286dafbde6bf3d15b0ebe27f62c83059639eae768c9d424a15eb9d3861d262",
+      "rightSHA256": "5e4d850520444e8d993206ae629ee7e41a262352eab0c806c01be4f2f1e3a100",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 56085,
+      "changedPercent": 17.038826102807146,
+      "bbox": [
+        0,
+        0,
+        390,
+        448
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          448
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "space-sidebar",
+          "changedPixels": 16846,
+          "bounds": [
+            0,
+            0,
+            140.3623809814453,
+            441.1239318847656
+          ]
+        },
+        {
+          "label": "space-channel-header",
+          "changedPixels": 9216,
+          "bounds": [
+            140.3623809814453,
+            0,
+            249.55355834960935,
+            54.98949432373047
+          ]
+        },
+        {
+          "label": "space-message-list",
+          "changedPixels": 13716,
+          "bounds": [
+            140.3623809814453,
+            54.98949432373047,
+            249.55355834960935,
+            220.95587158203125
+          ]
+        },
+        {
+          "label": "space-message-composer",
+          "changedPixels": 14089,
+          "bounds": [
+            148.35870361328125,
+            275.94537353515625,
+            233.5609130859375,
+            150.18380737304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 55782,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            441.1239318847656
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 173
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-light-spaces-text-3.jpg",
+      "right": "mobile-system-light-spaces-text-3.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-light-spaces-text-3.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-light-spaces-text-3.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "a1286dafbde6bf3d15b0ebe27f62c83059639eae768c9d424a15eb9d3861d262",
+      "rightSHA256": "5e4d850520444e8d993206ae629ee7e41a262352eab0c806c01be4f2f1e3a100",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 56085,
+      "changedPercent": 17.038826102807146,
+      "bbox": [
+        0,
+        0,
+        390,
+        448
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          448
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "space-sidebar",
+          "changedPixels": 16846,
+          "bounds": [
+            0,
+            0,
+            140.3623809814453,
+            441.1239318847656
+          ]
+        },
+        {
+          "label": "space-channel-header",
+          "changedPixels": 9216,
+          "bounds": [
+            140.3623809814453,
+            0,
+            249.55355834960935,
+            54.98949432373047
+          ]
+        },
+        {
+          "label": "space-message-list",
+          "changedPixels": 13716,
+          "bounds": [
+            140.3623809814453,
+            54.98949432373047,
+            249.55355834960935,
+            220.95587158203125
+          ]
+        },
+        {
+          "label": "space-message-composer",
+          "changedPixels": 14089,
+          "bounds": [
+            148.35870361328125,
+            275.94537353515625,
+            233.5609130859375,
+            150.18380737304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 55782,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            441.1239318847656
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 173
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-light-workspace-calls-1.jpg",
+      "right": "mobile-system-light-workspace-calls-1.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-light-workspace-calls-1.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-light-workspace-calls-1.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "14389dc831385067c1b93acaf3374710babc48be2cd1c1d5ad15bd61e559f83c",
+      "rightSHA256": "5df8913a82cd417ee0e57264e203b32de1cc400c731315d77b6da149170d3f1e",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 45504,
+      "changedPercent": 13.824279985417427,
+      "bbox": [
+        0,
+        0,
+        360,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          384,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-calls",
+          "changedPixels": 45504,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 45504,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 221
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-light-workspace-calls-2.jpg",
+      "right": "mobile-system-light-workspace-calls-2.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-light-workspace-calls-2.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-light-workspace-calls-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "14389dc831385067c1b93acaf3374710babc48be2cd1c1d5ad15bd61e559f83c",
+      "rightSHA256": "5df8913a82cd417ee0e57264e203b32de1cc400c731315d77b6da149170d3f1e",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 45504,
+      "changedPercent": 13.824279985417427,
+      "bbox": [
+        0,
+        0,
+        360,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          384,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-calls",
+          "changedPixels": 45504,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 45504,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 221
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-light-workspace-calls-3.jpg",
+      "right": "mobile-system-light-workspace-calls-3.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-light-workspace-calls-3.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-light-workspace-calls-3.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "14389dc831385067c1b93acaf3374710babc48be2cd1c1d5ad15bd61e559f83c",
+      "rightSHA256": "5df8913a82cd417ee0e57264e203b32de1cc400c731315d77b6da149170d3f1e",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 45504,
+      "changedPercent": 13.824279985417427,
+      "bbox": [
+        0,
+        0,
+        360,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          384,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-calls",
+          "changedPixels": 45504,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 45504,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 221
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-light-workspace-direct-1.jpg",
+      "right": "mobile-system-light-workspace-direct-1.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-light-workspace-direct-1.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-light-workspace-direct-1.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "c3ac3b3b9297a386f3b178b907aa0881031ca41097f4783b218f2f571608bc73",
+      "rightSHA256": "70f97e6da2ea5a83a9d75eecbd4c1a1f44f39dc4fb1b620c1e54ae1d74352c03",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 29935,
+      "changedPercent": 9.094361404787945,
+      "bbox": [
+        16,
+        16,
+        390,
+        832
+      ],
+      "connected32pxTileRegions": [
+        [
+          32,
+          256,
+          352,
+          608
+        ],
+        [
+          0,
+          736,
+          224,
+          832
+        ],
+        [
+          0,
+          0,
+          192,
+          256
+        ],
+        [
+          320,
+          160,
+          390,
+          768
+        ],
+        [
+          320,
+          96,
+          384,
+          128
+        ],
+        [
+          256,
+          800,
+          288,
+          832
+        ],
+        [
+          352,
+          0,
+          384,
+          32
+        ],
+        [
+          320,
+          800,
+          352,
+          832
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace",
+          "changedPixels": 29935,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 29935,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 169
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-light-workspace-direct-2.jpg",
+      "right": "mobile-system-light-workspace-direct-2.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-light-workspace-direct-2.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-light-workspace-direct-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "c3ac3b3b9297a386f3b178b907aa0881031ca41097f4783b218f2f571608bc73",
+      "rightSHA256": "70f97e6da2ea5a83a9d75eecbd4c1a1f44f39dc4fb1b620c1e54ae1d74352c03",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 29935,
+      "changedPercent": 9.094361404787945,
+      "bbox": [
+        16,
+        16,
+        390,
+        832
+      ],
+      "connected32pxTileRegions": [
+        [
+          32,
+          256,
+          352,
+          608
+        ],
+        [
+          0,
+          736,
+          224,
+          832
+        ],
+        [
+          0,
+          0,
+          192,
+          256
+        ],
+        [
+          320,
+          160,
+          390,
+          768
+        ],
+        [
+          320,
+          96,
+          384,
+          128
+        ],
+        [
+          256,
+          800,
+          288,
+          832
+        ],
+        [
+          352,
+          0,
+          384,
+          32
+        ],
+        [
+          320,
+          800,
+          352,
+          832
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace",
+          "changedPixels": 29935,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 29935,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 169
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-light-workspace-direct-3.jpg",
+      "right": "mobile-system-light-workspace-direct-3.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-light-workspace-direct-3.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-light-workspace-direct-3.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "c3ac3b3b9297a386f3b178b907aa0881031ca41097f4783b218f2f571608bc73",
+      "rightSHA256": "70f97e6da2ea5a83a9d75eecbd4c1a1f44f39dc4fb1b620c1e54ae1d74352c03",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 29935,
+      "changedPercent": 9.094361404787945,
+      "bbox": [
+        16,
+        16,
+        390,
+        832
+      ],
+      "connected32pxTileRegions": [
+        [
+          32,
+          256,
+          352,
+          608
+        ],
+        [
+          0,
+          736,
+          224,
+          832
+        ],
+        [
+          0,
+          0,
+          192,
+          256
+        ],
+        [
+          320,
+          160,
+          390,
+          768
+        ],
+        [
+          320,
+          96,
+          384,
+          128
+        ],
+        [
+          256,
+          800,
+          288,
+          832
+        ],
+        [
+          352,
+          0,
+          384,
+          32
+        ],
+        [
+          320,
+          800,
+          352,
+          832
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace",
+          "changedPixels": 29935,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 29935,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 169
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-light-workspace-inbox-1.jpg",
+      "right": "mobile-system-light-workspace-inbox-1.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-light-workspace-inbox-1.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-light-workspace-inbox-1.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "bb09c1a3acddd03ddce3e849a0c637ac60b8dc9f85e3885d767d4f3a191d2631",
+      "rightSHA256": "ed726f51dec0bf9a43214f20db4823483c484b8c1c22fd3db63d0c3ddfb8d22b",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 47133,
+      "changedPercent": 14.319176084578928,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace",
+          "changedPixels": 47133,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 47133,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 198
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-light-workspace-inbox-2.jpg",
+      "right": "mobile-system-light-workspace-inbox-2.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-light-workspace-inbox-2.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-light-workspace-inbox-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "bb09c1a3acddd03ddce3e849a0c637ac60b8dc9f85e3885d767d4f3a191d2631",
+      "rightSHA256": "ed726f51dec0bf9a43214f20db4823483c484b8c1c22fd3db63d0c3ddfb8d22b",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 47133,
+      "changedPercent": 14.319176084578928,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace",
+          "changedPixels": 47133,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 47133,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 198
+    },
+    {
+      "category": "historical-to-head",
+      "left": "mobile-system-light-workspace-inbox-3.jpg",
+      "right": "mobile-system-light-workspace-inbox-3.jpg",
+      "leftPath": ".git/design02/historical/mobile-system-light-workspace-inbox-3.jpg",
+      "rightPath": ".git/design02/captures/mobile-system-light-workspace-inbox-3.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "bb09c1a3acddd03ddce3e849a0c637ac60b8dc9f85e3885d767d4f3a191d2631",
+      "rightSHA256": "ed726f51dec0bf9a43214f20db4823483c484b8c1c22fd3db63d0c3ddfb8d22b",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 47133,
+      "changedPercent": 14.319176084578928,
+      "bbox": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          390,
+          844
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace",
+          "changedPixels": 47133,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        },
+        {
+          "label": "product-root",
+          "changedPixels": 47133,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 198
+    }
+  ],
+  "historicalLimitation": "Historical objects retained only first 200 properties and deep structures were truncated by serializer. Every recorded field is checked, supplemented by flat/chunked complete-style observations of unchanged required base. No historical raster regenerated."
+}
