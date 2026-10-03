@@ -1,0 +1,17 @@
+[
+  {
+    "side": "base",
+    "base": "531a8be1c112d830f76d969b561c793678b19a3b",
+    "archiveSHA256": "a25387014ab9b742a2f13b92a11ae37bfbed235ed244d42144ec300b253969f6",
+    "fixtureSHA256": "8e211f632f069e7c146907493f895b746aa0f245ccc3fc886ba1122b77af2540",
+    "bootstrapSHA256": "89cd3a99fb0b9595db623aaccf90c3d7f1aab8df46f4d3f33d2b660c5cc2cfba",
+    "overlaySHA256": {
+      "src/shared/components/Button.tsx": "a6870651bdef7fcf05ffc528e9786fd73f3d7c9117894fdecbb77d0e8936e1af",
+      "src/shared/components/IconButton.tsx": "5bfd85982e0205499e0a246ab7cceb5047c4ea1de026411682f71627e9d6a8e8",
+      "src/shared/styles/primitives.css": "58628fa2122cc0c1e5ee1f573c82d0e11e2596a352d6f012fd2d76acfd53d98c"
+    },
+    "cssSHA256": {
+      "index-UCFMBV6o.css": "248efc5d851984f92c68c4d0c4e1da19d673e5b47c03a14be96c426d4bc40af0"
+    }
+  }
+]

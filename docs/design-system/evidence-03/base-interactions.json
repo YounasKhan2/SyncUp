@@ -1,0 +1,226 @@
+[
+  {
+    "id": "default",
+    "action": "click",
+    "counts": {
+      "bubbles": 1,
+      "clicks": 1,
+      "submits": 1
+    },
+    "disabled": [
+      "disabled",
+      "disabled-icon"
+    ],
+    "focus": "default",
+    "focusVisible": false,
+    "refs": ""
+  },
+  {
+    "id": "explicit",
+    "action": "Enter",
+    "counts": {
+      "bubbles": 2,
+      "clicks": 2,
+      "submits": 1
+    },
+    "disabled": [
+      "disabled",
+      "disabled-icon"
+    ],
+    "focus": "explicit",
+    "focusVisible": true,
+    "refs": ""
+  },
+  {
+    "id": "explicit",
+    "action": "Space",
+    "counts": {
+      "bubbles": 3,
+      "clicks": 3,
+      "submits": 1
+    },
+    "disabled": [
+      "disabled",
+      "disabled-icon"
+    ],
+    "focus": "explicit",
+    "focusVisible": true,
+    "refs": ""
+  },
+  {
+    "id": "icon",
+    "action": "Enter",
+    "counts": {
+      "bubbles": 4,
+      "clicks": 4,
+      "submits": 1
+    },
+    "disabled": [
+      "disabled",
+      "disabled-icon"
+    ],
+    "focus": "icon",
+    "focusVisible": true,
+    "refs": ""
+  },
+  {
+    "id": "icon",
+    "action": "Space",
+    "counts": {
+      "bubbles": 5,
+      "clicks": 5,
+      "submits": 1
+    },
+    "disabled": [
+      "disabled",
+      "disabled-icon"
+    ],
+    "focus": "icon",
+    "focusVisible": true,
+    "refs": ""
+  },
+  {
+    "id": "submit",
+    "action": "click",
+    "counts": {
+      "bubbles": 6,
+      "clicks": 6,
+      "submits": 2
+    },
+    "disabled": [
+      "disabled",
+      "disabled-icon"
+    ],
+    "focus": "submit",
+    "focusVisible": false,
+    "refs": ""
+  },
+  {
+    "id": "disabled",
+    "action": "force",
+    "counts": {
+      "bubbles": 6,
+      "clicks": 6,
+      "submits": 2
+    },
+    "disabled": [
+      "disabled",
+      "disabled-icon"
+    ],
+    "focus": "",
+    "focusVisible": false,
+    "refs": ""
+  },
+  {
+    "id": "disabled-icon",
+    "action": "force",
+    "counts": {
+      "bubbles": 6,
+      "clicks": 6,
+      "submits": 2
+    },
+    "disabled": [
+      "disabled",
+      "disabled-icon"
+    ],
+    "focus": "",
+    "focusVisible": false,
+    "refs": ""
+  },
+  {
+    "id": "inspect-refs",
+    "action": "click",
+    "counts": {
+      "bubbles": 7,
+      "clicks": 6,
+      "submits": 2
+    },
+    "disabled": [
+      "disabled",
+      "disabled-icon"
+    ],
+    "focus": "inspect-refs",
+    "focusVisible": false,
+    "refs": "{\"button\":\"BUTTON\",\"buttonId\":\"default\",\"icon\":\"BUTTON\",\"iconId\":\"icon\"}"
+  },
+  {
+    "id": "start",
+    "action": "click",
+    "counts": {
+      "bubbles": 8,
+      "clicks": 6,
+      "submits": 2
+    },
+    "disabled": [
+      "disabled",
+      "disabled-icon"
+    ],
+    "focus": "",
+    "focusVisible": false,
+    "refs": "{\"button\":\"BUTTON\",\"buttonId\":\"default\",\"icon\":\"BUTTON\",\"iconId\":\"icon\"}"
+  },
+  {
+    "id": "start",
+    "action": "Tab",
+    "counts": {
+      "bubbles": 8,
+      "clicks": 6,
+      "submits": 2
+    },
+    "disabled": [
+      "disabled",
+      "disabled-icon"
+    ],
+    "focus": "default",
+    "focusVisible": true,
+    "refs": "{\"button\":\"BUTTON\",\"buttonId\":\"default\",\"icon\":\"BUTTON\",\"iconId\":\"icon\"}"
+  },
+  {
+    "id": "default",
+    "action": "Tab",
+    "counts": {
+      "bubbles": 8,
+      "clicks": 6,
+      "submits": 2
+    },
+    "disabled": [
+      "disabled",
+      "disabled-icon"
+    ],
+    "focus": "explicit",
+    "focusVisible": true,
+    "refs": "{\"button\":\"BUTTON\",\"buttonId\":\"default\",\"icon\":\"BUTTON\",\"iconId\":\"icon\"}"
+  },
+  {
+    "id": "explicit",
+    "action": "Tab",
+    "counts": {
+      "bubbles": 8,
+      "clicks": 6,
+      "submits": 2
+    },
+    "disabled": [
+      "disabled",
+      "disabled-icon"
+    ],
+    "focus": "submit",
+    "focusVisible": true,
+    "refs": "{\"button\":\"BUTTON\",\"buttonId\":\"default\",\"icon\":\"BUTTON\",\"iconId\":\"icon\"}"
+  },
+  {
+    "id": "submit",
+    "action": "Tab",
+    "counts": {
+      "bubbles": 8,
+      "clicks": 6,
+      "submits": 2
+    },
+    "disabled": [
+      "disabled",
+      "disabled-icon"
+    ],
+    "focus": "icon",
+    "focusVisible": true,
+    "refs": "{\"button\":\"BUTTON\",\"buttonId\":\"default\",\"icon\":\"BUTTON\",\"iconId\":\"icon\"}"
+  }
+]

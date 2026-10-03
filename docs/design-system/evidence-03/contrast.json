@@ -1,0 +1,58 @@
+[
+  {
+    "mode": "light-light",
+    "id": "default",
+    "foreground": "rgb(255, 252, 248)",
+    "background": "rgb(118, 84, 111)",
+    "ratio": 6.282666328036894
+  },
+  {
+    "mode": "light-light",
+    "id": "icon",
+    "foreground": "rgb(111, 103, 109)",
+    "background": "rgb(233, 228, 224)",
+    "ratio": 4.336514711499311
+  },
+  {
+    "mode": "dark-light",
+    "id": "default",
+    "foreground": "rgb(39, 34, 40)",
+    "background": "rgb(201, 154, 189)",
+    "ratio": 6.569403991223184
+  },
+  {
+    "mode": "dark-light",
+    "id": "icon",
+    "foreground": "rgb(183, 173, 180)",
+    "background": "rgb(48, 43, 51)",
+    "ratio": 6.352700925679639
+  },
+  {
+    "mode": "system-light",
+    "id": "default",
+    "foreground": "rgb(255, 252, 248)",
+    "background": "rgb(118, 84, 111)",
+    "ratio": 6.282666328036894
+  },
+  {
+    "mode": "system-light",
+    "id": "icon",
+    "foreground": "rgb(111, 103, 109)",
+    "background": "rgb(233, 228, 224)",
+    "ratio": 4.336514711499311
+  },
+  {
+    "mode": "system-dark",
+    "id": "default",
+    "foreground": "rgb(39, 34, 40)",
+    "background": "rgb(201, 154, 189)",
+    "ratio": 6.569403991223184
+  },
+  {
+    "mode": "system-dark",
+    "id": "icon",
+    "foreground": "rgb(183, 173, 180)",
+    "background": "rgb(48, 43, 51)",
+    "ratio": 6.352700925679639
+  }
+]

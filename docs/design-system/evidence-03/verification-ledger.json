@@ -1,0 +1,87 @@
+{
+  "base": "531a8be1c112d830f76d969b561c793678b19a3b",
+  "branch": "design/syncup-button-tailwind-migration-03",
+  "baseline": [
+    {
+      "command": "typecheck",
+      "exit": 0,
+      "log": ".git/design03/baseline-typecheck.log"
+    },
+    {
+      "command": "test",
+      "exit": 0,
+      "log": ".git/design03/baseline-test.log"
+    },
+    {
+      "command": "check:architecture",
+      "exit": 0,
+      "log": ".git/design03/baseline-check-architecture.log"
+    },
+    {
+      "command": "build",
+      "exit": 0,
+      "log": ".git/design03/baseline-build.log"
+    },
+    {
+      "command": "test:media-v2",
+      "exit": 0,
+      "log": ".git/design03/baseline-test-media-v2.log"
+    },
+    {
+      "command": "test:integration",
+      "exit": 0,
+      "log": ".git/design03/baseline-test-integration.log"
+    }
+  ],
+  "final": [
+    {
+      "command": "typecheck",
+      "exit": 0,
+      "log": ".git/design03/final-typecheck.log"
+    },
+    {
+      "command": "test",
+      "exit": 0,
+      "log": ".git/design03/final-test.log"
+    },
+    {
+      "command": "check:architecture",
+      "exit": 0,
+      "log": ".git/design03/final-check-architecture.log"
+    },
+    {
+      "command": "build",
+      "exit": 0,
+      "log": ".git/design03/final-build.log"
+    },
+    {
+      "command": "test:media-v2",
+      "exit": 0,
+      "log": ".git/design03/final-test-media-v2.log"
+    },
+    {
+      "command": "test:integration",
+      "exit": 0,
+      "log": ".git/design03/final-test-integration.log"
+    }
+  ],
+  "characterizationBeforeProductionEdits": {
+    "tests": 9,
+    "pass": 9,
+    "skipped": 0
+  },
+  "baselineStandardTests": 232,
+  "finalStandardTests": 238,
+  "architecture": {
+    "edges": 276,
+    "informational": 21,
+    "violations": 0
+  },
+  "mediaV2": 11,
+  "integration": 1,
+  "productionFiles": [
+    "client/src/shared/components/Button.tsx",
+    "client/src/shared/components/IconButton.tsx",
+    "client/src/shared/styles/primitives.css"
+  ]
+}
