@@ -1,12 +1,11 @@
 /* Bounded primary action and close-control extraction; legacy consumers keep platform.css. */
 .ui-button {
-  display: flex; width: 100%; height: 44px; align-items: center; justify-content: center; gap: 10px;
-  margin-top: 3px; border: 0; border-radius: 8px; color: var(--color-on-primary); background: var(--color-primary);
-  font: inherit; font-size: var(--type-body); font-weight: 600; cursor: pointer; transition: background .15s ease, transform .15s ease;
+  height: 44px; gap: 10px;
+  margin-top: 3px; border: 0;
+  font: inherit; font-size: var(--type-body); font-weight: 600; transition: background .15s ease, transform .15s ease;
 }
-.ui-button:hover:not(:disabled) { transform: translateY(-1px); background: var(--color-primary-hover); }
-.ui-button:disabled { cursor: wait; opacity: .7; }
+.ui-button:hover:not(:disabled) { transform: translateY(-1px); }
 .ui-button span { font-size: var(--type-title-sm); line-height: 1; }
-.ui-icon-button { display: grid; width: 30px; height: 30px; flex: 0 0 auto; place-items: center; border: 0; border-radius: 7px; color: var(--color-text-secondary); background: var(--color-bg-hover); font: inherit; font-size: var(--type-title-xs); cursor: pointer; }
+.ui-icon-button { width: 30px; height: 30px; flex: 0 0 auto; border: 0; border-radius: 7px; font: inherit; font-size: var(--type-title-xs); }
 .ui-dialog-overlay { position: fixed; z-index: 15; inset: 0; display: grid; place-items: center; padding: 20px; background: var(--color-overlay); }
 .ui-dialog { width: min(430px, 100%); max-height: calc(100svh - 40px); overflow-y: auto; box-sizing: border-box; padding: 24px; border: 1px solid var(--color-border); border-radius: 14px; background: var(--color-bg-elevated); box-shadow: 0 18px 50px rgba(17, 38, 28, .18); }

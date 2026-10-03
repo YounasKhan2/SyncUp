@@ -1,0 +1,267 @@
+{
+  "before": {
+    "selectors": 5,
+    "declarations": 34,
+    "rules": [
+      {
+        "selector": ".ui-button",
+        "declarations": [
+          {
+            "property": "display",
+            "value": "flex"
+          },
+          {
+            "property": "width",
+            "value": "100%"
+          },
+          {
+            "property": "height",
+            "value": "44px"
+          },
+          {
+            "property": "align-items",
+            "value": "center"
+          },
+          {
+            "property": "justify-content",
+            "value": "center"
+          },
+          {
+            "property": "gap",
+            "value": "10px"
+          },
+          {
+            "property": "margin-top",
+            "value": "3px"
+          },
+          {
+            "property": "border",
+            "value": "0"
+          },
+          {
+            "property": "border-radius",
+            "value": "8px"
+          },
+          {
+            "property": "color",
+            "value": "var(--color-on-primary)"
+          },
+          {
+            "property": "background",
+            "value": "var(--color-primary)"
+          },
+          {
+            "property": "font",
+            "value": "inherit"
+          },
+          {
+            "property": "font-size",
+            "value": "var(--type-body)"
+          },
+          {
+            "property": "font-weight",
+            "value": "600"
+          },
+          {
+            "property": "cursor",
+            "value": "pointer"
+          },
+          {
+            "property": "transition",
+            "value": "background .15s ease, transform .15s ease"
+          }
+        ]
+      },
+      {
+        "selector": ".ui-button:hover:not(:disabled)",
+        "declarations": [
+          {
+            "property": "transform",
+            "value": "translateY(-1px)"
+          },
+          {
+            "property": "background",
+            "value": "var(--color-primary-hover)"
+          }
+        ]
+      },
+      {
+        "selector": ".ui-button:disabled",
+        "declarations": [
+          {
+            "property": "cursor",
+            "value": "wait"
+          },
+          {
+            "property": "opacity",
+            "value": ".7"
+          }
+        ]
+      },
+      {
+        "selector": ".ui-button span",
+        "declarations": [
+          {
+            "property": "font-size",
+            "value": "var(--type-title-sm)"
+          },
+          {
+            "property": "line-height",
+            "value": "1"
+          }
+        ]
+      },
+      {
+        "selector": ".ui-icon-button",
+        "declarations": [
+          {
+            "property": "display",
+            "value": "grid"
+          },
+          {
+            "property": "width",
+            "value": "30px"
+          },
+          {
+            "property": "height",
+            "value": "30px"
+          },
+          {
+            "property": "flex",
+            "value": "0 0 auto"
+          },
+          {
+            "property": "place-items",
+            "value": "center"
+          },
+          {
+            "property": "border",
+            "value": "0"
+          },
+          {
+            "property": "border-radius",
+            "value": "7px"
+          },
+          {
+            "property": "color",
+            "value": "var(--color-text-secondary)"
+          },
+          {
+            "property": "background",
+            "value": "var(--color-bg-hover)"
+          },
+          {
+            "property": "font",
+            "value": "inherit"
+          },
+          {
+            "property": "font-size",
+            "value": "var(--type-title-xs)"
+          },
+          {
+            "property": "cursor",
+            "value": "pointer"
+          }
+        ]
+      }
+    ]
+  },
+  "after": {
+    "selectors": 4,
+    "declarations": 18,
+    "rules": [
+      {
+        "selector": ".ui-button",
+        "declarations": [
+          {
+            "property": "height",
+            "value": "44px"
+          },
+          {
+            "property": "gap",
+            "value": "10px"
+          },
+          {
+            "property": "margin-top",
+            "value": "3px"
+          },
+          {
+            "property": "border",
+            "value": "0"
+          },
+          {
+            "property": "font",
+            "value": "inherit"
+          },
+          {
+            "property": "font-size",
+            "value": "var(--type-body)"
+          },
+          {
+            "property": "font-weight",
+            "value": "600"
+          },
+          {
+            "property": "transition",
+            "value": "background .15s ease, transform .15s ease"
+          }
+        ]
+      },
+      {
+        "selector": ".ui-button:hover:not(:disabled)",
+        "declarations": [
+          {
+            "property": "transform",
+            "value": "translateY(-1px)"
+          }
+        ]
+      },
+      {
+        "selector": ".ui-button span",
+        "declarations": [
+          {
+            "property": "font-size",
+            "value": "var(--type-title-sm)"
+          },
+          {
+            "property": "line-height",
+            "value": "1"
+          }
+        ]
+      },
+      {
+        "selector": ".ui-icon-button",
+        "declarations": [
+          {
+            "property": "width",
+            "value": "30px"
+          },
+          {
+            "property": "height",
+            "value": "30px"
+          },
+          {
+            "property": "flex",
+            "value": "0 0 auto"
+          },
+          {
+            "property": "border",
+            "value": "0"
+          },
+          {
+            "property": "border-radius",
+            "value": "7px"
+          },
+          {
+            "property": "font",
+            "value": "inherit"
+          },
+          {
+            "property": "font-size",
+            "value": "var(--type-title-xs)"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "cases": 64,
+  "screenshots": 384,
+  "structuralDifferences": [],
+  "decodedComparisons": 832,
+  "byteIdenticalComparisons": 832,
+  "crossBuildComparisons": 192,
+  "crossBuildDifferences": [],
+  "sameBuildDifferences": [],
+  "algorithm": "Decode every RGB pixel; any unequal channel counts one changed pixel; zero tolerance, no masking/cropping."
+}

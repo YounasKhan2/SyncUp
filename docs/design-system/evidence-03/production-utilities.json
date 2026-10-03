@@ -1,0 +1,21 @@
+{
+  "allEmitted": true,
+  "classes": [
+    "ui:flex",
+    "ui:w-full",
+    "ui:items-center",
+    "ui:justify-center",
+    "ui:rounded-md",
+    "ui:text-brand-foreground",
+    "ui:bg-brand",
+    "ui:cursor-pointer",
+    "ui:[&:hover:not(:disabled)]:bg-brand-hover",
+    "ui:disabled:cursor-wait",
+    "ui:disabled:opacity-70",
+    "ui:grid",
+    "ui:place-items-center",
+    "ui:text-secondary",
+    "ui:bg-hover",
+    "ui:cursor-pointer"
+  ]
+}
