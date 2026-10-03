@@ -7,7 +7,7 @@ import {
   useState,
 } from "react";
 import type { FormEvent } from "react";
-import { Search, X } from "lucide-react";
+import { ConversationSearchBar } from "./components/ConversationSearchBar";
 import { api, apiUpload } from "../../shared/api";
 import {
   decryptMessage,
@@ -27,13 +27,13 @@ import type {
   StagedAttachment,
   User,
 } from "../../shared/types";
-import { ConversationHeader } from "./ConversationHeader";
+import { ConversationHeader } from "./components/ConversationHeader";
 import { ChatDetailsScreen } from "./ChatDetailsScreen";
 import { MessageComposer } from "./MessageComposer";
 import { MessageList } from "./MessageList";
-import { ReportDialog } from "./ReportDialog";
-import { useConversationUiState } from "./useConversationUiState";
-import { ConversationWelcome } from "./ConversationWelcome";
+import { ReportDialog } from "./components/ReportDialog";
+import { useConversationUiState } from "./hooks/useConversationUiState";
+import { ConversationWelcome } from "./components/ConversationWelcome";
 import { prepareVideoV2 } from "../media/v2/prepareVideo";
 import { prepareVoiceV2 } from "../media/v2/prepareVoice";
 import type { VoiceDraft } from "./VoiceRecorder";
@@ -1130,28 +1130,14 @@ export function Conversation({
         onStartCall={(type) => void startCall(type)}
       />
       {messageSearchOpen && (
-        <div className="conversation-search-bar">
-          <Search size={14} aria-hidden="true" />
-          <input
-            autoFocus
-            value={messageSearch}
-            onChange={(event) => setMessageSearch(event.target.value)}
-            placeholder="Search loaded messages on this device"
-            aria-label="Search messages in this conversation"
-          />
-          <span>
-            {messageSearch.trim()
+        <ConversationSearchBar
+          query={messageSearch}
+          label={messageSearch.trim()
               ? `${visibleMessages.filter((message) => !message.pending && !message.deleted_at && message.text.toLocaleLowerCase().includes(messageSearch.trim().toLocaleLowerCase())).length} matches`
               : "On-device only"}
-          </span>
-          <button
-            type="button"
-            onClick={closeMessageSearch}
-            aria-label="Close message search"
-          >
-            <X size={14} aria-hidden="true" />
-          </button>
-        </div>
+          onQueryChange={setMessageSearch}
+          onClose={closeMessageSearch}
+        />
       )}
       <MessageList
         messages={

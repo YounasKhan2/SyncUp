@@ -1,0 +1,151 @@
+{
+  "exactlyEqual": true,
+  "before": [
+    {
+      "action": "exact query filters",
+      "diagnostics": [],
+      "focus": "Search messages in this conversation",
+      "messages": [
+        "one"
+      ],
+      "query": "  tomorrow  ",
+      "search": "<div class=\"conversation-search-bar\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-search\" aria-hidden=\"true\"><path d=\"m21 21-4.34-4.34\"></path><circle cx=\"11\" cy=\"11\" r=\"8\"></circle></svg><input placeholder=\"Search loaded messages on this device\" aria-label=\"Search messages in this conversation\" value=\"  tomorrow  \"><span>1 matches</span><button type=\"button\" aria-label=\"Close message search\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-x\" aria-hidden=\"true\"><path d=\"M18 6 6 18\"></path><path d=\"m6 6 12 12\"></path></svg></button></div>"
+    },
+    {
+      "action": "Enter retains search",
+      "diagnostics": [],
+      "focus": "Search messages in this conversation",
+      "messages": [
+        "one"
+      ],
+      "query": "  tomorrow  ",
+      "search": "<div class=\"conversation-search-bar\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-search\" aria-hidden=\"true\"><path d=\"m21 21-4.34-4.34\"></path><circle cx=\"11\" cy=\"11\" r=\"8\"></circle></svg><input placeholder=\"Search loaded messages on this device\" aria-label=\"Search messages in this conversation\" value=\"  tomorrow  \"><span>1 matches</span><button type=\"button\" aria-label=\"Close message search\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-x\" aria-hidden=\"true\"><path d=\"M18 6 6 18\"></path><path d=\"m6 6 12 12\"></path></svg></button></div>"
+    },
+    {
+      "action": "Escape retains search",
+      "diagnostics": [],
+      "focus": "Search messages in this conversation",
+      "messages": [
+        "one"
+      ],
+      "query": "  tomorrow  ",
+      "search": "<div class=\"conversation-search-bar\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-search\" aria-hidden=\"true\"><path d=\"m21 21-4.34-4.34\"></path><circle cx=\"11\" cy=\"11\" r=\"8\"></circle></svg><input placeholder=\"Search loaded messages on this device\" aria-label=\"Search messages in this conversation\" value=\"  tomorrow  \"><span>1 matches</span><button type=\"button\" aria-label=\"Close message search\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-x\" aria-hidden=\"true\"><path d=\"M18 6 6 18\"></path><path d=\"m6 6 12 12\"></path></svg></button></div>"
+    },
+    {
+      "action": "header hides search",
+      "diagnostics": [],
+      "focus": "Search messages in this chat",
+      "messages": [
+        "one"
+      ],
+      "query": null,
+      "search": null
+    },
+    {
+      "action": "header reopens retained query and autofocus",
+      "diagnostics": [],
+      "focus": "Search messages in this conversation",
+      "messages": [
+        "one"
+      ],
+      "query": "  tomorrow  ",
+      "search": "<div class=\"conversation-search-bar\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-search\" aria-hidden=\"true\"><path d=\"m21 21-4.34-4.34\"></path><circle cx=\"11\" cy=\"11\" r=\"8\"></circle></svg><input placeholder=\"Search loaded messages on this device\" aria-label=\"Search messages in this conversation\" value=\"  tomorrow  \"><span>1 matches</span><button type=\"button\" aria-label=\"Close message search\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-x\" aria-hidden=\"true\"><path d=\"M18 6 6 18\"></path><path d=\"m6 6 12 12\"></path></svg></button></div>"
+    },
+    {
+      "action": "keyboard close unmounts search and clears query",
+      "diagnostics": [],
+      "focus": null,
+      "messages": [
+        "one",
+        "two"
+      ],
+      "query": null,
+      "search": null
+    },
+    {
+      "action": "reopen cleared query",
+      "diagnostics": [],
+      "focus": "Search messages in this conversation",
+      "messages": [
+        "one",
+        "two"
+      ],
+      "query": "",
+      "search": "<div class=\"conversation-search-bar\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-search\" aria-hidden=\"true\"><path d=\"m21 21-4.34-4.34\"></path><circle cx=\"11\" cy=\"11\" r=\"8\"></circle></svg><input placeholder=\"Search loaded messages on this device\" aria-label=\"Search messages in this conversation\" value=\"\"><span>On-device only</span><button type=\"button\" aria-label=\"Close message search\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-x\" aria-hidden=\"true\"><path d=\"M18 6 6 18\"></path><path d=\"m6 6 12 12\"></path></svg></button></div>"
+    }
+  ],
+  "after": [
+    {
+      "action": "exact query filters",
+      "diagnostics": [],
+      "focus": "Search messages in this conversation",
+      "messages": [
+        "one"
+      ],
+      "query": "  tomorrow  ",
+      "search": "<div class=\"conversation-search-bar\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-search\" aria-hidden=\"true\"><path d=\"m21 21-4.34-4.34\"></path><circle cx=\"11\" cy=\"11\" r=\"8\"></circle></svg><input placeholder=\"Search loaded messages on this device\" aria-label=\"Search messages in this conversation\" value=\"  tomorrow  \"><span>1 matches</span><button type=\"button\" aria-label=\"Close message search\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-x\" aria-hidden=\"true\"><path d=\"M18 6 6 18\"></path><path d=\"m6 6 12 12\"></path></svg></button></div>"
+    },
+    {
+      "action": "Enter retains search",
+      "diagnostics": [],
+      "focus": "Search messages in this conversation",
+      "messages": [
+        "one"
+      ],
+      "query": "  tomorrow  ",
+      "search": "<div class=\"conversation-search-bar\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-search\" aria-hidden=\"true\"><path d=\"m21 21-4.34-4.34\"></path><circle cx=\"11\" cy=\"11\" r=\"8\"></circle></svg><input placeholder=\"Search loaded messages on this device\" aria-label=\"Search messages in this conversation\" value=\"  tomorrow  \"><span>1 matches</span><button type=\"button\" aria-label=\"Close message search\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-x\" aria-hidden=\"true\"><path d=\"M18 6 6 18\"></path><path d=\"m6 6 12 12\"></path></svg></button></div>"
+    },
+    {
+      "action": "Escape retains search",
+      "diagnostics": [],
+      "focus": "Search messages in this conversation",
+      "messages": [
+        "one"
+      ],
+      "query": "  tomorrow  ",
+      "search": "<div class=\"conversation-search-bar\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-search\" aria-hidden=\"true\"><path d=\"m21 21-4.34-4.34\"></path><circle cx=\"11\" cy=\"11\" r=\"8\"></circle></svg><input placeholder=\"Search loaded messages on this device\" aria-label=\"Search messages in this conversation\" value=\"  tomorrow  \"><span>1 matches</span><button type=\"button\" aria-label=\"Close message search\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-x\" aria-hidden=\"true\"><path d=\"M18 6 6 18\"></path><path d=\"m6 6 12 12\"></path></svg></button></div>"
+    },
+    {
+      "action": "header hides search",
+      "diagnostics": [],
+      "focus": "Search messages in this chat",
+      "messages": [
+        "one"
+      ],
+      "query": null,
+      "search": null
+    },
+    {
+      "action": "header reopens retained query and autofocus",
+      "diagnostics": [],
+      "focus": "Search messages in this conversation",
+      "messages": [
+        "one"
+      ],
+      "query": "  tomorrow  ",
+      "search": "<div class=\"conversation-search-bar\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-search\" aria-hidden=\"true\"><path d=\"m21 21-4.34-4.34\"></path><circle cx=\"11\" cy=\"11\" r=\"8\"></circle></svg><input placeholder=\"Search loaded messages on this device\" aria-label=\"Search messages in this conversation\" value=\"  tomorrow  \"><span>1 matches</span><button type=\"button\" aria-label=\"Close message search\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-x\" aria-hidden=\"true\"><path d=\"M18 6 6 18\"></path><path d=\"m6 6 12 12\"></path></svg></button></div>"
+    },
+    {
+      "action": "keyboard close unmounts search and clears query",
+      "diagnostics": [],
+      "focus": null,
+      "messages": [
+        "one",
+        "two"
+      ],
+      "query": null,
+      "search": null
+    },
+    {
+      "action": "reopen cleared query",
+      "diagnostics": [],
+      "focus": "Search messages in this conversation",
+      "messages": [
+        "one",
+        "two"
+      ],
+      "query": "",
+      "search": "<div class=\"conversation-search-bar\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-search\" aria-hidden=\"true\"><path d=\"m21 21-4.34-4.34\"></path><circle cx=\"11\" cy=\"11\" r=\"8\"></circle></svg><input placeholder=\"Search loaded messages on this device\" aria-label=\"Search messages in this conversation\" value=\"\"><span>On-device only</span><button type=\"button\" aria-label=\"Close message search\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-x\" aria-hidden=\"true\"><path d=\"M18 6 6 18\"></path><path d=\"m6 6 12 12\"></path></svg></button></div>"
+    }
+  ]
+}

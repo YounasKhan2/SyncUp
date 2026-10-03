@@ -39,7 +39,7 @@ for (const [path, name, states, text] of [
   ['auth/AuthScreen', 'AuthScreen', ['sign-up', '', true], 'Please wait…'],
   ['auth/UnlockScreen', 'UnlockScreen', ['', true, ''], 'Unlocking…'],
   ['account/AccountPanel', 'AccountPanel', ['', '', true], 'Saving…'],
-  ['messaging/ReportDialog', 'ReportDialog', ['harassment', '', '', true], 'Submitting…'],
+  ['messaging/components/ReportDialog', 'ReportDialog', ['harassment', '', '', true], 'Submitting…'],
 ]) {
   test(`${name} retains submit type, busy disabling/copy and icon policy`, () => {
     const props = { user: { display_name: 'Sam', username: 'sam', email: 'sam@example.test' }, appearance: 'system', onClose() {} }

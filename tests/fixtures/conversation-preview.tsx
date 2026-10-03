@@ -2,16 +2,16 @@
 // No Conversation runtime effects, network, storage, encryption, uploads or Calls.
 import React, { useEffect, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
-import { Search, X } from 'lucide-react'
+import { ConversationSearchBar } from '../../client/src/features/messaging/components/ConversationSearchBar'
 import '../../client/src/index.css'
 import '../../client/src/App.css'
-import { ConversationWelcome } from '../../client/src/features/messaging/ConversationWelcome'
-import { useConversationUiState } from '../../client/src/features/messaging/useConversationUiState'
-import { ConversationHeader } from '../../client/src/features/messaging/ConversationHeader'
+import { ConversationWelcome } from '../../client/src/features/messaging/components/ConversationWelcome'
+import { useConversationUiState } from '../../client/src/features/messaging/hooks/useConversationUiState'
+import { ConversationHeader } from '../../client/src/features/messaging/components/ConversationHeader'
 import { MessageList } from '../../client/src/features/messaging/MessageList'
 import { MessageComposer } from '../../client/src/features/messaging/MessageComposer'
 import { ChatDetailsScreen } from '../../client/src/features/messaging/ChatDetailsScreen'
-import { ReportDialog } from '../../client/src/features/messaging/ReportDialog'
+import { ReportDialog } from '../../client/src/features/messaging/components/ReportDialog'
 import { WorkspaceRail } from '../../client/src/features/workspace/components/WorkspaceRail'
 import { InboxPane } from '../../client/src/features/workspace/components/InboxPane'
 import { MobileNavigation } from '../../client/src/features/workspace/components/MobileNavigation'
@@ -28,16 +28,24 @@ const messages = [
   { id: 'two', sender_id: 'me', text: 'Looking forward to it.', server_seq: '2', created_at: '2026-10-02T10:01:00Z' },
 ].map(message => ({ ...message, chat_id: 'chat', deleted_at: null, reactions: [], attachments: [] })) as DisplayMessage[]
 const noop = () => {}
+const params = new URLSearchParams(location.search)
+const initialScene = params.get('scene') ?? 'welcome'
+const initialTheme = (params.get('theme') ?? 'light') as AppearancePreference
 
 function Preview() {
   const ui = useConversationUiState()
-  const [active, setActive] = useState(false)
-  const [theme, setTheme] = useState<AppearancePreference>('light')
-  const [draft, setDraft] = useState('')
-  const [reply, setReply] = useState<DisplayMessage | null>(null)
+  const [active, setActive] = useState(initialScene !== 'welcome')
+  const [theme, setTheme] = useState<AppearancePreference>(initialTheme)
+  const [draft, setDraft] = useState(initialScene === 'edit' ? messages[1].text : '')
+  const [reply, setReply] = useState<DisplayMessage | null>(initialScene === 'reply' ? messages[0] : null)
   const [edit, setEdit] = useState<DisplayMessage | null>(null)
   const list = useRef<HTMLDivElement>(null)
-  useEffect(() => { applyAppearancePreference('light') }, [])
+  useEffect(() => {
+    applyAppearancePreference(initialTheme)
+    if (initialScene === 'search') { ui.toggleMessageSearch(); ui.setMessageSearch('Hello') }
+    if (initialScene === 'report') ui.openReport('one')
+    if (initialScene === 'details') ui.openDetails()
+  }, [])
   const select = () => setActive(true)
   const back = () => setActive(false)
   const visible = ui.messageSearch.trim() ? messages.filter(message => message.text.toLocaleLowerCase().includes(ui.messageSearch.trim().toLocaleLowerCase())) : messages
@@ -45,7 +53,7 @@ function Preview() {
     <nav aria-label="Fixture controls" style={{ position: 'fixed', right: 8, bottom: 45, zIndex: 100, padding: 8, background: 'var(--color-bg-elevated)', border: '1px solid var(--color-border)' }}>
       <small>Isolated Conversation fixture · no backend</small><br />
       <label>Scene <select aria-label="Fixture scene" value={active ? 'conversation' : 'welcome'} onChange={event => setActive(event.target.value === 'conversation')}><option>welcome</option><option>conversation</option></select></label>{' '}
-      <label>Theme <select aria-label="Fixture theme" value={theme} onChange={event => { const value = event.target.value as AppearancePreference; setTheme(value); applyAppearancePreference(value) }}><option>light</option><option>dark</option></select></label>
+      <label>Theme <select aria-label="Fixture theme" value={theme} onChange={event => { const value = event.target.value as AppearancePreference; setTheme(value); applyAppearancePreference(value) }}><option>light</option><option>dark</option><option>system</option></select></label>
     </nav>
     <main className={`workspace${active ? ' has-active-chat' : ''}`}>
       <WorkspaceRail user={user} showCalls={false} showUpdates={false} showSpaces={false} unreadConversationCount={1} onShowChats={back} onShowCalls={noop} onShowUpdates={noop} onShowSpaces={noop} onOpenAccount={noop} />
@@ -53,7 +61,7 @@ function Preview() {
       {!active ? <ConversationWelcome user={user} /> : <div className="conversation-layout">
         <section className={`conversation-pane active-conversation${ui.detailsOpen ? ' conversation-hidden' : ''}`} aria-label="Alex Chen" aria-hidden={ui.detailsOpen}>
           <ConversationHeader title="Alex Chen" subtitle="@alex · online · encrypted" canOpenDetails callStarting={false} online onOpenDetails={ui.openDetails} onSearchMessages={ui.toggleMessageSearch} onBack={back} onStartCall={noop} />
-          {ui.messageSearchOpen && <div className="conversation-search-bar"><Search size={14} aria-hidden="true" /><input autoFocus value={ui.messageSearch} onChange={event => ui.setMessageSearch(event.target.value)} placeholder="Search loaded messages on this device" aria-label="Search messages in this conversation" /><span>{ui.messageSearch.trim() ? `${visible.length} matches` : 'On-device only'}</span><button type="button" onClick={ui.closeMessageSearch} aria-label="Close message search"><X size={14} aria-hidden="true" /></button></div>}
+          {ui.messageSearchOpen && <ConversationSearchBar query={ui.messageSearch} label={ui.messageSearch.trim() ? `${visible.length} matches` : 'On-device only'} onQueryChange={ui.setMessageSearch} onClose={ui.closeMessageSearch} />}
           <MessageList messages={visible} calls={[]} members={members} currentUserId="me" loading={false} error="" emptyMessage={ui.messageSearch.trim() ? 'No matching loaded messages. Search is performed only on this device.' : undefined} scrollContainerRef={list} onScroll={noop} loadingOlder={false} mediaSends={[]} onRetryMedia={noop} onCancelMedia={noop} onReply={setReply} onJumpToMessage={noop} onReact={noop} onEdit={message => { setEdit(message); setReply(null); setDraft(message.text) }} onDelete={noop} onPin={noop} onCopy={noop} onReport={message => ui.openReport(message.id)} />
           <MessageComposer draft={draft} replyTo={edit ?? reply} editing={Boolean(edit)} replyAuthor="Alex Chen" attachments={[]} uploading={false} submitting={false} chatTitle="Alex Chen" voiceDraft={null} onSubmit={event => event.preventDefault()} onDraftChange={setDraft} onTypingChange={noop} onClearReply={() => { if (edit) { setEdit(null); setDraft('') } else setReply(null) }} onRemoveAttachment={noop} onUpload={noop} onVoiceReady={noop} onDeleteVoice={noop} onSendVoice={noop} />
           {ui.reportingMessageId && <ReportDialog messageId={ui.reportingMessageId} onClose={ui.closeReport} />}

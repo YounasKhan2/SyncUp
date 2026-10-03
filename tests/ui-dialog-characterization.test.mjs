@@ -4,7 +4,7 @@ import { renderConsumer, nodes } from './helpers/ui-harness.mjs'
 import { source } from './helpers/foundation-harness.mjs'
 
 const account = 'client/src/features/account/AccountPanel.tsx'
-const report = 'client/src/features/messaging/ReportDialog.tsx'
+const report = 'client/src/features/messaging/components/ReportDialog.tsx'
 const user = { display_name: 'Sam', username: 'sam', email: 'sam@example.test' }
 const profileProps = { user, appearance: 'system', onAppearanceChange() {}, onSaved() {} }
 

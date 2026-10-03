@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
 import { Flag, X } from 'lucide-react'
-import { submitReport } from './api'
-import { Button } from '../../shared/components/Button'
-import { IconButton } from '../../shared/components/IconButton'
-import { Dialog } from '../../shared/components/Dialog'
+import { submitReport } from '../api'
+import { Button } from '../../../shared/components/Button'
+import { IconButton } from '../../../shared/components/IconButton'
+import { Dialog } from '../../../shared/components/Dialog'
 
 const reasons = [
   ['spam', 'Spam'],

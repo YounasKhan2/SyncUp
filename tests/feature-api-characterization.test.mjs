@@ -3,7 +3,7 @@ import assert from 'node:assert/strict'
 import { functionBody, load, plain } from './helpers/foundation-harness.mjs'
 
 const account = 'client/src/features/account/AccountPanel.tsx'
-const report = 'client/src/features/messaging/ReportDialog.tsx'
+const report = 'client/src/features/messaging/components/ReportDialog.tsx'
 const noop = () => {}
 const tick = () => new Promise((resolve) => setImmediate(resolve))
 

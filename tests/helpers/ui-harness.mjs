@@ -33,6 +33,12 @@ export function renderConsumer(path, name, props, { states = [], api = async () 
     try { mocks[`../../shared/components/${primitive}`] = load(`client/src/shared/components/${primitive}.tsx`, { 'react/jsx-runtime': runtime }) }
     catch (error) { if (error.code !== 'ENOENT') throw error }
   }
+  if (path.includes('/messaging/components/')) {
+    for (const [specifier, value] of Object.entries(mocks)) {
+      if (specifier.startsWith('../../shared/')) mocks[`../${specifier}`] = value
+    }
+    mocks['../api'] = mocks['./api']
+  }
   const tree = load(path, mocks)[name](props)
   return expand(tree)
 }

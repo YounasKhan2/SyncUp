@@ -1,0 +1,29 @@
+[
+  {
+    "id": "1440x900-light-search",
+    "decodedDifferenceBounds": [
+      415,
+      63,
+      426,
+      81
+    ]
+  },
+  {
+    "id": "390x844-dark-search",
+    "decodedDifferenceBounds": [
+      63,
+      63,
+      80,
+      88
+    ]
+  },
+  {
+    "id": "390x844-light-search",
+    "decodedDifferenceBounds": [
+      63,
+      63,
+      80,
+      88
+    ]
+  }
+]
