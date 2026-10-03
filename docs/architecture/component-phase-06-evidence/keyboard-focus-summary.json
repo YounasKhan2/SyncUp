@@ -1,0 +1,20 @@
+{
+  "pairs": 4,
+  "viewports": [
+    [
+      1440,
+      900
+    ],
+    [
+      390,
+      844
+    ]
+  ],
+  "mode": "System with OS dark preference emulated before initialization",
+  "scenes": [
+    "account-sessions",
+    "updates-items"
+  ],
+  "activation": "native Tab from session Refresh and Updates search input; next focus is Revoke / Search button",
+  "exactDOMStyleBoundsFocusEqual": true
+}

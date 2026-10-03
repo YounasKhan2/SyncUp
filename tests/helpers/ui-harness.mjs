@@ -24,6 +24,7 @@ export function renderConsumer(path, name, props, { states = [], api = async () 
   // feature-owned API introduced in Phase 5 (no feature function stub).
   if (path.includes('/account/')) {
     mocks['./api'] = load('client/src/features/account/api.ts', { '../../shared/api': mocks['../../shared/api'] })
+    mocks['./components/AccountSessionsSection'] = load('client/src/features/account/components/AccountSessionsSection.tsx', mocks)
   }
   if (path.includes('/messaging/')) {
     mocks['./api'] = load('client/src/features/messaging/api.ts', { '../../shared/api': mocks['../../shared/api'] })

@@ -65,3 +65,4 @@ test('Dialog mount conditions remain owned by Workspace and Conversation', () =>
   assert.match(source('client/src/features/workspace/WorkspacePage.tsx'), /\{accountOpen && <AccountPanel/)
   assert.match(source('client/src/features/messaging/Conversation.tsx'), /\{reportingMessageId && \(\s*<ReportDialog/)
 })
+import './helpers/account-updates-characterization.mjs'

@@ -1,3 +1,4 @@
+import { restoreAccountUpdates } from './helpers/account-updates-parity.mjs'
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import fs from 'node:fs'
@@ -59,6 +60,7 @@ test('Ownership: selected consumer emitted JavaScript remains identical after ty
     // Canonicalize only those approved paths; preserve the frozen Phase 10 hash.
     let input = ['WorkspaceRail', 'MobileNavigation'].reduce((text, name) =>
       text.replaceAll(`/features/workspace/components/${name}`, `/features/workspace/${name}`), read(file))
+    input = restoreAccountUpdates(file, input)
     // Phase 04 reconstructs only the frozen approved header and relocation imports.
     // The original Phase 10 emitted-JavaScript digests remain unchanged.
     if (file.endsWith('/SpacesPage.tsx')) {

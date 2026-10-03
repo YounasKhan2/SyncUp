@@ -1,0 +1,15 @@
+{
+  "base": "b27a48aab156d02ad39331eb18bb8ad1f0e0a358",
+  "before": {
+    "stage": "before",
+    "clientFiles": 74,
+    "resolvedOccurrences": 192,
+    "cycles": []
+  },
+  "after": {
+    "stage": "after",
+    "clientFiles": 76,
+    "resolvedOccurrences": 195,
+    "cycles": []
+  }
+}
