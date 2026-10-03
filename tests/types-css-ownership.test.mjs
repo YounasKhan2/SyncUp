@@ -5,6 +5,7 @@ import path from 'node:path'
 import { createHash } from 'node:crypto'
 import ts from 'typescript'
 import postcss from 'postcss'
+import { restoreSpacesDialogs } from './helpers/spaces-dialog-parity.mjs'
 
 const root = new URL('../', import.meta.url)
 const currentFile = file => file.replace('/spaces/SpaceLegacyHistoryView.tsx', '/spaces/components/SpaceLegacyHistoryView.tsx')
@@ -61,6 +62,7 @@ test('Ownership: selected consumer emitted JavaScript remains identical after ty
     // Phase 04 reconstructs only the frozen approved header and relocation imports.
     // The original Phase 10 emitted-JavaScript digests remain unchanged.
     if (file.endsWith('/SpacesPage.tsx')) {
+      input = restoreSpacesDialogs(input)
       const header = JSON.parse(read('tests/fixtures/spaces-presentation-baseline.json')).header
       assert.ok(input.includes(header.replacement))
       input = input.replace(header.replacement, header.original)

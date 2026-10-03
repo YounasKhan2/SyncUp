@@ -1,3 +1,5 @@
+import { CreateCategoryDialog } from './components/CreateCategoryDialog'
+import { CreateChannelDialog } from './components/CreateChannelDialog'
 import { SpaceChannelHeader } from './components/SpaceChannelHeader'
 import { useEffect, useRef, useState } from 'react'
 import type { FormEvent, ReactNode } from 'react'
@@ -980,44 +982,30 @@ export function SpacesPage({ onBack, onJoinVoiceRoom, openTarget, userId }: {
           </div>
         </section>
       </div>}
-      {channelDialogOpen && canCreateChannels && <div className="overlay space-dialog-overlay" role="presentation" onMouseDown={(event) => {
-        if (event.target === event.currentTarget) setChannelDialogOpen(false)
-      }}>
-        <section className="account-dialog space-dialog" role="dialog" aria-modal="true" aria-labelledby="create-channel-title">
-          <div className="dialog-heading"><div><p className="eyebrow">SPACE CHANNELS</p><h2 id="create-channel-title">Create a channel</h2></div>
-            <button className="icon-button" type="button" onClick={() => setChannelDialogOpen(false)} aria-label="Close"><X size={15} aria-hidden="true" /></button>
-          </div>
-          <p className="space-dialog-copy">Channels keep different conversations easy to find. The <strong>#general</strong> channel is already here.</p>
-          <form className="profile-form" onSubmit={(event) => void createChannel(event)}>
-            <label><span>Category</span><select value={channelCategoryId} onChange={(event) => setChannelCategoryId(event.target.value)} required>
-              {space.categories.map((category) => <option key={category.id} value={category.id}>{category.name}</option>)}
-            </select></label>
-            <label><span>Channel name</span><input value={channelName} onChange={(event) => setChannelName(normalizeChannelName(event.target.value))} placeholder="e.g. design-feedback" maxLength={40} pattern="[a-z0-9][a-z0-9-]*" autoComplete="off" autoFocus required aria-describedby="channel-name-hint" /></label>
-            <small id="channel-name-hint" className="space-channel-name-hint">Lowercase letters, numbers, and hyphens. Spaces become hyphens.</small>
-            <label><span>Topic <small>(optional)</small></span><input value={channelTopic} onChange={(event) => setChannelTopic(event.target.value)} placeholder="What should people discuss here?" maxLength={160} /></label>
-            <label><span>Channel type</span><select value={channelType} onChange={(event) => setChannelType(event.target.value as SpaceChannel['type'])}>
-              <option value="discussion">Text channel</option><option value="announcement">Announcement channel</option><option value="private">Private channel</option><option value="voice">Voice room</option>
-            </select></label>
-            {error && <div className="form-error" role="alert">{error}</div>}
-            <button className="primary-button" disabled={busy}>{busy ? 'Creating…' : 'Create channel'}<Plus size={14} aria-hidden="true" /></button>
-          </form>
-        </section>
-      </div>}
-      {categoryDialogOpen && canCreateChannels && <div className="overlay space-dialog-overlay" role="presentation" onMouseDown={(event) => {
-        if (event.target === event.currentTarget) setCategoryDialogOpen(false)
-      }}>
-        <section className="account-dialog space-dialog" role="dialog" aria-modal="true" aria-labelledby="create-category-title">
-          <div className="dialog-heading"><div><p className="eyebrow">{space.name}</p><h2 id="create-category-title">Create a category</h2></div>
-            <button className="icon-button" type="button" onClick={() => setCategoryDialogOpen(false)} aria-label="Close"><X size={15} aria-hidden="true" /></button>
-          </div>
-          <p className="space-dialog-copy">Categories organize related channels. They can be collapsed in the channel list.</p>
-          <form className="profile-form" onSubmit={(event) => void createCategory(event)}>
-            <label><span>Category name</span><input value={categoryName} onChange={(event) => setCategoryName(event.target.value)} placeholder="e.g. Project" maxLength={40} autoFocus required /></label>
-            {error && <div className="form-error" role="alert">{error}</div>}
-            <button className="primary-button" disabled={busy}>{busy ? 'Creating…' : 'Create category'}<Plus size={14} aria-hidden="true" /></button>
-          </form>
-        </section>
-      </div>}
+      {channelDialogOpen && canCreateChannels && <CreateChannelDialog
+        categories={space.categories}
+        categoryId={channelCategoryId}
+        name={channelName}
+        topic={channelTopic}
+        type={channelType}
+        error={error}
+        busy={busy}
+        onCategoryChange={(value) => setChannelCategoryId(value)}
+        onNameChange={(value) => setChannelName(normalizeChannelName(value))}
+        onTopicChange={(value) => setChannelTopic(value)}
+        onTypeChange={(value) => setChannelType(value)}
+        onClose={() => setChannelDialogOpen(false)}
+        onSubmit={(event) => void createChannel(event)}
+      />}
+      {categoryDialogOpen && canCreateChannels && <CreateCategoryDialog
+        spaceName={space.name}
+        name={categoryName}
+        error={error}
+        busy={busy}
+        onNameChange={(value) => setCategoryName(value)}
+        onClose={() => setCategoryDialogOpen(false)}
+        onSubmit={(event) => void createCategory(event)}
+      />}
       {objectDialogType && space && activeChannel && <div className="overlay space-dialog-overlay" role="presentation" onMouseDown={(event) => {
         if (event.target === event.currentTarget) resetObjectForm()
       }}>

@@ -121,3 +121,4 @@ test('Spaces shared-object callbacks preserve canManage and reach response/state
   const guest = selected({ space: { ...space, role: 'guest' }, messages: [message], sharedObjects: [object] })
   assert.equal(guest.find(node => node.type === 'SharedObjectCard').props.canManage, false)
 })
+import './helpers/spaces-dialog-characterization.mjs'

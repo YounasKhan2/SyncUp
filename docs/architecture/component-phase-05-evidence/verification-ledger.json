@@ -1,0 +1,74 @@
+[
+  {
+    "stage": "baseline",
+    "command": "typecheck",
+    "exit": 0,
+    "log": ".git/phase05/baseline-typecheck.log"
+  },
+  {
+    "stage": "baseline",
+    "command": "test",
+    "exit": 0,
+    "log": ".git/phase05/baseline-test.log"
+  },
+  {
+    "stage": "baseline",
+    "command": "check:architecture",
+    "exit": 0,
+    "log": ".git/phase05/baseline-check-architecture.log"
+  },
+  {
+    "stage": "baseline",
+    "command": "build",
+    "exit": 0,
+    "log": ".git/phase05/baseline-build.log"
+  },
+  {
+    "stage": "baseline",
+    "command": "test:media-v2",
+    "exit": 0,
+    "log": ".git/phase05/baseline-test-media-v2.log"
+  },
+  {
+    "stage": "baseline",
+    "command": "test:integration",
+    "exit": 0,
+    "log": ".git/phase05/baseline-test-integration.log"
+  },
+  {
+    "stage": "final",
+    "command": "typecheck",
+    "exit": 0,
+    "log": ".git/phase05/final-typecheck.log"
+  },
+  {
+    "stage": "final",
+    "command": "test",
+    "exit": 0,
+    "log": ".git/phase05/final-test.log"
+  },
+  {
+    "stage": "final",
+    "command": "check:architecture",
+    "exit": 0,
+    "log": ".git/phase05/final-check-architecture.log"
+  },
+  {
+    "stage": "final",
+    "command": "build",
+    "exit": 0,
+    "log": ".git/phase05/final-build.log"
+  },
+  {
+    "stage": "final",
+    "command": "test:media-v2",
+    "exit": 0,
+    "log": ".git/phase05/final-test-media-v2.log"
+  },
+  {
+    "stage": "final",
+    "command": "test:integration",
+    "exit": 0,
+    "log": ".git/phase05/final-test-integration.log"
+  }
+]

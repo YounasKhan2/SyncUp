@@ -63,7 +63,7 @@ export function spacesPage({ seed = {}, props = {}, api, decrypt, target = null,
     visit(tree)
     return edits.sort((a, b) => b[0] - a[0]).reduce((text, [start, end, value]) => text.slice(0, start) + value + text.slice(end), text)
   }
-  for (const name of ['SpaceVoiceChannelView', 'SpaceLegacyHistoryView', 'SpaceChannelHeader']) {
+  for (const name of ['SpaceVoiceChannelView', 'SpaceLegacyHistoryView', 'SpaceChannelHeader', 'CreateChannelDialog', 'CreateCategoryDialog']) {
     const path = `client/src/features/spaces/components/${name}.tsx`
     try { mocks[`./components/${name}`] = load(path, mocks) } catch (error) { if (error.code !== 'ENOENT') throw error }
   }

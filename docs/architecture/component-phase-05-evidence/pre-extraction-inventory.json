@@ -1,0 +1,562 @@
+{
+  "base": "558d9764a44fafe2b991315c20bd7a16e86f5325",
+  "rootSourceDigest": "3e781b2c00333d3de3649df58e4098d993e030fb479b30f52eddc3cbd6ff227b",
+  "surfaces": [
+    {
+      "root": "form",
+      "className": "spaces-create-form",
+      "source": "<form className=\"spaces-create-form\" onSubmit={(event) => void createSpace(event)}>\n              <label htmlFor=\"space-name\">Space name</label>\n              <input id=\"space-name\" value={spaceName} onChange={(event) => setSpaceName(event.target.value)} placeholder=\"e.g. Website redesign\" maxLength={80} required />\n              <label htmlFor=\"space-description\">Description <small>(optional)</small></label>\n              <textarea id=\"space-description\" value={spaceDescription} onChange={(event) => setSpaceDescription(event.target.value)} placeholder=\"What is this Space for?\" maxLength={280} rows={2} />\n              <span className=\"space-icon-choice-label\">Space icon</span>\n              <div className=\"space-icon-choice-list\" role=\"group\" aria-label=\"Space icon\">\n                {spaceIconOptions.map(({ id, label }) => <button key={id} type=\"button\" className={spaceIcon === id ? 'selected' : ''} aria-pressed={spaceIcon === id} aria-label={label} title={label} onClick={() => setSpaceIcon(id)}><SpaceIconView icon={id} /></button>)}\n              </div>\n              <p className=\"spaces-create-hint\">This is your Space’s name. We’ll add a separate <strong>#general</strong> channel automatically.</p>\n              <button className=\"primary-button\" disabled={busy}>{busy ? 'Creating…' : 'Create Space'}<Plus size={14} aria-hidden=\"true\" /></button>\n            </form>",
+      "line": 734
+    },
+    {
+      "root": "div",
+      "role": "menu",
+      "className": "space-object-menu",
+      "source": "<div className=\"space-object-menu\" role=\"menu\" aria-label=\"Create a shared item\">\n                <button type=\"button\" role=\"menuitem\" onClick={() => { setObjectDialogType('poll'); setObjectMenuOpen(false); setError('') }}>Create poll</button>\n                <button type=\"button\" role=\"menuitem\" onClick={() => { setObjectDialogType('event'); setObjectMenuOpen(false); setError('') }}>Create event</button>\n                <button type=\"button\" role=\"menuitem\" onClick={() => { setObjectDialogType('checklist'); setObjectMenuOpen(false); setError('') }}>Create checklist</button>\n              </div>",
+      "line": 885
+    },
+    {
+      "root": "div",
+      "role": "listbox",
+      "className": "space-mention-menu",
+      "source": "<div className=\"space-mention-menu\" role=\"listbox\" aria-label=\"Mention someone in this channel\">\n                {activeChannel.members.map((member) => <button key={member.id} type=\"button\" role=\"option\" onClick={() => {\n                  setDraft((current) => `${current}${current && !/\\s$/u.test(current) ? ' ' : ''}@${member.username} `)\n                  setMentionMenuOpen(false)\n                }}><strong>{member.display_name}</strong><small>@{member.username}</small></button>)}\n                {['owner', 'admin', 'moderator'].includes(space.role) && <button type=\"button\" role=\"option\" onClick={() => {\n                  setDraft((current) => `${current}${current && !/\\s$/u.test(current) ? ' ' : ''}@everyone `)\n                  setMentionMenuOpen(false)\n                }}><strong>@everyone</strong><small>Notify everyone who can see this channel</small></button>}\n                {activeChannel.members.length === 0 && !['owner', 'admin', 'moderator'].includes(space.role) && <small>No other channel members to mention yet.</small>}\n              </div>",
+      "line": 890
+    },
+    {
+      "root": "section",
+      "role": "dialog",
+      "className": "account-dialog space-dialog space-discovery-dialog",
+      "source": "<section className=\"account-dialog space-dialog space-discovery-dialog\" role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"space-search-title\">\n          <header className=\"space-discovery-heading\">\n            <div><p className=\"eyebrow\">SEARCH SPACE</p><h2 id=\"space-search-title\">{space.name}</h2></div>\n            <button className=\"space-settings-button\" type=\"button\" aria-label=\"Close search\" onClick={() => setSearchOpen(false)}><X size={16} aria-hidden=\"true\" /></button>\n          </header>\n          <form className=\"space-discovery-form\" onSubmit={(event) => void searchSpace(event)}>\n            <label htmlFor=\"space-search-query\">Search messages, files, and shared items</label>\n            <div className=\"space-search-input\"><Search size={16} aria-hidden=\"true\" /><input id=\"space-search-query\" value={searchQuery} onChange={(event) => setSearchQuery(event.target.value)} minLength={2} maxLength={80} autoFocus required placeholder=\"Try a keyword or phrase\" /><button className=\"primary-button\" disabled={busy || searchQuery.trim().length < 2}>{busy ? 'Searching…' : 'Search'}</button></div>\n            <div className=\"space-search-filters\">\n              <label>From<select value={searchFrom} onChange={(event) => setSearchFrom(event.target.value)}><option value=\"\">Anyone</option>{space.members.map((member) => <option key={member.id} value={member.id}>{member.display_name}</option>)}</select></label>\n              <label>After<input type=\"date\" value={searchAfter} onChange={(event) => setSearchAfter(event.target.value)} /></label>\n              <label>Before<input type=\"date\" value={searchBefore} onChange={(event) => setSearchBefore(event.target.value)} /></label>\n              <label>Content<select value={searchHas} onChange={(event) => { setSearchHas(event.target.value); if (event.target.value) setSearchObjectType('') }}><option value=\"\">All content</option><option value=\"file\">Files</option><option value=\"image\">Images</option></select></label>\n              <label>Shared item<select value={searchObjectType} onChange={(event) => { setSearchObjectType(event.target.value); if (event.target.value) setSearchHas('') }}><option value=\"\">Any type</option><option value=\"poll\">Polls</option><option value=\"event\">Events</option><option value=\"checklist\">Checklists</option><option value=\"decision\">Decisions</option></select></label>\n            </div>\n          </form>\n          {error && <p className=\"spaces-error\" role=\"alert\">{error}</p>}\n          <div className=\"space-search-results\" aria-live=\"polite\">\n            {searchResults.length === 0\n              ? <p className=\"space-discovery-empty\">{searchSubmitted ? 'No matching results. Try a different term or filter.' : 'Search results from channels you can access will appear here.'}</p>\n              : searchResults.map((result) => result.type === 'file'\n                ? <a className=\"space-search-result\" key={`${result.type}-${result.id}`} href={`/api/spaces/${space.id}/channels/${result.channel_id}/files/${result.id}/content`}>\n                  {result.content_type?.startsWith('image/') ? <Image size={17} aria-hidden=\"true\" /> : <FileText size={17} aria-hidden=\"true\" />}\n                  <span><strong>{result.title}</strong><small>#{result.channel_name} · {result.author_name} · {new Intl.DateTimeFormat(undefined, { dateStyle: 'medium' }).format(new Date(result.created_at))}</small></span><Download size={15} aria-hidden=\"true\" />\n                </a>\n                : <button className=\"space-search-result\" key={`${result.type}-${result.id}`} type=\"button\" onClick={() => openSearchResult(result)}>\n                  {result.type === 'message' ? <Hash size={17} aria-hidden=\"true\" /> : <CalendarDays size={17} aria-hidden=\"true\" />}\n                  <span><strong>{result.title}</strong><small>#{result.channel_name} · {result.author_name} · {result.type === 'object' ? result.object_type : 'message'} · {new Intl.DateTimeFormat(undefined, { dateStyle: 'medium' }).format(new Date(result.created_at))}</small></span>\n                </button>)}\n          </div>\n        </section>",
+      "line": 922
+    },
+    {
+      "root": "section",
+      "role": "dialog",
+      "className": "account-dialog space-dialog space-discovery-dialog",
+      "source": "<section className=\"account-dialog space-dialog space-discovery-dialog\" role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"channel-files-title\">\n          <header className=\"space-discovery-heading\">\n            <div><p className=\"eyebrow\">CHANNEL FILES</p><h2 id=\"channel-files-title\">#{activeChannel.name}</h2></div>\n            <button className=\"space-settings-button\" type=\"button\" aria-label=\"Close files\" onClick={() => setFilePanelOpen(false)}><X size={16} aria-hidden=\"true\" /></button>\n          </header>\n          <div className=\"space-file-panel-actions\">\n            <p>Channel files are visible to its members. Allowed: .pdf, .doc/.docx, .xls/.xlsx, .ppt/.pptx, .zip, .txt, .csv, .gif, .jpg/.jpeg, .png, .webp, .mp4, .webm. Max 25 MB (images: 10 MB).</p>\n            {activeChannel.can_send && <button className=\"primary-button\" type=\"button\" disabled={busy} onClick={() => fileInput.current?.click()}><FileUp size={15} aria-hidden=\"true\" /> Upload file</button>}\n          </div>\n          {error && <p className=\"spaces-error\" role=\"alert\">{error}</p>}\n          <div className=\"space-file-grid\" aria-live=\"polite\">\n            {channelFiles.length === 0\n              ? <p className=\"space-discovery-empty\">No files have been shared in this channel yet.</p>\n              : channelFiles.map((file) => {\n                const url = `/api/spaces/${space.id}/channels/${activeChannel.id}/files/${file.id}/content`\n                return <a className=\"space-file-card\" href={url} key={file.id}>\n                  {file.content_type.startsWith('image/')\n                    ? <img src={url} alt=\"\" loading=\"lazy\" />\n                    : <span className=\"space-file-icon\"><FileText size={24} aria-hidden=\"true\" /></span>}\n                  <strong>{file.filename}</strong>\n                  <small>{file.author_name} · {new Intl.DateTimeFormat(undefined, { dateStyle: 'medium' }).format(new Date(file.created_at))}</small>\n                </a>\n              })}\n          </div>\n        </section>",
+      "line": 957
+    },
+    {
+      "root": "section",
+      "role": "dialog",
+      "className": "account-dialog space-dialog",
+      "source": "<section className=\"account-dialog space-dialog\" role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"create-channel-title\">\n          <div className=\"dialog-heading\"><div><p className=\"eyebrow\">SPACE CHANNELS</p><h2 id=\"create-channel-title\">Create a channel</h2></div>\n            <button className=\"icon-button\" type=\"button\" onClick={() => setChannelDialogOpen(false)} aria-label=\"Close\"><X size={15} aria-hidden=\"true\" /></button>\n          </div>\n          <p className=\"space-dialog-copy\">Channels keep different conversations easy to find. The <strong>#general</strong> channel is already here.</p>\n          <form className=\"profile-form\" onSubmit={(event) => void createChannel(event)}>\n            <label><span>Category</span><select value={channelCategoryId} onChange={(event) => setChannelCategoryId(event.target.value)} required>\n              {space.categories.map((category) => <option key={category.id} value={category.id}>{category.name}</option>)}\n            </select></label>\n            <label><span>Channel name</span><input value={channelName} onChange={(event) => setChannelName(normalizeChannelName(event.target.value))} placeholder=\"e.g. design-feedback\" maxLength={40} pattern=\"[a-z0-9][a-z0-9-]*\" autoComplete=\"off\" autoFocus required aria-describedby=\"channel-name-hint\" /></label>\n            <small id=\"channel-name-hint\" className=\"space-channel-name-hint\">Lowercase letters, numbers, and hyphens. Spaces become hyphens.</small>\n            <label><span>Topic <small>(optional)</small></span><input value={channelTopic} onChange={(event) => setChannelTopic(event.target.value)} placeholder=\"What should people discuss here?\" maxLength={160} /></label>\n            <label><span>Channel type</span><select value={channelType} onChange={(event) => setChannelType(event.target.value as SpaceChannel['type'])}>\n              <option value=\"discussion\">Text channel</option><option value=\"announcement\">Announcement channel</option><option value=\"private\">Private channel</option><option value=\"voice\">Voice room</option>\n            </select></label>\n            {error && <div className=\"form-error\" role=\"alert\">{error}</div>}\n            <button className=\"primary-button\" disabled={busy}>{busy ? 'Creating…' : 'Create channel'}<Plus size={14} aria-hidden=\"true\" /></button>\n          </form>\n        </section>",
+      "line": 986
+    },
+    {
+      "root": "section",
+      "role": "dialog",
+      "className": "account-dialog space-dialog",
+      "source": "<section className=\"account-dialog space-dialog\" role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"create-category-title\">\n          <div className=\"dialog-heading\"><div><p className=\"eyebrow\">{space.name}</p><h2 id=\"create-category-title\">Create a category</h2></div>\n            <button className=\"icon-button\" type=\"button\" onClick={() => setCategoryDialogOpen(false)} aria-label=\"Close\"><X size={15} aria-hidden=\"true\" /></button>\n          </div>\n          <p className=\"space-dialog-copy\">Categories organize related channels. They can be collapsed in the channel list.</p>\n          <form className=\"profile-form\" onSubmit={(event) => void createCategory(event)}>\n            <label><span>Category name</span><input value={categoryName} onChange={(event) => setCategoryName(event.target.value)} placeholder=\"e.g. Project\" maxLength={40} autoFocus required /></label>\n            {error && <div className=\"form-error\" role=\"alert\">{error}</div>}\n            <button className=\"primary-button\" disabled={busy}>{busy ? 'Creating…' : 'Create category'}<Plus size={14} aria-hidden=\"true\" /></button>\n          </form>\n        </section>",
+      "line": 1009
+    },
+    {
+      "root": "section",
+      "role": "dialog",
+      "className": "account-dialog space-dialog space-object-dialog",
+      "source": "<section className=\"account-dialog space-dialog space-object-dialog\" role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"shared-object-title\">\n          <div className=\"dialog-heading\"><div><p className=\"eyebrow\">#{activeChannel.name}</p><h2 id=\"shared-object-title\">Create {objectDialogType}</h2></div>\n            <button className=\"icon-button\" type=\"button\" onClick={resetObjectForm} aria-label=\"Close shared item form\"><X size={15} aria-hidden=\"true\" /></button>\n          </div>\n          <p className=\"space-dialog-copy\">This item will appear in the channel conversation and Updates.</p>\n          <form className=\"profile-form\" onSubmit={(event) => void createSharedObject(event)}>\n            <label><span>{objectDialogType === 'poll' ? 'Question' : 'Title'}</span>\n              <input name=\"sharedItemTitle\" autoComplete=\"off\" value={objectTitle} onChange={(event) => setObjectTitle(event.target.value)} maxLength={objectDialogType === 'poll' ? 240 : 160} placeholder={objectDialogType === 'poll' ? 'What should the team decide…' : 'Give this item a clear title…'} required />\n            </label>\n            {objectDialogType === 'poll' && <>\n              <fieldset className=\"space-object-options\"><legend>Options</legend>{objectOptions.map((option, index) => <div key={index}>\n                <label><span className=\"visually-hidden\">Option {index + 1}</span><input autoComplete=\"off\" value={option} onChange={(event) => setObjectOptions((current) => current.map((item, itemIndex) => itemIndex === index ? event.target.value : item))} maxLength={100} placeholder={`Option ${index + 1}…`} /></label>\n                {objectOptions.length > 2 && <button type=\"button\" className=\"icon-button\" aria-label={`Remove option ${index + 1}`} onClick={() => setObjectOptions((current) => current.filter((_, itemIndex) => itemIndex !== index))}><X size={14} aria-hidden=\"true\" /></button>}\n              </div>)}\n                {objectOptions.length < 8 && <button type=\"button\" className=\"space-add-object-option\" onClick={() => setObjectOptions((current) => [...current, ''])}><Plus size={13} aria-hidden=\"true\" /> Add option</button>}\n              </fieldset>\n              <label className=\"profile-checkbox\"><input type=\"checkbox\" checked={objectMultiSelect} onChange={(event) => setObjectMultiSelect(event.target.checked)} /><span>Allow multiple choices</span></label>\n              <label className=\"profile-checkbox\"><input type=\"checkbox\" checked={objectAnonymous} onChange={(event) => setObjectAnonymous(event.target.checked)} /><span>Anonymous poll</span></label>\n            </>}\n            {objectDialogType === 'event' && <>\n              <label><span>Starts</span><input type=\"datetime-local\" name=\"eventStartsAt\" value={objectStartsAt} onChange={(event) => setObjectStartsAt(event.target.value)} required /></label>\n              <label><span>Location <small>(optional)</small></span><input name=\"eventLocation\" autoComplete=\"off\" value={objectLocation} onChange={(event) => setObjectLocation(event.target.value)} maxLength={240} placeholder=\"Add a place or meeting link…\" /></label>\n              <small className=\"space-channel-name-hint\">Times use your local timezone: {Intl.DateTimeFormat().resolvedOptions().timeZone}.</small>\n            </>}\n            {objectDialogType === 'checklist' && <>\n              <label><span>Checklist items</span><textarea name=\"checklistItems\" autoComplete=\"off\" value={objectItemsText} onChange={(event) => setObjectItemsText(event.target.value)} rows={6} placeholder={'Write one item per line…\\nShare first draft\\nReview with the team'} required /></label>\n              <label><span>Assign items to <small>(optional)</small></span><select value={objectAssigneeId} onChange={(event) => setObjectAssigneeId(event.target.value)}>\n                <option value=\"\">No assignee</option>\n                {activeChannel.members.map((member) => <option key={member.id} value={member.id}>{member.display_name}</option>)}\n              </select></label>\n            </>}\n            {error && <div className=\"form-error\" role=\"alert\">{error}</div>}\n            <button className=\"primary-button\" disabled={busy}>{busy ? 'Creating…' : `Create ${objectDialogType}`}</button>\n          </form>\n        </section>",
+      "line": 1024
+    },
+    {
+      "root": "section",
+      "role": "dialog",
+      "className": "account-dialog space-settings-dialog",
+      "source": "<section className=\"account-dialog space-settings-dialog\" role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"space-settings-title\">\n          <header className=\"space-settings-header\">\n            <div><p className=\"eyebrow\">SPACE SETTINGS</p><h2 id=\"space-settings-title\">{space.name}</h2></div>\n            <button className=\"icon-button\" type=\"button\" onClick={() => { setSpaceSettingsTab(null); void loadSpace(space.id) }} aria-label=\"Close Space settings\"><X size={15} aria-hidden=\"true\" /></button>\n          </header>\n          <div className=\"space-settings-layout\">\n            <nav className=\"space-settings-nav\" aria-label=\"Space settings sections\">\n              <button type=\"button\" className={spaceSettingsTab === 'overview' ? 'is-active' : ''} aria-pressed={spaceSettingsTab === 'overview'} onClick={() => { setError(''); setSpaceSettingsTab('overview') }}><Settings2 size={15} aria-hidden=\"true\" /> Overview</button>\n              {canInvite && <button type=\"button\" className={spaceSettingsTab === 'people' ? 'is-active' : ''} aria-pressed={spaceSettingsTab === 'people'} onClick={() => { setError(''); setSpaceSettingsTab('people') }}><Users size={15} aria-hidden=\"true\" /> People & invites <small>{space.members.length}</small></button>}\n            </nav>\n            <div className=\"space-settings-content\">\n              {spaceSettingsTab === 'overview' ? <>\n                <div className=\"space-settings-section-heading\"><h3>Space overview</h3><p>Set the name and description members see across this Space.</p></div>\n                <form className=\"profile-form\" onSubmit={(event) => void saveSpaceSettings(event)}>\n                  <label><span>Space name</span><input name=\"spaceName\" autoComplete=\"off\" value={space.name} onChange={(event) => setSpace((current) => current ? { ...current, name: event.target.value } : current)} maxLength={80} required /></label>\n                  <label><span>Description</span><textarea name=\"spaceDescription\" autoComplete=\"off\" value={space.description} onChange={(event) => setSpace((current) => current ? { ...current, description: event.target.value } : current)} maxLength={280} rows={3} placeholder=\"What is this Space for?\" /></label>\n                  <span className=\"space-icon-choice-label\">Space icon</span>\n                  <div className=\"space-icon-choice-list\" role=\"group\" aria-label=\"Space icon\">\n                    {spaceIconOptions.map(({ id, label }) => <button key={id} type=\"button\" className={space.icon === id ? 'selected' : ''} aria-pressed={space.icon === id} aria-label={label} title={label} onClick={() => setSpace((current) => current ? { ...current, icon: id } : current)}><SpaceIconView icon={id} /></button>)}\n                  </div>\n                  {error && <div className=\"form-error\" role=\"alert\">{error}</div>}\n                  <button className=\"primary-button\" disabled={busy}>{busy ? 'Saving…' : 'Save changes'}</button>\n                </form>\n              </> : <section aria-labelledby=\"space-people-title\">\n                <div className=\"space-settings-section-heading\"><h3 id=\"space-people-title\">People & invites</h3><p>See who belongs to this Space and invite people with the access they need.</p></div>\n                <div className=\"space-dialog-members\">{space.members.map((member) => <div key={member.id}>\n                  <span><strong>{member.display_name}</strong><small>@{member.username}</small></span><small>{member.role}</small>\n                </div>)}</div>\n                <form className=\"profile-form space-invite-dialog-form\" onSubmit={(event) => void inviteMember(event)}>\n                  <label><span>Invite by username</span><input name=\"inviteUsername\" autoComplete=\"off\" spellCheck={false} value={inviteUsername} onChange={(event) => setInviteUsername(event.target.value.trimStart().replace(/^@/u, ''))} placeholder=\"username\" minLength={3} maxLength={24} pattern=\"[A-Za-z0-9_]+\" required /></label>\n                  <label><span>Role</span><select value={inviteRole} onChange={(event) => { setInviteRole(event.target.value as 'member' | 'guest'); setInviteChannels([]) }}>\n                    <option value=\"guest\">Guest</option>{space.role !== 'moderator' && <option value=\"member\">Member</option>}\n                  </select></label>\n                  {inviteRole === 'guest' && <fieldset className=\"space-channel-grants\"><legend>Guest channel access</legend>{space.channels.map((channel) => <label key={channel.id}>\n                    <input type=\"checkbox\" checked={inviteChannels.includes(channel.id)} onChange={(event) => setInviteChannels((current) => event.target.checked ? [...current, channel.id] : current.filter((id) => id !== channel.id))} />\n                    #{channel.name}\n                  </label>)}</fieldset>}\n                  {error && <div className=\"form-error\" role=\"alert\">{error}</div>}\n                  <button className=\"primary-button\" disabled={busy}>{busy ? 'Inviting…' : `Invite ${inviteRole}`}</button>\n                </form>\n              </section>}\n            </div>\n          </div>\n        </section>",
+      "line": 1066
+    },
+    {
+      "root": "section",
+      "role": "dialog",
+      "className": "account-dialog space-dialog space-channel-settings-dialog",
+      "source": "<section className=\"account-dialog space-dialog space-channel-settings-dialog\" role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"channel-settings-title\">\n          <div className=\"dialog-heading\"><div><p className=\"eyebrow\">#{activeChannel.name}</p><h2 id=\"channel-settings-title\">Channel settings</h2></div>\n            <button className=\"icon-button\" type=\"button\" onClick={() => setChannelSettingsTab(null)} aria-label=\"Close channel settings\"><X size={15} aria-hidden=\"true\" /></button>\n          </div>\n          <nav className=\"space-channel-settings-tabs\" aria-label=\"Channel settings sections\">\n            <button type=\"button\" className={channelSettingsTab === 'overview' ? 'is-active' : ''} aria-pressed={channelSettingsTab === 'overview'} onClick={() => openChannelSettings('overview')}>Overview</button>\n            <button type=\"button\" className={channelSettingsTab === 'permissions' ? 'is-active' : ''} aria-pressed={channelSettingsTab === 'permissions'} onClick={() => openChannelSettings('permissions')}>Permissions</button>\n          </nav>\n          {channelSettingsTab === 'overview' ? <>\n            <div className=\"space-settings-section-heading\"><h3>Channel overview</h3><p>Keep this channel easy to recognize and give members context before they post.</p></div>\n            <div className=\"space-channel-type-card\"><span>Channel type</span><strong>{activeChannel.type === 'discussion' ? 'Text channel' : activeChannel.type === 'announcement' ? 'Announcement channel' : activeChannel.type === 'private' ? 'Private channel' : 'Voice room'}</strong></div>\n            <form className=\"profile-form\" onSubmit={(event) => void saveChannelTopic(event)}>\n              <label><span>Topic</span><textarea name=\"channelTopic\" autoComplete=\"off\" value={topicDraft} onChange={(event) => setTopicDraft(event.target.value)} maxLength={160} rows={3} placeholder=\"What should people discuss here?\" /></label>\n              <small className=\"space-channel-name-hint\">{topicDraft.length}/160 characters · Shown beneath the channel name.</small>\n              {error && <div className=\"form-error\" role=\"alert\">{error}</div>}\n              <button className=\"primary-button\" disabled={busy}>{busy ? 'Saving…' : 'Save channel details'}</button>\n            </form>\n          </> : <>\n            <div className=\"space-settings-section-heading\"><h3>Role permissions</h3><p>Choose what each Space role can do in <strong>#{activeChannel.name}</strong>.</p></div>\n            <div className=\"space-permission-fixed\"><strong>Owner & admin</strong><span>Always have full channel access</span></div>\n            <form className=\"profile-form\" onSubmit={(event) => void saveChannelPermissions(event)}>\n              <div className=\"space-permission-table-wrap\">\n                <table className=\"space-permission-table\">\n                  <caption>Access for Space roles in this channel</caption>\n                  <thead><tr><th scope=\"col\">Role</th><th scope=\"col\">View</th><th scope=\"col\">{activeChannel.type === 'voice' ? 'Speak' : 'Send'}</th></tr></thead>\n                  <tbody>{permissionDraft.map((permission) => <tr key={permission.role}>\n                    <th scope=\"row\">{permission.role[0].toUpperCase() + permission.role.slice(1)}</th>\n                    <td><label><input type=\"checkbox\" checked={permission.can_view} aria-label={`${permission.role} can view`} onChange={(event) => updatePermission(permission.role, 'can_view', event.target.checked)} /></label></td>\n                    <td><label><input type=\"checkbox\" checked={activeChannel.type === 'voice' ? permission.can_speak : permission.can_send} disabled={!permission.can_view} aria-label={`${permission.role} can ${activeChannel.type === 'voice' ? 'speak' : 'send messages'}`} onChange={(event) => updatePermission(permission.role, activeChannel.type === 'voice' ? 'can_speak' : 'can_send', event.target.checked)} /></label></td>\n                  </tr>)}</tbody>\n                </table>\n              </div>\n              <p className=\"space-permission-note\">Turning off View also turns off sending or speaking. These role rules never grant access to guests who haven’t been added to this channel.</p>\n              {error && <div className=\"form-error\" role=\"alert\">{error}</div>}\n              <button className=\"primary-button\" disabled={busy || permissionDraft.length !== 3}>{busy ? 'Saving…' : 'Save permissions'}</button>\n            </form>\n          </>}\n        </section>",
+      "line": 1114
+    }
+  ],
+  "selectors": [
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".icon-button",
+      "rule": ".icon-button { display: grid; width: 30px; height: 30px; flex: 0 0 auto; place-items: center; border: 0; border-radius: 7px; color: #738077; background: #f1f3ee; font: inherit; font-size: var(--type-title-xs); cursor: pointer; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".overlay",
+      "rule": ".overlay { position: fixed; z-index: 15; inset: 0; display: grid; place-items: center; padding: 20px; background: rgba(16, 35, 27, .34); }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".account-dialog",
+      "rule": ".account-dialog { width: min(430px, 100%); max-height: calc(100svh - 40px); overflow-y: auto; box-sizing: border-box; padding: 24px; border: 1px solid #e8ece5; border-radius: 14px; background: var(--color-canvas); box-shadow: 0 18px 50px rgba(17, 38, 28, .18); }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".dialog-heading",
+      "rule": ".dialog-heading { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 20px; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".dialog-heading .eyebrow",
+      "rule": ".dialog-heading .eyebrow { margin-bottom: 5px; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".account-dialog h2",
+      "rule": ".account-dialog h2 { font-size: var(--type-heading); }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".search-overlay",
+      "rule": ".search-overlay { z-index: 15; align-items: start; padding-top: min(18vh, 140px); }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".search-dialog",
+      "rule": ".search-dialog { display: flex; width: min(560px, 100%); flex-direction: column; gap: 13px; padding: 19px; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".search-dialog .dialog-heading",
+      "rule": ".search-dialog .dialog-heading { margin-bottom: 0; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".group-invite .primary-button",
+      "rule": ".group-invite .primary-button { gap: 6px; height: 37px; margin-top: 0; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".profile-form",
+      "rule": ".profile-form { gap: 14px; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".profile-form textarea",
+      "rule": ".profile-form textarea { min-height: 75px; resize: vertical; padding-top: 10px; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".profile-form input[readonly]",
+      "rule": ".profile-form input[readonly] { color: #879189; background: #f7f8f5; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".profile-form .profile-checkbox",
+      "rule": ".profile-form .profile-checkbox { flex-direction: row; align-items: flex-start; gap: 9px; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".profile-form .profile-checkbox > input",
+      "rule": ".profile-form .profile-checkbox > input { width: 14px; min-height: 14px; margin: 1px 0 0; padding: 0; accent-color: #5f805f; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".profile-form .profile-checkbox > span",
+      "rule": ".profile-form .profile-checkbox > span { display: flex; flex-direction: column; gap: 4px; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".profile-form .profile-checkbox > span > strong",
+      "rule": ".profile-form .profile-checkbox > span > strong { color: #3e4a43; font-size: var(--type-body-xs); font-weight: 600; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".profile-form .profile-checkbox > span > small",
+      "rule": ".profile-form .profile-checkbox > span > small { color: #929b94; font-size: var(--type-small); }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".report-dialog",
+      "rule": ".report-dialog { max-height: calc(100svh - 40px); overflow-y: auto; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".service-error .primary-button",
+      "rule": ".service-error .primary-button { width: 180px; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".new-chat-dialog .profile-form textarea",
+      "rule": ".new-chat-dialog .profile-form textarea { min-height: 76px; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".request-list-panel .icon-button",
+      "rule": ".request-list-panel .icon-button { margin-left: 12px; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".space-dialog",
+      "rule": ".space-dialog { padding: 18px; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".space-settings-dialog",
+      "rule": ".space-settings-dialog { height: calc(100dvh - 16px); max-height: calc(100dvh - 16px); padding: 0; border-radius: 12px; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".space-channel-settings-dialog",
+      "rule": ".space-channel-settings-dialog { padding: 18px; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".chat-details-screen .group-invite .primary-button",
+      "rule": ".chat-details-screen .group-invite .primary-button { width: 100%; min-height: 39px; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".chat-details-screen .form-error",
+      "rule": ".chat-details-screen .form-error { font-size: var(--type-label); }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".call-overlay",
+      "rule": ".call-overlay { z-index: 25; background: rgba(14, 30, 23, .58); }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".call-dialog",
+      "rule": ".call-dialog {\r\n  display: flex; width: min(740px, 100%); max-height: min(650px, calc(100svh - 32px));\r\n  flex-direction: column; overflow: hidden; border: 1px solid #e3e9e1; border-radius: 15px;\r\n  background: var(--color-canvas); box-shadow: 0 20px 70px rgba(10, 26, 17, .32);\r\n}"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".call-dialog-header",
+      "rule": ".call-dialog-header { display: flex; min-height: 64px; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 17px; border-bottom: 1px solid #e8ece5; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".call-dialog-header .eyebrow",
+      "rule": ".call-dialog-header .eyebrow { margin-bottom: 4px; font-size: var(--type-caption); }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".call-dialog-header h2",
+      "rule": ".call-dialog-header h2 { margin: 0; color: var(--color-text); font-size: var(--type-subtitle); font-weight: 600; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".voice-room-dialog",
+      "rule": ".voice-room-dialog { width: min(1080px, calc(100vw - 32px)); height: min(760px, calc(100dvh - 32px)); max-height: none; border-color: #2d3b33; background: #111a15; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".voice-room-dialog .call-dialog-header",
+      "rule": ".voice-room-dialog .call-dialog-header { border-color: #2b3930; background: #111a15; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".voice-room-dialog .call-dialog-header .eyebrow",
+      "rule": ".voice-room-dialog .call-dialog-header .eyebrow { color: #9abda2; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".voice-room-dialog .call-dialog-header h2",
+      "rule": ".voice-room-dialog .call-dialog-header h2 { color: #f0f4f0; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".voice-room-dialog .call-connection",
+      "rule": ".voice-room-dialog .call-connection { color: #bbc8bd; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".voice-room-dialog .call-controls",
+      "rule": ".voice-room-dialog .call-controls { border-color: #2b3930; background: #111a15; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".voice-room-dialog .call-controls button",
+      "rule": ".voice-room-dialog .call-controls button { min-height: 38px; padding: 8px 13px; border: 1px solid #36453b; border-radius: 9px; color: #eef3ef; background: #26352b; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".voice-room-dialog .call-controls button:hover:not(:disabled)",
+      "rule": ".voice-room-dialog .call-controls button:hover:not(:disabled) { background: #34483a; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".voice-room-dialog .call-controls .call-end-button",
+      "rule": ".voice-room-dialog .call-controls .call-end-button { border-color: #b44848; color: #fff; background: #b44848; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".voice-room-dialog .call-controls .call-end-button:hover:not(:disabled)",
+      "rule": ".voice-room-dialog .call-controls .call-end-button:hover:not(:disabled) { background: #963838; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".call-dialog",
+      "rule": ".call-dialog { max-height: calc(100svh - 24px); }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".voice-room-dialog",
+      "rule": ".voice-room-dialog { width: calc(100vw - 16px); height: calc(100dvh - 16px); min-height: 0; border-radius: 12px; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".voice-room-dialog .call-dialog-header",
+      "rule": ".voice-room-dialog .call-dialog-header { padding: 10px 12px; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".attachment-video-overlay",
+      "rule": ".attachment-video-overlay { position: absolute; z-index: 1; inset: 0; pointer-events: none; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".attachment-v2-video-ready .attachment-video-overlay > small",
+      "rule": ".attachment-v2-video-ready .attachment-video-overlay > small { position: absolute; bottom: 9px; left: 50%; display: flex; align-items: center; gap: 4px; margin: 0; padding: 4px 7px; border-radius: 5px; color: #fff; background: rgba(9,18,13,.78); font-size: var(--type-caption); line-height: 1.2; transform: translateX(-50%); }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".attachment-v2-video-ready .attachment-video-overlay > strong",
+      "rule": ".attachment-v2-video-ready .attachment-video-overlay > strong { position: absolute; bottom: 31px; left: 50%; max-width: 90%; padding: 3px 6px; border-radius: 4px; color: #fff; background: rgba(9,18,13,.78); font-size: var(--type-label); font-weight: 600; text-align: center; transform: translateX(-50%); }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .auth-page,\r\n:root[data-theme=\"dark\"] .auth-panel,\r\n:root[data-theme=\"dark\"] .workspace,\r\n:root[data-theme=\"dark\"] .inbox-pane,\r\n:root[data-theme=\"dark\"] .conversation-pane,\r\n:root[data-theme=\"dark\"] .chat-details-screen,\r\n:root[data-theme=\"dark\"] .chat-details-header,\r\n:root[data-theme=\"dark\"] .mobile-bottom-nav,\r\n:root[data-theme=\"dark\"] .account-dialog,\r\n:root[data-theme=\"dark\"] .search-dialog,\r\n:root[data-theme=\"dark\"] .request-list-panel,\r\n:root[data-theme=\"dark\"] .chat-details-section,\r\n:root[data-theme=\"dark\"] .chat-details-back:hover",
+      "rule": ":root[data-theme=\"dark\"] .auth-page,\r\n:root[data-theme=\"dark\"] .auth-panel,\r\n:root[data-theme=\"dark\"] .workspace,\r\n:root[data-theme=\"dark\"] .inbox-pane,\r\n:root[data-theme=\"dark\"] .conversation-pane,\r\n:root[data-theme=\"dark\"] .chat-details-screen,\r\n:root[data-theme=\"dark\"] .chat-details-header,\r\n:root[data-theme=\"dark\"] .mobile-bottom-nav,\r\n:root[data-theme=\"dark\"] .account-dialog,\r\n:root[data-theme=\"dark\"] .search-dialog,\r\n:root[data-theme=\"dark\"] .request-list-panel,\r\n:root[data-theme=\"dark\"] .chat-details-section,\r\n:root[data-theme=\"dark\"] .chat-details-back:hover { background-color: var(--color-canvas); }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .inbox-pane,\r\n:root[data-theme=\"dark\"] .conversation-header,\r\n:root[data-theme=\"dark\"] .chat-details-header,\r\n:root[data-theme=\"dark\"] .chat-details-identity,\r\n:root[data-theme=\"dark\"] .account-dialog,\r\n:root[data-theme=\"dark\"] .chat-details-section,\r\n:root[data-theme=\"dark\"] .chat-details-members li,\r\n:root[data-theme=\"dark\"] .session-row,\r\n:root[data-theme=\"dark\"] .call-dialog,\r\n:root[data-theme=\"dark\"] .call-dialog-header,\r\n:root[data-theme=\"dark\"] .call-controls,\r\n:root[data-theme=\"dark\"] .global-search-input",
+      "rule": ":root[data-theme=\"dark\"] .inbox-pane,\r\n:root[data-theme=\"dark\"] .conversation-header,\r\n:root[data-theme=\"dark\"] .chat-details-header,\r\n:root[data-theme=\"dark\"] .chat-details-identity,\r\n:root[data-theme=\"dark\"] .account-dialog,\r\n:root[data-theme=\"dark\"] .chat-details-section,\r\n:root[data-theme=\"dark\"] .chat-details-members li,\r\n:root[data-theme=\"dark\"] .session-row,\r\n:root[data-theme=\"dark\"] .call-dialog,\r\n:root[data-theme=\"dark\"] .call-dialog-header,\r\n:root[data-theme=\"dark\"] .call-controls,\r\n:root[data-theme=\"dark\"] .global-search-input { border-color: var(--color-border); }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .auth-panel h2,\r\n:root[data-theme=\"dark\"] .account-dialog h2,\r\n:root[data-theme=\"dark\"] .pane-heading h1,\r\n:root[data-theme=\"dark\"] .conversation-heading,\r\n:root[data-theme=\"dark\"] .welcome-content h2,\r\n:root[data-theme=\"dark\"] .chat-row-copy strong,\r\n:root[data-theme=\"dark\"] .request-list-header h2,\r\n:root[data-theme=\"dark\"] .request-card-content strong,\r\n:root[data-theme=\"dark\"] .chat-details-header h1,\r\n:root[data-theme=\"dark\"] .chat-details-identity h2,\r\n:root[data-theme=\"dark\"] .chat-details-section h2,\r\n:root[data-theme=\"dark\"] .chat-details-members strong,\r\n:root[data-theme=\"dark\"] .sessions-heading h3,\r\n:root[data-theme=\"dark\"] .profile-avatar-actions > strong,\r\n:root[data-theme=\"dark\"] .profile-form label > span,\r\n:root[data-theme=\"dark\"] .profile-form .profile-checkbox > span > strong,\r\n:root[data-theme=\"dark\"] .safety-form label > span,\r\n:root[data-theme=\"dark\"] .call-dialog-header h2,\r\n:root[data-theme=\"dark\"] .incoming-call-banner strong",
+      "rule": ":root[data-theme=\"dark\"] .auth-panel h2,\r\n:root[data-theme=\"dark\"] .account-dialog h2,\r\n:root[data-theme=\"dark\"] .pane-heading h1,\r\n:root[data-theme=\"dark\"] .conversation-heading,\r\n:root[data-theme=\"dark\"] .welcome-content h2,\r\n:root[data-theme=\"dark\"] .chat-row-copy strong,\r\n:root[data-theme=\"dark\"] .request-list-header h2,\r\n:root[data-theme=\"dark\"] .request-card-content strong,\r\n:root[data-theme=\"dark\"] .chat-details-header h1,\r\n:root[data-theme=\"dark\"] .chat-details-identity h2,\r\n:root[data-theme=\"dark\"] .chat-details-section h2,\r\n:root[data-theme=\"dark\"] .chat-details-members strong,\r\n:root[data-theme=\"dark\"] .sessions-heading h3,\r\n:root[data-theme=\"dark\"] .profile-avatar-actions > strong,\r\n:root[data-theme=\"dark\"] .profile-form label > span,\r\n:root[data-theme=\"dark\"] .profile-form .profile-checkbox > span > strong,\r\n:root[data-theme=\"dark\"] .safety-form label > span,\r\n:root[data-theme=\"dark\"] .call-dialog-header h2,\r\n:root[data-theme=\"dark\"] .incoming-call-banner strong { color: var(--color-text); }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .auth-form input,\r\n:root[data-theme=\"dark\"] .profile-form input,\r\n:root[data-theme=\"dark\"] .profile-form textarea,\r\n:root[data-theme=\"dark\"] .profile-form select,\r\n:root[data-theme=\"dark\"] .safety-form input,\r\n:root[data-theme=\"dark\"] .safety-form select,\r\n:root[data-theme=\"dark\"] .safety-form textarea,\r\n:root[data-theme=\"dark\"] .global-search-input,\r\n:root[data-theme=\"dark\"] .conversation-search-bar,\r\n:root[data-theme=\"dark\"] .username-input,\r\n:root[data-theme=\"dark\"] .message-composer",
+      "rule": ":root[data-theme=\"dark\"] .auth-form input,\r\n:root[data-theme=\"dark\"] .profile-form input,\r\n:root[data-theme=\"dark\"] .profile-form textarea,\r\n:root[data-theme=\"dark\"] .profile-form select,\r\n:root[data-theme=\"dark\"] .safety-form input,\r\n:root[data-theme=\"dark\"] .safety-form select,\r\n:root[data-theme=\"dark\"] .safety-form textarea,\r\n:root[data-theme=\"dark\"] .global-search-input,\r\n:root[data-theme=\"dark\"] .conversation-search-bar,\r\n:root[data-theme=\"dark\"] .username-input,\r\n:root[data-theme=\"dark\"] .message-composer { color: var(--color-text); background-color: var(--color-surface); }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .profile-form input[readonly]",
+      "rule": ":root[data-theme=\"dark\"] .profile-form input[readonly] { color: var(--color-text-secondary); background: var(--color-surface-muted); }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .auth-form input::placeholder,\r\n:root[data-theme=\"dark\"] .profile-form input::placeholder,\r\n:root[data-theme=\"dark\"] .profile-form textarea::placeholder,\r\n:root[data-theme=\"dark\"] .message-composer textarea::placeholder",
+      "rule": ":root[data-theme=\"dark\"] .auth-form input::placeholder,\r\n:root[data-theme=\"dark\"] .profile-form input::placeholder,\r\n:root[data-theme=\"dark\"] .profile-form textarea::placeholder,\r\n:root[data-theme=\"dark\"] .message-composer textarea::placeholder { color: #9eaaa1; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .search-box,\r\n:root[data-theme=\"dark\"] .inbox-filters,\r\n:root[data-theme=\"dark\"] .icon-button,\r\n:root[data-theme=\"dark\"] .empty-symbol,\r\n:root[data-theme=\"dark\"] .chat-list-item:hover,\r\n:root[data-theme=\"dark\"] .chat-list-item.selected,\r\n:root[data-theme=\"dark\"] .inbox-filters button.filter-active,\r\n:root[data-theme=\"dark\"] .search-result:hover,\r\n:root[data-theme=\"dark\"] .search-result:focus-visible,\r\n:root[data-theme=\"dark\"] .username-match:hover,\r\n:root[data-theme=\"dark\"] .username-match.is-selected,\r\n:root[data-theme=\"dark\"] .call-history-item:hover,\r\n:root[data-theme=\"dark\"] .chat-details-back:hover,\r\n:root[data-theme=\"dark\"] .mobile-bottom-nav button[aria-current=\"page\"]",
+      "rule": ":root[data-theme=\"dark\"] .search-box,\r\n:root[data-theme=\"dark\"] .inbox-filters,\r\n:root[data-theme=\"dark\"] .icon-button,\r\n:root[data-theme=\"dark\"] .empty-symbol,\r\n:root[data-theme=\"dark\"] .chat-list-item:hover,\r\n:root[data-theme=\"dark\"] .chat-list-item.selected,\r\n:root[data-theme=\"dark\"] .inbox-filters button.filter-active,\r\n:root[data-theme=\"dark\"] .search-result:hover,\r\n:root[data-theme=\"dark\"] .search-result:focus-visible,\r\n:root[data-theme=\"dark\"] .username-match:hover,\r\n:root[data-theme=\"dark\"] .username-match.is-selected,\r\n:root[data-theme=\"dark\"] .call-history-item:hover,\r\n:root[data-theme=\"dark\"] .chat-details-back:hover,\r\n:root[data-theme=\"dark\"] .mobile-bottom-nav button[aria-current=\"page\"] { color: var(--color-text); background-color: var(--color-surface-muted); }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .chat-row-copy small,\r\n:root[data-theme=\"dark\"] .message-meta strong,\r\n:root[data-theme=\"dark\"] .chat-details-identity p,\r\n:root[data-theme=\"dark\"] .chat-details-identity small,\r\n:root[data-theme=\"dark\"] .chat-details-security p,\r\n:root[data-theme=\"dark\"] .request-card-content p,\r\n:root[data-theme=\"dark\"] .profile-avatar-actions > span,\r\n:root[data-theme=\"dark\"] .profile-form .profile-checkbox > span > small,\r\n:root[data-theme=\"dark\"] .search-result strong,\r\n:root[data-theme=\"dark\"] .search-message-result .search-message-snippet",
+      "rule": ":root[data-theme=\"dark\"] .chat-row-copy small,\r\n:root[data-theme=\"dark\"] .message-meta strong,\r\n:root[data-theme=\"dark\"] .chat-details-identity p,\r\n:root[data-theme=\"dark\"] .chat-details-identity small,\r\n:root[data-theme=\"dark\"] .chat-details-security p,\r\n:root[data-theme=\"dark\"] .request-card-content p,\r\n:root[data-theme=\"dark\"] .profile-avatar-actions > span,\r\n:root[data-theme=\"dark\"] .profile-form .profile-checkbox > span > small,\r\n:root[data-theme=\"dark\"] .search-result strong,\r\n:root[data-theme=\"dark\"] .search-message-result .search-message-snippet { color: var(--color-text-secondary); }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .call-dialog",
+      "rule": ":root[data-theme=\"dark\"] .call-dialog { border-color: var(--color-border); background: var(--color-canvas); }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .form-error,\r\n:root[data-theme=\"dark\"] .list-error,\r\n:root[data-theme=\"dark\"] .inline-error",
+      "rule": ":root[data-theme=\"dark\"] .form-error,\r\n:root[data-theme=\"dark\"] .list-error,\r\n:root[data-theme=\"dark\"] .inline-error { color: #ffc0b5; border-color: #75443d; background: #382724; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .spaces-create-hint strong,\r\n:root[data-theme=\"dark\"] .space-dialog-copy strong",
+      "rule": ":root[data-theme=\"dark\"] .spaces-create-hint strong,\r\n:root[data-theme=\"dark\"] .space-dialog-copy strong { color: #b7d6b8; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .spaces-create-form input,\r\n:root[data-theme=\"dark\"] .spaces-create-form textarea,\r\n:root[data-theme=\"dark\"] .space-dialog .profile-form input,\r\n:root[data-theme=\"dark\"] .space-dialog .profile-form select,\r\n:root[data-theme=\"dark\"] .space-dialog .profile-form textarea",
+      "rule": ":root[data-theme=\"dark\"] .spaces-create-form input,\r\n:root[data-theme=\"dark\"] .spaces-create-form textarea,\r\n:root[data-theme=\"dark\"] .space-dialog .profile-form input,\r\n:root[data-theme=\"dark\"] .space-dialog .profile-form select,\r\n:root[data-theme=\"dark\"] .space-dialog .profile-form textarea { border-color: var(--color-border); color: var(--color-text); background: var(--color-canvas); }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".space-discovery-dialog",
+      "rule": ".space-discovery-dialog {\r\n  display: flex;\r\n  width: min(720px, calc(100vw - 30px));\r\n  max-height: min(780px, calc(100dvh - 32px));\r\n  min-width: 0;\r\n  box-sizing: border-box;\r\n  flex-direction: column;\r\n  gap: 16px;\r\n  overflow: hidden;\r\n}"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".space-search-input .primary-button",
+      "rule": ".space-search-input .primary-button { width: auto; min-height: 34px; height: 34px; flex: 0 0 auto; margin: 0; padding: 5px 14px; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".space-file-panel-actions .primary-button",
+      "rule": ".space-file-panel-actions .primary-button { display: inline-flex; width: auto; min-height: 36px; height: 36px; flex: 0 0 auto; align-items: center; gap: 7px; margin: 0; padding: 0 14px; white-space: nowrap; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".space-file-panel-actions .primary-button",
+      "rule": ".space-file-panel-actions .primary-button { align-self: flex-start; }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root:is([data-theme], :not([data-theme])) .account-dialog,\r\n:root:is([data-theme], :not([data-theme])) .search-dialog,\r\n:root:is([data-theme], :not([data-theme])) .username-search-results,\r\n:root:is([data-theme], :not([data-theme])) .emoji-picker-popover,\r\n:root:is([data-theme], :not([data-theme])) .reaction-picker-popover,\r\n:root:is([data-theme], :not([data-theme])) .space-object-menu",
+      "rule": ":root:is([data-theme], :not([data-theme])) .account-dialog,\r\n:root:is([data-theme], :not([data-theme])) .search-dialog,\r\n:root:is([data-theme], :not([data-theme])) .username-search-results,\r\n:root:is([data-theme], :not([data-theme])) .emoji-picker-popover,\r\n:root:is([data-theme], :not([data-theme])) .reaction-picker-popover,\r\n:root:is([data-theme], :not([data-theme])) .space-object-menu { background: var(--color-bg-elevated); border-color: var(--color-border); }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root:is([data-theme], :not([data-theme])) .story-copy h1,\r\n:root:is([data-theme], :not([data-theme])) .auth-panel h2,\r\n:root:is([data-theme], :not([data-theme])) .account-dialog h2,\r\n:root:is([data-theme], :not([data-theme])) .pane-heading h1,\r\n:root:is([data-theme], :not([data-theme])) .conversation-heading,\r\n:root:is([data-theme], :not([data-theme])) .chat-row-copy strong,\r\n:root:is([data-theme], :not([data-theme])) .welcome-content h2,\r\n:root:is([data-theme], :not([data-theme])) .space-server-header strong,\r\n:root:is([data-theme], :not([data-theme])) .space-channel-header > div > span,\r\n:root:is([data-theme], :not([data-theme])) .spaces-intro h2,\r\n:root:is([data-theme], :not([data-theme])) .spaces-list h2,\r\n:root:is([data-theme], :not([data-theme])) .profile-form label > span,\r\n:root:is([data-theme], :not([data-theme])) .auth-form label > span",
+      "rule": ":root:is([data-theme], :not([data-theme])) .story-copy h1,\r\n:root:is([data-theme], :not([data-theme])) .auth-panel h2,\r\n:root:is([data-theme], :not([data-theme])) .account-dialog h2,\r\n:root:is([data-theme], :not([data-theme])) .pane-heading h1,\r\n:root:is([data-theme], :not([data-theme])) .conversation-heading,\r\n:root:is([data-theme], :not([data-theme])) .chat-row-copy strong,\r\n:root:is([data-theme], :not([data-theme])) .welcome-content h2,\r\n:root:is([data-theme], :not([data-theme])) .space-server-header strong,\r\n:root:is([data-theme], :not([data-theme])) .space-channel-header > div > span,\r\n:root:is([data-theme], :not([data-theme])) .spaces-intro h2,\r\n:root:is([data-theme], :not([data-theme])) .spaces-list h2,\r\n:root:is([data-theme], :not([data-theme])) .profile-form label > span,\r\n:root:is([data-theme], :not([data-theme])) .auth-form label > span { color: var(--color-text-primary); }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root:is([data-theme], :not([data-theme])) .auth-form input,\r\n:root:is([data-theme], :not([data-theme])) .profile-form input,\r\n:root:is([data-theme], :not([data-theme])) .profile-form textarea,\r\n:root:is([data-theme], :not([data-theme])) .profile-form select,\r\n:root:is([data-theme], :not([data-theme])) .username-input",
+      "rule": ":root:is([data-theme], :not([data-theme])) .auth-form input,\r\n:root:is([data-theme], :not([data-theme])) .profile-form input,\r\n:root:is([data-theme], :not([data-theme])) .profile-form textarea,\r\n:root:is([data-theme], :not([data-theme])) .profile-form select,\r\n:root:is([data-theme], :not([data-theme])) .username-input { color: var(--color-text-primary); background: var(--color-bg-surface); border-color: var(--color-border); }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root:is([data-theme], :not([data-theme])) .auth-form input::placeholder,\r\n:root:is([data-theme], :not([data-theme])) .profile-form input::placeholder,\r\n:root:is([data-theme], :not([data-theme])) .profile-form textarea::placeholder,\r\n:root:is([data-theme], :not([data-theme])) .message-composer textarea::placeholder",
+      "rule": ":root:is([data-theme], :not([data-theme])) .auth-form input::placeholder,\r\n:root:is([data-theme], :not([data-theme])) .profile-form input::placeholder,\r\n:root:is([data-theme], :not([data-theme])) .profile-form textarea::placeholder,\r\n:root:is([data-theme], :not([data-theme])) .message-composer textarea::placeholder { color: var(--color-text-secondary); }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root:is([data-theme], :not([data-theme])) .primary-button,\r\n:root:is([data-theme], :not([data-theme])) .composer-toolbar > .composer-send-button,\r\n:root:is([data-theme], :not([data-theme])) .unread-pill,\r\n:root:is([data-theme], :not([data-theme])) .chat-row-meta b",
+      "rule": ":root:is([data-theme], :not([data-theme])) .primary-button,\r\n:root:is([data-theme], :not([data-theme])) .composer-toolbar > .composer-send-button,\r\n:root:is([data-theme], :not([data-theme])) .unread-pill,\r\n:root:is([data-theme], :not([data-theme])) .chat-row-meta b { color: var(--color-on-primary); background: var(--color-primary); }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root:is([data-theme], :not([data-theme])) .primary-button:hover:not(:disabled),\r\n:root:is([data-theme], :not([data-theme])) .composer-toolbar > .composer-send-button:hover:not(:disabled)",
+      "rule": ":root:is([data-theme], :not([data-theme])) .primary-button:hover:not(:disabled),\r\n:root:is([data-theme], :not([data-theme])) .composer-toolbar > .composer-send-button:hover:not(:disabled) { background: var(--color-primary-hover); }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root:is([data-theme], :not([data-theme])) .rail-item,\r\n:root:is([data-theme], :not([data-theme])) .mobile-bottom-nav button,\r\n:root:is([data-theme], :not([data-theme])) .icon-button,\r\n:root:is([data-theme], :not([data-theme])) .inbox-filters button",
+      "rule": ":root:is([data-theme], :not([data-theme])) .rail-item,\r\n:root:is([data-theme], :not([data-theme])) .mobile-bottom-nav button,\r\n:root:is([data-theme], :not([data-theme])) .icon-button,\r\n:root:is([data-theme], :not([data-theme])) .inbox-filters button { color: var(--color-text-secondary); }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root:is([data-theme], :not([data-theme])) .form-error,\r\n:root:is([data-theme], :not([data-theme])) .list-error,\r\n:root:is([data-theme], :not([data-theme])) .inline-error",
+      "rule": ":root:is([data-theme], :not([data-theme])) .form-error,\r\n:root:is([data-theme], :not([data-theme])) .list-error,\r\n:root:is([data-theme], :not([data-theme])) .inline-error { color: var(--color-text-primary); border-color: var(--color-danger); background: var(--color-danger-soft); }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root:is([data-theme], :not([data-theme])) .auth-form input:focus,\r\n:root:is([data-theme], :not([data-theme])) .profile-form input:focus,\r\n:root:is([data-theme], :not([data-theme])) .profile-form textarea:focus,\r\n:root:is([data-theme], :not([data-theme])) .username-input:focus-within,\r\n:root:is([data-theme], :not([data-theme])) .message-composer:focus-within",
+      "rule": ":root:is([data-theme], :not([data-theme])) .auth-form input:focus,\r\n:root:is([data-theme], :not([data-theme])) .profile-form input:focus,\r\n:root:is([data-theme], :not([data-theme])) .profile-form textarea:focus,\r\n:root:is([data-theme], :not([data-theme])) .username-input:focus-within,\r\n:root:is([data-theme], :not([data-theme])) .message-composer:focus-within { border-color: var(--color-focus-ring); box-shadow: 0 0 0 2px var(--color-focus-ring); }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root:is([data-theme], :not([data-theme])) .overlay",
+      "rule": ":root:is([data-theme], :not([data-theme])) .overlay { background: var(--color-overlay); }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root:is([data-theme], :not([data-theme])) .muted,\r\n:root:is([data-theme], :not([data-theme])) .welcome-description,\r\n:root:is([data-theme], :not([data-theme])) .workspace-footer,\r\n:root:is([data-theme], :not([data-theme])) .workspace-footer button,\r\n:root:is([data-theme], :not([data-theme])) .profile-form .profile-checkbox > span > small,\r\n:root:is([data-theme], :not([data-theme])) .sessions-caption",
+      "rule": ":root:is([data-theme], :not([data-theme])) .muted,\r\n:root:is([data-theme], :not([data-theme])) .welcome-description,\r\n:root:is([data-theme], :not([data-theme])) .workspace-footer,\r\n:root:is([data-theme], :not([data-theme])) .workspace-footer button,\r\n:root:is([data-theme], :not([data-theme])) .profile-form .profile-checkbox > span > small,\r\n:root:is([data-theme], :not([data-theme])) .sessions-caption { color: var(--color-text-secondary); }"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root:is([data-theme], :not([data-theme])) .profile-form .profile-checkbox > input",
+      "rule": ":root:is([data-theme], :not([data-theme])) .profile-form .profile-checkbox > input { accent-color: var(--color-primary); }"
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".spaces-create-form .primary-button",
+      "rule": ".spaces-create-form .primary-button { margin-top: 5px; }"
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".group-space-upgrade-dialog",
+      "rule": ".group-space-upgrade-dialog { display: flex; flex-direction: column; gap: 10px; }"
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".space-voice-welcome .primary-button",
+      "rule": ".space-voice-welcome .primary-button { display: inline-flex; width: auto; min-height: 38px; align-items: center; gap: 7px; margin: 0; padding-inline: 14px; font-size: var(--type-label); }"
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".space-dialog-overlay",
+      "rule": ".space-dialog-overlay { z-index: 45; overscroll-behavior: contain; }"
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".space-dialog",
+      "rule": ".space-dialog { width: min(440px, calc(100vw - 30px)); max-height: min(760px, calc(100dvh - 32px)); overflow-y: auto; }"
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".space-dialog-copy",
+      "rule": ".space-dialog-copy { margin: -5px 0 18px; color: var(--color-text-secondary); font-size: var(--type-label); line-height: 1.55; }"
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".space-dialog-copy strong",
+      "rule": ".space-dialog-copy strong { color: #42634a; }"
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".space-channel-name-hint",
+      "rule": ".space-channel-name-hint { margin-top: -12px; color: var(--color-text-secondary); font-size: var(--type-small); }"
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".space-dialog-members",
+      "rule": ".space-dialog-members { display: flex; max-height: 190px; flex-direction: column; gap: 4px; overflow-y: auto; margin: 12px 0 18px; padding: 9px; border: 1px solid var(--color-border); border-radius: 8px; }"
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".space-dialog-members > div, .space-dialog-members > div > span",
+      "rule": ".space-dialog-members > div, .space-dialog-members > div > span { display: flex; align-items: center; justify-content: space-between; gap: 10px; }"
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".space-dialog-members > div",
+      "rule": ".space-dialog-members > div { min-width: 0; min-height: 35px; }"
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".space-dialog-members > div > span",
+      "rule": ".space-dialog-members > div > span { min-width: 0; flex: 1; align-items: flex-start; flex-direction: column; gap: 2px; }"
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".space-dialog-members strong",
+      "rule": ".space-dialog-members strong { max-width: 100%; overflow: hidden; color: var(--color-text); font-size: var(--type-label); text-overflow: ellipsis; white-space: nowrap; }"
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".space-dialog-members small",
+      "rule": ".space-dialog-members small { color: var(--color-text-secondary); font-size: var(--type-small); }"
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".space-invite-dialog-form",
+      "rule": ".space-invite-dialog-form { margin-top: 0; }"
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".space-invite-dialog-form .space-channel-grants",
+      "rule": ".space-invite-dialog-form .space-channel-grants { max-height: 150px; overflow-y: auto; }"
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".space-settings-dialog",
+      "rule": ".space-settings-dialog { container-type: inline-size; display: flex; width: min(850px, 100%); height: min(680px, calc(100dvh - 40px)); flex-direction: column; overflow: hidden; padding: 0; }"
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".space-settings-content .profile-form",
+      "rule": ".space-settings-content .profile-form { max-width: 520px; }"
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".space-settings-content .space-dialog-members",
+      "rule": ".space-settings-content .space-dialog-members { max-height: 180px; margin-top: 0; }"
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".space-channel-settings-dialog",
+      "rule": ".space-channel-settings-dialog { width: min(560px, 100%); }"
+    },
+    {
+      "file": "client/src/features/spaces/spaces.css",
+      "selector": ".space-object-dialog",
+      "rule": ".space-object-dialog { width: min(500px, calc(100vw - 30px)); }"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "base": "558d9764a44fafe2b991315c20bd7a16e86f5325",
+  "side": "base",
+  "productionSourceSHA256": "d1dac4066787aa45eead74a3c875fd112ae1df2fde3574b86d62764b630e04a7",
+  "bootstrapSHA256": "89cd3a99fb0b9595db623aaccf90c3d7f1aab8df46f4d3f33d2b660c5cc2cfba",
+  "fixtureSHA256": "1d898a6c8e40cfe92e780e44f32b25390258859c3234cac1feebe4f801cdafd2",
+  "htmlSHA256": "dfc4a71ee73fe839de6f58664cb54001ce7914b84e4611b41c357a9e3976670d"
+}
