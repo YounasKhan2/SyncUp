@@ -1,0 +1,50 @@
+{
+  "existingEntriesChanged": [
+    "client"
+  ],
+  "addedLockEntries": {
+    "node_modules/@jridgewell/gen-mapping": "0.3.13",
+    "node_modules/@jridgewell/remapping": "2.3.5",
+    "node_modules/@jridgewell/resolve-uri": "3.1.2",
+    "node_modules/@jridgewell/sourcemap-codec": "1.6.0",
+    "node_modules/@jridgewell/trace-mapping": "0.3.31",
+    "node_modules/@tailwindcss/node": "4.3.3",
+    "node_modules/@tailwindcss/node/node_modules/lightningcss": "1.32.0",
+    "node_modules/@tailwindcss/node/node_modules/lightningcss-android-arm64": "1.32.0",
+    "node_modules/@tailwindcss/node/node_modules/lightningcss-darwin-arm64": "1.32.0",
+    "node_modules/@tailwindcss/node/node_modules/lightningcss-darwin-x64": "1.32.0",
+    "node_modules/@tailwindcss/node/node_modules/lightningcss-freebsd-x64": "1.32.0",
+    "node_modules/@tailwindcss/node/node_modules/lightningcss-linux-arm-gnueabihf": "1.32.0",
+    "node_modules/@tailwindcss/node/node_modules/lightningcss-linux-arm64-gnu": "1.32.0",
+    "node_modules/@tailwindcss/node/node_modules/lightningcss-linux-arm64-musl": "1.32.0",
+    "node_modules/@tailwindcss/node/node_modules/lightningcss-linux-x64-gnu": "1.32.0",
+    "node_modules/@tailwindcss/node/node_modules/lightningcss-linux-x64-musl": "1.32.0",
+    "node_modules/@tailwindcss/node/node_modules/lightningcss-win32-arm64-msvc": "1.32.0",
+    "node_modules/@tailwindcss/node/node_modules/lightningcss-win32-x64-msvc": "1.32.0",
+    "node_modules/@tailwindcss/oxide": "4.3.3",
+    "node_modules/@tailwindcss/oxide-android-arm64": "4.3.3",
+    "node_modules/@tailwindcss/oxide-darwin-arm64": "4.3.3",
+    "node_modules/@tailwindcss/oxide-darwin-x64": "4.3.3",
+    "node_modules/@tailwindcss/oxide-freebsd-x64": "4.3.3",
+    "node_modules/@tailwindcss/oxide-linux-arm-gnueabihf": "4.3.3",
+    "node_modules/@tailwindcss/oxide-linux-arm64-gnu": "4.3.3",
+    "node_modules/@tailwindcss/oxide-linux-arm64-musl": "4.3.3",
+    "node_modules/@tailwindcss/oxide-linux-x64-gnu": "4.3.3",
+    "node_modules/@tailwindcss/oxide-linux-x64-musl": "4.3.3",
+    "node_modules/@tailwindcss/oxide-wasm32-wasi": "4.3.3",
+    "node_modules/@tailwindcss/oxide-win32-arm64-msvc": "4.3.3",
+    "node_modules/@tailwindcss/oxide-win32-x64-msvc": "4.3.3",
+    "node_modules/@tailwindcss/vite": "4.3.3",
+    "node_modules/enhanced-resolve": "5.26.0",
+    "node_modules/graceful-fs": "4.2.11",
+    "node_modules/jiti": "2.7.0",
+    "node_modules/magic-string": "0.30.21",
+    "node_modules/tailwindcss": "4.3.3",
+    "node_modules/tapable": "2.3.3"
+  },
+  "installedRegistryVersions": {
+    "tailwindcss": "4.3.3",
+    "@tailwindcss/vite": "4.3.3"
+  },
+  "vitePluginPeerRange": "^5.2.0 || ^6 || ^7 || ^8"
+}
