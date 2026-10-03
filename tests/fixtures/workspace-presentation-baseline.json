@@ -1,0 +1,37 @@
+{
+  "baseSHA": "7019b4007b16da10c7c4fb489e0d16ac202dc217",
+  "files": {
+    "client/src/features/workspace/WorkspaceRail.tsx": {
+      "relocatedPath": "client/src/features/workspace/components/WorkspaceRail.tsx",
+      "canonicalDigest": "cdc4363a5018c5c065a189ee9625c2cae1e3e1a5f397722eb75f448574568672"
+    },
+    "client/src/features/workspace/InboxPane.tsx": {
+      "relocatedPath": "client/src/features/workspace/components/InboxPane.tsx",
+      "canonicalDigest": "b813b5488bedc62c750cd1f202aa023bc902dbb1eb24fe1288e3584dd13d559f"
+    },
+    "client/src/features/workspace/ChatRow.tsx": {
+      "relocatedPath": "client/src/features/workspace/components/ChatRow.tsx",
+      "canonicalDigest": "bcf86f9e85a56fde503492b3f8a0e6490adb4cc234c5451eeb7c7ff55fc1132c"
+    },
+    "client/src/features/workspace/MobileNavigation.tsx": {
+      "relocatedPath": "client/src/features/workspace/components/MobileNavigation.tsx",
+      "canonicalDigest": "37b471fc5f46ca15f0ea85213fc53acf9d61fd4cedad21e4db741dc6e46a3c30"
+    },
+    "client/src/features/workspace/CallsHome.tsx": {
+      "relocatedPath": "client/src/features/workspace/components/CallsHome.tsx",
+      "canonicalDigest": "e4490d3efc022fb689c1fd7522bae7fe86f4bda81ee7e19da02548d278a6f929"
+    },
+    "client/src/features/workspace/IncomingCallBanner.tsx": {
+      "relocatedPath": "client/src/features/workspace/components/IncomingCallBanner.tsx",
+      "canonicalDigest": "8a811342d509e7eb999dcdfd939b53235707a98a1fc8aca5eea1e52138ce97df"
+    },
+    "client/src/features/workspace/useWorkspaceNavigation.ts": {
+      "relocatedPath": "client/src/features/workspace/hooks/useWorkspaceNavigation.ts",
+      "canonicalDigest": "1ccce6b4eb4df5734033da4db9b23a022811d64a44b209b876504b48fd0f3c20"
+    },
+    "client/src/features/workspace/WorkspacePage.tsx": {
+      "relocatedPath": "client/src/features/workspace/WorkspacePage.tsx",
+      "canonicalDigest": "665686b6356124b4e72e64e9936c6e042e294d92e654fe33d5877a0cf09c03d8"
+    }
+  }
+}

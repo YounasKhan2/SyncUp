@@ -1,0 +1,1982 @@
+[
+  {
+    "id": "1440x900-light-inbox",
+    "viewport": [
+      1440,
+      900
+    ],
+    "effectiveTheme": "light",
+    "systemDark": true,
+    "dpr": 1.190000057220459,
+    "domStyleBoundsEqual": true,
+    "diagnostics": "[]",
+    "navBounds": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "eb520c4491eabb12d0ee6f0e8e46ec09e0615593ee1ba8ef338cfc0b77c87082",
+    "afterScreenshotSHA256": "eb520c4491eabb12d0ee6f0e8e46ec09e0615593ee1ba8ef338cfc0b77c87082",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ]
+  },
+  {
+    "id": "1440x900-light-selected",
+    "viewport": [
+      1440,
+      900
+    ],
+    "effectiveTheme": "light",
+    "systemDark": true,
+    "dpr": 1.190000057220459,
+    "domStyleBoundsEqual": true,
+    "diagnostics": "[]",
+    "navBounds": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "a7c5b4fad791361cf81f9ea40846d996498074bdb4b368f91312b1628d2ccb73",
+    "afterScreenshotSHA256": "a7c5b4fad791361cf81f9ea40846d996498074bdb4b368f91312b1628d2ccb73",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ]
+  },
+  {
+    "id": "1440x900-light-calls",
+    "viewport": [
+      1440,
+      900
+    ],
+    "effectiveTheme": "light",
+    "systemDark": true,
+    "dpr": 1.190000057220459,
+    "domStyleBoundsEqual": true,
+    "diagnostics": "[]",
+    "navBounds": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "a7c7d3d1ea867a092fd0dfb486fdd5cf3c945fe5977998dc41517fc64bbf26a8",
+    "afterScreenshotSHA256": "a7c7d3d1ea867a092fd0dfb486fdd5cf3c945fe5977998dc41517fc64bbf26a8",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ]
+  },
+  {
+    "id": "1440x900-light-history",
+    "viewport": [
+      1440,
+      900
+    ],
+    "effectiveTheme": "light",
+    "systemDark": true,
+    "dpr": 1.190000057220459,
+    "domStyleBoundsEqual": true,
+    "diagnostics": "[]",
+    "navBounds": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "913b1d412816d0a8c3eae3f8483e7fb797bcdcac6456ac0f7d3da03ac7772cc6",
+    "afterScreenshotSHA256": "913b1d412816d0a8c3eae3f8483e7fb797bcdcac6456ac0f7d3da03ac7772cc6",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ]
+  },
+  {
+    "id": "1440x900-light-direct",
+    "viewport": [
+      1440,
+      900
+    ],
+    "effectiveTheme": "light",
+    "systemDark": true,
+    "dpr": 1.190000057220459,
+    "domStyleBoundsEqual": true,
+    "diagnostics": "[]",
+    "navBounds": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "ce4f2f2488b07b0a8c36b545f59162d396341edd12bc6339c47b41dcf972cc94",
+    "afterScreenshotSHA256": "ce4f2f2488b07b0a8c36b545f59162d396341edd12bc6339c47b41dcf972cc94",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ]
+  },
+  {
+    "id": "1440x900-light-group",
+    "viewport": [
+      1440,
+      900
+    ],
+    "effectiveTheme": "light",
+    "systemDark": true,
+    "dpr": 1.190000057220459,
+    "domStyleBoundsEqual": true,
+    "diagnostics": "[]",
+    "navBounds": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "b2044cdb5003bf778d618bd6302b0c2eeefed307eb0c6a7be9fb647c672ae901",
+    "afterScreenshotSHA256": "b2044cdb5003bf778d618bd6302b0c2eeefed307eb0c6a7be9fb647c672ae901",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ]
+  },
+  {
+    "id": "1440x900-dark-inbox",
+    "viewport": [
+      1440,
+      900
+    ],
+    "effectiveTheme": "dark",
+    "systemDark": true,
+    "dpr": 1.190000057220459,
+    "domStyleBoundsEqual": true,
+    "diagnostics": "[]",
+    "navBounds": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "15b4b3d863f5f2c1d3a6172480a954f2ad45acad15be102b93578b5921fc7299",
+    "afterScreenshotSHA256": "15b4b3d863f5f2c1d3a6172480a954f2ad45acad15be102b93578b5921fc7299",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ]
+  },
+  {
+    "id": "1440x900-dark-selected",
+    "viewport": [
+      1440,
+      900
+    ],
+    "effectiveTheme": "dark",
+    "systemDark": true,
+    "dpr": 1.190000057220459,
+    "domStyleBoundsEqual": true,
+    "diagnostics": "[]",
+    "navBounds": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "b5480a8fbfd73b2f252a267008a6d636e4df2d28b8573a3bb86e639fb6942438",
+    "afterScreenshotSHA256": "b5480a8fbfd73b2f252a267008a6d636e4df2d28b8573a3bb86e639fb6942438",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ]
+  },
+  {
+    "id": "1440x900-dark-calls",
+    "viewport": [
+      1440,
+      900
+    ],
+    "effectiveTheme": "dark",
+    "systemDark": true,
+    "dpr": 1.190000057220459,
+    "domStyleBoundsEqual": true,
+    "diagnostics": "[]",
+    "navBounds": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "124250eef350d06aef7bb326d53031d3647de190525ffd38f331eda98d230013",
+    "afterScreenshotSHA256": "124250eef350d06aef7bb326d53031d3647de190525ffd38f331eda98d230013",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ]
+  },
+  {
+    "id": "1440x900-dark-history",
+    "viewport": [
+      1440,
+      900
+    ],
+    "effectiveTheme": "dark",
+    "systemDark": true,
+    "dpr": 1.190000057220459,
+    "domStyleBoundsEqual": true,
+    "diagnostics": "[]",
+    "navBounds": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "9018282b2850346d728f6d524d8db863395fa94cd867376b4f4502a875081d66",
+    "afterScreenshotSHA256": "9018282b2850346d728f6d524d8db863395fa94cd867376b4f4502a875081d66",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ]
+  },
+  {
+    "id": "1440x900-dark-direct",
+    "viewport": [
+      1440,
+      900
+    ],
+    "effectiveTheme": "dark",
+    "systemDark": true,
+    "dpr": 1.190000057220459,
+    "domStyleBoundsEqual": true,
+    "diagnostics": "[]",
+    "navBounds": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "349e09d4b9beeccd319af9861cd98ab02df69198d2ea7a0af6d7f7c824c9d1cf",
+    "afterScreenshotSHA256": "349e09d4b9beeccd319af9861cd98ab02df69198d2ea7a0af6d7f7c824c9d1cf",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ]
+  },
+  {
+    "id": "1440x900-dark-group",
+    "viewport": [
+      1440,
+      900
+    ],
+    "effectiveTheme": "dark",
+    "systemDark": true,
+    "dpr": 1.190000057220459,
+    "domStyleBoundsEqual": true,
+    "diagnostics": "[]",
+    "navBounds": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "36116215afad8434fc6d558eba7c4d83978646453dc3234465954c9bc1b3a011",
+    "afterScreenshotSHA256": "36116215afad8434fc6d558eba7c4d83978646453dc3234465954c9bc1b3a011",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ]
+  },
+  {
+    "id": "1440x900-system-inbox",
+    "viewport": [
+      1440,
+      900
+    ],
+    "effectiveTheme": "dark",
+    "systemDark": true,
+    "dpr": 1.190000057220459,
+    "domStyleBoundsEqual": true,
+    "diagnostics": "[]",
+    "navBounds": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "826667c76f001ef41cb60d0c558a27fb918576d8cfa0193c38e38097d3d99002",
+    "afterScreenshotSHA256": "826667c76f001ef41cb60d0c558a27fb918576d8cfa0193c38e38097d3d99002",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ]
+  },
+  {
+    "id": "1440x900-system-selected",
+    "viewport": [
+      1440,
+      900
+    ],
+    "effectiveTheme": "dark",
+    "systemDark": true,
+    "dpr": 1.190000057220459,
+    "domStyleBoundsEqual": true,
+    "diagnostics": "[]",
+    "navBounds": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "83b0144d595f7b0ed2db66a608fc9da6b75b7c864f79f63dc1c2cb0b7b540bb1",
+    "afterScreenshotSHA256": "83b0144d595f7b0ed2db66a608fc9da6b75b7c864f79f63dc1c2cb0b7b540bb1",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ]
+  },
+  {
+    "id": "1440x900-system-calls",
+    "viewport": [
+      1440,
+      900
+    ],
+    "effectiveTheme": "dark",
+    "systemDark": true,
+    "dpr": 1.190000057220459,
+    "domStyleBoundsEqual": true,
+    "diagnostics": "[]",
+    "navBounds": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "c59ce46555381e55c676fcef2e8d1670d150262d8b97757a89ef7dbd988659fb",
+    "afterScreenshotSHA256": "c59ce46555381e55c676fcef2e8d1670d150262d8b97757a89ef7dbd988659fb",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ]
+  },
+  {
+    "id": "1440x900-system-history",
+    "viewport": [
+      1440,
+      900
+    ],
+    "effectiveTheme": "dark",
+    "systemDark": true,
+    "dpr": 1.190000057220459,
+    "domStyleBoundsEqual": true,
+    "diagnostics": "[]",
+    "navBounds": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "219bf724a0da6a764e4de93b8fd18c62c8cf2461001e95176c87dbd716ee48dd",
+    "afterScreenshotSHA256": "219bf724a0da6a764e4de93b8fd18c62c8cf2461001e95176c87dbd716ee48dd",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ]
+  },
+  {
+    "id": "1440x900-system-direct",
+    "viewport": [
+      1440,
+      900
+    ],
+    "effectiveTheme": "dark",
+    "systemDark": true,
+    "dpr": 1.190000057220459,
+    "domStyleBoundsEqual": true,
+    "diagnostics": "[]",
+    "navBounds": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "af205534b2098466109b8ecba8e883d15540087dc1ccf27c28e99783c884755f",
+    "afterScreenshotSHA256": "af205534b2098466109b8ecba8e883d15540087dc1ccf27c28e99783c884755f",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ]
+  },
+  {
+    "id": "1440x900-system-group",
+    "viewport": [
+      1440,
+      900
+    ],
+    "effectiveTheme": "dark",
+    "systemDark": true,
+    "dpr": 1.190000057220459,
+    "domStyleBoundsEqual": true,
+    "diagnostics": "[]",
+    "navBounds": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "7bea464d1fb92efba507a6f57e952cafc5a165650b6130bce94532feaa778c3b",
+    "afterScreenshotSHA256": "7bea464d1fb92efba507a6f57e952cafc5a165650b6130bce94532feaa778c3b",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ]
+  },
+  {
+    "id": "390x844-light-inbox",
+    "viewport": [
+      390,
+      844
+    ],
+    "effectiveTheme": "light",
+    "systemDark": true,
+    "dpr": 1.190000057220459,
+    "domStyleBoundsEqual": true,
+    "diagnostics": "[]",
+    "navBounds": [
+      [
+        7.996323108673096,
+        787.5393676757812,
+        74.77677917480469,
+        56.158084869384766
+      ],
+      [
+        82.77310180664062,
+        787.5393676757812,
+        74.78990936279297,
+        56.158084869384766
+      ],
+      [
+        157.56301879882812,
+        787.5393676757812,
+        74.77677917480469,
+        56.158084869384766
+      ],
+      [
+        232.3397979736328,
+        787.5393676757812,
+        74.78990936279297,
+        56.158084869384766
+      ],
+      [
+        307.12969970703125,
+        787.5393676757812,
+        74.78990936279297,
+        56.158084869384766
+      ]
+    ],
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "9ba9bb71893f4aca99a81853019fa2f2b76a0a17f8a750c284b413d499d6412f",
+    "afterScreenshotSHA256": "9ba9bb71893f4aca99a81853019fa2f2b76a0a17f8a750c284b413d499d6412f",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ]
+  },
+  {
+    "id": "390x844-light-selected",
+    "viewport": [
+      390,
+      844
+    ],
+    "effectiveTheme": "light",
+    "systemDark": true,
+    "dpr": 1.190000057220459,
+    "domStyleBoundsEqual": true,
+    "diagnostics": "[]",
+    "navBounds": [
+      [
+        7.996323108673096,
+        787.5393676757812,
+        74.77677917480469,
+        56.158084869384766
+      ],
+      [
+        82.77310180664062,
+        787.5393676757812,
+        74.78990936279297,
+        56.158084869384766
+      ],
+      [
+        157.56301879882812,
+        787.5393676757812,
+        74.77677917480469,
+        56.158084869384766
+      ],
+      [
+        232.3397979736328,
+        787.5393676757812,
+        74.78990936279297,
+        56.158084869384766
+      ],
+      [
+        307.12969970703125,
+        787.5393676757812,
+        74.78990936279297,
+        56.158084869384766
+      ]
+    ],
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "c2aaa2ce15a9a654f237fbfa3f1442e545aa93396d1cf999f2c718c98621e9a6",
+    "afterScreenshotSHA256": "c2aaa2ce15a9a654f237fbfa3f1442e545aa93396d1cf999f2c718c98621e9a6",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ]
+  },
+  {
+    "id": "390x844-light-calls",
+    "viewport": [
+      390,
+      844
+    ],
+    "effectiveTheme": "light",
+    "systemDark": true,
+    "dpr": 1.190000057220459,
+    "domStyleBoundsEqual": true,
+    "diagnostics": "[]",
+    "navBounds": [
+      [
+        7.996323108673096,
+        787.5393676757812,
+        43.999473571777344,
+        56.158084869384766
+      ],
+      [
+        7.996323108673096,
+        787.5393676757812,
+        43.999473571777344,
+        56.158084869384766
+      ],
+      [
+        7.996323108673096,
+        787.5393676757812,
+        43.999473571777344,
+        56.158084869384766
+      ],
+      [
+        7.996323108673096,
+        787.5393676757812,
+        43.999473571777344,
+        56.158084869384766
+      ],
+      [
+        7.996323108673096,
+        787.5393676757812,
+        43.999473571777344,
+        56.158084869384766
+      ]
+    ],
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "31e096a14cf8a8fe1c455914c47da6f60d3b0c41c8d65ad09ce8572ce379ebfe",
+    "afterScreenshotSHA256": "31e096a14cf8a8fe1c455914c47da6f60d3b0c41c8d65ad09ce8572ce379ebfe",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ]
+  },
+  {
+    "id": "390x844-light-history",
+    "viewport": [
+      390,
+      844
+    ],
+    "effectiveTheme": "light",
+    "systemDark": true,
+    "dpr": 1.190000057220459,
+    "domStyleBoundsEqual": true,
+    "diagnostics": "[]",
+    "navBounds": [
+      [
+        7.996323108673096,
+        787.5393676757812,
+        43.999473571777344,
+        56.158084869384766
+      ],
+      [
+        7.996323108673096,
+        787.5393676757812,
+        43.999473571777344,
+        56.158084869384766
+      ],
+      [
+        7.996323108673096,
+        787.5393676757812,
+        43.999473571777344,
+        56.158084869384766
+      ],
+      [
+        7.996323108673096,
+        787.5393676757812,
+        43.999473571777344,
+        56.158084869384766
+      ],
+      [
+        7.996323108673096,
+        787.5393676757812,
+        43.999473571777344,
+        56.158084869384766
+      ]
+    ],
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "0d72f77cbf7f07e4b308c3a707b01e0c66922804c029ba8c198d80deea6e2847",
+    "afterScreenshotSHA256": "0d72f77cbf7f07e4b308c3a707b01e0c66922804c029ba8c198d80deea6e2847",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ]
+  },
+  {
+    "id": "390x844-light-direct",
+    "viewport": [
+      390,
+      844
+    ],
+    "effectiveTheme": "light",
+    "systemDark": true,
+    "dpr": 1.190000057220459,
+    "domStyleBoundsEqual": true,
+    "diagnostics": "[]",
+    "navBounds": [
+      [
+        7.996323108673096,
+        787.5393676757812,
+        74.77677917480469,
+        56.158084869384766
+      ],
+      [
+        82.77310180664062,
+        787.5393676757812,
+        74.78990936279297,
+        56.158084869384766
+      ],
+      [
+        157.56301879882812,
+        787.5393676757812,
+        74.77677917480469,
+        56.158084869384766
+      ],
+      [
+        232.3397979736328,
+        787.5393676757812,
+        74.78990936279297,
+        56.158084869384766
+      ],
+      [
+        307.12969970703125,
+        787.5393676757812,
+        74.78990936279297,
+        56.158084869384766
+      ]
+    ],
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "fd028f4b73cfda795bf743b489089d79862da58bf80d877ce7a72e4b35a01bde",
+    "afterScreenshotSHA256": "fd028f4b73cfda795bf743b489089d79862da58bf80d877ce7a72e4b35a01bde",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ]
+  },
+  {
+    "id": "390x844-light-group",
+    "viewport": [
+      390,
+      844
+    ],
+    "effectiveTheme": "light",
+    "systemDark": true,
+    "dpr": 1.190000057220459,
+    "domStyleBoundsEqual": true,
+    "diagnostics": "[]",
+    "navBounds": [
+      [
+        7.996323108673096,
+        787.5393676757812,
+        74.77677917480469,
+        56.158084869384766
+      ],
+      [
+        82.77310180664062,
+        787.5393676757812,
+        74.78990936279297,
+        56.158084869384766
+      ],
+      [
+        157.56301879882812,
+        787.5393676757812,
+        74.77677917480469,
+        56.158084869384766
+      ],
+      [
+        232.3397979736328,
+        787.5393676757812,
+        74.78990936279297,
+        56.158084869384766
+      ],
+      [
+        307.12969970703125,
+        787.5393676757812,
+        74.78990936279297,
+        56.158084869384766
+      ]
+    ],
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "00840316a2822d6ffcc8fbb3cb848316b58766bf781f0222f1be35c9e7546476",
+    "afterScreenshotSHA256": "00840316a2822d6ffcc8fbb3cb848316b58766bf781f0222f1be35c9e7546476",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ]
+  },
+  {
+    "id": "390x844-dark-inbox",
+    "viewport": [
+      390,
+      844
+    ],
+    "effectiveTheme": "dark",
+    "systemDark": true,
+    "dpr": 1.190000057220459,
+    "domStyleBoundsEqual": true,
+    "diagnostics": "[]",
+    "navBounds": [
+      [
+        7.996323108673096,
+        787.5393676757812,
+        74.77677917480469,
+        56.158084869384766
+      ],
+      [
+        82.77310180664062,
+        787.5393676757812,
+        74.78990936279297,
+        56.158084869384766
+      ],
+      [
+        157.56301879882812,
+        787.5393676757812,
+        74.77677917480469,
+        56.158084869384766
+      ],
+      [
+        232.3397979736328,
+        787.5393676757812,
+        74.78990936279297,
+        56.158084869384766
+      ],
+      [
+        307.12969970703125,
+        787.5393676757812,
+        74.78990936279297,
+        56.158084869384766
+      ]
+    ],
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "61283ab31af8870269e450db7ff8cb7789ef89345b79331a3c379fc8926e2721",
+    "afterScreenshotSHA256": "61283ab31af8870269e450db7ff8cb7789ef89345b79331a3c379fc8926e2721",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ]
+  },
+  {
+    "id": "390x844-dark-selected",
+    "viewport": [
+      390,
+      844
+    ],
+    "effectiveTheme": "dark",
+    "systemDark": true,
+    "dpr": 1.190000057220459,
+    "domStyleBoundsEqual": true,
+    "diagnostics": "[]",
+    "navBounds": [
+      [
+        7.996323108673096,
+        787.5393676757812,
+        74.77677917480469,
+        56.158084869384766
+      ],
+      [
+        82.77310180664062,
+        787.5393676757812,
+        74.78990936279297,
+        56.158084869384766
+      ],
+      [
+        157.56301879882812,
+        787.5393676757812,
+        74.77677917480469,
+        56.158084869384766
+      ],
+      [
+        232.3397979736328,
+        787.5393676757812,
+        74.78990936279297,
+        56.158084869384766
+      ],
+      [
+        307.12969970703125,
+        787.5393676757812,
+        74.78990936279297,
+        56.158084869384766
+      ]
+    ],
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "d81e5a1543e950eff361ef230b9d906b7a03129d343929f744e6419e073f21eb",
+    "afterScreenshotSHA256": "d81e5a1543e950eff361ef230b9d906b7a03129d343929f744e6419e073f21eb",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ]
+  },
+  {
+    "id": "390x844-dark-calls",
+    "viewport": [
+      390,
+      844
+    ],
+    "effectiveTheme": "dark",
+    "systemDark": true,
+    "dpr": 1.190000057220459,
+    "domStyleBoundsEqual": true,
+    "diagnostics": "[]",
+    "navBounds": [
+      [
+        7.996323108673096,
+        787.5393676757812,
+        43.999473571777344,
+        56.158084869384766
+      ],
+      [
+        7.996323108673096,
+        787.5393676757812,
+        43.999473571777344,
+        56.158084869384766
+      ],
+      [
+        7.996323108673096,
+        787.5393676757812,
+        43.999473571777344,
+        56.158084869384766
+      ],
+      [
+        7.996323108673096,
+        787.5393676757812,
+        43.999473571777344,
+        56.158084869384766
+      ],
+      [
+        7.996323108673096,
+        787.5393676757812,
+        43.999473571777344,
+        56.158084869384766
+      ]
+    ],
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "f0a571b07c441dab557ec3f5e0f897b861a3f952d7ed3a5b5e241c26621451c0",
+    "afterScreenshotSHA256": "f0a571b07c441dab557ec3f5e0f897b861a3f952d7ed3a5b5e241c26621451c0",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ]
+  },
+  {
+    "id": "390x844-dark-history",
+    "viewport": [
+      390,
+      844
+    ],
+    "effectiveTheme": "dark",
+    "systemDark": true,
+    "dpr": 1.190000057220459,
+    "domStyleBoundsEqual": true,
+    "diagnostics": "[]",
+    "navBounds": [
+      [
+        7.996323108673096,
+        787.5393676757812,
+        43.999473571777344,
+        56.158084869384766
+      ],
+      [
+        7.996323108673096,
+        787.5393676757812,
+        43.999473571777344,
+        56.158084869384766
+      ],
+      [
+        7.996323108673096,
+        787.5393676757812,
+        43.999473571777344,
+        56.158084869384766
+      ],
+      [
+        7.996323108673096,
+        787.5393676757812,
+        43.999473571777344,
+        56.158084869384766
+      ],
+      [
+        7.996323108673096,
+        787.5393676757812,
+        43.999473571777344,
+        56.158084869384766
+      ]
+    ],
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "988af9cd8316b456c26b6c11427b65fdd3bd94284982dc3a3d2bea576dcc8315",
+    "afterScreenshotSHA256": "988af9cd8316b456c26b6c11427b65fdd3bd94284982dc3a3d2bea576dcc8315",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ]
+  },
+  {
+    "id": "390x844-dark-direct",
+    "viewport": [
+      390,
+      844
+    ],
+    "effectiveTheme": "dark",
+    "systemDark": true,
+    "dpr": 1.190000057220459,
+    "domStyleBoundsEqual": true,
+    "diagnostics": "[]",
+    "navBounds": [
+      [
+        7.996323108673096,
+        787.5393676757812,
+        74.77677917480469,
+        56.158084869384766
+      ],
+      [
+        82.77310180664062,
+        787.5393676757812,
+        74.78990936279297,
+        56.158084869384766
+      ],
+      [
+        157.56301879882812,
+        787.5393676757812,
+        74.77677917480469,
+        56.158084869384766
+      ],
+      [
+        232.3397979736328,
+        787.5393676757812,
+        74.78990936279297,
+        56.158084869384766
+      ],
+      [
+        307.12969970703125,
+        787.5393676757812,
+        74.78990936279297,
+        56.158084869384766
+      ]
+    ],
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "3ee6cc51cc670cbecc63228b7d4fa369447e39f242a9576a2dca0a1470f3b90b",
+    "afterScreenshotSHA256": "3ee6cc51cc670cbecc63228b7d4fa369447e39f242a9576a2dca0a1470f3b90b",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ]
+  },
+  {
+    "id": "390x844-dark-group",
+    "viewport": [
+      390,
+      844
+    ],
+    "effectiveTheme": "dark",
+    "systemDark": true,
+    "dpr": 1.190000057220459,
+    "domStyleBoundsEqual": true,
+    "diagnostics": "[]",
+    "navBounds": [
+      [
+        7.996323108673096,
+        787.5393676757812,
+        74.77677917480469,
+        56.158084869384766
+      ],
+      [
+        82.77310180664062,
+        787.5393676757812,
+        74.78990936279297,
+        56.158084869384766
+      ],
+      [
+        157.56301879882812,
+        787.5393676757812,
+        74.77677917480469,
+        56.158084869384766
+      ],
+      [
+        232.3397979736328,
+        787.5393676757812,
+        74.78990936279297,
+        56.158084869384766
+      ],
+      [
+        307.12969970703125,
+        787.5393676757812,
+        74.78990936279297,
+        56.158084869384766
+      ]
+    ],
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "19a7914282c3c7c2238617037e2364d70148b71ca8a590b276531ab189a1ccce",
+    "afterScreenshotSHA256": "19a7914282c3c7c2238617037e2364d70148b71ca8a590b276531ab189a1ccce",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ]
+  },
+  {
+    "id": "390x844-system-inbox",
+    "viewport": [
+      390,
+      844
+    ],
+    "effectiveTheme": "dark",
+    "systemDark": true,
+    "dpr": 1.190000057220459,
+    "domStyleBoundsEqual": true,
+    "diagnostics": "[]",
+    "navBounds": [
+      [
+        7.996323108673096,
+        787.5393676757812,
+        74.77677917480469,
+        56.158084869384766
+      ],
+      [
+        82.77310180664062,
+        787.5393676757812,
+        74.78990936279297,
+        56.158084869384766
+      ],
+      [
+        157.56301879882812,
+        787.5393676757812,
+        74.77677917480469,
+        56.158084869384766
+      ],
+      [
+        232.3397979736328,
+        787.5393676757812,
+        74.78990936279297,
+        56.158084869384766
+      ],
+      [
+        307.12969970703125,
+        787.5393676757812,
+        74.78990936279297,
+        56.158084869384766
+      ]
+    ],
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "8312ad024010aa0fca4119f73ee3ab40e973c7719e8978c355e0204e04358f31",
+    "afterScreenshotSHA256": "8312ad024010aa0fca4119f73ee3ab40e973c7719e8978c355e0204e04358f31",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ]
+  },
+  {
+    "id": "390x844-system-selected",
+    "viewport": [
+      390,
+      844
+    ],
+    "effectiveTheme": "dark",
+    "systemDark": true,
+    "dpr": 1.190000057220459,
+    "domStyleBoundsEqual": true,
+    "diagnostics": "[]",
+    "navBounds": [
+      [
+        7.996323108673096,
+        787.5393676757812,
+        74.77677917480469,
+        56.158084869384766
+      ],
+      [
+        82.77310180664062,
+        787.5393676757812,
+        74.78990936279297,
+        56.158084869384766
+      ],
+      [
+        157.56301879882812,
+        787.5393676757812,
+        74.77677917480469,
+        56.158084869384766
+      ],
+      [
+        232.3397979736328,
+        787.5393676757812,
+        74.78990936279297,
+        56.158084869384766
+      ],
+      [
+        307.12969970703125,
+        787.5393676757812,
+        74.78990936279297,
+        56.158084869384766
+      ]
+    ],
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "4b2b90e18a9bc041a20e027955fea6ff00652eb0d31fc2326c6ecd61199ed965",
+    "afterScreenshotSHA256": "4b2b90e18a9bc041a20e027955fea6ff00652eb0d31fc2326c6ecd61199ed965",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ]
+  },
+  {
+    "id": "390x844-system-calls",
+    "viewport": [
+      390,
+      844
+    ],
+    "effectiveTheme": "dark",
+    "systemDark": true,
+    "dpr": 1.190000057220459,
+    "domStyleBoundsEqual": true,
+    "diagnostics": "[]",
+    "navBounds": [
+      [
+        7.996323108673096,
+        787.5393676757812,
+        43.999473571777344,
+        56.158084869384766
+      ],
+      [
+        7.996323108673096,
+        787.5393676757812,
+        43.999473571777344,
+        56.158084869384766
+      ],
+      [
+        7.996323108673096,
+        787.5393676757812,
+        43.999473571777344,
+        56.158084869384766
+      ],
+      [
+        7.996323108673096,
+        787.5393676757812,
+        43.999473571777344,
+        56.158084869384766
+      ],
+      [
+        7.996323108673096,
+        787.5393676757812,
+        43.999473571777344,
+        56.158084869384766
+      ]
+    ],
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "c26b9f1ab39aa0b8f5a503db243fa405a1390e9424e285cd2ead03b7c2907f02",
+    "afterScreenshotSHA256": "c26b9f1ab39aa0b8f5a503db243fa405a1390e9424e285cd2ead03b7c2907f02",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ]
+  },
+  {
+    "id": "390x844-system-history",
+    "viewport": [
+      390,
+      844
+    ],
+    "effectiveTheme": "dark",
+    "systemDark": true,
+    "dpr": 1.190000057220459,
+    "domStyleBoundsEqual": true,
+    "diagnostics": "[]",
+    "navBounds": [
+      [
+        7.996323108673096,
+        787.5393676757812,
+        43.999473571777344,
+        56.158084869384766
+      ],
+      [
+        7.996323108673096,
+        787.5393676757812,
+        43.999473571777344,
+        56.158084869384766
+      ],
+      [
+        7.996323108673096,
+        787.5393676757812,
+        43.999473571777344,
+        56.158084869384766
+      ],
+      [
+        7.996323108673096,
+        787.5393676757812,
+        43.999473571777344,
+        56.158084869384766
+      ],
+      [
+        7.996323108673096,
+        787.5393676757812,
+        43.999473571777344,
+        56.158084869384766
+      ]
+    ],
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "106ff76461cee9a2ec8827fbc5620105931bb447eb4e83bf710cd02d4e936f63",
+    "afterScreenshotSHA256": "106ff76461cee9a2ec8827fbc5620105931bb447eb4e83bf710cd02d4e936f63",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ]
+  },
+  {
+    "id": "390x844-system-direct",
+    "viewport": [
+      390,
+      844
+    ],
+    "effectiveTheme": "dark",
+    "systemDark": true,
+    "dpr": 1.190000057220459,
+    "domStyleBoundsEqual": true,
+    "diagnostics": "[]",
+    "navBounds": [
+      [
+        7.996323108673096,
+        787.5393676757812,
+        74.77677917480469,
+        56.158084869384766
+      ],
+      [
+        82.77310180664062,
+        787.5393676757812,
+        74.78990936279297,
+        56.158084869384766
+      ],
+      [
+        157.56301879882812,
+        787.5393676757812,
+        74.77677917480469,
+        56.158084869384766
+      ],
+      [
+        232.3397979736328,
+        787.5393676757812,
+        74.78990936279297,
+        56.158084869384766
+      ],
+      [
+        307.12969970703125,
+        787.5393676757812,
+        74.78990936279297,
+        56.158084869384766
+      ]
+    ],
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "85d595deda05b1e8d1ed29e16d8acd75dca0366846414e2dc92ceb015df3f4e0",
+    "afterScreenshotSHA256": "85d595deda05b1e8d1ed29e16d8acd75dca0366846414e2dc92ceb015df3f4e0",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ]
+  },
+  {
+    "id": "390x844-system-group",
+    "viewport": [
+      390,
+      844
+    ],
+    "effectiveTheme": "dark",
+    "systemDark": true,
+    "dpr": 1.190000057220459,
+    "domStyleBoundsEqual": true,
+    "diagnostics": "[]",
+    "navBounds": [
+      [
+        7.996323108673096,
+        787.5393676757812,
+        74.77677917480469,
+        56.158084869384766
+      ],
+      [
+        82.77310180664062,
+        787.5393676757812,
+        74.78990936279297,
+        56.158084869384766
+      ],
+      [
+        157.56301879882812,
+        787.5393676757812,
+        74.77677917480469,
+        56.158084869384766
+      ],
+      [
+        232.3397979736328,
+        787.5393676757812,
+        74.78990936279297,
+        56.158084869384766
+      ],
+      [
+        307.12969970703125,
+        787.5393676757812,
+        74.78990936279297,
+        56.158084869384766
+      ]
+    ],
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "adb6fe471707dfa7c8d481181266a0fe26ae7afb7808b0e73101a2d8009859e8",
+    "afterScreenshotSHA256": "adb6fe471707dfa7c8d481181266a0fe26ae7afb7808b0e73101a2d8009859e8",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ]
+  }
+]

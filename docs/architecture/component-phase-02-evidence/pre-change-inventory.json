@@ -1,0 +1,1735 @@
+{
+  "baseSHA": "7019b4007b16da10c7c4fb489e0d16ac202dc217",
+  "files": [
+    {
+      "path": "client/src/features/workspace/WorkspaceRail.tsx",
+      "exports": [
+        "WorkspaceRail"
+      ],
+      "imports": [
+        "import { Layers3, MessageSquare, Phone, Sparkles } from 'lucide-react'",
+        "import { BrandMark } from '../../shared/components/BrandMark'",
+        "import type { User } from '../../shared/types'",
+        "import { Avatar } from '../../shared/components/Avatar'"
+      ],
+      "props": [
+        "type WorkspaceRailProps = {\n  user: User\n  showCalls: boolean\n  showUpdates: boolean\n  showSpaces: boolean\n  unreadConversationCount: number\n  onShowChats: () => void\n  onShowCalls: () => void\n  onShowUpdates: () => void\n  onShowSpaces: () => void\n  onOpenAccount: () => void\n}",
+        "WorkspaceRailProps"
+      ],
+      "dom": [
+        {
+          "tag": "aside",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"primary-rail\""
+            },
+            {
+              "name": "aria-label",
+              "value": "\"Main navigation\""
+            }
+          ]
+        },
+        {
+          "tag": "BrandMark",
+          "attributes": [
+            {
+              "name": "small"
+            }
+          ]
+        },
+        {
+          "tag": "button",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "{`rail-item${!showCalls && !showUpdates && !showSpaces ? ' rail-item-active' : ''}`}"
+            },
+            {
+              "name": "type",
+              "value": "\"button\""
+            },
+            {
+              "name": "aria-current",
+              "value": "{!showCalls && !showUpdates && !showSpaces ? 'page' : undefined}"
+            },
+            {
+              "name": "aria-label",
+              "value": "{unreadConversationCount ? `Chats, ${unreadConversationCount} unread conversations` : 'Chats'}"
+            },
+            {
+              "name": "onClick",
+              "value": "{onShowChats}"
+            }
+          ]
+        },
+        {
+          "tag": "span",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"rail-item-icon\""
+            }
+          ]
+        },
+        {
+          "tag": "MessageSquare",
+          "attributes": [
+            {
+              "name": "size",
+              "value": "{15}"
+            },
+            {
+              "name": "aria-hidden",
+              "value": "\"true\""
+            }
+          ]
+        },
+        {
+          "tag": "b",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"navigation-badge\""
+            }
+          ]
+        },
+        {
+          "tag": "span",
+          "attributes": []
+        },
+        {
+          "tag": "button",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "{`rail-item${showCalls ? ' rail-item-active' : ''}`}"
+            },
+            {
+              "name": "type",
+              "value": "\"button\""
+            },
+            {
+              "name": "aria-current",
+              "value": "{showCalls ? 'page' : undefined}"
+            },
+            {
+              "name": "onClick",
+              "value": "{onShowCalls}"
+            }
+          ]
+        },
+        {
+          "tag": "Phone",
+          "attributes": [
+            {
+              "name": "size",
+              "value": "{15}"
+            },
+            {
+              "name": "aria-hidden",
+              "value": "\"true\""
+            }
+          ]
+        },
+        {
+          "tag": "span",
+          "attributes": []
+        },
+        {
+          "tag": "button",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "{`rail-item${showUpdates ? ' rail-item-active' : ''}`}"
+            },
+            {
+              "name": "type",
+              "value": "\"button\""
+            },
+            {
+              "name": "aria-current",
+              "value": "{showUpdates ? 'page' : undefined}"
+            },
+            {
+              "name": "onClick",
+              "value": "{onShowUpdates}"
+            }
+          ]
+        },
+        {
+          "tag": "Sparkles",
+          "attributes": [
+            {
+              "name": "size",
+              "value": "{15}"
+            },
+            {
+              "name": "aria-hidden",
+              "value": "\"true\""
+            }
+          ]
+        },
+        {
+          "tag": "span",
+          "attributes": []
+        },
+        {
+          "tag": "button",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "{`rail-item${showSpaces ? ' rail-item-active' : ''}`}"
+            },
+            {
+              "name": "type",
+              "value": "\"button\""
+            },
+            {
+              "name": "aria-current",
+              "value": "{showSpaces ? 'page' : undefined}"
+            },
+            {
+              "name": "onClick",
+              "value": "{onShowSpaces}"
+            }
+          ]
+        },
+        {
+          "tag": "Layers3",
+          "attributes": [
+            {
+              "name": "size",
+              "value": "{15}"
+            },
+            {
+              "name": "aria-hidden",
+              "value": "\"true\""
+            }
+          ]
+        },
+        {
+          "tag": "span",
+          "attributes": []
+        },
+        {
+          "tag": "div",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"rail-spacer\""
+            }
+          ]
+        },
+        {
+          "tag": "button",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"profile-trigger\""
+            },
+            {
+              "name": "type",
+              "value": "\"button\""
+            },
+            {
+              "name": "onClick",
+              "value": "{onOpenAccount}"
+            },
+            {
+              "name": "aria-label",
+              "value": "\"Open profile and settings\""
+            }
+          ]
+        },
+        {
+          "tag": "Avatar",
+          "attributes": [
+            {
+              "name": "name",
+              "value": "{user.display_name}"
+            },
+            {
+              "name": "src",
+              "value": "{user.avatar_url}"
+            },
+            {
+              "name": "className",
+              "value": "\"avatar-you\""
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "name": "onClick",
+          "value": "{onShowChats}"
+        },
+        {
+          "name": "onClick",
+          "value": "{onShowCalls}"
+        },
+        {
+          "name": "onClick",
+          "value": "{onShowUpdates}"
+        },
+        {
+          "name": "onClick",
+          "value": "{onShowSpaces}"
+        },
+        {
+          "name": "onClick",
+          "value": "{onOpenAccount}"
+        }
+      ],
+      "refs": [],
+      "keys": []
+    },
+    {
+      "path": "client/src/features/workspace/InboxPane.tsx",
+      "exports": [
+        "InboxPane"
+      ],
+      "imports": [
+        "import { ArrowDownLeft, ArrowUpRight, Clock3, Phone, PhoneMissed, PhoneOutgoing, Plus, Search, Video } from 'lucide-react'",
+        "import type { CallRecord, Chat, IncomingRequest } from '../../shared/types'",
+        "import { ChatRow } from './ChatRow'",
+        "import { Avatar } from '../../shared/components/Avatar'"
+      ],
+      "props": [
+        "type InboxPaneProps = {\n  showCalls: boolean\n  callHistory: CallRecord[]\n  userId: string\n  filter: 'all' | 'unread'\n  showRequests: boolean\n  requests: IncomingRequest[]\n  error: string\n  chats: Chat[]\n  drafts: Record<string, string>\n  activeChatId: string | null\n  online: boolean\n  onSelectChat: (chatId: string) => void\n  onSelectCall: (chatId: string) => void\n  onCallAgain: (call: CallRecord, callType: 'audio' | 'video') => void\n  onNewCall: () => void\n  onSelectRequest: () => void\n  onSelectFilter: (filter: 'all' | 'unread') => void\n  onShowRequests: () => void\n  onNewConversation: () => void\n  onOpenSearch: () => void\n}",
+        "InboxPaneProps"
+      ],
+      "dom": [
+        {
+          "tag": "aside",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"inbox-pane\""
+            }
+          ]
+        },
+        {
+          "tag": "div",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"pane-heading\""
+            }
+          ]
+        },
+        {
+          "tag": "h1",
+          "attributes": []
+        },
+        {
+          "tag": "button",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"icon-button add-button\""
+            },
+            {
+              "name": "type",
+              "value": "\"button\""
+            },
+            {
+              "name": "aria-label",
+              "value": "\"Start a new call\""
+            },
+            {
+              "name": "onClick",
+              "value": "{onNewCall}"
+            }
+          ]
+        },
+        {
+          "tag": "Phone",
+          "attributes": [
+            {
+              "name": "size",
+              "value": "{15}"
+            },
+            {
+              "name": "aria-hidden",
+              "value": "\"true\""
+            }
+          ]
+        },
+        {
+          "tag": "button",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"icon-button add-button\""
+            },
+            {
+              "name": "type",
+              "value": "\"button\""
+            },
+            {
+              "name": "aria-label",
+              "value": "\"New conversation\""
+            },
+            {
+              "name": "onClick",
+              "value": "{onNewConversation}"
+            }
+          ]
+        },
+        {
+          "tag": "Plus",
+          "attributes": [
+            {
+              "name": "size",
+              "value": "{15}"
+            },
+            {
+              "name": "aria-hidden",
+              "value": "\"true\""
+            }
+          ]
+        },
+        {
+          "tag": "button",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"search-box\""
+            },
+            {
+              "name": "type",
+              "value": "\"button\""
+            },
+            {
+              "name": "onClick",
+              "value": "{onOpenSearch}"
+            }
+          ]
+        },
+        {
+          "tag": "Search",
+          "attributes": [
+            {
+              "name": "size",
+              "value": "{13}"
+            },
+            {
+              "name": "aria-hidden",
+              "value": "\"true\""
+            }
+          ]
+        },
+        {
+          "tag": "span",
+          "attributes": []
+        },
+        {
+          "tag": "kbd",
+          "attributes": []
+        },
+        {
+          "tag": "div",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"inbox-filters\""
+            },
+            {
+              "name": "aria-label",
+              "value": "\"Conversation filters\""
+            }
+          ]
+        },
+        {
+          "tag": "button",
+          "attributes": [
+            {
+              "name": "type",
+              "value": "\"button\""
+            },
+            {
+              "name": "className",
+              "value": "{filter === 'all' && !showRequests ? 'filter-active' : ''}"
+            },
+            {
+              "name": "onClick",
+              "value": "{() => onSelectFilter('all')}"
+            }
+          ]
+        },
+        {
+          "tag": "button",
+          "attributes": [
+            {
+              "name": "type",
+              "value": "\"button\""
+            },
+            {
+              "name": "className",
+              "value": "{filter === 'unread' && !showRequests ? 'filter-active' : ''}"
+            },
+            {
+              "name": "onClick",
+              "value": "{() => onSelectFilter('unread')}"
+            }
+          ]
+        },
+        {
+          "tag": "button",
+          "attributes": [
+            {
+              "name": "type",
+              "value": "\"button\""
+            },
+            {
+              "name": "className",
+              "value": "{showRequests ? 'filter-active' : ''}"
+            },
+            {
+              "name": "onClick",
+              "value": "{onShowRequests}"
+            }
+          ]
+        },
+        {
+          "tag": "span",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"request-count\""
+            }
+          ]
+        },
+        {
+          "tag": "div",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"chat-list\""
+            }
+          ]
+        },
+        {
+          "tag": "div",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"list-error\""
+            },
+            {
+              "name": "role",
+              "value": "\"alert\""
+            }
+          ]
+        },
+        {
+          "tag": "div",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"list-empty\""
+            }
+          ]
+        },
+        {
+          "tag": "div",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"empty-symbol\""
+            }
+          ]
+        },
+        {
+          "tag": "Clock3",
+          "attributes": [
+            {
+              "name": "size",
+              "value": "{18}"
+            },
+            {
+              "name": "aria-hidden",
+              "value": "\"true\""
+            }
+          ]
+        },
+        {
+          "tag": "p",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"empty-title\""
+            }
+          ]
+        },
+        {
+          "tag": "p",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"empty-copy\""
+            }
+          ]
+        },
+        {
+          "tag": "button",
+          "attributes": [
+            {
+              "name": "type",
+              "value": "\"button\""
+            },
+            {
+              "name": "onClick",
+              "value": "{onNewCall}"
+            }
+          ]
+        },
+        {
+          "tag": "Phone",
+          "attributes": [
+            {
+              "name": "size",
+              "value": "{14}"
+            },
+            {
+              "name": "aria-hidden",
+              "value": "\"true\""
+            }
+          ]
+        },
+        {
+          "tag": "div",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"call-history-list\""
+            }
+          ]
+        },
+        {
+          "tag": "section",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"call-history-day\""
+            },
+            {
+              "name": "key",
+              "value": "{section.title}"
+            }
+          ]
+        },
+        {
+          "tag": "p",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"list-section-label\""
+            }
+          ]
+        },
+        {
+          "tag": "article",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "{`call-history-item${missed ? ' is-missed' : ''}`}"
+            },
+            {
+              "name": "key",
+              "value": "{call.id}"
+            }
+          ]
+        },
+        {
+          "tag": "button",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"call-history-open\""
+            },
+            {
+              "name": "type",
+              "value": "\"button\""
+            },
+            {
+              "name": "onClick",
+              "value": "{() => onSelectCall(call.chat_id)}"
+            },
+            {
+              "name": "aria-label",
+              "value": "{`Open chat with ${callTitle(call)}`}"
+            }
+          ]
+        },
+        {
+          "tag": "span",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"call-history-avatar\""
+            }
+          ]
+        },
+        {
+          "tag": "Avatar",
+          "attributes": [
+            {
+              "name": "name",
+              "value": "{callTitle(call)}"
+            },
+            {
+              "name": "src",
+              "value": "{call.is_group ? undefined : call.other_avatar_url}"
+            }
+          ]
+        },
+        {
+          "tag": "CallDirection",
+          "attributes": [
+            {
+              "name": "size",
+              "value": "{14}"
+            },
+            {
+              "name": "aria-hidden",
+              "value": "\"true\""
+            }
+          ]
+        },
+        {
+          "tag": "span",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"call-history-copy\""
+            }
+          ]
+        },
+        {
+          "tag": "strong",
+          "attributes": []
+        },
+        {
+          "tag": "small",
+          "attributes": []
+        },
+        {
+          "tag": "CallDirection",
+          "attributes": [
+            {
+              "name": "size",
+              "value": "{13}"
+            },
+            {
+              "name": "aria-hidden",
+              "value": "\"true\""
+            }
+          ]
+        },
+        {
+          "tag": "span",
+          "attributes": []
+        },
+        {
+          "tag": "time",
+          "attributes": [
+            {
+              "name": "dateTime",
+              "value": "{call.created_at}"
+            }
+          ]
+        },
+        {
+          "tag": "button",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"call-history-again\""
+            },
+            {
+              "name": "type",
+              "value": "\"button\""
+            },
+            {
+              "name": "disabled",
+              "value": "{ongoing}"
+            },
+            {
+              "name": "onClick",
+              "value": "{() => onCallAgain(call, call.call_type)}"
+            },
+            {
+              "name": "aria-label",
+              "value": "{ongoing ? `Call with ${callTitle(call)} is already in progress` : `Call ${callTitle(call)} again by ${call.call_type}`}"
+            }
+          ]
+        },
+        {
+          "tag": "CallType",
+          "attributes": [
+            {
+              "name": "size",
+              "value": "{17}"
+            },
+            {
+              "name": "aria-hidden",
+              "value": "\"true\""
+            }
+          ]
+        },
+        {
+          "tag": "div",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"request-list-inline\""
+            }
+          ]
+        },
+        {
+          "tag": "p",
+          "attributes": []
+        },
+        {
+          "tag": "button",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"chat-list-item\""
+            },
+            {
+              "name": "type",
+              "value": "\"button\""
+            },
+            {
+              "name": "key",
+              "value": "{item.id}"
+            },
+            {
+              "name": "onClick",
+              "value": "{onSelectRequest}"
+            }
+          ]
+        },
+        {
+          "tag": "Avatar",
+          "attributes": [
+            {
+              "name": "name",
+              "value": "{item.display_name}"
+            },
+            {
+              "name": "src",
+              "value": "{item.avatar_url}"
+            }
+          ]
+        },
+        {
+          "tag": "span",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"chat-row-copy\""
+            }
+          ]
+        },
+        {
+          "tag": "strong",
+          "attributes": []
+        },
+        {
+          "tag": "small",
+          "attributes": []
+        },
+        {
+          "tag": "span",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"unread-pill\""
+            }
+          ]
+        },
+        {
+          "tag": "div",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"list-empty\""
+            }
+          ]
+        },
+        {
+          "tag": "div",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"empty-symbol\""
+            }
+          ]
+        },
+        {
+          "tag": "ArrowUpRight",
+          "attributes": [
+            {
+              "name": "size",
+              "value": "{18}"
+            },
+            {
+              "name": "aria-hidden",
+              "value": "\"true\""
+            }
+          ]
+        },
+        {
+          "tag": "p",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"empty-title\""
+            }
+          ]
+        },
+        {
+          "tag": "p",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"empty-copy\""
+            }
+          ]
+        },
+        {
+          "tag": "button",
+          "attributes": [
+            {
+              "name": "type",
+              "value": "\"button\""
+            },
+            {
+              "name": "onClick",
+              "value": "{onNewConversation}"
+            }
+          ]
+        },
+        {
+          "tag": "Plus",
+          "attributes": [
+            {
+              "name": "size",
+              "value": "{13}"
+            },
+            {
+              "name": "aria-hidden",
+              "value": "\"true\""
+            }
+          ]
+        },
+        {
+          "tag": "p",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"list-section-label\""
+            }
+          ]
+        },
+        {
+          "tag": "ChatRow",
+          "attributes": [
+            {
+              "name": "key",
+              "value": "{chat.id}"
+            },
+            {
+              "name": "chat",
+              "value": "{chat}"
+            },
+            {
+              "name": "draft",
+              "value": "{drafts[chat.id]}"
+            },
+            {
+              "name": "selected",
+              "value": "{activeChatId === chat.id}"
+            },
+            {
+              "name": "onSelect",
+              "value": "{onSelectChat}"
+            }
+          ]
+        },
+        {
+          "tag": "p",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"list-section-label group-label\""
+            }
+          ]
+        },
+        {
+          "tag": "ChatRow",
+          "attributes": [
+            {
+              "name": "key",
+              "value": "{chat.id}"
+            },
+            {
+              "name": "chat",
+              "value": "{chat}"
+            },
+            {
+              "name": "draft",
+              "value": "{drafts[chat.id]}"
+            },
+            {
+              "name": "selected",
+              "value": "{activeChatId === chat.id}"
+            },
+            {
+              "name": "onSelect",
+              "value": "{onSelectChat}"
+            }
+          ]
+        },
+        {
+          "tag": "div",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"inbox-footnote\""
+            }
+          ]
+        },
+        {
+          "tag": "span",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "{`status-dot${online ? '' : ' status-offline'}`}"
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "name": "onClick",
+          "value": "{onNewCall}"
+        },
+        {
+          "name": "onClick",
+          "value": "{onNewConversation}"
+        },
+        {
+          "name": "onClick",
+          "value": "{onOpenSearch}"
+        },
+        {
+          "name": "onClick",
+          "value": "{() => onSelectFilter('all')}"
+        },
+        {
+          "name": "onClick",
+          "value": "{() => onSelectFilter('unread')}"
+        },
+        {
+          "name": "onClick",
+          "value": "{onShowRequests}"
+        },
+        {
+          "name": "onClick",
+          "value": "{onNewCall}"
+        },
+        {
+          "name": "onClick",
+          "value": "{() => onSelectCall(call.chat_id)}"
+        },
+        {
+          "name": "onClick",
+          "value": "{() => onCallAgain(call, call.call_type)}"
+        },
+        {
+          "name": "onClick",
+          "value": "{onSelectRequest}"
+        },
+        {
+          "name": "onClick",
+          "value": "{onNewConversation}"
+        },
+        {
+          "name": "onSelect",
+          "value": "{onSelectChat}"
+        },
+        {
+          "name": "onSelect",
+          "value": "{onSelectChat}"
+        }
+      ],
+      "refs": [],
+      "keys": [
+        {
+          "name": "key",
+          "value": "{section.title}"
+        },
+        {
+          "name": "key",
+          "value": "{call.id}"
+        },
+        {
+          "name": "key",
+          "value": "{item.id}"
+        },
+        {
+          "name": "key",
+          "value": "{chat.id}"
+        },
+        {
+          "name": "key",
+          "value": "{chat.id}"
+        }
+      ]
+    },
+    {
+      "path": "client/src/features/workspace/ChatRow.tsx",
+      "exports": [
+        "ChatRow"
+      ],
+      "imports": [
+        "import { PenLine } from 'lucide-react'",
+        "import type { Chat } from '../../shared/types'",
+        "import { Avatar } from '../../shared/components/Avatar'"
+      ],
+      "props": [
+        "{ chat: Chat; draft?: string; selected: boolean; onSelect: (chatId: string) => void }"
+      ],
+      "dom": [
+        {
+          "tag": "button",
+          "attributes": [
+            {
+              "name": "type",
+              "value": "\"button\""
+            },
+            {
+              "name": "className",
+              "value": "{`chat-list-item${selected ? ' selected' : ''}${draft ? ' has-draft' : ''}`}"
+            },
+            {
+              "name": "onClick",
+              "value": "{() => onSelect(chat.id)}"
+            }
+          ]
+        },
+        {
+          "tag": "Avatar",
+          "attributes": [
+            {
+              "name": "name",
+              "value": "{chat.display_title}"
+            },
+            {
+              "name": "src",
+              "value": "{chat.peer_avatar_url}"
+            },
+            {
+              "name": "className",
+              "value": "{chat.kind === 'group' ? 'group-avatar' : ''}"
+            }
+          ]
+        },
+        {
+          "tag": "span",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"chat-row-copy\""
+            }
+          ]
+        },
+        {
+          "tag": "strong",
+          "attributes": []
+        },
+        {
+          "tag": "small",
+          "attributes": []
+        },
+        {
+          "tag": "span",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"draft-label\""
+            }
+          ]
+        },
+        {
+          "tag": "PenLine",
+          "attributes": [
+            {
+              "name": "size",
+              "value": "{9}"
+            },
+            {
+              "name": "aria-hidden",
+              "value": "\"true\""
+            }
+          ]
+        },
+        {
+          "tag": "span",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"chat-row-meta\""
+            }
+          ]
+        },
+        {
+          "tag": "b",
+          "attributes": []
+        }
+      ],
+      "events": [
+        {
+          "name": "onClick",
+          "value": "{() => onSelect(chat.id)}"
+        }
+      ],
+      "refs": [],
+      "keys": []
+    },
+    {
+      "path": "client/src/features/workspace/MobileNavigation.tsx",
+      "exports": [
+        "MobileNavigation"
+      ],
+      "imports": [
+        "import { Layers3, MessageSquare, Phone, Sparkles, UserRound } from 'lucide-react'"
+      ],
+      "props": [
+        "type MobileNavigationProps = {\n  section: 'chats' | 'calls' | 'updates' | 'spaces'\n  accountOpen: boolean\n  unreadConversationCount: number\n  onShowChats: () => void\n  onShowCalls: () => void\n  onShowUpdates: () => void\n  onShowSpaces: () => void\n  onOpenAccount: () => void\n}",
+        "MobileNavigationProps"
+      ],
+      "dom": [
+        {
+          "tag": "nav",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"mobile-bottom-nav\""
+            },
+            {
+              "name": "aria-label",
+              "value": "\"Main navigation\""
+            }
+          ]
+        },
+        {
+          "tag": "button",
+          "attributes": [
+            {
+              "name": "type",
+              "value": "\"button\""
+            },
+            {
+              "name": "aria-current",
+              "value": "{!accountOpen && section === 'chats' ? 'page' : undefined}"
+            },
+            {
+              "name": "aria-label",
+              "value": "{unreadConversationCount ? `Chats, ${unreadConversationCount} unread conversations` : 'Chats'}"
+            },
+            {
+              "name": "onClick",
+              "value": "{onShowChats}"
+            }
+          ]
+        },
+        {
+          "tag": "span",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"mobile-nav-icon\""
+            }
+          ]
+        },
+        {
+          "tag": "MessageSquare",
+          "attributes": [
+            {
+              "name": "size",
+              "value": "{19}"
+            },
+            {
+              "name": "aria-hidden",
+              "value": "\"true\""
+            }
+          ]
+        },
+        {
+          "tag": "b",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"navigation-badge\""
+            }
+          ]
+        },
+        {
+          "tag": "span",
+          "attributes": []
+        },
+        {
+          "tag": "button",
+          "attributes": [
+            {
+              "name": "type",
+              "value": "\"button\""
+            },
+            {
+              "name": "aria-current",
+              "value": "{!accountOpen && section === 'calls' ? 'page' : undefined}"
+            },
+            {
+              "name": "onClick",
+              "value": "{onShowCalls}"
+            }
+          ]
+        },
+        {
+          "tag": "Phone",
+          "attributes": [
+            {
+              "name": "size",
+              "value": "{19}"
+            },
+            {
+              "name": "aria-hidden",
+              "value": "\"true\""
+            }
+          ]
+        },
+        {
+          "tag": "span",
+          "attributes": []
+        },
+        {
+          "tag": "button",
+          "attributes": [
+            {
+              "name": "type",
+              "value": "\"button\""
+            },
+            {
+              "name": "aria-current",
+              "value": "{!accountOpen && section === 'updates' ? 'page' : undefined}"
+            },
+            {
+              "name": "onClick",
+              "value": "{onShowUpdates}"
+            }
+          ]
+        },
+        {
+          "tag": "Sparkles",
+          "attributes": [
+            {
+              "name": "size",
+              "value": "{19}"
+            },
+            {
+              "name": "aria-hidden",
+              "value": "\"true\""
+            }
+          ]
+        },
+        {
+          "tag": "span",
+          "attributes": []
+        },
+        {
+          "tag": "button",
+          "attributes": [
+            {
+              "name": "type",
+              "value": "\"button\""
+            },
+            {
+              "name": "aria-current",
+              "value": "{!accountOpen && section === 'spaces' ? 'page' : undefined}"
+            },
+            {
+              "name": "onClick",
+              "value": "{onShowSpaces}"
+            }
+          ]
+        },
+        {
+          "tag": "Layers3",
+          "attributes": [
+            {
+              "name": "size",
+              "value": "{19}"
+            },
+            {
+              "name": "aria-hidden",
+              "value": "\"true\""
+            }
+          ]
+        },
+        {
+          "tag": "span",
+          "attributes": []
+        },
+        {
+          "tag": "button",
+          "attributes": [
+            {
+              "name": "type",
+              "value": "\"button\""
+            },
+            {
+              "name": "aria-current",
+              "value": "{accountOpen ? 'page' : undefined}"
+            },
+            {
+              "name": "onClick",
+              "value": "{onOpenAccount}"
+            }
+          ]
+        },
+        {
+          "tag": "UserRound",
+          "attributes": [
+            {
+              "name": "size",
+              "value": "{19}"
+            },
+            {
+              "name": "aria-hidden",
+              "value": "\"true\""
+            }
+          ]
+        },
+        {
+          "tag": "span",
+          "attributes": []
+        }
+      ],
+      "events": [
+        {
+          "name": "onClick",
+          "value": "{onShowChats}"
+        },
+        {
+          "name": "onClick",
+          "value": "{onShowCalls}"
+        },
+        {
+          "name": "onClick",
+          "value": "{onShowUpdates}"
+        },
+        {
+          "name": "onClick",
+          "value": "{onShowSpaces}"
+        },
+        {
+          "name": "onClick",
+          "value": "{onOpenAccount}"
+        }
+      ],
+      "refs": [],
+      "keys": []
+    },
+    {
+      "path": "client/src/features/workspace/CallsHome.tsx",
+      "exports": [
+        "CallsHome"
+      ],
+      "imports": [
+        "import { Phone, Video } from 'lucide-react'"
+      ],
+      "props": [
+        "type CallsHomeProps = {\n  onAudioCall: () => void\n  onVideoCall: () => void\n}",
+        "CallsHomeProps"
+      ],
+      "dom": [
+        {
+          "tag": "section",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"calls-home\""
+            }
+          ]
+        },
+        {
+          "tag": "div",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"calls-home-content\""
+            }
+          ]
+        },
+        {
+          "tag": "span",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"calls-home-icon\""
+            }
+          ]
+        },
+        {
+          "tag": "Phone",
+          "attributes": [
+            {
+              "name": "size",
+              "value": "{26}"
+            },
+            {
+              "name": "aria-hidden",
+              "value": "\"true\""
+            }
+          ]
+        },
+        {
+          "tag": "p",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"eyebrow\""
+            }
+          ]
+        },
+        {
+          "tag": "h2",
+          "attributes": []
+        },
+        {
+          "tag": "p",
+          "attributes": []
+        },
+        {
+          "tag": "div",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"calls-home-actions\""
+            }
+          ]
+        },
+        {
+          "tag": "button",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"calls-home-button\""
+            },
+            {
+              "name": "type",
+              "value": "\"button\""
+            },
+            {
+              "name": "onClick",
+              "value": "{onAudioCall}"
+            }
+          ]
+        },
+        {
+          "tag": "Phone",
+          "attributes": [
+            {
+              "name": "size",
+              "value": "{16}"
+            },
+            {
+              "name": "aria-hidden",
+              "value": "\"true\""
+            }
+          ]
+        },
+        {
+          "tag": "button",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"calls-home-button is-video\""
+            },
+            {
+              "name": "type",
+              "value": "\"button\""
+            },
+            {
+              "name": "onClick",
+              "value": "{onVideoCall}"
+            }
+          ]
+        },
+        {
+          "tag": "Video",
+          "attributes": [
+            {
+              "name": "size",
+              "value": "{16}"
+            },
+            {
+              "name": "aria-hidden",
+              "value": "\"true\""
+            }
+          ]
+        },
+        {
+          "tag": "small",
+          "attributes": []
+        }
+      ],
+      "events": [
+        {
+          "name": "onClick",
+          "value": "{onAudioCall}"
+        },
+        {
+          "name": "onClick",
+          "value": "{onVideoCall}"
+        }
+      ],
+      "refs": [],
+      "keys": []
+    },
+    {
+      "path": "client/src/features/workspace/IncomingCallBanner.tsx",
+      "exports": [
+        "IncomingCallBanner"
+      ],
+      "imports": [
+        "import { Avatar } from '../../shared/components/Avatar'",
+        "import type { IncomingCall } from '../../shared/types'"
+      ],
+      "props": [
+        "type IncomingCallBannerProps = {\n  incomingCall: IncomingCall\n  onAnswer: () => void\n  onDecline: () => void\n}",
+        "IncomingCallBannerProps"
+      ],
+      "dom": [
+        {
+          "tag": "section",
+          "attributes": [
+            {
+              "name": "className",
+              "value": "\"incoming-call-banner\""
+            },
+            {
+              "name": "role",
+              "value": "\"alertdialog\""
+            },
+            {
+              "name": "aria-modal",
+              "value": "\"true\""
+            },
+            {
+              "name": "aria-labelledby",
+              "value": "\"incoming-call-title\""
+            }
+          ]
+        },
+        {
+          "tag": "Avatar",
+          "attributes": [
+            {
+              "name": "name",
+              "value": "{incomingCall.group_title ?? incomingCall.caller_name}"
+            },
+            {
+              "name": "src",
+              "value": "{incomingCall.is_group ? undefined : incomingCall.caller_avatar_url}"
+            }
+          ]
+        },
+        {
+          "tag": "div",
+          "attributes": []
+        },
+        {
+          "tag": "strong",
+          "attributes": [
+            {
+              "name": "id",
+              "value": "\"incoming-call-title\""
+            }
+          ]
+        },
+        {
+          "tag": "small",
+          "attributes": []
+        },
+        {
+          "tag": "button",
+          "attributes": [
+            {
+              "name": "type",
+              "value": "\"button\""
+            },
+            {
+              "name": "className",
+              "value": "\"answer-call-button\""
+            },
+            {
+              "name": "onClick",
+              "value": "{onAnswer}"
+            }
+          ]
+        },
+        {
+          "tag": "button",
+          "attributes": [
+            {
+              "name": "type",
+              "value": "\"button\""
+            },
+            {
+              "name": "className",
+              "value": "\"decline-call-button\""
+            },
+            {
+              "name": "onClick",
+              "value": "{onDecline}"
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "name": "onClick",
+          "value": "{onAnswer}"
+        },
+        {
+          "name": "onClick",
+          "value": "{onDecline}"
+        }
+      ],
+      "refs": [],
+      "keys": []
+    },
+    {
+      "path": "client/src/features/workspace/useWorkspaceNavigation.ts",
+      "exports": [
+        "useWorkspaceNavigation"
+      ],
+      "imports": [
+        "import { useState } from 'react'"
+      ],
+      "props": [],
+      "dom": [],
+      "events": [],
+      "refs": [],
+      "keys": []
+    }
+  ]
+}

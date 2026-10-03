@@ -1,0 +1,30 @@
+[
+  {
+    "action": "Audio call",
+    "result": "audio callback"
+  },
+  {
+    "action": "Video call",
+    "result": "video callback"
+  },
+  {
+    "action": "group Answer",
+    "result": "answer callback"
+  },
+  {
+    "action": "group Decline",
+    "result": "decline callback"
+  },
+  {
+    "action": "mobile keyboard Calls",
+    "result": "{\"calls\":true,\"updates\":false,\"spaces\":false,\"requests\":false,\"chat\":null,\"target\":null}"
+  },
+  {
+    "action": "mobile keyboard Updates",
+    "result": "{\"calls\":false,\"updates\":true,\"spaces\":false,\"requests\":false,\"chat\":null,\"target\":null}"
+  },
+  {
+    "action": "mobile keyboard Spaces",
+    "result": "{\"calls\":false,\"updates\":false,\"spaces\":true,\"requests\":false,\"chat\":null,\"target\":null}"
+  }
+]
