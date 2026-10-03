@@ -4,8 +4,9 @@ import assert from 'node:assert/strict'
 import {execFileSync} from 'node:child_process'
 import ts from 'typescript'
 import postcss from 'postcss'
+import {restoreInbox} from './helpers/inbox-parity.mjs'
 import {buildProof} from './helpers/design-system-wiring-proof.mjs'
-const fixture=JSON.parse(fs.readFileSync('tests/fixtures/shell-navigation-baseline.json','utf8')),read=file=>fs.readFileSync(file,'utf8').replaceAll('\r\n','\n')
+const fixture=JSON.parse(fs.readFileSync('tests/fixtures/shell-navigation-baseline.json','utf8')),read=file=>restoreInbox(file,fs.readFileSync(file,'utf8'))
 function behavior(file,source){const tree=ts.createSourceFile(file,source,99,true,ts.ScriptKind.TSX),result=ts.transform(tree,[context=>{const visit=node=>ts.isJsxAttributes(node)?context.factory.updateJsxAttributes(node,node.properties.filter(n=>!ts.isJsxAttribute(n)||n.name.text!=='className')):ts.visitEachChild(node,visit,context);return node=>ts.visitNode(node,visit)}]);return ts.createPrinter().printFile(result.transformed[0])}
 const owned=selector=>/\.(?:workspace|inbox-pane|primary-rail|rail-item(?:-active|-icon)?|rail-spacer|rail-glyph|profile-trigger|navigation-badge|mobile-nav-icon|mobile-bottom-nav|avatar-you)(?=[\s.:>#,\[]|$)/.test(selector)
 function featureRules(source){const rows=[];postcss.parse(source).walkRules(rule=>{const nesting=[];for(let p=rule.parent;p;p=p.parent)if(p.type==='atrule')nesting.unshift(`@${p.name} ${p.params}`);for(const selector of rule.selectors)if(!owned(selector))rows.push({selector,nesting,declarations:rule.nodes.filter(n=>n.type==='decl').map(n=>[n.prop,n.value,Boolean(n.important)])})});return rows}

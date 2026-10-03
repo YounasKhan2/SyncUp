@@ -1,0 +1,15 @@
+
+> typecheck
+> npm run typecheck:client && npm run typecheck:server
+
+
+> typecheck:client
+> npm run typecheck --workspace client
+
+
+> client@0.0.0 typecheck
+> tsc -p tsconfig.app.json --noEmit --incremental false && tsc -p tsconfig.node.json --noEmit --incremental false
+
+
+> typecheck:server
+> tsc -p tsconfig.server.json --noEmit --incremental false
