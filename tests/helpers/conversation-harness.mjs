@@ -83,6 +83,10 @@ export function conversation({ seed = {}, props = {}, api, decrypt, draft = asyn
     '../../shared/components/BrandMark': component('BrandMark'), '../../shared/components/Avatar': component('Avatar'),
   }
   for (const name of ['ConversationHeader', 'ChatDetailsScreen', 'MessageComposer', 'MessageList', 'ReportDialog']) mocks[`./${name}`] = component(name)
+  for (const name of ['ConversationHeader', 'ReportDialog']) mocks[`./components/${name}`] = component(name)
+  mocks['../../../shared/components/BrandMark'] = mocks['../../shared/components/BrandMark']
+  mocks['../../../shared/components/Avatar'] = mocks['../../shared/components/Avatar']
+  mocks['./components/ConversationSearchBar'] = load(`${base}components/ConversationSearchBar.tsx`, mocks, globals)
   function transformed(path, text = source(path)) {
     const tree = ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX)
     const edits = []
@@ -102,8 +106,9 @@ export function conversation({ seed = {}, props = {}, api, decrypt, draft = asyn
     return edits.sort((a, b) => b[0] - a[0]).reduce((text, [start, end, value]) => text.slice(0, start) + value + text.slice(end), text)
   }
   for (const [name, extension] of [['useConversationUiState', 'ts'], ['ConversationWelcome', 'tsx']]) {
-    const path = `${base}${name}.${extension}`
-    try { mocks[`./${name}`] = load(path, mocks, globals, transformed(path)) }
+    const folder = name === 'useConversationUiState' ? 'hooks' : 'components'
+    const path = `${base}${folder}/${name}.${extension}`
+    try { mocks[`./${folder}/${name}`] = load(path, mocks, globals, transformed(path)) }
     catch (error) { if (error.code !== 'ENOENT') throw error }
   }
   const module = load(`${base}Conversation.tsx`, mocks, globals, transformed(`${base}Conversation.tsx`, pageSource))

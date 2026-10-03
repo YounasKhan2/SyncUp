@@ -1,5 +1,5 @@
 import { ArrowLeft, Phone, Search, Video } from 'lucide-react'
-import { Avatar } from '../../shared/components/Avatar'
+import { Avatar } from '../../../shared/components/Avatar'
 
 type ConversationHeaderProps = {
   title: string

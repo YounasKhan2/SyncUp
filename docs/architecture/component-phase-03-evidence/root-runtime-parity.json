@@ -1,0 +1,11 @@
+{
+  "base": "3f66945f8765ae7fb8928ba982af329cf97e018b",
+  "effects": 9,
+  "refs": 17,
+  "namedFunctions": 13,
+  "effectsIdentical": true,
+  "refsIdentical": true,
+  "runtimeFunctionsIdentical": true,
+  "beforeLines": 1258,
+  "afterLines": 1244
+}

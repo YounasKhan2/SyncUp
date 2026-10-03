@@ -1,0 +1,1094 @@
+[
+  {
+    "id": "1440x900-dark-details",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "14d2075652cc75c060cb72c72c9c77f9607f806e9f312278f095c38c3c558a54",
+    "afterScreenshotSHA256": "14d2075652cc75c060cb72c72c9c77f9607f806e9f312278f095c38c3c558a54",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "dark",
+    "appearance": "dark",
+    "systemDark": false,
+    "focused": null,
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  },
+  {
+    "id": "1440x900-dark-edit",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "fff7797f833882548fccf8b08abd8b210df074760479ac644db7383b99653e97",
+    "afterScreenshotSHA256": "fff7797f833882548fccf8b08abd8b210df074760479ac644db7383b99653e97",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "dark",
+    "appearance": "dark",
+    "systemDark": false,
+    "focused": null,
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  },
+  {
+    "id": "1440x900-dark-normal",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "5de23396473f3b74174a340c7b012ff19550c0bb1e773baeab4542b2cf72954c",
+    "afterScreenshotSHA256": "5de23396473f3b74174a340c7b012ff19550c0bb1e773baeab4542b2cf72954c",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "dark",
+    "appearance": "dark",
+    "systemDark": false,
+    "focused": null,
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  },
+  {
+    "id": "1440x900-dark-reply",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "748ea28e13d6814a64613447ab0ad49cb970ba90367430088a72138b4fcaa771",
+    "afterScreenshotSHA256": "748ea28e13d6814a64613447ab0ad49cb970ba90367430088a72138b4fcaa771",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "dark",
+    "appearance": "dark",
+    "systemDark": false,
+    "focused": null,
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  },
+  {
+    "id": "1440x900-dark-report",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "ce8e45d06551c820c2ce561d8b648ab9def753550b6f49e2db9fb918470b52ab",
+    "afterScreenshotSHA256": "ce8e45d06551c820c2ce561d8b648ab9def753550b6f49e2db9fb918470b52ab",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "dark",
+    "appearance": "dark",
+    "systemDark": false,
+    "focused": null,
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  },
+  {
+    "id": "1440x900-dark-search",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "74cb3ec4b34d96fb398e50e2798ad3e18e10355575e1f11d7d59d67c770e8130",
+    "afterScreenshotSHA256": "74cb3ec4b34d96fb398e50e2798ad3e18e10355575e1f11d7d59d67c770e8130",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "dark",
+    "appearance": "dark",
+    "systemDark": false,
+    "focused": "Search messages in this conversation",
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  },
+  {
+    "id": "1440x900-dark-welcome",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "6fffcea9b067799a244e9c8ecc940da3a0b3bdc085fb64b0b8fccce74676b67e",
+    "afterScreenshotSHA256": "6fffcea9b067799a244e9c8ecc940da3a0b3bdc085fb64b0b8fccce74676b67e",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "dark",
+    "appearance": "dark",
+    "systemDark": false,
+    "focused": null,
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  },
+  {
+    "id": "1440x900-light-details",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "6d3618084e16759a90fe3b658bde185f99e634e53e699d4981c6357d0128eac4",
+    "afterScreenshotSHA256": "6d3618084e16759a90fe3b658bde185f99e634e53e699d4981c6357d0128eac4",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "light",
+    "appearance": "light",
+    "systemDark": false,
+    "focused": null,
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  },
+  {
+    "id": "1440x900-light-edit",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "244338cfc39e9f741ed44e48e2c301c2ed68e4196e89e8d0798fe4e0747dc55a",
+    "afterScreenshotSHA256": "244338cfc39e9f741ed44e48e2c301c2ed68e4196e89e8d0798fe4e0747dc55a",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "light",
+    "appearance": "light",
+    "systemDark": false,
+    "focused": null,
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  },
+  {
+    "id": "1440x900-light-normal",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "3c8f19e6f95996f324291932c7e892fff96d83fe15d7421fddd4b51da842748f",
+    "afterScreenshotSHA256": "3c8f19e6f95996f324291932c7e892fff96d83fe15d7421fddd4b51da842748f",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "light",
+    "appearance": "light",
+    "systemDark": false,
+    "focused": null,
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  },
+  {
+    "id": "1440x900-light-reply",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "a33bea2a2480d4b6a41d715677c4691e97ae34a202502b2f1a9fa46d2439a6ba",
+    "afterScreenshotSHA256": "a33bea2a2480d4b6a41d715677c4691e97ae34a202502b2f1a9fa46d2439a6ba",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "light",
+    "appearance": "light",
+    "systemDark": false,
+    "focused": null,
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  },
+  {
+    "id": "1440x900-light-report",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "fe5a897eca949c22e33e39e5a561156b9f5c4873de5e31c05054cf075b4a511c",
+    "afterScreenshotSHA256": "fe5a897eca949c22e33e39e5a561156b9f5c4873de5e31c05054cf075b4a511c",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "light",
+    "appearance": "light",
+    "systemDark": false,
+    "focused": null,
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  },
+  {
+    "id": "1440x900-light-search",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "802baa9b7e9b7504c3b902e6b56820e9854224e0190a0ad38b48e82b2898f1de",
+    "afterScreenshotSHA256": "e2ce778a9b07d1ac0e65103ace95479d5edef4fe5add8125e88d32c055093a9d",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "light",
+    "appearance": "light",
+    "systemDark": false,
+    "focused": "Search messages in this conversation",
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  },
+  {
+    "id": "1440x900-light-welcome",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "07e1ae3d7d672e6801ae58ff36f122561da6402fa51e2a3ed95e8b1419e78894",
+    "afterScreenshotSHA256": "07e1ae3d7d672e6801ae58ff36f122561da6402fa51e2a3ed95e8b1419e78894",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "light",
+    "appearance": "light",
+    "systemDark": false,
+    "focused": null,
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  },
+  {
+    "id": "1440x900-system-details",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "cf851732380766e4ebe728fdc8bc0dc5f1693d6e81e5587f34271a9b79384985",
+    "afterScreenshotSHA256": "cf851732380766e4ebe728fdc8bc0dc5f1693d6e81e5587f34271a9b79384985",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "light",
+    "appearance": "system",
+    "systemDark": false,
+    "focused": null,
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  },
+  {
+    "id": "1440x900-system-edit",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "39b2aee1d82fd1479a4e304dc15a576f1d2761449d7555ca4a9a44d42424f6d1",
+    "afterScreenshotSHA256": "39b2aee1d82fd1479a4e304dc15a576f1d2761449d7555ca4a9a44d42424f6d1",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "light",
+    "appearance": "system",
+    "systemDark": false,
+    "focused": null,
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  },
+  {
+    "id": "1440x900-system-normal",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "d41b47512cc42ebc5d2c31a7d39c63d95bffa0eaed7a4953b1ede30e63d8e72d",
+    "afterScreenshotSHA256": "d41b47512cc42ebc5d2c31a7d39c63d95bffa0eaed7a4953b1ede30e63d8e72d",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "light",
+    "appearance": "system",
+    "systemDark": false,
+    "focused": null,
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  },
+  {
+    "id": "1440x900-system-reply",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "02fadc0c41068e851c70777d706a8195940ac906635b219e1e3488409e9707df",
+    "afterScreenshotSHA256": "02fadc0c41068e851c70777d706a8195940ac906635b219e1e3488409e9707df",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "light",
+    "appearance": "system",
+    "systemDark": false,
+    "focused": null,
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  },
+  {
+    "id": "1440x900-system-report",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "035358cb6027ac1b1b7214d0ce8025110d0e9934d8f0b7eb938d0fc85ba71aa4",
+    "afterScreenshotSHA256": "035358cb6027ac1b1b7214d0ce8025110d0e9934d8f0b7eb938d0fc85ba71aa4",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "light",
+    "appearance": "system",
+    "systemDark": false,
+    "focused": null,
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  },
+  {
+    "id": "1440x900-system-search",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "5d07cda21368573ac64b3181a9542be98d717cd90ff26d143e8bb8ed07fe7bd7",
+    "afterScreenshotSHA256": "5d07cda21368573ac64b3181a9542be98d717cd90ff26d143e8bb8ed07fe7bd7",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "light",
+    "appearance": "system",
+    "systemDark": false,
+    "focused": "Search messages in this conversation",
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  },
+  {
+    "id": "1440x900-system-welcome",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "8a33fd1b90b65472bffb30eb2ecace8218619c5c8c35b872584656e945bab2f5",
+    "afterScreenshotSHA256": "8a33fd1b90b65472bffb30eb2ecace8218619c5c8c35b872584656e945bab2f5",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "light",
+    "appearance": "system",
+    "systemDark": false,
+    "focused": null,
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  },
+  {
+    "id": "390x844-dark-details",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "75e0b12da43cf66f600e90021c276fac80578e6a47afa7c65e839c8dccfe6669",
+    "afterScreenshotSHA256": "75e0b12da43cf66f600e90021c276fac80578e6a47afa7c65e839c8dccfe6669",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "dark",
+    "appearance": "dark",
+    "systemDark": false,
+    "focused": null,
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  },
+  {
+    "id": "390x844-dark-edit",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "89e70109065fb37bc8573ac08c6d6a72c85bd9d19d828478d8c909cd303063dc",
+    "afterScreenshotSHA256": "89e70109065fb37bc8573ac08c6d6a72c85bd9d19d828478d8c909cd303063dc",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "dark",
+    "appearance": "dark",
+    "systemDark": false,
+    "focused": null,
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  },
+  {
+    "id": "390x844-dark-normal",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "92492ec968e9973c666268e55249c245dcacf7d04c02fb5446c99a5cc290e6ab",
+    "afterScreenshotSHA256": "92492ec968e9973c666268e55249c245dcacf7d04c02fb5446c99a5cc290e6ab",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "dark",
+    "appearance": "dark",
+    "systemDark": false,
+    "focused": null,
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  },
+  {
+    "id": "390x844-dark-reply",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "a8de6fce3fe0733ee938fdcc361e701949b5b572770be5f4f66dfe06fb3c87b1",
+    "afterScreenshotSHA256": "a8de6fce3fe0733ee938fdcc361e701949b5b572770be5f4f66dfe06fb3c87b1",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "dark",
+    "appearance": "dark",
+    "systemDark": false,
+    "focused": null,
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  },
+  {
+    "id": "390x844-dark-report",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "eca43e64c0a046d5f7f768918ff75bb4dc6120ea850cb68e08dc8b3d8edede0b",
+    "afterScreenshotSHA256": "eca43e64c0a046d5f7f768918ff75bb4dc6120ea850cb68e08dc8b3d8edede0b",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "dark",
+    "appearance": "dark",
+    "systemDark": false,
+    "focused": null,
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  },
+  {
+    "id": "390x844-dark-search",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "98eceff334fe22d7f22e6389e29ab11461db8b76fbf236afb813a419f36f03b6",
+    "afterScreenshotSHA256": "fa2c3a6b96ea49b283a63c934bdba2502dd5ad3ebc15b52427cee346d531c76a",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "dark",
+    "appearance": "dark",
+    "systemDark": false,
+    "focused": "Search messages in this conversation",
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  },
+  {
+    "id": "390x844-dark-welcome",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "365fc482b539efb81cbf830b8d8316f13c406b86220db10ca17f090c5b34d103",
+    "afterScreenshotSHA256": "365fc482b539efb81cbf830b8d8316f13c406b86220db10ca17f090c5b34d103",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "dark",
+    "appearance": "dark",
+    "systemDark": false,
+    "focused": null,
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  },
+  {
+    "id": "390x844-light-details",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "54597421c27f931474ca74c4038705ba430d062a4be3b9ec2b76130e0ec3a973",
+    "afterScreenshotSHA256": "54597421c27f931474ca74c4038705ba430d062a4be3b9ec2b76130e0ec3a973",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "light",
+    "appearance": "light",
+    "systemDark": false,
+    "focused": null,
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  },
+  {
+    "id": "390x844-light-edit",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "51a351de9d09210b8ecd1975749b548a1b54b5b1a463531151776a45fb6adb5f",
+    "afterScreenshotSHA256": "51a351de9d09210b8ecd1975749b548a1b54b5b1a463531151776a45fb6adb5f",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "light",
+    "appearance": "light",
+    "systemDark": false,
+    "focused": null,
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  },
+  {
+    "id": "390x844-light-normal",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "db5e0324bdceb8eae91c82fffafad30ebee9d4854a5cf62c12fe410350ca813a",
+    "afterScreenshotSHA256": "db5e0324bdceb8eae91c82fffafad30ebee9d4854a5cf62c12fe410350ca813a",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "light",
+    "appearance": "light",
+    "systemDark": false,
+    "focused": null,
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  },
+  {
+    "id": "390x844-light-reply",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "a0b1da50b5aa2b3c62da077299e2ed10a3a5003d562a03d8d5288cb5c8e082e1",
+    "afterScreenshotSHA256": "a0b1da50b5aa2b3c62da077299e2ed10a3a5003d562a03d8d5288cb5c8e082e1",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "light",
+    "appearance": "light",
+    "systemDark": false,
+    "focused": null,
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  },
+  {
+    "id": "390x844-light-report",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "84c29dcf5d1741b8181d696d1a4be5c68de250bf3c89560f476dc8bb5a3ae385",
+    "afterScreenshotSHA256": "84c29dcf5d1741b8181d696d1a4be5c68de250bf3c89560f476dc8bb5a3ae385",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "light",
+    "appearance": "light",
+    "systemDark": false,
+    "focused": null,
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  },
+  {
+    "id": "390x844-light-search",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "38f29200befcd0c096165181c7498003ebb161488f7806fef51acf1b1614878b",
+    "afterScreenshotSHA256": "4cea8a89c948b4b0f21587bf226e4ca1202cb3abcf18b743a424d2f9bf22321e",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "light",
+    "appearance": "light",
+    "systemDark": false,
+    "focused": "Search messages in this conversation",
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  },
+  {
+    "id": "390x844-light-welcome",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "94af943acbb950716e279781d531146e2c40ba2f256e5649b0278d6d29443c89",
+    "afterScreenshotSHA256": "94af943acbb950716e279781d531146e2c40ba2f256e5649b0278d6d29443c89",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "light",
+    "appearance": "light",
+    "systemDark": false,
+    "focused": null,
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  },
+  {
+    "id": "390x844-system-details",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "864304c83242afab06f5183b075238bdf6d51630ae5f0004c4da49d8e402e335",
+    "afterScreenshotSHA256": "864304c83242afab06f5183b075238bdf6d51630ae5f0004c4da49d8e402e335",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "light",
+    "appearance": "system",
+    "systemDark": false,
+    "focused": null,
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  },
+  {
+    "id": "390x844-system-edit",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "eeca94b2a37462163b26f0e2806ab9c14c45f2298dd8e0a73d5de92669ccacfa",
+    "afterScreenshotSHA256": "eeca94b2a37462163b26f0e2806ab9c14c45f2298dd8e0a73d5de92669ccacfa",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "light",
+    "appearance": "system",
+    "systemDark": false,
+    "focused": null,
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  },
+  {
+    "id": "390x844-system-normal",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "4380472faa0f5182913ec4b12b66fa0a482007f0482b76d96f355f9e95bfef5b",
+    "afterScreenshotSHA256": "4380472faa0f5182913ec4b12b66fa0a482007f0482b76d96f355f9e95bfef5b",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "light",
+    "appearance": "system",
+    "systemDark": false,
+    "focused": null,
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  },
+  {
+    "id": "390x844-system-reply",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "85b8246849b67852101014e427dd7780e3686175e0d0af273e8baec22550f7c6",
+    "afterScreenshotSHA256": "85b8246849b67852101014e427dd7780e3686175e0d0af273e8baec22550f7c6",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "light",
+    "appearance": "system",
+    "systemDark": false,
+    "focused": null,
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  },
+  {
+    "id": "390x844-system-report",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "cd23eec00756ede3a3755899466ef90f5296331b4a7c180f8bd45895f74d3262",
+    "afterScreenshotSHA256": "cd23eec00756ede3a3755899466ef90f5296331b4a7c180f8bd45895f74d3262",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "light",
+    "appearance": "system",
+    "systemDark": false,
+    "focused": null,
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  },
+  {
+    "id": "390x844-system-search",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "2a75d9b46ecbc582a3aaea319d284d036d68edee7c8c1c4bb34647373527e56b",
+    "afterScreenshotSHA256": "2a75d9b46ecbc582a3aaea319d284d036d68edee7c8c1c4bb34647373527e56b",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "light",
+    "appearance": "system",
+    "systemDark": false,
+    "focused": "Search messages in this conversation",
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  },
+  {
+    "id": "390x844-system-welcome",
+    "completeSnapshotEqual": true,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "b4583127804bd7cbe8f8c3caf15f6bfe72fa213c88748f2db3d84ac8d69f7977",
+    "afterScreenshotSHA256": "b4583127804bd7cbe8f8c3caf15f6bfe72fa213c88748f2db3d84ac8d69f7977",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "effectiveTheme": "light",
+    "appearance": "system",
+    "systemDark": false,
+    "focused": null,
+    "beforeDiagnostics": [],
+    "afterDiagnostics": []
+  }
+]

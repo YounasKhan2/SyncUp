@@ -1,0 +1,74 @@
+{
+  "base": "3f66945f8765ae7fb8928ba982af329cf97e018b",
+  "files": {
+    "client/src/features/messaging/api.ts": {
+      "relocatedPath": "client/src/features/messaging/api.ts",
+      "canonicalDigest": "17f98576b5dc63899d5135af736f7e51e5130164e0282e359398f661b18f60e7"
+    },
+    "client/src/features/messaging/ChatDetailsScreen.tsx": {
+      "relocatedPath": "client/src/features/messaging/ChatDetailsScreen.tsx",
+      "canonicalDigest": "6b7e8ee2ae8c9443713c26c921cca96bb00793e9b3b8c16b5b29c54a18250328"
+    },
+    "client/src/features/messaging/Conversation.tsx": {
+      "relocatedPath": "client/src/features/messaging/Conversation.tsx",
+      "canonicalDigest": "205c5e5c5d800aaf215eed95323e0bc5a97bc86850cf073a9959d1e5419b8693"
+    },
+    "client/src/features/messaging/ConversationHeader.tsx": {
+      "relocatedPath": "client/src/features/messaging/components/ConversationHeader.tsx",
+      "canonicalDigest": "02f62f4d3546878e7ed8d76f5af02579dcb324f31989a2e067aaed990c8f1170"
+    },
+    "client/src/features/messaging/ConversationWelcome.tsx": {
+      "relocatedPath": "client/src/features/messaging/components/ConversationWelcome.tsx",
+      "canonicalDigest": "53700198ec522d658dc133835eae59d485542611fca646043e285812d789bc9d"
+    },
+    "client/src/features/messaging/MessageAttachment.tsx": {
+      "relocatedPath": "client/src/features/messaging/MessageAttachment.tsx",
+      "canonicalDigest": "aa95484daeb46285c898b2b9eb77ef7b68541f31701e1da0c4e931f3f83083da"
+    },
+    "client/src/features/messaging/MessageComposer.tsx": {
+      "relocatedPath": "client/src/features/messaging/MessageComposer.tsx",
+      "canonicalDigest": "e38f88d5f6b0fd07a2e1079bb4af19a77915f867926a704d28c0af5160d02d4c"
+    },
+    "client/src/features/messaging/MessageList.tsx": {
+      "relocatedPath": "client/src/features/messaging/MessageList.tsx",
+      "canonicalDigest": "ed8073b298774c61098ac2d70878ddd6b1919aa1af63c2dce73e4884f8825716"
+    },
+    "client/src/features/messaging/NewConversation.tsx": {
+      "relocatedPath": "client/src/features/messaging/NewConversation.tsx",
+      "canonicalDigest": "2efd2994f39c5b9a7953c75c02a3ed4ce52911a4d3731dbe94f107e6a52a33af"
+    },
+    "client/src/features/messaging/outbox.ts": {
+      "relocatedPath": "client/src/features/messaging/outbox.ts",
+      "canonicalDigest": "0573d2dcd0b7771f97b32cc6740eeecde40fa5dd382700c1e730d075ff2cc753"
+    },
+    "client/src/features/messaging/ReportDialog.tsx": {
+      "relocatedPath": "client/src/features/messaging/components/ReportDialog.tsx",
+      "canonicalDigest": "d712dfae9764d46093667ee1797ef1a7f8ff6dd59d6c12ddac3c9ce41cd98b1f"
+    },
+    "client/src/features/messaging/RequestsPanel.tsx": {
+      "relocatedPath": "client/src/features/messaging/RequestsPanel.tsx",
+      "canonicalDigest": "23005fde390ef8378cfdd67bebf54342c464237fb02b7b5d8a5af2c2e856d22d"
+    },
+    "client/src/features/messaging/SearchDialog.tsx": {
+      "relocatedPath": "client/src/features/messaging/SearchDialog.tsx",
+      "canonicalDigest": "4ec7f8986ade18179b0a27265fc83195ce3a5072a32eb26179751abd5d4f7fa2"
+    },
+    "client/src/features/messaging/useConversationUiState.ts": {
+      "relocatedPath": "client/src/features/messaging/hooks/useConversationUiState.ts",
+      "canonicalDigest": "af0e47b60d00b7b42790b01c9a512547eaaf7ba337033084e407a831243be1d1"
+    },
+    "client/src/features/messaging/VoiceRecorder.tsx": {
+      "relocatedPath": "client/src/features/messaging/VoiceRecorder.tsx",
+      "canonicalDigest": "809e93a7c81099136cedd220d7ea3f09b6525acacdf00a8cc19c2e507e2c9698"
+    },
+    "client/src/features/workspace/WorkspacePage.tsx": {
+      "relocatedPath": "client/src/features/workspace/WorkspacePage.tsx",
+      "canonicalDigest": "2b49a07e332e92d5daaf150ec89c089e2ff8a21bff623d4b5d25acdc0cd214e7"
+    }
+  },
+  "search": {
+    "originalRegion": "{messageSearchOpen && (\n        <div className=\"conversation-search-bar\">\n          <Search size={14} aria-hidden=\"true\" />\n          <input\n            autoFocus\n            value={messageSearch}\n            onChange={(event) => setMessageSearch(event.target.value)}\n            placeholder=\"Search loaded messages on this device\"\n            aria-label=\"Search messages in this conversation\"\n          />\n          <span>\n            {messageSearch.trim()\n              ? `${visibleMessages.filter((message) => !message.pending && !message.deleted_at && message.text.toLocaleLowerCase().includes(messageSearch.trim().toLocaleLowerCase())).length} matches`\n              : \"On-device only\"}\n          </span>\n          <button\n            type=\"button\"\n            onClick={closeMessageSearch}\n            aria-label=\"Close message search\"\n          >\n            <X size={14} aria-hidden=\"true\" />\n          </button>\n        </div>\n      )}",
+    "replacementRegion": "{messageSearchOpen && (\n        <ConversationSearchBar\n          query={messageSearch}\n          label={messageSearch.trim()\n              ? `${visibleMessages.filter((message) => !message.pending && !message.deleted_at && message.text.toLocaleLowerCase().includes(messageSearch.trim().toLocaleLowerCase())).length} matches`\n              : \"On-device only\"}\n          onQueryChange={setMessageSearch}\n          onClose={closeMessageSearch}\n        />\n      )}",
+    "componentDigest": "ae34044790bc608c811042aefa1cf9d858fd9e3cf07b22474e1bb82e994fe153"
+  }
+}

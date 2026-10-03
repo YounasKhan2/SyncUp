@@ -1,6 +1,6 @@
-import { BrandMark } from '../../shared/components/BrandMark'
-import { Avatar } from '../../shared/components/Avatar'
-import type { User } from '../../shared/types'
+import { BrandMark } from '../../../shared/components/BrandMark'
+import { Avatar } from '../../../shared/components/Avatar'
+import type { User } from '../../../shared/types'
 
 export function ConversationWelcome({ user }: { user: User }) {
   return (
