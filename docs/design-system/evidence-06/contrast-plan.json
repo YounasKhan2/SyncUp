@@ -1,0 +1,92 @@
+[
+  {
+    "theme": "light",
+    "label": "default label",
+    "foreground": "#6F676D",
+    "background": "#EEEAE5",
+    "ratio": 4.570440425476691,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "light",
+    "label": "selected label",
+    "foreground": "#272228",
+    "background": "#E7DCE3",
+    "ratio": 11.699533315018723,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "light",
+    "label": "selected accent",
+    "foreground": "#76546F",
+    "background": "#E7DCE3",
+    "ratio": 4.817740075724825,
+    "minimum": 3,
+    "pass": true
+  },
+  {
+    "theme": "light",
+    "label": "badge",
+    "foreground": "#FFFCF8",
+    "background": "#B34D55",
+    "ratio": 4.996176224090457,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "light",
+    "label": "focus ring",
+    "foreground": "#98728F",
+    "background": "#EEEAE5",
+    "ratio": 3.412573387780824,
+    "minimum": 3,
+    "pass": true
+  },
+  {
+    "theme": "dark",
+    "label": "default label",
+    "foreground": "#B7ADB4",
+    "background": "#1D1A20",
+    "ratio": 7.904236695847046,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "dark",
+    "label": "selected label",
+    "foreground": "#F1ECEF",
+    "background": "#352A33",
+    "ratio": 11.751918550795244,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "dark",
+    "label": "selected accent",
+    "foreground": "#C99ABD",
+    "background": "#352A33",
+    "ratio": 5.776766827299299,
+    "minimum": 3,
+    "pass": true
+  },
+  {
+    "theme": "dark",
+    "label": "badge",
+    "foreground": "#272228",
+    "background": "#ED858D",
+    "ratio": 6.1978310111795905,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "dark",
+    "label": "focus ring",
+    "foreground": "#D5A7C9",
+    "background": "#1D1A20",
+    "ratio": 8.3548883486999,
+    "minimum": 3,
+    "pass": true
+  }
+]

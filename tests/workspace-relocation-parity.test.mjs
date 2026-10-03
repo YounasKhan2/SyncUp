@@ -1,3 +1,4 @@
+import {restoreShellNavigation} from './helpers/shell-navigation-parity.mjs'
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import fs from 'node:fs'
@@ -12,7 +13,7 @@ const oldTargets = new Map(Object.entries(baseline.files).map(([old, value]) => 
 test('Workspace relocation preserves complete source and dependency identity, including root effects, JSX, props, handlers, types and hook transitions', () => {
   for (const [oldPath, { relocatedPath, canonicalDigest }] of Object.entries(baseline.files)) {
     const currentPath = fs.existsSync(new URL(relocatedPath, root)) ? relocatedPath : oldPath
-    const text = fs.readFileSync(new URL(currentPath, root), 'utf8').replace(/\r\n/gu, '\n')
+    const text = restoreShellNavigation(currentPath, fs.readFileSync(new URL(currentPath, root), 'utf8').replace(/\r\n/gu, '\n'))
     const tree = ts.createSourceFile(currentPath, text, ts.ScriptTarget.Latest, true)
     const edits = tree.statements.filter(ts.isImportDeclaration).map(n => n.moduleSpecifier).filter(n => n.text.startsWith('.')).map(n => {
       const target = path.posix.normalize(path.posix.join(path.posix.dirname(currentPath), n.text))

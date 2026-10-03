@@ -92,7 +92,7 @@ export function InboxPane({
     : call.caller_id === userId ? 'Outgoing' : 'Incoming'
 
   return (
-    <aside className="inbox-pane">
+    <aside className="inbox-pane ui:bg-surface ui:text-secondary ui:border-default">
       <div className="pane-heading"><h1>{showCalls ? 'Calls' : 'Chats'}</h1>{showCalls
         ? <button className="icon-button add-button" type="button" aria-label="Start a new call" onClick={onNewCall}><Phone size={15} aria-hidden="true" /></button>
         : <button className="icon-button add-button" type="button" aria-label="New conversation" onClick={onNewConversation}><Plus size={15} aria-hidden="true" /></button>}</div>

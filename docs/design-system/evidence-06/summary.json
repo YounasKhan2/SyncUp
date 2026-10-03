@@ -1,0 +1,19 @@
+{
+  "cases": 74,
+  "screenshots": 444,
+  "unaffectedStructuralDifferences": [],
+  "intentionalOwnedStyleBoundsChanges": 6472,
+  "interactionStepPairs": 48,
+  "crossBuildComparisons": 222,
+  "crossBuildByteIdentical": 0,
+  "crossBuildPixelRange": [
+    23378,
+    580310
+  ],
+  "sameBuildFinalComparisons": 444,
+  "sameBuildFinalDifferences": [],
+  "outsideRegionDifferences": [],
+  "warmupComparisons": 296,
+  "warmupDifferences": [],
+  "algorithm": "All decoded RGB pixels, zero tolerance. Full screenshots retained; no masking of comparison input. Region counts use the union of base and candidate owned rectangles, including their changed navigation footprint."
+}

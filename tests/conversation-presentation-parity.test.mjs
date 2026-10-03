@@ -1,3 +1,4 @@
+import {restoreShellNavigation} from './helpers/shell-navigation-parity.mjs'
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import fs from 'node:fs'
@@ -7,7 +8,7 @@ const baseline = JSON.parse(read('tests/fixtures/conversation-presentation-basel
 test('Conversation presentation pass preserves complete moved and retained implementations and resolved dependency identities', () => {
   for (const [old, value] of Object.entries(baseline.files)) {
     const file = fs.existsSync(new URL(value.relocatedPath, root)) ? value.relocatedPath : old
-    assert.equal(hash(canonical(file, read(file), baseline.files)), value.canonicalDigest, file)
+    assert.equal(hash(canonical(file, restoreShellNavigation(file, read(file)), baseline.files)), value.canonicalDigest, file)
     if (file !== old) assert.equal(fs.existsSync(new URL(old, root)), false, `no compatibility copy: ${old}`)
   }
 })

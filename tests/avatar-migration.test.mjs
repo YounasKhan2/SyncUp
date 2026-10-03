@@ -11,7 +11,7 @@ const read=file=>fs.readFileSync(file,'utf8').replaceAll('\r\n','\n')
 test('Avatar transfers only four exact root declarations and static prefixed utilities',()=>{
   for(const [file,record] of Object.entries(fixture.files)) {
     assert.equal(record.before,execFileSync('git',['show',`${fixture.base}:${file}`],{encoding:'utf8'}))
-    assert.equal(read(file),record.after)
+    assert.equal(restoreSharedPrimitives(file,read(file)),record.after)
   }
   const file='client/src/shared/components/Avatar.tsx',record=fixture.files[file]
   assert.equal(record.after.replace(' ui:relative ui:grid ui:place-items-center ui:overflow-hidden',''),record.before)

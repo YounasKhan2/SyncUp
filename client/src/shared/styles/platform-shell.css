@@ -96,7 +96,7 @@
 .privacy-note span { font-size: var(--type-control); }
 .mobile-brand { display: none; }
 
-.workspace { display: grid; width: 100%; height: 100vh; height: 100dvh; min-height: 0; grid-template-columns: 72px 280px minmax(0, 1fr); overflow: hidden; background: var(--color-surface-subtle); }
+.workspace { display: grid; width: 100%; height: 100vh; height: 100dvh; min-height: 0; grid-template-columns: 72px 280px minmax(0, 1fr); overflow: hidden; }
 .workspace.has-active-space { grid-template-columns: 72px minmax(0, 1fr); }
 .workspace.has-active-space .inbox-pane,
 .workspace.has-active-space .conversation-pane,

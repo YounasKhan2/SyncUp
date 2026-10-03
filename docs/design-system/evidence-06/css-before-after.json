@@ -1,0 +1,1788 @@
+{
+  "base": "bf407baf96aa0e9329f143e1ffa01280d664172a",
+  "files": [
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "beforeLines": 1301,
+      "afterLines": 1274,
+      "physicalDeclarations": {
+        "before": 2992,
+        "after": 2919
+      },
+      "ownedSelectorSites": {
+        "before": 57,
+        "after": 27
+      },
+      "ownedDeclarationSelectorSites": {
+        "before": 156,
+        "after": 53
+      },
+      "before": [
+        {
+          "selector": ".primary-rail",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "display",
+              "value": "flex"
+            },
+            {
+              "property": "align-items",
+              "value": "center"
+            },
+            {
+              "property": "flex-direction",
+              "value": "column"
+            },
+            {
+              "property": "gap",
+              "value": "18px"
+            },
+            {
+              "property": "padding",
+              "value": "12px 6px"
+            },
+            {
+              "property": "color",
+              "value": "#dce6dd"
+            },
+            {
+              "property": "background",
+              "value": "linear-gradient(180deg, #173c31, #102b24)"
+            }
+          ]
+        },
+        {
+          "selector": ".primary-rail > .brand-mark",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "width",
+              "value": "36px"
+            },
+            {
+              "property": "height",
+              "value": "36px"
+            },
+            {
+              "property": "margin-bottom",
+              "value": "12px"
+            },
+            {
+              "property": "border-radius",
+              "value": "11px"
+            },
+            {
+              "property": "background",
+              "value": "#f1eadb"
+            }
+          ]
+        },
+        {
+          "selector": ".primary-rail > .brand-mark svg",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "width",
+              "value": "29px"
+            },
+            {
+              "property": "height",
+              "value": "29px"
+            }
+          ]
+        },
+        {
+          "selector": ".rail-item",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "display",
+              "value": "flex"
+            },
+            {
+              "property": "width",
+              "value": "50px"
+            },
+            {
+              "property": "min-height",
+              "value": "48px"
+            },
+            {
+              "property": "align-items",
+              "value": "center"
+            },
+            {
+              "property": "flex-direction",
+              "value": "column"
+            },
+            {
+              "property": "justify-content",
+              "value": "center"
+            },
+            {
+              "property": "gap",
+              "value": "2px"
+            },
+            {
+              "property": "border",
+              "value": "0"
+            },
+            {
+              "property": "border-radius",
+              "value": "8px"
+            },
+            {
+              "property": "color",
+              "value": "#bdcdc2"
+            },
+            {
+              "property": "background",
+              "value": "transparent"
+            },
+            {
+              "property": "font",
+              "value": "inherit"
+            },
+            {
+              "property": "font-size",
+              "value": "var(--type-small)"
+            },
+            {
+              "property": "cursor",
+              "value": "pointer"
+            }
+          ]
+        },
+        {
+          "selector": ".rail-item-icon",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "position",
+              "value": "relative"
+            },
+            {
+              "property": "display",
+              "value": "grid"
+            },
+            {
+              "property": "place-items",
+              "value": "center"
+            }
+          ]
+        },
+        {
+          "selector": ".navigation-badge",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "position",
+              "value": "absolute"
+            },
+            {
+              "property": "top",
+              "value": "-6px"
+            },
+            {
+              "property": "right",
+              "value": "-9px"
+            },
+            {
+              "property": "display",
+              "value": "grid"
+            },
+            {
+              "property": "min-width",
+              "value": "15px"
+            },
+            {
+              "property": "height",
+              "value": "15px"
+            },
+            {
+              "property": "place-items",
+              "value": "center"
+            },
+            {
+              "property": "padding",
+              "value": "0 3px"
+            },
+            {
+              "property": "border",
+              "value": "1px solid var(--color-canvas)"
+            },
+            {
+              "property": "border-radius",
+              "value": "9px"
+            },
+            {
+              "property": "color",
+              "value": "#fff"
+            },
+            {
+              "property": "background",
+              "value": "#ae5447"
+            },
+            {
+              "property": "font-size",
+              "value": "var(--type-caption)"
+            },
+            {
+              "property": "font-weight",
+              "value": "700"
+            },
+            {
+              "property": "line-height",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "selector": ".rail-item-active",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "color",
+              "value": "var(--color-surface)"
+            },
+            {
+              "property": "background",
+              "value": "#315a47"
+            }
+          ]
+        },
+        {
+          "selector": ".rail-glyph",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "font-size",
+              "value": "var(--type-title)"
+            },
+            {
+              "property": "line-height",
+              "value": "20px"
+            }
+          ]
+        },
+        {
+          "selector": ".rail-spacer",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "flex",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "selector": ".profile-trigger",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "padding",
+              "value": "0"
+            },
+            {
+              "property": "border",
+              "value": "0"
+            },
+            {
+              "property": "background",
+              "value": "transparent"
+            },
+            {
+              "property": "cursor",
+              "value": "pointer"
+            }
+          ]
+        },
+        {
+          "selector": ".avatar-you",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "color",
+              "value": "#47644c"
+            },
+            {
+              "property": "background",
+              "value": "#dce7d7"
+            }
+          ]
+        },
+        {
+          "selector": ".inbox-pane",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "position",
+              "value": "relative"
+            },
+            {
+              "property": "display",
+              "value": "flex"
+            },
+            {
+              "property": "min-width",
+              "value": "0"
+            },
+            {
+              "property": "flex-direction",
+              "value": "column"
+            },
+            {
+              "property": "border-right",
+              "value": "1px solid #e6eae4"
+            },
+            {
+              "property": "background",
+              "value": "var(--color-canvas)"
+            }
+          ]
+        },
+        {
+          "selector": ".mobile-bottom-nav",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "display",
+              "value": "none"
+            }
+          ]
+        },
+        {
+          "selector": ".workspace",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "position",
+              "value": "relative"
+            }
+          ]
+        },
+        {
+          "selector": ".workspace",
+          "nesting": [
+            "@media (min-width: 701px) and (max-width: 1099px)"
+          ],
+          "declarations": [
+            {
+              "property": "grid-template-columns",
+              "value": "56px 248px minmax(0, 1fr)"
+            }
+          ]
+        },
+        {
+          "selector": ".primary-rail",
+          "nesting": [
+            "@media (min-width: 701px) and (max-width: 1099px)"
+          ],
+          "declarations": [
+            {
+              "property": "padding-inline",
+              "value": "4px"
+            }
+          ]
+        },
+        {
+          "selector": ".rail-item",
+          "nesting": [
+            "@media (min-width: 701px) and (max-width: 1099px)"
+          ],
+          "declarations": [
+            {
+              "property": "width",
+              "value": "46px"
+            }
+          ]
+        },
+        {
+          "selector": ".workspace",
+          "nesting": [
+            "@media (max-width: 700px)"
+          ],
+          "declarations": [
+            {
+              "property": "height",
+              "value": "100svh"
+            },
+            {
+              "property": "height",
+              "value": "100dvh"
+            },
+            {
+              "property": "min-height",
+              "value": "0"
+            },
+            {
+              "property": "grid-template-columns",
+              "value": "minmax(0, 1fr)"
+            },
+            {
+              "property": "grid-template-rows",
+              "value": "minmax(0, 1fr) calc(60px + env(safe-area-inset-bottom))"
+            }
+          ]
+        },
+        {
+          "selector": ".workspace.has-active-space",
+          "nesting": [
+            "@media (max-width: 700px)"
+          ],
+          "declarations": [
+            {
+              "property": "grid-template-columns",
+              "value": "minmax(0, 1fr)"
+            }
+          ]
+        },
+        {
+          "selector": ".workspace.has-active-updates",
+          "nesting": [
+            "@media (max-width: 700px)"
+          ],
+          "declarations": [
+            {
+              "property": "grid-template-columns",
+              "value": "minmax(0, 1fr)"
+            }
+          ]
+        },
+        {
+          "selector": ".primary-rail",
+          "nesting": [
+            "@media (max-width: 700px)"
+          ],
+          "declarations": [
+            {
+              "property": "display",
+              "value": "none"
+            }
+          ]
+        },
+        {
+          "selector": ".inbox-pane",
+          "nesting": [
+            "@media (max-width: 700px)"
+          ],
+          "declarations": [
+            {
+              "property": "display",
+              "value": "flex"
+            },
+            {
+              "property": "grid-column",
+              "value": "1"
+            },
+            {
+              "property": "grid-row",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "selector": ".workspace.has-active-chat .inbox-pane",
+          "nesting": [
+            "@media (max-width: 700px)"
+          ],
+          "declarations": [
+            {
+              "property": "display",
+              "value": "none"
+            }
+          ]
+        },
+        {
+          "selector": ".workspace.has-active-space .inbox-pane",
+          "nesting": [
+            "@media (max-width: 700px)"
+          ],
+          "declarations": [
+            {
+              "property": "display",
+              "value": "none"
+            }
+          ]
+        },
+        {
+          "selector": ".workspace.has-active-updates .inbox-pane",
+          "nesting": [
+            "@media (max-width: 700px)"
+          ],
+          "declarations": [
+            {
+              "property": "display",
+              "value": "none"
+            }
+          ]
+        },
+        {
+          "selector": ".workspace.has-active-updates .conversation-pane",
+          "nesting": [
+            "@media (max-width: 700px)"
+          ],
+          "declarations": [
+            {
+              "property": "display",
+              "value": "none"
+            }
+          ]
+        },
+        {
+          "selector": ".workspace.has-active-space .spaces-page",
+          "nesting": [
+            "@media (max-width: 700px)"
+          ],
+          "declarations": [
+            {
+              "property": "grid-column",
+              "value": "1"
+            },
+            {
+              "property": "grid-row",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "selector": ".workspace.has-active-updates .updates-page",
+          "nesting": [
+            "@media (max-width: 700px)"
+          ],
+          "declarations": [
+            {
+              "property": "grid-column",
+              "value": "1"
+            },
+            {
+              "property": "grid-row",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "selector": ".workspace.has-active-chat .active-conversation:not(.conversation-hidden)",
+          "nesting": [
+            "@media (max-width: 700px)"
+          ],
+          "declarations": [
+            {
+              "property": "display",
+              "value": "flex"
+            }
+          ]
+        },
+        {
+          "selector": ".workspace.has-active-chat .chat-details-screen",
+          "nesting": [
+            "@media (max-width: 700px)"
+          ],
+          "declarations": [
+            {
+              "property": "display",
+              "value": "flex"
+            }
+          ]
+        },
+        {
+          "selector": ".mobile-bottom-nav",
+          "nesting": [
+            "@media (max-width: 700px)"
+          ],
+          "declarations": [
+            {
+              "property": "position",
+              "value": "relative"
+            },
+            {
+              "property": "z-index",
+              "value": "8"
+            },
+            {
+              "property": "display",
+              "value": "grid"
+            },
+            {
+              "property": "grid-column",
+              "value": "1"
+            },
+            {
+              "property": "grid-row",
+              "value": "2"
+            },
+            {
+              "property": "grid-template-columns",
+              "value": "repeat(5, minmax(0, 1fr))"
+            },
+            {
+              "property": "align-items",
+              "value": "stretch"
+            },
+            {
+              "property": "padding",
+              "value": "3px 8px env(safe-area-inset-bottom)"
+            },
+            {
+              "property": "border-top",
+              "value": "1px solid #e5e9e3"
+            },
+            {
+              "property": "background",
+              "value": "var(--color-canvas)"
+            }
+          ]
+        },
+        {
+          "selector": ".mobile-bottom-nav button",
+          "nesting": [
+            "@media (max-width: 700px)"
+          ],
+          "declarations": [
+            {
+              "property": "display",
+              "value": "flex"
+            },
+            {
+              "property": "min-width",
+              "value": "44px"
+            },
+            {
+              "property": "min-height",
+              "value": "44px"
+            },
+            {
+              "property": "align-items",
+              "value": "center"
+            },
+            {
+              "property": "flex-direction",
+              "value": "column"
+            },
+            {
+              "property": "justify-content",
+              "value": "center"
+            },
+            {
+              "property": "gap",
+              "value": "3px"
+            },
+            {
+              "property": "border",
+              "value": "0"
+            },
+            {
+              "property": "border-radius",
+              "value": "8px"
+            },
+            {
+              "property": "color",
+              "value": "#7d8a80"
+            },
+            {
+              "property": "background",
+              "value": "transparent"
+            },
+            {
+              "property": "font",
+              "value": "inherit"
+            },
+            {
+              "property": "font-size",
+              "value": "var(--type-small)"
+            },
+            {
+              "property": "touch-action",
+              "value": "manipulation"
+            }
+          ]
+        },
+        {
+          "selector": ".mobile-bottom-nav button[aria-current=\"page\"]",
+          "nesting": [
+            "@media (max-width: 700px)"
+          ],
+          "declarations": [
+            {
+              "property": "color",
+              "value": "#315a40"
+            },
+            {
+              "property": "background",
+              "value": "#edf3ec"
+            },
+            {
+              "property": "font-weight",
+              "value": "650"
+            }
+          ]
+        },
+        {
+          "selector": ".mobile-bottom-nav button:hover",
+          "nesting": [
+            "@media (max-width: 700px)"
+          ],
+          "declarations": [
+            {
+              "property": "background",
+              "value": "#f0f4ee"
+            }
+          ]
+        },
+        {
+          "selector": ".mobile-nav-icon",
+          "nesting": [
+            "@media (max-width: 700px)"
+          ],
+          "declarations": [
+            {
+              "property": "position",
+              "value": "relative"
+            },
+            {
+              "property": "display",
+              "value": "grid"
+            },
+            {
+              "property": "place-items",
+              "value": "center"
+            }
+          ]
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .workspace",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "background-color",
+              "value": "var(--color-canvas)"
+            }
+          ]
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .inbox-pane",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "background-color",
+              "value": "var(--color-canvas)"
+            }
+          ]
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .mobile-bottom-nav",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "background-color",
+              "value": "var(--color-canvas)"
+            }
+          ]
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .inbox-pane",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "border-color",
+              "value": "var(--color-border)"
+            }
+          ]
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .mobile-bottom-nav button[aria-current=\"page\"]",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "color",
+              "value": "var(--color-text)"
+            },
+            {
+              "property": "background-color",
+              "value": "var(--color-surface-muted)"
+            }
+          ]
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .avatar-you",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "background-color",
+              "value": "#304237"
+            }
+          ]
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .rail-item-active",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "color",
+              "value": "#fff"
+            },
+            {
+              "property": "background",
+              "value": "#315a47"
+            }
+          ]
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .mobile-bottom-nav",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "border-color",
+              "value": "var(--color-border)"
+            }
+          ]
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .mobile-bottom-nav button",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "color",
+              "value": "var(--color-text-secondary)"
+            }
+          ]
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .navigation-badge",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "color",
+              "value": "#fff"
+            },
+            {
+              "property": "background",
+              "value": "#b55247"
+            }
+          ]
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .workspace",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "background",
+              "value": "var(--color-bg-app)"
+            }
+          ]
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .primary-rail",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "color",
+              "value": "var(--color-text-secondary)"
+            },
+            {
+              "property": "background",
+              "value": "var(--color-bg-navigation)"
+            },
+            {
+              "property": "border-color",
+              "value": "var(--color-border)"
+            }
+          ]
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .inbox-pane",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "color",
+              "value": "var(--color-text-secondary)"
+            },
+            {
+              "property": "background",
+              "value": "var(--color-bg-navigation)"
+            },
+            {
+              "property": "border-color",
+              "value": "var(--color-border)"
+            }
+          ]
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .mobile-bottom-nav",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "color",
+              "value": "var(--color-text-secondary)"
+            },
+            {
+              "property": "background",
+              "value": "var(--color-bg-navigation)"
+            },
+            {
+              "property": "border-color",
+              "value": "var(--color-border)"
+            }
+          ]
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .primary-rail > .brand-mark",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "background",
+              "value": "var(--color-primary-soft)"
+            }
+          ]
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .rail-item",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "color",
+              "value": "var(--color-text-secondary)"
+            }
+          ]
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .mobile-bottom-nav button",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "color",
+              "value": "var(--color-text-secondary)"
+            }
+          ]
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .rail-item:hover",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "color",
+              "value": "var(--color-text-primary)"
+            },
+            {
+              "property": "background",
+              "value": "var(--color-bg-hover)"
+            }
+          ]
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .rail-item-active",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "color",
+              "value": "var(--color-text-primary)"
+            },
+            {
+              "property": "background",
+              "value": "var(--color-selected)"
+            }
+          ]
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .mobile-bottom-nav button[aria-current=\"page\"]",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "color",
+              "value": "var(--color-text-primary)"
+            },
+            {
+              "property": "background",
+              "value": "var(--color-selected)"
+            }
+          ]
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .avatar-you",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "color",
+              "value": "var(--color-text-primary)"
+            },
+            {
+              "property": "background",
+              "value": "var(--color-primary-soft)"
+            }
+          ]
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .navigation-badge",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "color",
+              "value": "var(--color-on-primary)"
+            },
+            {
+              "property": "background",
+              "value": "var(--color-danger)"
+            }
+          ]
+        }
+      ],
+      "after": [
+        {
+          "selector": ".navigation-badge",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "top",
+              "value": "-6px"
+            },
+            {
+              "property": "right",
+              "value": "-9px"
+            }
+          ]
+        },
+        {
+          "selector": ".inbox-pane",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "position",
+              "value": "relative"
+            },
+            {
+              "property": "display",
+              "value": "flex"
+            },
+            {
+              "property": "min-width",
+              "value": "0"
+            },
+            {
+              "property": "flex-direction",
+              "value": "column"
+            },
+            {
+              "property": "border-right-width",
+              "value": "1px"
+            },
+            {
+              "property": "border-right-style",
+              "value": "solid"
+            }
+          ]
+        },
+        {
+          "selector": ".mobile-bottom-nav",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "display",
+              "value": "none"
+            }
+          ]
+        },
+        {
+          "selector": ".workspace",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "position",
+              "value": "relative"
+            }
+          ]
+        },
+        {
+          "selector": ".workspace",
+          "nesting": [
+            "@media (min-width: 701px) and (max-width: 1099px)"
+          ],
+          "declarations": [
+            {
+              "property": "grid-template-columns",
+              "value": "56px 248px minmax(0, 1fr)"
+            }
+          ]
+        },
+        {
+          "selector": ".workspace",
+          "nesting": [
+            "@media (max-width: 700px)"
+          ],
+          "declarations": [
+            {
+              "property": "height",
+              "value": "100svh"
+            },
+            {
+              "property": "height",
+              "value": "100dvh"
+            },
+            {
+              "property": "min-height",
+              "value": "0"
+            },
+            {
+              "property": "grid-template-columns",
+              "value": "minmax(0, 1fr)"
+            },
+            {
+              "property": "grid-template-rows",
+              "value": "minmax(0, 1fr) calc(60px + env(safe-area-inset-bottom))"
+            }
+          ]
+        },
+        {
+          "selector": ".workspace.has-active-space",
+          "nesting": [
+            "@media (max-width: 700px)"
+          ],
+          "declarations": [
+            {
+              "property": "grid-template-columns",
+              "value": "minmax(0, 1fr)"
+            }
+          ]
+        },
+        {
+          "selector": ".workspace.has-active-updates",
+          "nesting": [
+            "@media (max-width: 700px)"
+          ],
+          "declarations": [
+            {
+              "property": "grid-template-columns",
+              "value": "minmax(0, 1fr)"
+            }
+          ]
+        },
+        {
+          "selector": ".primary-rail",
+          "nesting": [
+            "@media (max-width: 700px)"
+          ],
+          "declarations": [
+            {
+              "property": "display",
+              "value": "none"
+            }
+          ]
+        },
+        {
+          "selector": ".inbox-pane",
+          "nesting": [
+            "@media (max-width: 700px)"
+          ],
+          "declarations": [
+            {
+              "property": "display",
+              "value": "flex"
+            },
+            {
+              "property": "grid-column",
+              "value": "1"
+            },
+            {
+              "property": "grid-row",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "selector": ".workspace.has-active-chat .inbox-pane",
+          "nesting": [
+            "@media (max-width: 700px)"
+          ],
+          "declarations": [
+            {
+              "property": "display",
+              "value": "none"
+            }
+          ]
+        },
+        {
+          "selector": ".workspace.has-active-space .inbox-pane",
+          "nesting": [
+            "@media (max-width: 700px)"
+          ],
+          "declarations": [
+            {
+              "property": "display",
+              "value": "none"
+            }
+          ]
+        },
+        {
+          "selector": ".workspace.has-active-updates .inbox-pane",
+          "nesting": [
+            "@media (max-width: 700px)"
+          ],
+          "declarations": [
+            {
+              "property": "display",
+              "value": "none"
+            }
+          ]
+        },
+        {
+          "selector": ".workspace.has-active-updates .conversation-pane",
+          "nesting": [
+            "@media (max-width: 700px)"
+          ],
+          "declarations": [
+            {
+              "property": "display",
+              "value": "none"
+            }
+          ]
+        },
+        {
+          "selector": ".workspace.has-active-space .spaces-page",
+          "nesting": [
+            "@media (max-width: 700px)"
+          ],
+          "declarations": [
+            {
+              "property": "grid-column",
+              "value": "1"
+            },
+            {
+              "property": "grid-row",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "selector": ".workspace.has-active-updates .updates-page",
+          "nesting": [
+            "@media (max-width: 700px)"
+          ],
+          "declarations": [
+            {
+              "property": "grid-column",
+              "value": "1"
+            },
+            {
+              "property": "grid-row",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "selector": ".workspace.has-active-chat .active-conversation:not(.conversation-hidden)",
+          "nesting": [
+            "@media (max-width: 700px)"
+          ],
+          "declarations": [
+            {
+              "property": "display",
+              "value": "flex"
+            }
+          ]
+        },
+        {
+          "selector": ".workspace.has-active-chat .chat-details-screen",
+          "nesting": [
+            "@media (max-width: 700px)"
+          ],
+          "declarations": [
+            {
+              "property": "display",
+              "value": "flex"
+            }
+          ]
+        },
+        {
+          "selector": ".mobile-bottom-nav",
+          "nesting": [
+            "@media (max-width: 700px)"
+          ],
+          "declarations": [
+            {
+              "property": "position",
+              "value": "relative"
+            },
+            {
+              "property": "z-index",
+              "value": "8"
+            },
+            {
+              "property": "display",
+              "value": "grid"
+            },
+            {
+              "property": "grid-column",
+              "value": "1"
+            },
+            {
+              "property": "grid-row",
+              "value": "2"
+            },
+            {
+              "property": "grid-template-columns",
+              "value": "repeat(5, minmax(0, 1fr))"
+            },
+            {
+              "property": "align-items",
+              "value": "stretch"
+            }
+          ]
+        },
+        {
+          "selector": ".primary-rail button:focus-visible",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "outline",
+              "value": "2px solid var(--ds-color-focus)"
+            },
+            {
+              "property": "outline-offset",
+              "value": "2px"
+            }
+          ]
+        },
+        {
+          "selector": ".mobile-bottom-nav button:focus-visible",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "outline",
+              "value": "2px solid var(--ds-color-focus)"
+            },
+            {
+              "property": "outline-offset",
+              "value": "2px"
+            }
+          ]
+        },
+        {
+          "selector": ".primary-rail",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "border-right",
+              "value": "1px solid var(--ds-color-border)"
+            }
+          ]
+        },
+        {
+          "selector": ".rail-item",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "border-width",
+              "value": "0 0 0 var(--ds-space-1)"
+            },
+            {
+              "property": "border-style",
+              "value": "solid"
+            }
+          ]
+        },
+        {
+          "selector": ".profile-trigger",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "border-width",
+              "value": "1px 0 0"
+            },
+            {
+              "property": "border-style",
+              "value": "solid"
+            }
+          ]
+        },
+        {
+          "selector": ".navigation-badge",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "border-width",
+              "value": "1px"
+            },
+            {
+              "property": "border-style",
+              "value": "solid"
+            }
+          ]
+        },
+        {
+          "selector": ".mobile-bottom-nav",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "border-top",
+              "value": "1px solid var(--ds-color-border)"
+            }
+          ]
+        },
+        {
+          "selector": ".mobile-bottom-nav button",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "border-width",
+              "value": "var(--ds-space-1) 0 0"
+            },
+            {
+              "property": "border-style",
+              "value": "solid"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "client/src/shared/styles/platform-shell.css",
+      "beforeLines": 105,
+      "afterLines": 105,
+      "physicalDeclarations": {
+        "before": 245,
+        "after": 244
+      },
+      "ownedSelectorSites": {
+        "before": 7,
+        "after": 7
+      },
+      "ownedDeclarationSelectorSites": {
+        "before": 14,
+        "after": 13
+      },
+      "before": [
+        {
+          "selector": ".workspace",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "display",
+              "value": "grid"
+            },
+            {
+              "property": "width",
+              "value": "100%"
+            },
+            {
+              "property": "height",
+              "value": "100vh"
+            },
+            {
+              "property": "height",
+              "value": "100dvh"
+            },
+            {
+              "property": "min-height",
+              "value": "0"
+            },
+            {
+              "property": "grid-template-columns",
+              "value": "72px 280px minmax(0, 1fr)"
+            },
+            {
+              "property": "overflow",
+              "value": "hidden"
+            },
+            {
+              "property": "background",
+              "value": "var(--color-surface-subtle)"
+            }
+          ]
+        },
+        {
+          "selector": ".workspace.has-active-space",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "grid-template-columns",
+              "value": "72px minmax(0, 1fr)"
+            }
+          ]
+        },
+        {
+          "selector": ".workspace.has-active-space .inbox-pane",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "display",
+              "value": "none"
+            }
+          ]
+        },
+        {
+          "selector": ".workspace.has-active-space .conversation-pane",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "display",
+              "value": "none"
+            }
+          ]
+        },
+        {
+          "selector": ".workspace.has-active-updates .inbox-pane",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "display",
+              "value": "none"
+            }
+          ]
+        },
+        {
+          "selector": ".workspace.has-active-updates .conversation-pane",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "display",
+              "value": "none"
+            }
+          ]
+        },
+        {
+          "selector": ".workspace.has-active-updates",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "grid-template-columns",
+              "value": "72px minmax(0, 1fr)"
+            }
+          ]
+        }
+      ],
+      "after": [
+        {
+          "selector": ".workspace",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "display",
+              "value": "grid"
+            },
+            {
+              "property": "width",
+              "value": "100%"
+            },
+            {
+              "property": "height",
+              "value": "100vh"
+            },
+            {
+              "property": "height",
+              "value": "100dvh"
+            },
+            {
+              "property": "min-height",
+              "value": "0"
+            },
+            {
+              "property": "grid-template-columns",
+              "value": "72px 280px minmax(0, 1fr)"
+            },
+            {
+              "property": "overflow",
+              "value": "hidden"
+            }
+          ]
+        },
+        {
+          "selector": ".workspace.has-active-space",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "grid-template-columns",
+              "value": "72px minmax(0, 1fr)"
+            }
+          ]
+        },
+        {
+          "selector": ".workspace.has-active-space .inbox-pane",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "display",
+              "value": "none"
+            }
+          ]
+        },
+        {
+          "selector": ".workspace.has-active-space .conversation-pane",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "display",
+              "value": "none"
+            }
+          ]
+        },
+        {
+          "selector": ".workspace.has-active-updates .inbox-pane",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "display",
+              "value": "none"
+            }
+          ]
+        },
+        {
+          "selector": ".workspace.has-active-updates .conversation-pane",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "display",
+              "value": "none"
+            }
+          ]
+        },
+        {
+          "selector": ".workspace.has-active-updates",
+          "nesting": [],
+          "declarations": [
+            {
+              "property": "grid-template-columns",
+              "value": "72px minmax(0, 1fr)"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "utilities": [
+    {
+      "file": "client/src/features/workspace/WorkspacePage.tsx",
+      "classes": [
+        "ui:bg-canvas"
+      ]
+    },
+    {
+      "file": "client/src/features/workspace/components/WorkspaceRail.tsx",
+      "classes": [
+        "ui:[&>.avatar]:bg-brand-soft",
+        "ui:[&>.avatar]:text-primary",
+        "ui:[&>.brand-mark>svg]:h-7",
+        "ui:[&>.brand-mark>svg]:w-7",
+        "ui:[&>.brand-mark]:bg-brand-soft",
+        "ui:[&>.brand-mark]:h-8",
+        "ui:[&>.brand-mark]:mb-5",
+        "ui:[&>.brand-mark]:rounded-lg",
+        "ui:[&>.brand-mark]:w-8",
+        "ui:absolute",
+        "ui:aria-[current=page]:bg-selected",
+        "ui:aria-[current=page]:border-brand",
+        "ui:aria-[current=page]:text-primary",
+        "ui:bg-danger",
+        "ui:bg-sidebar",
+        "ui:bg-transparent",
+        "ui:border-default",
+        "ui:border-sidebar",
+        "ui:border-transparent",
+        "ui:cursor-pointer",
+        "ui:flex",
+        "ui:flex-1",
+        "ui:flex-col",
+        "ui:gap-1",
+        "ui:gap-5",
+        "ui:grid",
+        "ui:h-6",
+        "ui:hover:bg-hover",
+        "ui:hover:text-primary",
+        "ui:items-center",
+        "ui:justify-center",
+        "ui:leading-none",
+        "ui:min-h-9",
+        "ui:min-w-6",
+        "ui:p-2",
+        "ui:place-items-center",
+        "ui:px-1",
+        "ui:px-2",
+        "ui:py-5",
+        "ui:relative",
+        "ui:rounded-full",
+        "ui:rounded-md",
+        "ui:text-danger-foreground",
+        "ui:text-label",
+        "ui:text-secondary",
+        "ui:w-9"
+      ]
+    },
+    {
+      "file": "client/src/features/workspace/components/MobileNavigation.tsx",
+      "classes": [
+        "ui:absolute",
+        "ui:aria-[current=page]:[&>span:last-child]:text-label",
+        "ui:aria-[current=page]:bg-selected",
+        "ui:aria-[current=page]:border-brand",
+        "ui:aria-[current=page]:text-primary",
+        "ui:bg-danger",
+        "ui:bg-sidebar",
+        "ui:bg-transparent",
+        "ui:border-default",
+        "ui:border-sidebar",
+        "ui:border-transparent",
+        "ui:cursor-pointer",
+        "ui:flex",
+        "ui:flex-col",
+        "ui:gap-1",
+        "ui:grid",
+        "ui:h-6",
+        "ui:hover:bg-hover",
+        "ui:hover:text-primary",
+        "ui:items-center",
+        "ui:justify-center",
+        "ui:leading-none",
+        "ui:min-h-9",
+        "ui:min-w-6",
+        "ui:min-w-9",
+        "ui:p-2",
+        "ui:pb-[calc(var(--ds-space-2)+env(safe-area-inset-bottom))]",
+        "ui:place-items-center",
+        "ui:pt-2",
+        "ui:px-1",
+        "ui:px-4",
+        "ui:relative",
+        "ui:rounded-full",
+        "ui:rounded-md",
+        "ui:text-caption",
+        "ui:text-danger-foreground",
+        "ui:text-label",
+        "ui:text-secondary",
+        "ui:touch-manipulation",
+        "ui:w-dvw"
+      ]
+    },
+    {
+      "file": "client/src/features/workspace/components/InboxPane.tsx",
+      "classes": [
+        "ui:bg-surface",
+        "ui:border-default",
+        "ui:text-secondary"
+      ]
+    }
+  ],
+  "categories": [
+    "COLOR",
+    "TYPOGRAPHY",
+    "SPACING",
+    "RADIUS",
+    "BORDER",
+    "STATE",
+    "SURFACE",
+    "ICON_PRESENTATION",
+    "RESPONSIVE_SHELL"
+  ],
+  "preserved": [
+    "All non-owned CSS selectors and declaration order",
+    "72/280 and 56/248 desktop columns",
+    "700px navigation switch",
+    "1100px rail width split",
+    "safe-area inset and 60px mobile row",
+    "z-index 8 mobile layer",
+    "global and feature focus rules"
+  ],
+  "compatibility": [
+    "Local border widths prevent new globally registered Tailwind custom properties",
+    "Semantic typography applies on labels because unlayered global button font inheritance wins over layered utilities",
+    "Mobile navigation uses 100dvw to remain full-width despite the pre-existing mobile Calls implicit-grid-column coupling"
+  ]
+}

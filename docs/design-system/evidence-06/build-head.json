@@ -1,0 +1,24 @@
+{
+  "base": "bf407baf96aa0e9329f143e1ffa01280d664172a",
+  "side": "head",
+  "archiveSHA256": "93d828fd85227b5f3497cdbca76e3e0b368fc5a89483d70b3bd0dc5e551a2fb8",
+  "fixtureSHA256": "551bc28b10d81bc380a42c5d98ef329e2343566317329af582b82fbd42e5f6b8",
+  "bootstrapSHA256": "89cd3a99fb0b9595db623aaccf90c3d7f1aab8df46f4d3f33d2b660c5cc2cfba",
+  "apiBoundarySHA256": "3043d22e11fb0d58dfeef0efc0d64cd2517570526179e0b9f4895fe31228cc71",
+  "production": {
+    "client/src/features/workspace/WorkspacePage.tsx": "dd4c83e30b4c7a3f2a1c1855862ac76531c4a432199eb5700d0de7980a224f36",
+    "client/src/features/workspace/components/WorkspaceRail.tsx": "b8ae76816c560d193b7f89c23501679e0d525536736b0b7d11888efec20d7906",
+    "client/src/features/workspace/components/MobileNavigation.tsx": "dd0bfccb9e825adc115b502d5bca1222e55d4a56a15a5ad9ecef04141c0d4b87",
+    "client/src/features/workspace/components/InboxPane.tsx": "a7b2235c3c895db224d407e34b56ef1b8793f44fa574364fda3c1575f6b261e0",
+    "client/src/shared/styles/platform.css": "29fb3def11a500bb96d16fad211e311ffd20ba0dd6dcba977315594577c3b493",
+    "client/src/shared/styles/platform-shell.css": "63b941ba06bbfa0dd44e62e51e1d1cd47adc246ffc7a845a8964410f612b4057"
+  },
+  "productionCanonicalLF": {
+    "client/src/features/workspace/WorkspacePage.tsx": "b5eaefa777bcee85f3a9b6e74ae69d4b2424d4bd721d344aab0d432f6dae7523",
+    "client/src/features/workspace/components/WorkspaceRail.tsx": "a47a61c6f3ab8a8ab87d69968b3fa38ac5313f6c7d2db6b3e7e41a279e534b29",
+    "client/src/features/workspace/components/MobileNavigation.tsx": "7a0e8f1fb2d85e04093a1bd4e6024f28769c60594507cafe7f1f973620cac8ff",
+    "client/src/features/workspace/components/InboxPane.tsx": "8847c552fe5a41f7c9f36f767c1ff1f89f8bb5b5f5d529a199d54084a2a82805",
+    "client/src/shared/styles/platform.css": "cd0e84b4682b9857b4c3dee93fcb7cc6f17bbdf86989e497260dd5519baefa61",
+    "client/src/shared/styles/platform-shell.css": "9a899dafbc429ac8f6056085b2c308d22fecd13c7676fa32bc00cc524544bd4c"
+  }
+}

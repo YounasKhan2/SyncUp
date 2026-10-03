@@ -381,7 +381,7 @@ export function WorkspacePage({ user, onSignedOut }: { user: User; onSignedOut: 
   return (
     <>
     <a className="skip-link" href="#workspace-main">Skip to main content</a>
-    <main id="workspace-main" tabIndex={-1} className={`workspace${activeChatId ? ' has-active-chat' : ''}${showCalls ? ' has-active-calls' : ''}${showSpaces ? ' has-active-space' : ''}${showUpdates ? ' has-active-updates' : ''}`}>
+    <main id="workspace-main" tabIndex={-1} className={`workspace ui:bg-canvas${activeChatId ? ' has-active-chat' : ''}${showCalls ? ' has-active-calls' : ''}${showSpaces ? ' has-active-space' : ''}${showUpdates ? ' has-active-updates' : ''}`}>
       <WorkspaceRail
         user={currentUser}
         showCalls={showCalls}
