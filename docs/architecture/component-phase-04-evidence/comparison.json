@@ -1,0 +1,1826 @@
+[
+  {
+    "id": "desktop-dark-announcement",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "96ca960e9a8d8ebcf999d1e604c9ccda6cbac3048fe68fd7132577788200022f",
+    "afterScreenshotSHA256": "0198e514adf4c9d13ad94167738f3178269858b164050e4d388c4e3d68ca2209",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": true,
+    "beforeRootAttributes": {
+      "data-appearance": "dark",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "dark",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "desktop-dark-announcement",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "desktop-dark-collapsed",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "ebf1c72f00052a176f4b73b36a0c751390b630c3c976d91b2f7977c5c387f30b",
+    "afterScreenshotSHA256": "57027ed00ba498deada27762d9ec203a55813e1bd13ded0ff2d15fb631769048",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": true,
+    "beforeRootAttributes": {
+      "data-appearance": "dark",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "dark",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "desktop-dark-collapsed",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "desktop-dark-history",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "5ed0e5c45d33f47ccdf337d89500ce75eefaabd7f38b2d1ecde1fc42df0e9758",
+    "afterScreenshotSHA256": "98b00c9fc68efb93c92c67e399447fe705def27ca94af5dbb785268186e8cb34",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": true,
+    "beforeRootAttributes": {
+      "data-appearance": "dark",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "dark",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "desktop-dark-history",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "desktop-dark-home",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "304b67b18d26f979de156d218f72d52d4aefe60d289246c25d96c87f755da431",
+    "afterScreenshotSHA256": "49944ebadcb259f02633163443168c5b3e9a1af19642e5988cc10de9bd732c33",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": true,
+    "beforeRootAttributes": {
+      "data-appearance": "dark",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "dark",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "desktop-dark-home",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "desktop-dark-object",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "abbeae91f3f9cb97b457df952c46494b8a913064497899a6aef604b3dcdf752f",
+    "afterScreenshotSHA256": "157437632d0321687a39e50bb46b0ce01f025c8cb1e0c0f1de12ff281e19b80b",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": true,
+    "beforeRootAttributes": {
+      "data-appearance": "dark",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "dark",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "desktop-dark-object",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "desktop-dark-private",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "2c0a3b7890bf53534c96741e14a49006898f2dd9163192a01327652707d6ab38",
+    "afterScreenshotSHA256": "326c462c91d6de1d4aed3029dff522f30e78b21765a3b1e030039dd662c74e4f",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": true,
+    "beforeRootAttributes": {
+      "data-appearance": "dark",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "dark",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "desktop-dark-private",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "desktop-dark-text",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "d037d3cd636a0a640779b1b28468ab3529dde945cb8265cc321ab433ac20b80f",
+    "afterScreenshotSHA256": "b1e3fbccd48c6c985db2db08328f772b7bfd07f0f61b2d97de9eb7a135ef9f79",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": true,
+    "beforeRootAttributes": {
+      "data-appearance": "dark",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "dark",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "desktop-dark-text",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "desktop-dark-voice",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "80aa21dcf301d56817d3e8be0130bf871eeb650e50e3586eeda68a7cc2ff4c02",
+    "afterScreenshotSHA256": "36b5660955aa8b88e692e563a87e0e5ae84c00c9824340d2b1b36b9232ab4d83",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": true,
+    "beforeRootAttributes": {
+      "data-appearance": "dark",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "dark",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "desktop-dark-voice",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "desktop-light-announcement",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "d10f6661e14a39e948e66943f1b378e59342decf68baa752d545e0851421cbd9",
+    "afterScreenshotSHA256": "6f8aa1cb04bb2c18100158b4302024c98b9487a57b847da1bc24ff669138d4fa",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": true,
+    "beforeRootAttributes": {
+      "data-appearance": "light",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "light",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "desktop-light-announcement",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "desktop-light-collapsed",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "6d3873db95489c00eb5e9324daaa031e562f32fe5ef1056def6e31acbf29cfea",
+    "afterScreenshotSHA256": "183ca441b2928672ed607c6d7f38aeb93662d853ccc24cff5dca0dbc0dbcff14",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": true,
+    "beforeRootAttributes": {
+      "data-appearance": "light",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "light",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "desktop-light-collapsed",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "desktop-light-history",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "53657ebc048c216e2978f45beef20b1c7c88ab4db6b9b922aeeb8cc4c25ae2e4",
+    "afterScreenshotSHA256": "c34e362851d098f8778c82ac8117a6a81c57b0f9f24a68e3bbff700b51630372",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": true,
+    "beforeRootAttributes": {
+      "data-appearance": "light",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "light",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "desktop-light-history",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "desktop-light-home",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "7b2aa05e350664412f57922b3cdf21021a5e11eb2f454c5c16beacc427012602",
+    "afterScreenshotSHA256": "48110f120205c78d818a7952b4c80213aad8a57b9ddf038bdecf1a508cdb5c09",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": true,
+    "beforeRootAttributes": {
+      "data-appearance": "light",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "light",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "desktop-light-home",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "desktop-light-object",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "2b637d0fbc9ef3f2b7f18abe2dfe4213d4765cd2ae1d82e33859b95d2f051e21",
+    "afterScreenshotSHA256": "a51245ca46dd26a372441f29a455b74bbe9579bba689c16a1eaeaff88ad252fa",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": true,
+    "beforeRootAttributes": {
+      "data-appearance": "light",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "light",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "desktop-light-object",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "desktop-light-private",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "8eb70b2bbed76bf92324a454735224a1852e723919764572e4a8276b0b801f84",
+    "afterScreenshotSHA256": "3bab5ab90a40b31d9c9b40e4e6ae06a0432c6fba8d52e1ce226910bf58530db7",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": true,
+    "beforeRootAttributes": {
+      "data-appearance": "light",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "light",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "desktop-light-private",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "desktop-light-text",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "a5c0572aa7d0a1644acd650ee7df802b67e28d275a0ec596582b71798c1e1b8e",
+    "afterScreenshotSHA256": "2d28538bcf18a5ee289313efec24390e7bdcda2f61cc376d7429e5e30ba6c492",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": true,
+    "beforeRootAttributes": {
+      "data-appearance": "light",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "light",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "desktop-light-text",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "desktop-light-voice",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "6c04fec4ab1dc02d6e9b992cf04d39d04cea800b960f6c64f4afba08e2841e05",
+    "afterScreenshotSHA256": "8d9ee55889f3c52842bf20b70b2228b911cbd994637a02274f229a8758dd4dc2",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": true,
+    "beforeRootAttributes": {
+      "data-appearance": "light",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "light",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "desktop-light-voice",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "desktop-system-announcement",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "d10f6661e14a39e948e66943f1b378e59342decf68baa752d545e0851421cbd9",
+    "afterScreenshotSHA256": "0198e514adf4c9d13ad94167738f3178269858b164050e4d388c4e3d68ca2209",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": false,
+    "beforeRootAttributes": {
+      "data-appearance": "system",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "system",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "desktop-dark-announcement",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "desktop-system-collapsed",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "6d3873db95489c00eb5e9324daaa031e562f32fe5ef1056def6e31acbf29cfea",
+    "afterScreenshotSHA256": "57027ed00ba498deada27762d9ec203a55813e1bd13ded0ff2d15fb631769048",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": false,
+    "beforeRootAttributes": {
+      "data-appearance": "system",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "system",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "desktop-dark-collapsed",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "desktop-system-history",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "53657ebc048c216e2978f45beef20b1c7c88ab4db6b9b922aeeb8cc4c25ae2e4",
+    "afterScreenshotSHA256": "98b00c9fc68efb93c92c67e399447fe705def27ca94af5dbb785268186e8cb34",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": false,
+    "beforeRootAttributes": {
+      "data-appearance": "system",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "system",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "desktop-dark-history",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "desktop-system-home",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "7b2aa05e350664412f57922b3cdf21021a5e11eb2f454c5c16beacc427012602",
+    "afterScreenshotSHA256": "49944ebadcb259f02633163443168c5b3e9a1af19642e5988cc10de9bd732c33",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": false,
+    "beforeRootAttributes": {
+      "data-appearance": "system",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "system",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "desktop-dark-home",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "desktop-system-object",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "2b637d0fbc9ef3f2b7f18abe2dfe4213d4765cd2ae1d82e33859b95d2f051e21",
+    "afterScreenshotSHA256": "157437632d0321687a39e50bb46b0ce01f025c8cb1e0c0f1de12ff281e19b80b",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": false,
+    "beforeRootAttributes": {
+      "data-appearance": "system",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "system",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "desktop-dark-object",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "desktop-system-private",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "8eb70b2bbed76bf92324a454735224a1852e723919764572e4a8276b0b801f84",
+    "afterScreenshotSHA256": "326c462c91d6de1d4aed3029dff522f30e78b21765a3b1e030039dd662c74e4f",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": false,
+    "beforeRootAttributes": {
+      "data-appearance": "system",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "system",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "desktop-dark-private",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "desktop-system-text",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "a5c0572aa7d0a1644acd650ee7df802b67e28d275a0ec596582b71798c1e1b8e",
+    "afterScreenshotSHA256": "b1e3fbccd48c6c985db2db08328f772b7bfd07f0f61b2d97de9eb7a135ef9f79",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": false,
+    "beforeRootAttributes": {
+      "data-appearance": "system",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "system",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "desktop-dark-text",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "desktop-system-voice",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "6c04fec4ab1dc02d6e9b992cf04d39d04cea800b960f6c64f4afba08e2841e05",
+    "afterScreenshotSHA256": "36b5660955aa8b88e692e563a87e0e5ae84c00c9824340d2b1b36b9232ab4d83",
+    "beforeRaster": [
+      1440,
+      900
+    ],
+    "afterRaster": [
+      1440,
+      900
+    ],
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": false,
+    "beforeRootAttributes": {
+      "data-appearance": "system",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "system",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "desktop-dark-voice",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "mobile-dark-announcement",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "a976112b0ca0bdfcf95af2314adc19d25c84dfd8f9b8440283b0b9ffb0f6b9da",
+    "afterScreenshotSHA256": "cd80267c56e54e368508838bec632deadcf2165b015bdbfe3fa465c29631f304",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": true,
+    "beforeRootAttributes": {
+      "data-appearance": "dark",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "dark",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "mobile-dark-announcement",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "mobile-dark-collapsed",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "2994fa807fe375ef8faac371a490357d31e617ec4b17c69251fdf9638b4fd2a3",
+    "afterScreenshotSHA256": "cccf918a7c38007d3c5cdaaa88ce07062f2c3e5fb9836885d4179e2d65d36824",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": true,
+    "beforeRootAttributes": {
+      "data-appearance": "dark",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "dark",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "mobile-dark-collapsed",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "mobile-dark-history",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "4b02c6d28200c040f0bbd93f62f33836c92df2280f46872b40d4af32f356f369",
+    "afterScreenshotSHA256": "959fe093f97c2ab4cbe574030dc1be36853bc6c3ed668b76f018ac54c6184c6a",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": true,
+    "beforeRootAttributes": {
+      "data-appearance": "dark",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "dark",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "mobile-dark-history",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "mobile-dark-home",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "727f108f877167da3776012020ed8283cf2ce6de3cc1aa55d28ee717e313045f",
+    "afterScreenshotSHA256": "d2d2a7716969c843e25069afa7e54c36c90d03d002748de3af3b330f2f0ee1b2",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": true,
+    "beforeRootAttributes": {
+      "data-appearance": "dark",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "dark",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "mobile-dark-home",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "mobile-dark-object",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "e7d2134fb6bb0a328beb9a06f5bc4ad3e4cd8abddd359c3febab61a05f9b7419",
+    "afterScreenshotSHA256": "37398e3b6e88918995221d559c6e733bfa36a9cb3d3768f5f4de47a6bf23805c",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": true,
+    "beforeRootAttributes": {
+      "data-appearance": "dark",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "dark",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "mobile-dark-object",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "mobile-dark-private",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "6560b3fbb1d40c686ddf97438d7afc186807d82ec7aa8380c7f39b6c31c3869e",
+    "afterScreenshotSHA256": "4115cf885a0ace89ef69b706916637d19eff248ed1bfaa8510dad0bfd8948d96",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": true,
+    "beforeRootAttributes": {
+      "data-appearance": "dark",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "dark",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "mobile-dark-private",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "mobile-dark-text",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "fc82c5571361348e034d4003952914f7dd0f11ca15200dba65c4241833caa81d",
+    "afterScreenshotSHA256": "9e730eba930aa699b5f6a7a1de2593a8a2c8423da873b678e90c73598331004c",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": true,
+    "beforeRootAttributes": {
+      "data-appearance": "dark",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "dark",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "mobile-dark-text",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "mobile-dark-voice",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "4ee5efcd7667171bebe27889683ab393de7425d87609e52b08b47b4af2e21c40",
+    "afterScreenshotSHA256": "a6254e51b846487c763eb607cf22a1871744f7ab129c4dc473ad6ae1b959fc6b",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": true,
+    "beforeRootAttributes": {
+      "data-appearance": "dark",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "dark",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "mobile-dark-voice",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "mobile-light-announcement",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "f0a55d6343e5442655df84a0d5ff2e9262de01c9354b40ff03c5d4f55e2234b3",
+    "afterScreenshotSHA256": "709cddf91b5e614fbc65ffd44e69746bee560944e431e1472b776d1cc3df38a1",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": true,
+    "beforeRootAttributes": {
+      "data-appearance": "light",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "light",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "mobile-light-announcement",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "mobile-light-collapsed",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "609fa463ef2411e8ead0aab810bed217327eca1c31f4a94e11c32fa2c48b1458",
+    "afterScreenshotSHA256": "9bba2bbbe8aed3bc0c2e9cb5e9170802a56fb1a8cc3027f19bd07e727d52af82",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": true,
+    "beforeRootAttributes": {
+      "data-appearance": "light",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "light",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "mobile-light-collapsed",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "mobile-light-history",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "80209a199c08e7f7c43ce13d9f05fe355ce44b02bb3d50535af89931bf1ca267",
+    "afterScreenshotSHA256": "73f7e1c4b11fec810d47802997dfda770a95566a620bf4ecf348292bf6ef6064",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": true,
+    "beforeRootAttributes": {
+      "data-appearance": "light",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "light",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "mobile-light-history",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "mobile-light-home",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "3c62fc71cca1ec63c7ecac050d76dfe7276244ea217f31a7014002f7c926be36",
+    "afterScreenshotSHA256": "3962bb161ae13fa5f54d3907ab5e920b229a6e1eaef192d3d9efe9d125e974cf",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": true,
+    "beforeRootAttributes": {
+      "data-appearance": "light",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "light",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "mobile-light-home",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "mobile-light-object",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "4041bba477f81fbe7715f1a296105e09da5270e036328f30cc036dbca9f1a08d",
+    "afterScreenshotSHA256": "27922605c0874c7c15da3d3a06174f39b4a6d7648bceee1a646248afa689b806",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": true,
+    "beforeRootAttributes": {
+      "data-appearance": "light",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "light",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "mobile-light-object",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "mobile-light-private",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "82e48e362c22c40ebc3bb636e60f427caf9b3441292fa5d2b1338610b2df0bcc",
+    "afterScreenshotSHA256": "c6df6de428b2e6da28ebd9b783c0b9c131bc7549428aea9ff054aa92b1ced1bc",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": true,
+    "beforeRootAttributes": {
+      "data-appearance": "light",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "light",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "mobile-light-private",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "mobile-light-text",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "095e7b6dd4095ae36dd4f8dffa660afc58be8f9e09e43a312c1a44fe416c7f35",
+    "afterScreenshotSHA256": "f4f6ee7ab6c957e39694bd66594f5d8df70f911b3c72e83ba1ff12a2b8c2235b",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": true,
+    "beforeRootAttributes": {
+      "data-appearance": "light",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "light",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "mobile-light-text",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "mobile-light-voice",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "0b54f6b95943f6ed4fa48aa3117de6656f7bb36e772fc37c58e4460d1843e47b",
+    "afterScreenshotSHA256": "5927f4e9dc8ccfda34bd02083984fb6ca07340657f7c28f2bbf43e9fadefa332",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": true,
+    "beforeRootAttributes": {
+      "data-appearance": "light",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "light",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "mobile-light-voice",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "mobile-system-announcement",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "7340a18b04d5b0f6a4beebc9922e1032c1cb57e5940ae568ebd4786819eeb9a8",
+    "afterScreenshotSHA256": "cd80267c56e54e368508838bec632deadcf2165b015bdbfe3fa465c29631f304",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": true,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": false,
+    "beforeRootAttributes": {
+      "data-appearance": "system",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "system",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "beforeSystemDark": true,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "mobile-dark-announcement",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "mobile-system-collapsed",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "cccf918a7c38007d3c5cdaaa88ce07062f2c3e5fb9836885d4179e2d65d36824",
+    "afterScreenshotSHA256": "cccf918a7c38007d3c5cdaaa88ce07062f2c3e5fb9836885d4179e2d65d36824",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": true,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": true,
+    "beforeRootAttributes": {
+      "data-appearance": "system",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "system",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "beforeSystemDark": true,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "mobile-dark-collapsed",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "mobile-system-history",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "959fe093f97c2ab4cbe574030dc1be36853bc6c3ed668b76f018ac54c6184c6a",
+    "afterScreenshotSHA256": "959fe093f97c2ab4cbe574030dc1be36853bc6c3ed668b76f018ac54c6184c6a",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": true,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": true,
+    "beforeRootAttributes": {
+      "data-appearance": "system",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "system",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "beforeSystemDark": true,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "mobile-dark-history",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "mobile-system-home",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "3c62fc71cca1ec63c7ecac050d76dfe7276244ea217f31a7014002f7c926be36",
+    "afterScreenshotSHA256": "d2d2a7716969c843e25069afa7e54c36c90d03d002748de3af3b330f2f0ee1b2",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": false,
+    "beforeRootAttributes": {
+      "data-appearance": "system",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "system",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "mobile-dark-home",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "mobile-system-object",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "37398e3b6e88918995221d559c6e733bfa36a9cb3d3768f5f4de47a6bf23805c",
+    "afterScreenshotSHA256": "37398e3b6e88918995221d559c6e733bfa36a9cb3d3768f5f4de47a6bf23805c",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": true,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": true,
+    "beforeRootAttributes": {
+      "data-appearance": "system",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "system",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "beforeSystemDark": true,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "mobile-dark-object",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "mobile-system-private",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "4115cf885a0ace89ef69b706916637d19eff248ed1bfaa8510dad0bfd8948d96",
+    "afterScreenshotSHA256": "4115cf885a0ace89ef69b706916637d19eff248ed1bfaa8510dad0bfd8948d96",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": true,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": true,
+    "beforeRootAttributes": {
+      "data-appearance": "system",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "system",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "beforeSystemDark": true,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "mobile-dark-private",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "mobile-system-text",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": false,
+    "beforeScreenshotSHA256": "095e7b6dd4095ae36dd4f8dffa660afc58be8f9e09e43a312c1a44fe416c7f35",
+    "afterScreenshotSHA256": "9e730eba930aa699b5f6a7a1de2593a8a2c8423da873b678e90c73598331004c",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": false,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": false,
+    "beforeRootAttributes": {
+      "data-appearance": "system",
+      "data-theme": "light",
+      "style": "color-scheme: light;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "system",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "beforeSystemDark": false,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "mobile-dark-text",
+    "effectiveThemeDomComputedBoundsEqual": true
+  },
+  {
+    "id": "mobile-system-voice",
+    "completeSnapshotEqual": false,
+    "screenshotBytesEqual": true,
+    "beforeScreenshotSHA256": "a6254e51b846487c763eb607cf22a1871744f7ab129c4dc473ad6ae1b959fc6b",
+    "afterScreenshotSHA256": "a6254e51b846487c763eb607cf22a1871744f7ab129c4dc473ad6ae1b959fc6b",
+    "beforeRaster": [
+      390,
+      844
+    ],
+    "afterRaster": [
+      390,
+      844
+    ],
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.190000057220459,
+    "systemDark": true,
+    "beforeDiagnostics": "[]",
+    "afterDiagnostics": "[]",
+    "domComputedBoundsEqual": true,
+    "beforeRootAttributes": {
+      "data-appearance": "system",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "afterRootAttributes": {
+      "data-appearance": "system",
+      "data-theme": "dark",
+      "style": "color-scheme: dark;"
+    },
+    "beforeSystemDark": true,
+    "afterSystemDark": true,
+    "effectiveThemeReference": "mobile-dark-voice",
+    "effectiveThemeDomComputedBoundsEqual": true
+  }
+]

@@ -1,13 +1,14 @@
+import { SpaceChannelHeader } from './components/SpaceChannelHeader'
 import { useEffect, useRef, useState } from 'react'
 import type { FormEvent, ReactNode } from 'react'
-import { ArrowLeft, AtSign, BriefcaseBusiness, CalendarDays, ChevronDown, ChevronRight, Download, FileText, FileUp, Hash, Heart, Image, Layers3, LockKeyhole, Megaphone, Mic, Plus, Rocket, Search, Send, Settings2, Sparkles, Users, Volume2, X } from 'lucide-react'
+import { ArrowLeft, AtSign, BriefcaseBusiness, CalendarDays, ChevronDown, ChevronRight, Download, FileText, FileUp, Hash, Heart, Image, Layers3, LockKeyhole, Megaphone, Plus, Rocket, Search, Send, Settings2, Sparkles, Users, Volume2, X } from 'lucide-react'
 import { decryptMessage } from '../auth/crypto/crypto'
 import { api, apiUpload } from '../../shared/api'
 import type { ActiveCall, DisplayMessage, EncryptedChatMessage } from '../../shared/types'
 import type { SpaceCategory, SpaceChannel, SpaceChannelRolePermission, SpaceIcon, SpaceMember, SpaceMessage, SpaceSharedObject, SpaceSummary } from './types'
 import { SharedObjectCard } from './SharedObjectCard'
-import { SpaceVoiceChannelView } from './SpaceVoiceChannelView'
-import { SpaceLegacyHistoryView } from './SpaceLegacyHistoryView'
+import { SpaceVoiceChannelView } from './components/SpaceVoiceChannelView'
+import { SpaceLegacyHistoryView } from './components/SpaceLegacyHistoryView'
 
 type SpaceDetails = {
   id: string
@@ -813,17 +814,16 @@ export function SpacesPage({ onBack, onJoinVoiceRoom, openTarget, userId }: {
         </aside>
         <section className="space-channel-view" aria-label={activeChannel ? `Channel ${activeChannel.name}` : 'No channel selected'}>
           {activeChannel ? <>
-            <header className="space-channel-header"><div>
-              <span>{activeChannel.type === 'announcement' ? <Megaphone size={16} aria-hidden="true" /> : activeChannel.type === 'private' ? <LockKeyhole size={16} aria-hidden="true" /> : activeChannel.type === 'voice' ? <Volume2 size={16} aria-hidden="true" /> : <Hash size={16} aria-hidden="true" />}{activeChannel.name}</span>
-              <small>{activeChannel.topic || (activeChannel.type === 'announcement' ? 'Only Space moderators can post here' : activeChannel.type === 'private' ? 'Private channel' : activeChannel.type === 'voice' ? 'Persistent voice room · up to 16 people' : 'Visible to invited members')}</small>
-            </div>
-            <div className="space-channel-actions">
-              {activeChannel.type !== 'voice' && <>
-                <button className="space-topic-edit" type="button" onClick={() => { setError(''); setSearchResults([]); setSearchSubmitted(false); setSearchOpen(true) }} aria-label={`Search ${space.name}`} title="Search this Space"><Search size={14} aria-hidden="true" /><span>Search</span></button>
-                <button className="space-topic-edit" type="button" onClick={() => void openFilePanel()} aria-label={`Files in ${activeChannel.name}`} title="Channel files"><FileText size={14} aria-hidden="true" /><span>Files</span></button>
-              </>}
-              {canCreateChannels && <button className="space-topic-edit" type="button" onClick={() => openChannelSettings('overview')}><Settings2 size={13} aria-hidden="true" /> Edit channel</button>}
-              {activeChannel.type === 'voice' && <button className="space-topic-edit" type="button" onClick={() => {
+            <SpaceChannelHeader
+              channelName={activeChannel.name}
+              channelType={activeChannel.type}
+              topic={activeChannel.topic}
+              spaceName={space.name}
+              canEdit={canCreateChannels}
+              onSearch={() => { setError(''); setSearchResults([]); setSearchSubmitted(false); setSearchOpen(true) }}
+              onFiles={() => void openFilePanel()}
+              onEdit={() => openChannelSettings('overview')}
+              onJoinVoice={() => {
                 onJoinVoiceRoom({
                   id: activeChannel.id,
                   chatId: activeChannel.id,
@@ -834,9 +834,8 @@ export function SpacesPage({ onBack, onJoinVoiceRoom, openTarget, userId }: {
                   voiceChannelId: activeChannel.id,
                   canPublish: activeChannel.can_speak,
                 })
-              }}><Mic size={13} aria-hidden="true" /> Join voice</button>}
-            </div>
-            </header>
+              }}
+            />
             {activeChannel.type === 'voice' ? <SpaceVoiceChannelView onJoin={() => {
                 onJoinVoiceRoom({
                   id: activeChannel.id,

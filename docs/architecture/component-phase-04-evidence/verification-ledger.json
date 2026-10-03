@@ -1,0 +1,150 @@
+{
+  "base": "c8ae377c756038992dd0f02fe303e66f83a6c698",
+  "baseline": {
+    "typecheck": 0,
+    "test": {
+      "initialExit": 1,
+      "reason": "Windows UNKNOWN open of unchanged IncomingCallBanner.tsx",
+      "retryExit": 0,
+      "pass": 207,
+      "fail": 0,
+      "skip": 0
+    },
+    "architecture": {
+      "exit": 0,
+      "edges": 268,
+      "informational": 21,
+      "violations": 0
+    },
+    "build": 0,
+    "media": {
+      "exit": 0,
+      "pass": 11,
+      "fail": 0,
+      "skip": 0
+    },
+    "integration": {
+      "exit": 0,
+      "pass": 1,
+      "fail": 0,
+      "skip": 0,
+      "durationMs": 34541.6529
+    }
+  },
+  "precommit": {
+    "typecheck": 0,
+    "test": {
+      "exit": 0,
+      "pass": 212,
+      "fail": 0,
+      "skip": 0,
+      "durationMs": 37647.6376,
+      "failedAttempts": [
+        "six workers native allocation failure (155/161)",
+        "one worker native allocation failure (204/205)",
+        "spawn UNKNOWN/ENOMEM"
+      ]
+    },
+    "architecture": {
+      "exit": 0,
+      "edges": 270,
+      "informational": 21,
+      "violations": 0
+    },
+    "build": 0,
+    "media": {
+      "exit": 0,
+      "pass": 11,
+      "fail": 0,
+      "skip": 0,
+      "durationMs": 545.9547
+    },
+    "integration": {
+      "exit": 0,
+      "pass": 1,
+      "fail": 0,
+      "skip": 0,
+      "durationMs": 43560.582,
+      "earlierAttempts": [
+        "API unavailable: skipped",
+        "Appwrite download ECONNRESET: 500 versus 200"
+      ]
+    }
+  },
+  "unchanged": "No flags, heap overrides, environment/configuration/assertion/rate-limit changes. New tests share the existing UI worker. Unavailable dev API restarted using original npm run dev:server.",
+  "logs": [
+    {
+      "file": "component-phase04-baseline-build.log",
+      "sha256": "88e80226257c518264b64d7771976a04de9c9c307f7400559f5976b7d7ddcfd9"
+    },
+    {
+      "file": "component-phase04-baseline-check-architecture.log",
+      "sha256": "6ae982458d6112f6909591fd91310f3d64c1ef8eae50c5d0a65b44db52ecd0da"
+    },
+    {
+      "file": "component-phase04-baseline-test-integration.log",
+      "sha256": "eac2f4cb91d40efef0835043981dd1cabb0d02fdaae4c53a53793c255053e7cb"
+    },
+    {
+      "file": "component-phase04-baseline-test-media-v2.log",
+      "sha256": "8756a25ae3595f9ca012fe43d7b05924a1edd0e641bed0a23a74067b422a3648"
+    },
+    {
+      "file": "component-phase04-baseline-test-retry.log",
+      "sha256": "e5f099eb27435362dc028114a22cfd60a4f46ec637780fbf41e9051e23205231"
+    },
+    {
+      "file": "component-phase04-baseline-test.log",
+      "sha256": "2963c5c3de9a5d9fdf4394cac6933f80c027785c9073bd0e0b0a7fe26bc79193"
+    },
+    {
+      "file": "component-phase04-baseline-typecheck.log",
+      "sha256": "4890a8ef6de56833fc8b49218de7906987543a0456aa324051780406979204c1"
+    },
+    {
+      "file": "component-phase04-precommit-build.log",
+      "sha256": "c09c884cd4ec88b6fdd42e9187f04b69199fdcd9669da6f89057465db4789a80"
+    },
+    {
+      "file": "component-phase04-precommit-check-architecture.log",
+      "sha256": "f36c2605862947ae6782e995687860dfd6fbd91aae7363051ed433f9d0a67afe"
+    },
+    {
+      "file": "component-phase04-precommit-integration-failed-storage.log",
+      "sha256": "59361e6be8b72a966c0e26dc34bfee8fa281a81ed50606accb63eaa663466122"
+    },
+    {
+      "file": "component-phase04-precommit-integration-skipped.log",
+      "sha256": "9d15c1eea496d5018c82242cd146602cd819c1fb76b7c3476dbc21138beada71"
+    },
+    {
+      "file": "component-phase04-precommit-test-failed-oom-retry.log",
+      "sha256": "79a51d0c3fa9d782cacac15493b1704b21d2dc033bba3d4b0674e0295058a19a"
+    },
+    {
+      "file": "component-phase04-precommit-test-failed-oom.log",
+      "sha256": "1cc20296574561d54c4969db72cbcfac8a58fabbdf924d52d355cf7356057669"
+    },
+    {
+      "file": "component-phase04-precommit-test-failed-spawn.log",
+      "sha256": "1006275fa5f3c81147e1b200b402e06daa559c213715855af10864376b35e0f6"
+    },
+    {
+      "file": "component-phase04-precommit-test-integration.log",
+      "sha256": "db21bb670658ae97e80a58b7c9d6c6ade9072ea11bb91395275e34ef7f61071c"
+    },
+    {
+      "file": "component-phase04-precommit-test-media-v2.log",
+      "sha256": "f04f797e2f65176a1c56911419667f714f55ab444a356d8d88571d16cb7ee595"
+    },
+    {
+      "file": "component-phase04-precommit-test.log",
+      "sha256": "19a8a55b295b762db7bff19864bbaa48dfe4b8cce5852a9824dd123c22a054f7"
+    },
+    {
+      "file": "component-phase04-precommit-typecheck.log",
+      "sha256": "e5fdcf376eeb59234408cacf0afc15cc04c9ea5944e5d6d4784302ab03e73e64"
+    }
+  ],
+  "committedHead": "The same six gates will be repeated after commit; exact HEAD results are reported in the PR and final report."
+}
