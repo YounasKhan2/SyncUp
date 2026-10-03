@@ -1,0 +1,47 @@
+[
+  {
+    "side": "base",
+    "family": "workspace",
+    "base": "aabff6a4e15cfa73c33fd30287e1771914c3c60f",
+    "archiveSHA256": "fc724ea287c2074aba7be6a1ce2014e6df68436e0238cb2680d67990f3aa877c",
+    "fixtureSHA256": "b547be7aca30fde1606682fd3fbd15ad072a784c99ef552db449e9edff5317a0",
+    "bootstrapSHA256": "89cd3a99fb0b9595db623aaccf90c3d7f1aab8df46f4d3f33d2b660c5cc2cfba",
+    "overlaySHA256": {
+      "src/shared/components/Avatar.tsx": "d1b660113ff95296df7b553c99e8c50119a68fd220310d36c6b413c220c600e7",
+      "src/shared/styles/platform.css": "4824f106f5e695ef754ec35c064ceb0392b5521c00e0093548c27801da9f2431"
+    },
+    "cssSHA256": {
+      "index-B0Rw3-EO.css": "d8a5faca04bcd26e6268e68c8300c25f62fa03579ac4013e4b7038c31c4aeaf2"
+    }
+  },
+  {
+    "side": "base",
+    "family": "conversation",
+    "base": "aabff6a4e15cfa73c33fd30287e1771914c3c60f",
+    "archiveSHA256": "fc724ea287c2074aba7be6a1ce2014e6df68436e0238cb2680d67990f3aa877c",
+    "fixtureSHA256": "b547be7aca30fde1606682fd3fbd15ad072a784c99ef552db449e9edff5317a0",
+    "bootstrapSHA256": "89cd3a99fb0b9595db623aaccf90c3d7f1aab8df46f4d3f33d2b660c5cc2cfba",
+    "overlaySHA256": {
+      "src/shared/components/Avatar.tsx": "d1b660113ff95296df7b553c99e8c50119a68fd220310d36c6b413c220c600e7",
+      "src/shared/styles/platform.css": "4824f106f5e695ef754ec35c064ceb0392b5521c00e0093548c27801da9f2431"
+    },
+    "cssSHA256": {
+      "index-B0Rw3-EO.css": "d8a5faca04bcd26e6268e68c8300c25f62fa03579ac4013e4b7038c31c4aeaf2"
+    }
+  },
+  {
+    "side": "base",
+    "family": "custom",
+    "base": "aabff6a4e15cfa73c33fd30287e1771914c3c60f",
+    "archiveSHA256": "fc724ea287c2074aba7be6a1ce2014e6df68436e0238cb2680d67990f3aa877c",
+    "fixtureSHA256": "b547be7aca30fde1606682fd3fbd15ad072a784c99ef552db449e9edff5317a0",
+    "bootstrapSHA256": "89cd3a99fb0b9595db623aaccf90c3d7f1aab8df46f4d3f33d2b660c5cc2cfba",
+    "overlaySHA256": {
+      "src/shared/components/Avatar.tsx": "d1b660113ff95296df7b553c99e8c50119a68fd220310d36c6b413c220c600e7",
+      "src/shared/styles/platform.css": "4824f106f5e695ef754ec35c064ceb0392b5521c00e0093548c27801da9f2431"
+    },
+    "cssSHA256": {
+      "index-B0Rw3-EO.css": "d8a5faca04bcd26e6268e68c8300c25f62fa03579ac4013e4b7038c31c4aeaf2"
+    }
+  }
+]

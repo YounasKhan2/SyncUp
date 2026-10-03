@@ -1,0 +1,422 @@
+[
+  {
+    "step": "initial",
+    "state": [
+      {
+        "className": "avatar  avatar-has-image",
+        "fallback": "S",
+        "fallbackVisibility": "hidden",
+        "img": {
+          "complete": true,
+          "display": "block",
+          "naturalHeight": 64,
+          "naturalWidth": 96,
+          "objectFit": "cover",
+          "src": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2296%22%20height%3D%2264%22%3E%3Crect%20width%3D%2296%22%20height%3D%2264%22%20fill%3D%22%2376546f%22%2F%3E%3Ccircle%20cx%3D%2248%22%20cy%3D%2225%22%20r%3D%2215%22%20fill%3D%22%23fffcf8%22%2F%3E%3Cpath%20d%3D%22M20%2064a28%2028%200%200%201%2056%200%22%20fill%3D%22%23d2b8cb%22%2F%3E%3C%2Fsvg%3E"
+        },
+        "label": "Sam Rivera"
+      },
+      {
+        "className": "avatar ",
+        "fallback": "A",
+        "fallbackVisibility": "visible",
+        "img": null,
+        "label": " Alex Chen "
+      },
+      {
+        "className": "avatar",
+        "fallback": "R",
+        "fallbackVisibility": "visible",
+        "img": {
+          "complete": true,
+          "display": "none",
+          "naturalHeight": 0,
+          "naturalWidth": 0,
+          "objectFit": "cover",
+          "src": "/broken-avatar"
+        },
+        "label": "Robin Lee"
+      },
+      {
+        "className": "avatar ",
+        "fallback": "?",
+        "fallbackVisibility": "visible",
+        "img": null,
+        "label": ""
+      },
+      {
+        "className": "avatar profile-avatar",
+        "fallback": "R",
+        "fallbackVisibility": "visible",
+        "img": {
+          "complete": true,
+          "display": "none",
+          "naturalHeight": 0,
+          "naturalWidth": 0,
+          "objectFit": "cover",
+          "src": "/broken-avatar"
+        },
+        "label": "Robin Lee"
+      }
+    ]
+  },
+  {
+    "step": "Same props rerender",
+    "state": [
+      {
+        "className": "avatar  avatar-has-image",
+        "fallback": "S",
+        "fallbackVisibility": "hidden",
+        "img": {
+          "complete": true,
+          "display": "block",
+          "naturalHeight": 64,
+          "naturalWidth": 96,
+          "objectFit": "cover",
+          "src": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2296%22%20height%3D%2264%22%3E%3Crect%20width%3D%2296%22%20height%3D%2264%22%20fill%3D%22%2376546f%22%2F%3E%3Ccircle%20cx%3D%2248%22%20cy%3D%2225%22%20r%3D%2215%22%20fill%3D%22%23fffcf8%22%2F%3E%3Cpath%20d%3D%22M20%2064a28%2028%200%200%201%2056%200%22%20fill%3D%22%23d2b8cb%22%2F%3E%3C%2Fsvg%3E"
+        },
+        "label": "Sam Rivera"
+      },
+      {
+        "className": "avatar ",
+        "fallback": "A",
+        "fallbackVisibility": "visible",
+        "img": null,
+        "label": " Alex Chen "
+      },
+      {
+        "className": "avatar",
+        "fallback": "R",
+        "fallbackVisibility": "visible",
+        "img": {
+          "complete": true,
+          "display": "none",
+          "naturalHeight": 0,
+          "naturalWidth": 0,
+          "objectFit": "cover",
+          "src": "/broken-avatar"
+        },
+        "label": "Robin Lee"
+      },
+      {
+        "className": "avatar ",
+        "fallback": "?",
+        "fallbackVisibility": "visible",
+        "img": null,
+        "label": ""
+      },
+      {
+        "className": "avatar profile-avatar",
+        "fallback": "R",
+        "fallbackVisibility": "visible",
+        "img": {
+          "complete": true,
+          "display": "none",
+          "naturalHeight": 0,
+          "naturalWidth": 0,
+          "objectFit": "cover",
+          "src": "/broken-avatar"
+        },
+        "label": "Robin Lee"
+      }
+    ]
+  },
+  {
+    "step": "Change name",
+    "state": [
+      {
+        "className": "avatar  avatar-has-image",
+        "fallback": "S",
+        "fallbackVisibility": "hidden",
+        "img": {
+          "complete": true,
+          "display": "block",
+          "naturalHeight": 64,
+          "naturalWidth": 96,
+          "objectFit": "cover",
+          "src": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2296%22%20height%3D%2264%22%3E%3Crect%20width%3D%2296%22%20height%3D%2264%22%20fill%3D%22%2376546f%22%2F%3E%3Ccircle%20cx%3D%2248%22%20cy%3D%2225%22%20r%3D%2215%22%20fill%3D%22%23fffcf8%22%2F%3E%3Cpath%20d%3D%22M20%2064a28%2028%200%200%201%2056%200%22%20fill%3D%22%23d2b8cb%22%2F%3E%3C%2Fsvg%3E"
+        },
+        "label": "Sam Rivera"
+      },
+      {
+        "className": "avatar ",
+        "fallback": "A",
+        "fallbackVisibility": "visible",
+        "img": null,
+        "label": " Alex Chen "
+      },
+      {
+        "className": "avatar",
+        "fallback": "R",
+        "fallbackVisibility": "visible",
+        "img": {
+          "complete": true,
+          "display": "none",
+          "naturalHeight": 0,
+          "naturalWidth": 0,
+          "objectFit": "cover",
+          "src": "/broken-avatar"
+        },
+        "label": "Robin Lee"
+      },
+      {
+        "className": "avatar ",
+        "fallback": "?",
+        "fallbackVisibility": "visible",
+        "img": null,
+        "label": ""
+      },
+      {
+        "className": "avatar profile-avatar",
+        "fallback": "R",
+        "fallbackVisibility": "visible",
+        "img": {
+          "complete": true,
+          "display": "none",
+          "naturalHeight": 0,
+          "naturalWidth": 0,
+          "objectFit": "cover",
+          "src": "/broken-avatar"
+        },
+        "label": "Riley Lee"
+      }
+    ]
+  },
+  {
+    "step": "Change class",
+    "state": [
+      {
+        "className": "avatar  avatar-has-image",
+        "fallback": "S",
+        "fallbackVisibility": "hidden",
+        "img": {
+          "complete": true,
+          "display": "block",
+          "naturalHeight": 64,
+          "naturalWidth": 96,
+          "objectFit": "cover",
+          "src": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2296%22%20height%3D%2264%22%3E%3Crect%20width%3D%2296%22%20height%3D%2264%22%20fill%3D%22%2376546f%22%2F%3E%3Ccircle%20cx%3D%2248%22%20cy%3D%2225%22%20r%3D%2215%22%20fill%3D%22%23fffcf8%22%2F%3E%3Cpath%20d%3D%22M20%2064a28%2028%200%200%201%2056%200%22%20fill%3D%22%23d2b8cb%22%2F%3E%3C%2Fsvg%3E"
+        },
+        "label": "Sam Rivera"
+      },
+      {
+        "className": "avatar ",
+        "fallback": "A",
+        "fallbackVisibility": "visible",
+        "img": null,
+        "label": " Alex Chen "
+      },
+      {
+        "className": "avatar",
+        "fallback": "R",
+        "fallbackVisibility": "visible",
+        "img": {
+          "complete": true,
+          "display": "none",
+          "naturalHeight": 0,
+          "naturalWidth": 0,
+          "objectFit": "cover",
+          "src": "/broken-avatar"
+        },
+        "label": "Robin Lee"
+      },
+      {
+        "className": "avatar ",
+        "fallback": "?",
+        "fallbackVisibility": "visible",
+        "img": null,
+        "label": ""
+      },
+      {
+        "className": "avatar profile-avatar extension avatar-has-image",
+        "fallback": "R",
+        "fallbackVisibility": "hidden",
+        "img": {
+          "complete": true,
+          "display": "none",
+          "naturalHeight": 0,
+          "naturalWidth": 0,
+          "objectFit": "cover",
+          "src": "/broken-avatar"
+        },
+        "label": "Riley Lee"
+      }
+    ]
+  },
+  {
+    "step": "Valid source",
+    "state": [
+      {
+        "className": "avatar  avatar-has-image",
+        "fallback": "S",
+        "fallbackVisibility": "hidden",
+        "img": {
+          "complete": true,
+          "display": "block",
+          "naturalHeight": 64,
+          "naturalWidth": 96,
+          "objectFit": "cover",
+          "src": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2296%22%20height%3D%2264%22%3E%3Crect%20width%3D%2296%22%20height%3D%2264%22%20fill%3D%22%2376546f%22%2F%3E%3Ccircle%20cx%3D%2248%22%20cy%3D%2225%22%20r%3D%2215%22%20fill%3D%22%23fffcf8%22%2F%3E%3Cpath%20d%3D%22M20%2064a28%2028%200%200%201%2056%200%22%20fill%3D%22%23d2b8cb%22%2F%3E%3C%2Fsvg%3E"
+        },
+        "label": "Sam Rivera"
+      },
+      {
+        "className": "avatar ",
+        "fallback": "A",
+        "fallbackVisibility": "visible",
+        "img": null,
+        "label": " Alex Chen "
+      },
+      {
+        "className": "avatar",
+        "fallback": "R",
+        "fallbackVisibility": "visible",
+        "img": {
+          "complete": true,
+          "display": "none",
+          "naturalHeight": 0,
+          "naturalWidth": 0,
+          "objectFit": "cover",
+          "src": "/broken-avatar"
+        },
+        "label": "Robin Lee"
+      },
+      {
+        "className": "avatar ",
+        "fallback": "?",
+        "fallbackVisibility": "visible",
+        "img": null,
+        "label": ""
+      },
+      {
+        "className": "avatar profile-avatar extension avatar-has-image",
+        "fallback": "R",
+        "fallbackVisibility": "hidden",
+        "img": {
+          "complete": true,
+          "display": "block",
+          "naturalHeight": 64,
+          "naturalWidth": 96,
+          "objectFit": "cover",
+          "src": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2296%22%20height%3D%2264%22%3E%3Crect%20width%3D%2296%22%20height%3D%2264%22%20fill%3D%22%2376546f%22%2F%3E%3Ccircle%20cx%3D%2248%22%20cy%3D%2225%22%20r%3D%2215%22%20fill%3D%22%23fffcf8%22%2F%3E%3Cpath%20d%3D%22M20%2064a28%2028%200%200%201%2056%200%22%20fill%3D%22%23d2b8cb%22%2F%3E%3C%2Fsvg%3E"
+        },
+        "label": "Riley Lee"
+      }
+    ]
+  },
+  {
+    "step": "Missing source",
+    "state": [
+      {
+        "className": "avatar  avatar-has-image",
+        "fallback": "S",
+        "fallbackVisibility": "hidden",
+        "img": {
+          "complete": true,
+          "display": "block",
+          "naturalHeight": 64,
+          "naturalWidth": 96,
+          "objectFit": "cover",
+          "src": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2296%22%20height%3D%2264%22%3E%3Crect%20width%3D%2296%22%20height%3D%2264%22%20fill%3D%22%2376546f%22%2F%3E%3Ccircle%20cx%3D%2248%22%20cy%3D%2225%22%20r%3D%2215%22%20fill%3D%22%23fffcf8%22%2F%3E%3Cpath%20d%3D%22M20%2064a28%2028%200%200%201%2056%200%22%20fill%3D%22%23d2b8cb%22%2F%3E%3C%2Fsvg%3E"
+        },
+        "label": "Sam Rivera"
+      },
+      {
+        "className": "avatar ",
+        "fallback": "A",
+        "fallbackVisibility": "visible",
+        "img": null,
+        "label": " Alex Chen "
+      },
+      {
+        "className": "avatar",
+        "fallback": "R",
+        "fallbackVisibility": "visible",
+        "img": {
+          "complete": true,
+          "display": "none",
+          "naturalHeight": 0,
+          "naturalWidth": 0,
+          "objectFit": "cover",
+          "src": "/broken-avatar"
+        },
+        "label": "Robin Lee"
+      },
+      {
+        "className": "avatar ",
+        "fallback": "?",
+        "fallbackVisibility": "visible",
+        "img": null,
+        "label": ""
+      },
+      {
+        "className": "avatar profile-avatar extension",
+        "fallback": "R",
+        "fallbackVisibility": "visible",
+        "img": null,
+        "label": "Riley Lee"
+      }
+    ]
+  },
+  {
+    "step": "Broken source",
+    "state": [
+      {
+        "className": "avatar  avatar-has-image",
+        "fallback": "S",
+        "fallbackVisibility": "hidden",
+        "img": {
+          "complete": true,
+          "display": "block",
+          "naturalHeight": 64,
+          "naturalWidth": 96,
+          "objectFit": "cover",
+          "src": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2296%22%20height%3D%2264%22%3E%3Crect%20width%3D%2296%22%20height%3D%2264%22%20fill%3D%22%2376546f%22%2F%3E%3Ccircle%20cx%3D%2248%22%20cy%3D%2225%22%20r%3D%2215%22%20fill%3D%22%23fffcf8%22%2F%3E%3Cpath%20d%3D%22M20%2064a28%2028%200%200%201%2056%200%22%20fill%3D%22%23d2b8cb%22%2F%3E%3C%2Fsvg%3E"
+        },
+        "label": "Sam Rivera"
+      },
+      {
+        "className": "avatar ",
+        "fallback": "A",
+        "fallbackVisibility": "visible",
+        "img": null,
+        "label": " Alex Chen "
+      },
+      {
+        "className": "avatar",
+        "fallback": "R",
+        "fallbackVisibility": "visible",
+        "img": {
+          "complete": true,
+          "display": "none",
+          "naturalHeight": 0,
+          "naturalWidth": 0,
+          "objectFit": "cover",
+          "src": "/broken-avatar"
+        },
+        "label": "Robin Lee"
+      },
+      {
+        "className": "avatar ",
+        "fallback": "?",
+        "fallbackVisibility": "visible",
+        "img": null,
+        "label": ""
+      },
+      {
+        "className": "avatar profile-avatar extension",
+        "fallback": "R",
+        "fallbackVisibility": "visible",
+        "img": {
+          "complete": true,
+          "display": "none",
+          "naturalHeight": 0,
+          "naturalWidth": 0,
+          "objectFit": "cover",
+          "src": "/broken-avatar"
+        },
+        "label": "Riley Lee"
+      }
+    ]
+  }
+]

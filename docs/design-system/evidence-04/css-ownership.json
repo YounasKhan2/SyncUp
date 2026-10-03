@@ -1,0 +1,156 @@
+{
+  "before": {
+    "selectors": 3,
+    "declarations": 16,
+    "rules": [
+      {
+        "selector": ".avatar",
+        "declarations": [
+          {
+            "property": "position",
+            "value": "relative"
+          },
+          {
+            "property": "display",
+            "value": "grid"
+          },
+          {
+            "property": "width",
+            "value": "31px"
+          },
+          {
+            "property": "height",
+            "value": "31px"
+          },
+          {
+            "property": "flex",
+            "value": "0 0 auto"
+          },
+          {
+            "property": "place-items",
+            "value": "center"
+          },
+          {
+            "property": "overflow",
+            "value": "hidden"
+          },
+          {
+            "property": "border-radius",
+            "value": "50%"
+          },
+          {
+            "property": "font-size",
+            "value": "var(--type-body-xs)"
+          },
+          {
+            "property": "font-weight",
+            "value": "600"
+          }
+        ]
+      },
+      {
+        "selector": ".avatar > img",
+        "declarations": [
+          {
+            "property": "position",
+            "value": "absolute"
+          },
+          {
+            "property": "inset",
+            "value": "0"
+          },
+          {
+            "property": "width",
+            "value": "100%"
+          },
+          {
+            "property": "height",
+            "value": "100%"
+          },
+          {
+            "property": "object-fit",
+            "value": "cover"
+          }
+        ]
+      },
+      {
+        "selector": ".avatar-has-image > span",
+        "declarations": [
+          {
+            "property": "visibility",
+            "value": "hidden"
+          }
+        ]
+      }
+    ]
+  },
+  "after": {
+    "selectors": 3,
+    "declarations": 12,
+    "rules": [
+      {
+        "selector": ".avatar",
+        "declarations": [
+          {
+            "property": "width",
+            "value": "31px"
+          },
+          {
+            "property": "height",
+            "value": "31px"
+          },
+          {
+            "property": "flex",
+            "value": "0 0 auto"
+          },
+          {
+            "property": "border-radius",
+            "value": "50%"
+          },
+          {
+            "property": "font-size",
+            "value": "var(--type-body-xs)"
+          },
+          {
+            "property": "font-weight",
+            "value": "600"
+          }
+        ]
+      },
+      {
+        "selector": ".avatar > img",
+        "declarations": [
+          {
+            "property": "position",
+            "value": "absolute"
+          },
+          {
+            "property": "inset",
+            "value": "0"
+          },
+          {
+            "property": "width",
+            "value": "100%"
+          },
+          {
+            "property": "height",
+            "value": "100%"
+          },
+          {
+            "property": "object-fit",
+            "value": "cover"
+          }
+        ]
+      },
+      {
+        "selector": ".avatar-has-image > span",
+        "declarations": [
+          {
+            "property": "visibility",
+            "value": "hidden"
+          }
+        ]
+      }
+    ]
+  }
+}

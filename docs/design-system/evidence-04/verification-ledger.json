@@ -1,0 +1,87 @@
+{
+  "base": "aabff6a4e15cfa73c33fd30287e1771914c3c60f",
+  "branch": "design/syncup-avatar-tailwind-migration-04",
+  "baseline": [
+    {
+      "command": "typecheck",
+      "exit": 0,
+      "log": ".git/design04/baseline-typecheck.log"
+    },
+    {
+      "command": "test",
+      "exit": 0,
+      "log": ".git/design04/baseline-test.log"
+    },
+    {
+      "command": "check:architecture",
+      "exit": 0,
+      "log": ".git/design04/baseline-check-architecture.log"
+    },
+    {
+      "command": "build",
+      "exit": 0,
+      "log": ".git/design04/baseline-build.log"
+    },
+    {
+      "command": "test:media-v2",
+      "exit": 0,
+      "log": ".git/design04/baseline-test-media-v2.log"
+    },
+    {
+      "command": "test:integration",
+      "exit": 0,
+      "log": ".git/design04/baseline-test-integration.log"
+    }
+  ],
+  "candidate": [
+    {
+      "command": "typecheck",
+      "exit": 0,
+      "log": ".git/design04/candidate-typecheck.log"
+    },
+    {
+      "command": "test",
+      "exit": 0,
+      "log": ".git/design04/candidate-test.log"
+    },
+    {
+      "command": "check:architecture",
+      "exit": 0,
+      "log": ".git/design04/candidate-check-architecture.log"
+    },
+    {
+      "command": "build",
+      "exit": 0,
+      "log": ".git/design04/candidate-build.log"
+    },
+    {
+      "command": "test:media-v2",
+      "exit": 0,
+      "log": ".git/design04/candidate-test-media-v2.log"
+    },
+    {
+      "command": "test:integration",
+      "exit": 0,
+      "log": ".git/design04/candidate-test-integration.log"
+    }
+  ],
+  "characterizationBeforeProductionEdits": {
+    "tests": 3,
+    "pass": 3,
+    "skipped": 0
+  },
+  "baselineStandardTests": 238,
+  "candidateStandardTests": 244,
+  "architecture": {
+    "edges": 276,
+    "informational": 21,
+    "violations": 0
+  },
+  "mediaV2": 11,
+  "integration": 1,
+  "productionFiles": [
+    "client/src/shared/components/Avatar.tsx",
+    "client/src/shared/styles/platform.css"
+  ],
+  "committedHeadGates": "Run after commit; exact results reported in PR and final response"
+}

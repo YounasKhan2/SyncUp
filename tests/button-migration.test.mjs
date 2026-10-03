@@ -4,6 +4,7 @@ import fs from 'node:fs'
 import { execFileSync } from 'node:child_process'
 import postcss from 'postcss'
 import { buildProof } from './helpers/design-system-wiring-proof.mjs'
+import { restoreAvatarMigration } from './helpers/avatar-migration-parity.mjs'
 const fixture = JSON.parse(fs.readFileSync('tests/fixtures/button-migration-baseline.json', 'utf8'))
 const read = file => fs.readFileSync(file, 'utf8').replaceAll('\r\n', '\n')
 
@@ -23,7 +24,7 @@ test('Button migration changes only static primitive class mappings and exact ow
 
 test('Button migration leaves every other tracked production source and configuration unchanged', () => {
   const files = execFileSync('git', ['ls-tree', '-r', '--name-only', fixture.base], { encoding: 'utf8' }).trim().split('\n').filter(file => file.startsWith('client/') || file.startsWith('server/') || ['package.json', 'package-lock.json'].includes(file))
-  for (const file of files) if (!fixture.files[file]) assert.equal(fs.readFileSync(file).toString().replaceAll('\r\n', '\n'), execFileSync('git', ['show', `${fixture.base}:${file}`], { encoding: 'utf8' }).replaceAll('\r\n', '\n'), file)
+  for (const file of files) if (!fixture.files[file]) assert.equal(restoreAvatarMigration(file,fs.readFileSync(file).toString().replaceAll('\r\n', '\n')), execFileSync('git', ['show', `${fixture.base}:${file}`], { encoding: 'utf8' }).replaceAll('\r\n', '\n'), file)
 })
 
 test('Removed primitive declarations cannot return and unrelated dialog CSS stays exact', () => {
