@@ -33,7 +33,7 @@ test('Workspace history retains local day boundaries, section order, input row o
   const atDay = (offset, hours = 0) => { const date = new FixedDate(today); date.setDate(date.getDate() + offset); date.setHours(hours); return date.toISOString() }
   const calls = [call('today-a', atDay(0)), call('old', atDay(-20)), call('today-b', atDay(0, 10)), call('yesterday', atDay(-1, 23)), call('week', atDay(-2, 12)), call('tomorrow', atDay(1))]
   const tree = surface('InboxPane', props({ callHistory: calls }), FixedDate)
-  assert.equal(tree.type, 'aside'); assert.equal(tree.props.className, 'inbox-pane')
+  assert.equal(tree.type, 'aside'); assert.ok(tree.props.className.split(' ').includes('inbox-pane'))
   const list = find(tree, 'call-history-list')[0]
   const chatList = find(tree, 'chat-list')[0]
   assert.ok(nodes(chatList, n => n === list).length)

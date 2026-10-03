@@ -1,0 +1,224 @@
+[
+  {
+    "path": "README.md",
+    "bytes": 3039,
+    "sha256": "91376d3bc3f275971ba8c40b2b1bdfd3b4610b2e863d25af78f5e81eb52450ce",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "archive-verification.json",
+    "bytes": 240,
+    "sha256": "c68fe04aaace6fd8743e37d6d32e998d8e9533931c779f074b608a2745c9723d",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "base-desktop-dark.jpg",
+    "bytes": 37051,
+    "sha256": "734dea535ad316564920378a499fc3ea1b7762dac772de8b4600443368458efb",
+    "normalization": "binary, unchanged"
+  },
+  {
+    "path": "base-desktop-light.jpg",
+    "bytes": 34124,
+    "sha256": "52102206d61fc4b79fd906ae20930ccd32efd2e34bf2322a5c2b27d588db7d61",
+    "normalization": "binary, unchanged"
+  },
+  {
+    "path": "base-mobile-calls-light.jpg",
+    "bytes": 14471,
+    "sha256": "5df8913a82cd417ee0e57264e203b32de1cc400c731315d77b6da149170d3f1e",
+    "normalization": "binary, unchanged"
+  },
+  {
+    "path": "base-mobile-dark.jpg",
+    "bytes": 13863,
+    "sha256": "971deba7d200177c649c642bc4d3e2d3b3e495833615f0fcd7faf9ec0411639d",
+    "normalization": "binary, unchanged"
+  },
+  {
+    "path": "base-mobile-light.jpg",
+    "bytes": 12813,
+    "sha256": "ed726f51dec0bf9a43214f20db4823483c484b8c1c22fd3db63d0c3ddfb8d22b",
+    "normalization": "binary, unchanged"
+  },
+  {
+    "path": "baseline-build.log",
+    "bytes": 1567,
+    "sha256": "26f83842f3f32e3208927f5db086f392d4285d61a0aa69f68058caa7965bb9fd",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "baseline-check-architecture.log",
+    "bytes": 2488,
+    "sha256": "153a3bb86cf7d3509913ed47256b4b209b2f01771035bbdf734b3d9d22c64865",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "baseline-gates.json",
+    "bytes": 972,
+    "sha256": "46c19bc51ab458866e19977001a5eacf2d994b0e98f8ed4cb25b46fec21fb7b6",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "baseline-test-integration.log",
+    "bytes": 1183,
+    "sha256": "e9a38bc7471102f3ae333f3080a24c559dc9a349876ba292c102382814bc5da2",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "baseline-test-media-v2.log",
+    "bytes": 844,
+    "sha256": "6df50789694b17649da45383e1cab5225987aadf339154d02557789305f23bc1",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "baseline-test.log",
+    "bytes": 29559,
+    "sha256": "ffaf2959b2a6d0d3626e8e75bc3143561d49e83b85b94a8987bdd21101954b0d",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "baseline-typecheck.log",
+    "bytes": 349,
+    "sha256": "702029cc428a789dbec79dc7e5c69dc4bce21033fa7940be5f423d00f1eb4c3e",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "build-base.json",
+    "bytes": 1996,
+    "sha256": "c82061840f03e3cc9cb9a107db67765bb94d4d5b18bc304b798f99eb808788a2",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "build-head.json",
+    "bytes": 1996,
+    "sha256": "8be8287b7ea6fb95415d270680069fc77b95b8acff82b979f0d9c3873cac4a86",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "captures.ndjson.gz",
+    "bytes": 11857784,
+    "sha256": "ea0cc85d1da84e101749e84342acfec153d9eccbfe97f21f4af1c77e431bb0ae",
+    "normalization": "binary, unchanged"
+  },
+  {
+    "path": "comparisons.json.gz",
+    "bytes": 265899,
+    "sha256": "b42950ec84e32aed789f84bd2d15fa15e6173c9a691900984bbfc4dede58ff04",
+    "normalization": "binary, unchanged"
+  },
+  {
+    "path": "contrast-measured.json",
+    "bytes": 6831,
+    "sha256": "5573d38759b83e486ae607aecf29ec874c95b74fb308d4d2a049f72f151bd7b3",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "contrast-plan.json",
+    "bytes": 1854,
+    "sha256": "de9c40682579313b72c8cfab249e53cedb5350f887460c4b6351b8d7e73c3b63",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "css-before-after.json",
+    "bytes": 45533,
+    "sha256": "bd626926f57e06dbcd9c125acbad9ef526073747697ebeac9bd2dfba7dfb8fd5",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "css-removal.json",
+    "bytes": 14724,
+    "sha256": "d98ef73cbb29482281113f04dc361e6c63ddd4784c08ff6c4cd2e0d03a97681e",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "head-desktop-dark.jpg",
+    "bytes": 38426,
+    "sha256": "62fb8ab0191b51d80dbe7b63a9d61eb6634ce4b94b6a066d3788c710ea3b5702",
+    "normalization": "binary, unchanged"
+  },
+  {
+    "path": "head-desktop-light.jpg",
+    "bytes": 35744,
+    "sha256": "a5ac6667af00018c89eb147c8aa656813159e5b9a4a4693e31af0a8d3259c73d",
+    "normalization": "binary, unchanged"
+  },
+  {
+    "path": "head-mobile-calls-light.jpg",
+    "bytes": 16396,
+    "sha256": "2a2c76c1a08f5a5c84e09520e5fc1e7cd0e7825a63f2f48eba58652cf64c4a3c",
+    "normalization": "binary, unchanged"
+  },
+  {
+    "path": "head-mobile-dark.jpg",
+    "bytes": 13998,
+    "sha256": "ef178d62b3a086d85db79fec73b56f6847a01523a037a71a228c49c9e7f6ef09",
+    "normalization": "binary, unchanged"
+  },
+  {
+    "path": "head-mobile-light.jpg",
+    "bytes": 13126,
+    "sha256": "d069d25b6f4a5c8ef3693058232448ee452f53af59713eb7e78cf158a883375a",
+    "normalization": "binary, unchanged"
+  },
+  {
+    "path": "ownership-before.json",
+    "bytes": 228979,
+    "sha256": "b0425397b65eb972b3fa8e5fc60fe29a5edb9588673cf9e729858d7506af8a62",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "precommit-build.log",
+    "bytes": 1567,
+    "sha256": "fd99c6b882a56b67ec146264f3ef9ba4c88e9e19d0d8df692564d054778f94ea",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "precommit-check-architecture.log",
+    "bytes": 2488,
+    "sha256": "153a3bb86cf7d3509913ed47256b4b209b2f01771035bbdf734b3d9d22c64865",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "precommit-gates.json",
+    "bytes": 984,
+    "sha256": "0f44be96bbf3e4349a6db0fe0838fdf39eae6c6ca7cb522cd153e30712663e04",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "precommit-test-integration.log",
+    "bytes": 1184,
+    "sha256": "3ec61b56ff2a30a7714d28be98a7044555f447120f3a3e349fa912b0030acd12",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "precommit-test-media-v2.log",
+    "bytes": 847,
+    "sha256": "28e4b913b228a4a61240068e2d16b35d9d28cf1f1e0f791bcc89d35db8fc8215",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "precommit-test.log",
+    "bytes": 30158,
+    "sha256": "c432b62ed425c4bbdb9de7bcf39425ba4e004383685e2f617cf0e4eea975ecad",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "precommit-typecheck.log",
+    "bytes": 349,
+    "sha256": "702029cc428a789dbec79dc7e5c69dc4bce21033fa7940be5f423d00f1eb4c3e",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "preimplementation.ndjson.gz",
+    "bytes": 204730,
+    "sha256": "53d70d663e101f0ce56e40f9c1b15bd084f23b16277d3be9d1cdea22446ef8f1",
+    "normalization": "binary, unchanged"
+  },
+  {
+    "path": "summary.json",
+    "bytes": 667,
+    "sha256": "7dc6db188c42b47239a8d1ddca6cd63f51e019ab4f78b53098cbb170e60e3df2",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  }
+]

@@ -1,0 +1,810 @@
+{
+  "file": "client/src/shared/styles/platform.css",
+  "beforeLines": 1301,
+  "afterLines": 1274,
+  "removed": [
+    {
+      "selectors": [
+        ".primary-rail"
+      ],
+      "media": "",
+      "declarations": [
+        [
+          "display",
+          "flex"
+        ],
+        [
+          "align-items",
+          "center"
+        ],
+        [
+          "flex-direction",
+          "column"
+        ],
+        [
+          "gap",
+          "18px"
+        ],
+        [
+          "padding",
+          "12px 6px"
+        ],
+        [
+          "color",
+          "#dce6dd"
+        ],
+        [
+          "background",
+          "linear-gradient(180deg, #173c31, #102b24)"
+        ]
+      ]
+    },
+    {
+      "selectors": [
+        ".primary-rail > .brand-mark"
+      ],
+      "media": "",
+      "declarations": [
+        [
+          "width",
+          "36px"
+        ],
+        [
+          "height",
+          "36px"
+        ],
+        [
+          "margin-bottom",
+          "12px"
+        ],
+        [
+          "border-radius",
+          "11px"
+        ],
+        [
+          "background",
+          "#f1eadb"
+        ]
+      ]
+    },
+    {
+      "selectors": [
+        ".primary-rail > .brand-mark svg"
+      ],
+      "media": "",
+      "declarations": [
+        [
+          "width",
+          "29px"
+        ],
+        [
+          "height",
+          "29px"
+        ]
+      ]
+    },
+    {
+      "selectors": [
+        ".rail-item"
+      ],
+      "media": "",
+      "declarations": [
+        [
+          "display",
+          "flex"
+        ],
+        [
+          "width",
+          "50px"
+        ],
+        [
+          "min-height",
+          "48px"
+        ],
+        [
+          "align-items",
+          "center"
+        ],
+        [
+          "flex-direction",
+          "column"
+        ],
+        [
+          "justify-content",
+          "center"
+        ],
+        [
+          "gap",
+          "2px"
+        ],
+        [
+          "border",
+          "0"
+        ],
+        [
+          "border-radius",
+          "8px"
+        ],
+        [
+          "color",
+          "#bdcdc2"
+        ],
+        [
+          "background",
+          "transparent"
+        ],
+        [
+          "font",
+          "inherit"
+        ],
+        [
+          "font-size",
+          "var(--type-small)"
+        ],
+        [
+          "cursor",
+          "pointer"
+        ]
+      ]
+    },
+    {
+      "selectors": [
+        ".rail-item-icon"
+      ],
+      "media": "",
+      "declarations": [
+        [
+          "position",
+          "relative"
+        ],
+        [
+          "display",
+          "grid"
+        ],
+        [
+          "place-items",
+          "center"
+        ]
+      ]
+    },
+    {
+      "selector": ".navigation-badge",
+      "declarations": [
+        [
+          "position",
+          "absolute"
+        ],
+        [
+          "display",
+          "grid"
+        ],
+        [
+          "min-width",
+          "15px"
+        ],
+        [
+          "height",
+          "15px"
+        ],
+        [
+          "place-items",
+          "center"
+        ],
+        [
+          "padding",
+          "0 3px"
+        ],
+        [
+          "border",
+          "1px solid var(--color-canvas)"
+        ],
+        [
+          "border-radius",
+          "9px"
+        ],
+        [
+          "color",
+          "#fff"
+        ],
+        [
+          "background",
+          "#ae5447"
+        ],
+        [
+          "font-size",
+          "var(--type-caption)"
+        ],
+        [
+          "font-weight",
+          "700"
+        ],
+        [
+          "line-height",
+          "1"
+        ]
+      ]
+    },
+    {
+      "selectors": [
+        ".rail-item-active"
+      ],
+      "media": "",
+      "declarations": [
+        [
+          "color",
+          "var(--color-surface)"
+        ],
+        [
+          "background",
+          "#315a47"
+        ]
+      ]
+    },
+    {
+      "selectors": [
+        ".rail-glyph"
+      ],
+      "media": "",
+      "declarations": [
+        [
+          "font-size",
+          "var(--type-title)"
+        ],
+        [
+          "line-height",
+          "20px"
+        ]
+      ]
+    },
+    {
+      "selectors": [
+        ".rail-spacer"
+      ],
+      "media": "",
+      "declarations": [
+        [
+          "flex",
+          "1"
+        ]
+      ]
+    },
+    {
+      "selectors": [
+        ".profile-trigger"
+      ],
+      "media": "",
+      "declarations": [
+        [
+          "padding",
+          "0"
+        ],
+        [
+          "border",
+          "0"
+        ],
+        [
+          "background",
+          "transparent"
+        ],
+        [
+          "cursor",
+          "pointer"
+        ]
+      ]
+    },
+    {
+      "selectors": [
+        ".avatar-you"
+      ],
+      "media": "",
+      "declarations": [
+        [
+          "color",
+          "#47644c"
+        ],
+        [
+          "background",
+          "#dce7d7"
+        ]
+      ]
+    },
+    {
+      "selector": ".inbox-pane",
+      "declarations": [
+        [
+          "border-right",
+          "1px solid #e6eae4"
+        ],
+        [
+          "background",
+          "var(--color-canvas)"
+        ]
+      ]
+    },
+    {
+      "selectors": [
+        ".primary-rail"
+      ],
+      "media": "(min-width: 701px) and (max-width: 1099px)",
+      "declarations": [
+        [
+          "padding-inline",
+          "4px"
+        ]
+      ]
+    },
+    {
+      "selectors": [
+        ".rail-item"
+      ],
+      "media": "(min-width: 701px) and (max-width: 1099px)",
+      "declarations": [
+        [
+          "width",
+          "46px"
+        ]
+      ]
+    },
+    {
+      "selector": ".mobile-bottom-nav",
+      "media": "(max-width: 700px)",
+      "declarations": [
+        [
+          "padding",
+          "3px 8px env(safe-area-inset-bottom)"
+        ],
+        [
+          "border-top",
+          "1px solid #e5e9e3"
+        ],
+        [
+          "background",
+          "var(--color-canvas)"
+        ]
+      ]
+    },
+    {
+      "selectors": [
+        ".mobile-bottom-nav button"
+      ],
+      "media": "(max-width: 700px)",
+      "declarations": [
+        [
+          "display",
+          "flex"
+        ],
+        [
+          "min-width",
+          "44px"
+        ],
+        [
+          "min-height",
+          "44px"
+        ],
+        [
+          "align-items",
+          "center"
+        ],
+        [
+          "flex-direction",
+          "column"
+        ],
+        [
+          "justify-content",
+          "center"
+        ],
+        [
+          "gap",
+          "3px"
+        ],
+        [
+          "border",
+          "0"
+        ],
+        [
+          "border-radius",
+          "8px"
+        ],
+        [
+          "color",
+          "#7d8a80"
+        ],
+        [
+          "background",
+          "transparent"
+        ],
+        [
+          "font",
+          "inherit"
+        ],
+        [
+          "font-size",
+          "var(--type-small)"
+        ],
+        [
+          "touch-action",
+          "manipulation"
+        ]
+      ]
+    },
+    {
+      "selectors": [
+        ".mobile-bottom-nav button[aria-current=\"page\"]"
+      ],
+      "media": "(max-width: 700px)",
+      "declarations": [
+        [
+          "color",
+          "#315a40"
+        ],
+        [
+          "background",
+          "#edf3ec"
+        ],
+        [
+          "font-weight",
+          "650"
+        ]
+      ]
+    },
+    {
+      "selectors": [
+        ".mobile-bottom-nav button:hover"
+      ],
+      "media": "(max-width: 700px)",
+      "declarations": [
+        [
+          "background",
+          "#f0f4ee"
+        ]
+      ]
+    },
+    {
+      "selectors": [
+        ".mobile-nav-icon"
+      ],
+      "media": "(max-width: 700px)",
+      "declarations": [
+        [
+          "position",
+          "relative"
+        ],
+        [
+          "display",
+          "grid"
+        ],
+        [
+          "place-items",
+          "center"
+        ]
+      ]
+    },
+    {
+      "selectors": [
+        ":root[data-theme=\"dark\"] .workspace",
+        ":root[data-theme=\"dark\"] .inbox-pane",
+        ":root[data-theme=\"dark\"] .mobile-bottom-nav"
+      ],
+      "media": "",
+      "declarations": [
+        [
+          "background-color",
+          "var(--color-canvas)"
+        ]
+      ]
+    },
+    {
+      "selectors": [
+        ":root[data-theme=\"dark\"] .inbox-pane"
+      ],
+      "media": "",
+      "declarations": [
+        [
+          "border-color",
+          "var(--color-border)"
+        ]
+      ]
+    },
+    {
+      "selectors": [
+        ":root[data-theme=\"dark\"] .mobile-bottom-nav button[aria-current=\"page\"]"
+      ],
+      "media": "",
+      "declarations": [
+        [
+          "color",
+          "var(--color-text)"
+        ],
+        [
+          "background-color",
+          "var(--color-surface-muted)"
+        ]
+      ]
+    },
+    {
+      "selectors": [
+        ":root[data-theme=\"dark\"] .avatar-you"
+      ],
+      "media": "",
+      "declarations": [
+        [
+          "background-color",
+          "#304237"
+        ]
+      ]
+    },
+    {
+      "selectors": [
+        ":root[data-theme=\"dark\"] .rail-item-active"
+      ],
+      "media": "",
+      "declarations": [
+        [
+          "color",
+          "#fff"
+        ],
+        [
+          "background",
+          "#315a47"
+        ]
+      ]
+    },
+    {
+      "selectors": [
+        ":root[data-theme=\"dark\"] .mobile-bottom-nav"
+      ],
+      "media": "",
+      "declarations": [
+        [
+          "border-color",
+          "var(--color-border)"
+        ]
+      ]
+    },
+    {
+      "selectors": [
+        ":root[data-theme=\"dark\"] .mobile-bottom-nav button"
+      ],
+      "media": "",
+      "declarations": [
+        [
+          "color",
+          "var(--color-text-secondary)"
+        ]
+      ]
+    },
+    {
+      "selectors": [
+        ":root[data-theme=\"dark\"] .navigation-badge"
+      ],
+      "media": "",
+      "declarations": [
+        [
+          "color",
+          "#fff"
+        ],
+        [
+          "background",
+          "#b55247"
+        ]
+      ]
+    },
+    {
+      "selectors": [
+        ":root:is([data-theme], :not([data-theme])) .workspace"
+      ],
+      "media": "",
+      "declarations": [
+        [
+          "background",
+          "var(--color-bg-app)"
+        ]
+      ]
+    },
+    {
+      "selectors": [
+        ":root:is([data-theme], :not([data-theme])) .primary-rail",
+        ":root:is([data-theme], :not([data-theme])) .inbox-pane",
+        ":root:is([data-theme], :not([data-theme])) .mobile-bottom-nav"
+      ],
+      "media": "",
+      "declarations": [
+        [
+          "color",
+          "var(--color-text-secondary)"
+        ],
+        [
+          "background",
+          "var(--color-bg-navigation)"
+        ],
+        [
+          "border-color",
+          "var(--color-border)"
+        ]
+      ]
+    },
+    {
+      "selectors": [
+        ":root:is([data-theme], :not([data-theme])) .primary-rail > .brand-mark"
+      ],
+      "media": "",
+      "declarations": [
+        [
+          "background",
+          "var(--color-primary-soft)"
+        ]
+      ]
+    },
+    {
+      "selectors": [
+        ":root:is([data-theme], :not([data-theme])) .rail-item",
+        ":root:is([data-theme], :not([data-theme])) .mobile-bottom-nav button"
+      ],
+      "media": "",
+      "declarations": [
+        [
+          "color",
+          "var(--color-text-secondary)"
+        ]
+      ]
+    },
+    {
+      "selectors": [
+        ":root:is([data-theme], :not([data-theme])) .rail-item:hover"
+      ],
+      "media": "",
+      "declarations": [
+        [
+          "color",
+          "var(--color-text-primary)"
+        ],
+        [
+          "background",
+          "var(--color-bg-hover)"
+        ]
+      ]
+    },
+    {
+      "selectors": [
+        ":root:is([data-theme], :not([data-theme])) .rail-item-active",
+        ":root:is([data-theme], :not([data-theme])) .mobile-bottom-nav button[aria-current=\"page\"]"
+      ],
+      "media": "",
+      "declarations": [
+        [
+          "color",
+          "var(--color-text-primary)"
+        ],
+        [
+          "background",
+          "var(--color-selected)"
+        ]
+      ]
+    },
+    {
+      "selectors": [
+        ":root:is([data-theme], :not([data-theme])) .avatar-you"
+      ],
+      "media": "",
+      "declarations": [
+        [
+          "color",
+          "var(--color-text-primary)"
+        ],
+        [
+          "background",
+          "var(--color-primary-soft)"
+        ]
+      ]
+    },
+    {
+      "selectors": [
+        ":root:is([data-theme], :not([data-theme])) .navigation-badge"
+      ],
+      "media": "",
+      "declarations": [
+        [
+          "color",
+          "var(--color-on-primary)"
+        ],
+        [
+          "background",
+          "var(--color-danger)"
+        ]
+      ]
+    }
+  ],
+  "lineCountDefinition": "Nonempty terminal line count; trailing newline is not counted as a line",
+  "finalAddedCompatibilityRules": [
+    {
+      "selector": ".mobile-bottom-nav button:focus-visible",
+      "nesting": [],
+      "declarations": [
+        {
+          "property": "outline",
+          "value": "2px solid var(--ds-color-focus)"
+        },
+        {
+          "property": "outline-offset",
+          "value": "2px"
+        }
+      ]
+    },
+    {
+      "selector": ".primary-rail",
+      "nesting": [],
+      "declarations": [
+        {
+          "property": "border-right",
+          "value": "1px solid var(--ds-color-border)"
+        }
+      ]
+    },
+    {
+      "selector": ".rail-item",
+      "nesting": [],
+      "declarations": [
+        {
+          "property": "border-width",
+          "value": "0 0 0 var(--ds-space-1)"
+        },
+        {
+          "property": "border-style",
+          "value": "solid"
+        }
+      ]
+    },
+    {
+      "selector": ".profile-trigger",
+      "nesting": [],
+      "declarations": [
+        {
+          "property": "border-width",
+          "value": "1px 0 0"
+        },
+        {
+          "property": "border-style",
+          "value": "solid"
+        }
+      ]
+    },
+    {
+      "selector": ".navigation-badge",
+      "nesting": [],
+      "declarations": [
+        {
+          "property": "border-width",
+          "value": "1px"
+        },
+        {
+          "property": "border-style",
+          "value": "solid"
+        }
+      ]
+    },
+    {
+      "selector": ".mobile-bottom-nav",
+      "nesting": [],
+      "declarations": [
+        {
+          "property": "border-top",
+          "value": "1px solid var(--ds-color-border)"
+        }
+      ]
+    },
+    {
+      "selector": ".mobile-bottom-nav button",
+      "nesting": [],
+      "declarations": [
+        {
+          "property": "border-width",
+          "value": "var(--ds-space-1) 0 0"
+        },
+        {
+          "property": "border-style",
+          "value": "solid"
+        }
+      ]
+    }
+  ]
+}

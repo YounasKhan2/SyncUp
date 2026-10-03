@@ -1,0 +1,38 @@
+[
+  {
+    "command": "typecheck",
+    "exit": 0,
+    "log": ".git/visual06/baseline-typecheck.log",
+    "committedEvidenceLog": "baseline-typecheck.log"
+  },
+  {
+    "command": "test",
+    "exit": 0,
+    "log": ".git/visual06/baseline-test.log",
+    "committedEvidenceLog": "baseline-test.log"
+  },
+  {
+    "command": "check:architecture",
+    "exit": 0,
+    "log": ".git/visual06/baseline-check-architecture.log",
+    "committedEvidenceLog": "baseline-check-architecture.log"
+  },
+  {
+    "command": "build",
+    "exit": 0,
+    "log": ".git/visual06/baseline-build.log",
+    "committedEvidenceLog": "baseline-build.log"
+  },
+  {
+    "command": "test:media-v2",
+    "exit": 0,
+    "log": ".git/visual06/baseline-test-media-v2.log",
+    "committedEvidenceLog": "baseline-test-media-v2.log"
+  },
+  {
+    "command": "test:integration",
+    "exit": 0,
+    "log": ".git/visual06/baseline-test-integration.log",
+    "committedEvidenceLog": "baseline-test-integration.log"
+  }
+]

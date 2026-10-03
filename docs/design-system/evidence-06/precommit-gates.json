@@ -1,0 +1,38 @@
+[
+  {
+    "command": "typecheck",
+    "exit": 0,
+    "log": ".git/visual06/precommit-typecheck.log",
+    "committedEvidenceLog": "precommit-typecheck.log"
+  },
+  {
+    "command": "test",
+    "exit": 0,
+    "log": ".git/visual06/precommit-test.log",
+    "committedEvidenceLog": "precommit-test.log"
+  },
+  {
+    "command": "check:architecture",
+    "exit": 0,
+    "log": ".git/visual06/precommit-check-architecture.log",
+    "committedEvidenceLog": "precommit-check-architecture.log"
+  },
+  {
+    "command": "build",
+    "exit": 0,
+    "log": ".git/visual06/precommit-build.log",
+    "committedEvidenceLog": "precommit-build.log"
+  },
+  {
+    "command": "test:media-v2",
+    "exit": 0,
+    "log": ".git/visual06/precommit-test-media-v2.log",
+    "committedEvidenceLog": "precommit-test-media-v2.log"
+  },
+  {
+    "command": "test:integration",
+    "exit": 0,
+    "log": ".git/visual06/precommit-test-integration.log",
+    "committedEvidenceLog": "precommit-test-integration.log"
+  }
+]

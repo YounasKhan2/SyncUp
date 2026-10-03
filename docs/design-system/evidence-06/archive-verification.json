@@ -1,0 +1,12 @@
+{
+  "captures": {
+    "verifiedRecords": 1236,
+    "uniquePayloads": 406
+  },
+  "preimplementation": {
+    "verifiedRecords": 10,
+    "uniquePayloads": 6
+  },
+  "verifier": "tests/helpers/shell-navigation-archive.mjs",
+  "streamed": true
+}
