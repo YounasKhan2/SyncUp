@@ -1,0 +1,78 @@
+{
+  "base": "fe285890cb8bebc71fcceaaea280dc7c50038227",
+  "baseline": [
+    {
+      "command": "typecheck",
+      "exit": 0,
+      "log": ".git/design05/baseline-typecheck.log"
+    },
+    {
+      "command": "test",
+      "exit": 0,
+      "log": ".git/design05/baseline-test.log"
+    },
+    {
+      "command": "check:architecture",
+      "exit": 0,
+      "log": ".git/design05/baseline-check-architecture.log"
+    },
+    {
+      "command": "build",
+      "exit": 0,
+      "log": ".git/design05/baseline-build.log"
+    },
+    {
+      "command": "test:media-v2",
+      "exit": 0,
+      "log": ".git/design05/baseline-test-media-v2.log"
+    },
+    {
+      "command": "test:integration",
+      "exit": 0,
+      "log": ".git/design05/baseline-test-integration.log"
+    }
+  ],
+  "candidate": [
+    {
+      "command": "typecheck",
+      "exit": 0,
+      "log": ".git/design05/candidate-typecheck.log"
+    },
+    {
+      "command": "test",
+      "exit": 0,
+      "log": ".git/design05/candidate-test.log"
+    },
+    {
+      "command": "check:architecture",
+      "exit": 0,
+      "log": ".git/design05/candidate-check-architecture.log"
+    },
+    {
+      "command": "build",
+      "exit": 0,
+      "log": ".git/design05/candidate-build.log"
+    },
+    {
+      "command": "test:media-v2",
+      "exit": 0,
+      "log": ".git/design05/candidate-test-media-v2.log"
+    },
+    {
+      "command": "test:integration",
+      "exit": 0,
+      "log": ".git/design05/candidate-test-integration.log"
+    }
+  ],
+  "preProductionCharacterization": "14/14, zero skips",
+  "baselineStandardTests": 244,
+  "candidateStandardTests": 249,
+  "architecture": {
+    "edges": 276,
+    "informational": 21,
+    "violations": 0
+  },
+  "media": "11/11",
+  "integration": "real 1/1",
+  "committedHeadGates": "Run after this bounded commit; exact SHA/results reported in PR and final response."
+}

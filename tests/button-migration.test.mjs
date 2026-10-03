@@ -1,3 +1,4 @@
+import {restoreSharedPrimitives} from './helpers/shared-primitives-parity.mjs'
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import fs from 'node:fs'
@@ -11,7 +12,7 @@ const read = file => fs.readFileSync(file, 'utf8').replaceAll('\r\n', '\n')
 test('Button migration changes only static primitive class mappings and exact owned CSS', () => {
   for (const [file, record] of Object.entries(fixture.files)) {
     assert.equal(record.before, execFileSync('git', ['show', `${fixture.base}:${file}`], { encoding: 'utf8' }))
-    assert.equal(read(file), record.after)
+    assert.equal(restoreSharedPrimitives(file,read(file)), record.after)
     if (file.endsWith('.tsx')) {
       const normalize = source => source.replace(/'ui-(?:icon-)?button[^']*'/, "'primitive-classes'")
       assert.equal(normalize(record.after), normalize(record.before), 'Props, refs, children and handlers cannot change')
@@ -24,11 +25,11 @@ test('Button migration changes only static primitive class mappings and exact ow
 
 test('Button migration leaves every other tracked production source and configuration unchanged', () => {
   const files = execFileSync('git', ['ls-tree', '-r', '--name-only', fixture.base], { encoding: 'utf8' }).trim().split('\n').filter(file => file.startsWith('client/') || file.startsWith('server/') || ['package.json', 'package-lock.json'].includes(file))
-  for (const file of files) if (!fixture.files[file]) assert.equal(restoreAvatarMigration(file,fs.readFileSync(file).toString().replaceAll('\r\n', '\n')), execFileSync('git', ['show', `${fixture.base}:${file}`], { encoding: 'utf8' }).replaceAll('\r\n', '\n'), file)
+  for (const file of files) if (!fixture.files[file]) assert.equal(restoreAvatarMigration(file,restoreSharedPrimitives(file,fs.readFileSync(file).toString().replaceAll('\r\n', '\n'))), execFileSync('git', ['show', `${fixture.base}:${file}`], { encoding: 'utf8' }).replaceAll('\r\n', '\n'), file)
 })
 
 test('Removed primitive declarations cannot return and unrelated dialog CSS stays exact', () => {
-  const file = 'client/src/shared/styles/primitives.css', before = postcss.parse(fixture.files[file].before), after = postcss.parse(read(file))
+  const file = 'client/src/shared/styles/primitives.css', before = postcss.parse(fixture.files[file].before), after = postcss.parse(restoreSharedPrimitives(file,read(file)))
   const rules = css => { const map = {}; css.walkRules(rule => { map[rule.selector] = rule.nodes.map(n => n.toString()) }); return map }
   const old = rules(before), next = rules(after)
   for (const selector of ['.ui-dialog-overlay', '.ui-dialog', '.ui-button span']) assert.deepEqual(next[selector], old[selector])

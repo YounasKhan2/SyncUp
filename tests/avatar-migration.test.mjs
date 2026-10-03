@@ -1,3 +1,4 @@
+import {restoreSharedPrimitives} from './helpers/shared-primitives-parity.mjs'
 import fs from 'node:fs'
 import test from 'node:test'
 import assert from 'node:assert/strict'
@@ -21,7 +22,7 @@ test('Avatar transfers only four exact root declarations and static prefixed uti
 
 test('Avatar keeps every contextual override, image/fallback rule and unrelated production file frozen',()=>{
   const files=execFileSync('git',['ls-tree','-r','--name-only',fixture.base],{encoding:'utf8'}).trim().split('\n').filter(file=>file.startsWith('client/')||file.startsWith('server/')||['package.json','package-lock.json'].includes(file))
-  for(const file of files)if(!fixture.files[file])assert.equal(read(file),execFileSync('git',['show',`${fixture.base}:${file}`],{encoding:'utf8'}).replaceAll('\r\n','\n'),file)
+  for(const file of files)if(!fixture.files[file])assert.equal(restoreSharedPrimitives(file,read(file)),execFileSync('git',['show',`${fixture.base}:${file}`],{encoding:'utf8'}).replaceAll('\r\n','\n'),file)
   const root=postcss.parse(read('client/src/shared/styles/platform.css'));let avatar
   root.walkRules('.avatar',rule=>{avatar=rule})
   assert.ok(avatar)

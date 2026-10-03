@@ -1,3 +1,4 @@
+import {restoreSharedPrimitives} from './helpers/shared-primitives-parity.mjs'
 import assert from 'node:assert/strict'
 import fs from 'node:fs'
 import path from 'node:path'
@@ -60,7 +61,7 @@ test('Tailwind source detection is client-only, prefixed and excludes Preflight/
 
 test('Phase 02 leaves all feature JSX, appearance and frozen legacy CSS identical after Git checkout newline normalization',()=>{
   const files=execFileSync('git',['ls-tree','-r','--name-only',base,'client/src'],{encoding:'utf8'}).trim().split('\n').filter(file=>/\.tsx?$/.test(file)||/\/(platform-shell|spaces|platform|primitives)\.css$/.test(file)||file.endsWith('/App.css'))
-  for(const file of files)assert.equal(restoreButtonMigration(file,restoreAvatarMigration(file,fs.readFileSync(file,'utf8').replaceAll('\r\n','\n'))),execFileSync('git',['show',`${base}:${file}`],{encoding:'utf8'}),file)
+  for(const file of files)assert.equal(restoreButtonMigration(file,restoreAvatarMigration(file,restoreSharedPrimitives(file,fs.readFileSync(file,'utf8').replaceAll('\r\n','\n')))),execFileSync('git',['show',`${base}:${file}`],{encoding:'utf8'}),file)
   assert.ok(files.length>=70)
 })
 
