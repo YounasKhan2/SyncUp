@@ -1,5 +1,6 @@
 import {execFileSync} from 'node:child_process'
 import { restoreButtonMigration } from './helpers/button-migration-parity.mjs'
+import { restoreAvatarMigration } from './helpers/avatar-migration-parity.mjs'
 import { restoreAccountUpdates } from './helpers/account-updates-parity.mjs'
 import test from 'node:test'
 import assert from 'node:assert/strict'
@@ -22,7 +23,7 @@ const parse = file => ts.createSourceFile(file, read(file), ts.ScriptTarget.Late
 const walk = dir => fs.readdirSync(new URL(dir, root), { withFileTypes: true }).flatMap(e => e.isDirectory() ? walk(`${dir}/${e.name}`) : [`${dir}/${e.name}`])
 const cssImports = file => [...read(file).matchAll(/@import\s+['"]([^'"]+)['"];\s*\n?/gu)].map(m => path.posix.normalize(path.posix.join(path.posix.dirname(file), m[1])))
 const appFiles = () => cssImports('client/src/App.css')
-const platform = () => appFiles().slice(0, -1).map(read).join('')
+const platform = () => appFiles().slice(0, -1).map(file => restoreAvatarMigration(file, read(file))).join('')
 
 test('Ownership: all baseline type declarations retain exact fields, unions, optionality and intersections without duplicate owners', () => {
   const declarations = [...parse('client/src/shared/types.ts').statements, ...(migrated ? parse(owner).statements : [])]

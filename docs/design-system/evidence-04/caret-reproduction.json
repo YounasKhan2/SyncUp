@@ -1,0 +1,2031 @@
+{
+  "frames": 60,
+  "uniqueSHA256": [
+    "023919af96edcc3a1bcc2b9e39bec4347e802c0fedf7ee3e7c01c5354b45b529",
+    "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+    "d403380fe24866e4c22cedb55b474447f33912201dfdba26bbca53f5630cdc9d",
+    "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06"
+  ],
+  "recoveredRejectedFiles": [
+    {
+      "file": "base-desktop-light-light-custom-search-1.jpg",
+      "sha256": "023919af96edcc3a1bcc2b9e39bec4347e802c0fedf7ee3e7c01c5354b45b529",
+      "recoveredFrom": "caret-reproduction/light-7.jpg"
+    },
+    {
+      "file": "head-desktop-light-light-custom-search-1.jpg",
+      "sha256": "023919af96edcc3a1bcc2b9e39bec4347e802c0fedf7ee3e7c01c5354b45b529",
+      "recoveredFrom": "caret-reproduction/light-7.jpg"
+    },
+    {
+      "file": "base-desktop-light-light-custom-search-2.jpg",
+      "sha256": "023919af96edcc3a1bcc2b9e39bec4347e802c0fedf7ee3e7c01c5354b45b529",
+      "recoveredFrom": "caret-reproduction/light-7.jpg"
+    },
+    {
+      "file": "head-desktop-light-light-custom-search-2.jpg",
+      "sha256": "023919af96edcc3a1bcc2b9e39bec4347e802c0fedf7ee3e7c01c5354b45b529",
+      "recoveredFrom": "caret-reproduction/light-7.jpg"
+    },
+    {
+      "file": "base-desktop-light-light-custom-search-3.jpg",
+      "sha256": "023919af96edcc3a1bcc2b9e39bec4347e802c0fedf7ee3e7c01c5354b45b529",
+      "recoveredFrom": "caret-reproduction/light-7.jpg"
+    },
+    {
+      "file": "head-desktop-light-light-custom-search-3.jpg",
+      "sha256": "023919af96edcc3a1bcc2b9e39bec4347e802c0fedf7ee3e7c01c5354b45b529",
+      "recoveredFrom": "caret-reproduction/light-7.jpg"
+    },
+    {
+      "file": "base-desktop-system-light-custom-search-1.jpg",
+      "sha256": "023919af96edcc3a1bcc2b9e39bec4347e802c0fedf7ee3e7c01c5354b45b529",
+      "recoveredFrom": "caret-reproduction/light-7.jpg"
+    },
+    {
+      "file": "head-desktop-system-light-custom-search-1.jpg",
+      "sha256": "023919af96edcc3a1bcc2b9e39bec4347e802c0fedf7ee3e7c01c5354b45b529",
+      "recoveredFrom": "caret-reproduction/light-7.jpg"
+    },
+    {
+      "file": "base-desktop-system-light-custom-search-2.jpg",
+      "sha256": "023919af96edcc3a1bcc2b9e39bec4347e802c0fedf7ee3e7c01c5354b45b529",
+      "recoveredFrom": "caret-reproduction/light-7.jpg"
+    },
+    {
+      "file": "head-desktop-system-light-custom-search-2.jpg",
+      "sha256": "023919af96edcc3a1bcc2b9e39bec4347e802c0fedf7ee3e7c01c5354b45b529",
+      "recoveredFrom": "caret-reproduction/light-7.jpg"
+    },
+    {
+      "file": "base-desktop-system-light-custom-search-3.jpg",
+      "sha256": "023919af96edcc3a1bcc2b9e39bec4347e802c0fedf7ee3e7c01c5354b45b529",
+      "recoveredFrom": "caret-reproduction/light-7.jpg"
+    },
+    {
+      "file": "head-desktop-system-light-custom-search-3.jpg",
+      "sha256": "023919af96edcc3a1bcc2b9e39bec4347e802c0fedf7ee3e7c01c5354b45b529",
+      "recoveredFrom": "caret-reproduction/light-7.jpg"
+    }
+  ],
+  "verifiedOriginalFinalRasterHashes": 18,
+  "allRecoveredHashesExact": true,
+  "originalSnapshotCopiesOverwritten": true,
+  "preservedFullFocusObservations": "focused-search base/head snapshots captured before pointer blur",
+  "comparisons": [
+    {
+      "category": "unchanged-head-dark-caret",
+      "left": "0.jpg",
+      "right": "1.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/1.jpg",
+      "bytesEqual": true,
+      "leftSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "rightSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 0,
+      "changedPercent": 0.0,
+      "bbox": null,
+      "connected32pxTileRegions": [],
+      "productRegionsTouched": [],
+      "touchesProductUI": false,
+      "maxChannelDifference": 0
+    },
+    {
+      "category": "unchanged-head-dark-caret",
+      "left": "0.jpg",
+      "right": "2.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/2.jpg",
+      "bytesEqual": true,
+      "leftSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "rightSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 0,
+      "changedPercent": 0.0,
+      "bbox": null,
+      "connected32pxTileRegions": [],
+      "productRegionsTouched": [],
+      "touchesProductUI": false,
+      "maxChannelDifference": 0
+    },
+    {
+      "category": "unchanged-head-dark-caret",
+      "left": "0.jpg",
+      "right": "3.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/3.jpg",
+      "bytesEqual": true,
+      "leftSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "rightSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 0,
+      "changedPercent": 0.0,
+      "bbox": null,
+      "connected32pxTileRegions": [],
+      "productRegionsTouched": [],
+      "touchesProductUI": false,
+      "maxChannelDifference": 0
+    },
+    {
+      "category": "unchanged-head-dark-caret",
+      "left": "0.jpg",
+      "right": "4.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/4.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "rightSHA256": "d403380fe24866e4c22cedb55b474447f33912201dfdba26bbca53f5630cdc9d",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 170,
+      "changedPercent": 0.013117283950617283,
+      "bbox": [
+        512,
+        232,
+        520,
+        256
+      ],
+      "connected32pxTileRegions": [
+        [
+          512,
+          224,
+          544,
+          256
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "INPUT",
+          "changedPixels": 140,
+          "bounds": [
+            493.080322265625,
+            234.29620361328125,
+            441.2289733886719,
+            18.802520751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 140
+    },
+    {
+      "category": "unchanged-head-dark-caret",
+      "left": "0.jpg",
+      "right": "5.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/5.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "rightSHA256": "d403380fe24866e4c22cedb55b474447f33912201dfdba26bbca53f5630cdc9d",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 170,
+      "changedPercent": 0.013117283950617283,
+      "bbox": [
+        512,
+        232,
+        520,
+        256
+      ],
+      "connected32pxTileRegions": [
+        [
+          512,
+          224,
+          544,
+          256
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "INPUT",
+          "changedPixels": 140,
+          "bounds": [
+            493.080322265625,
+            234.29620361328125,
+            441.2289733886719,
+            18.802520751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 140
+    },
+    {
+      "category": "unchanged-head-dark-caret",
+      "left": "0.jpg",
+      "right": "6.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/6.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "rightSHA256": "d403380fe24866e4c22cedb55b474447f33912201dfdba26bbca53f5630cdc9d",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 170,
+      "changedPercent": 0.013117283950617283,
+      "bbox": [
+        512,
+        232,
+        520,
+        256
+      ],
+      "connected32pxTileRegions": [
+        [
+          512,
+          224,
+          544,
+          256
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "INPUT",
+          "changedPixels": 140,
+          "bounds": [
+            493.080322265625,
+            234.29620361328125,
+            441.2289733886719,
+            18.802520751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 140
+    },
+    {
+      "category": "unchanged-head-dark-caret",
+      "left": "0.jpg",
+      "right": "7.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/7.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "rightSHA256": "d403380fe24866e4c22cedb55b474447f33912201dfdba26bbca53f5630cdc9d",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 170,
+      "changedPercent": 0.013117283950617283,
+      "bbox": [
+        512,
+        232,
+        520,
+        256
+      ],
+      "connected32pxTileRegions": [
+        [
+          512,
+          224,
+          544,
+          256
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "INPUT",
+          "changedPixels": 140,
+          "bounds": [
+            493.080322265625,
+            234.29620361328125,
+            441.2289733886719,
+            18.802520751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 140
+    },
+    {
+      "category": "unchanged-head-dark-caret",
+      "left": "0.jpg",
+      "right": "8.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/8.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "rightSHA256": "d403380fe24866e4c22cedb55b474447f33912201dfdba26bbca53f5630cdc9d",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 170,
+      "changedPercent": 0.013117283950617283,
+      "bbox": [
+        512,
+        232,
+        520,
+        256
+      ],
+      "connected32pxTileRegions": [
+        [
+          512,
+          224,
+          544,
+          256
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "INPUT",
+          "changedPixels": 140,
+          "bounds": [
+            493.080322265625,
+            234.29620361328125,
+            441.2289733886719,
+            18.802520751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 140
+    },
+    {
+      "category": "unchanged-head-dark-caret",
+      "left": "0.jpg",
+      "right": "9.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/9.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "rightSHA256": "d403380fe24866e4c22cedb55b474447f33912201dfdba26bbca53f5630cdc9d",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 170,
+      "changedPercent": 0.013117283950617283,
+      "bbox": [
+        512,
+        232,
+        520,
+        256
+      ],
+      "connected32pxTileRegions": [
+        [
+          512,
+          224,
+          544,
+          256
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "INPUT",
+          "changedPixels": 140,
+          "bounds": [
+            493.080322265625,
+            234.29620361328125,
+            441.2289733886719,
+            18.802520751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 140
+    },
+    {
+      "category": "unchanged-head-dark-caret",
+      "left": "0.jpg",
+      "right": "10.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/10.jpg",
+      "bytesEqual": true,
+      "leftSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "rightSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 0,
+      "changedPercent": 0.0,
+      "bbox": null,
+      "connected32pxTileRegions": [],
+      "productRegionsTouched": [],
+      "touchesProductUI": false,
+      "maxChannelDifference": 0
+    },
+    {
+      "category": "unchanged-head-dark-caret",
+      "left": "0.jpg",
+      "right": "11.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/11.jpg",
+      "bytesEqual": true,
+      "leftSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "rightSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 0,
+      "changedPercent": 0.0,
+      "bbox": null,
+      "connected32pxTileRegions": [],
+      "productRegionsTouched": [],
+      "touchesProductUI": false,
+      "maxChannelDifference": 0
+    },
+    {
+      "category": "unchanged-head-dark-caret",
+      "left": "0.jpg",
+      "right": "12.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/12.jpg",
+      "bytesEqual": true,
+      "leftSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "rightSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 0,
+      "changedPercent": 0.0,
+      "bbox": null,
+      "connected32pxTileRegions": [],
+      "productRegionsTouched": [],
+      "touchesProductUI": false,
+      "maxChannelDifference": 0
+    },
+    {
+      "category": "unchanged-head-dark-caret",
+      "left": "0.jpg",
+      "right": "13.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/13.jpg",
+      "bytesEqual": true,
+      "leftSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "rightSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 0,
+      "changedPercent": 0.0,
+      "bbox": null,
+      "connected32pxTileRegions": [],
+      "productRegionsTouched": [],
+      "touchesProductUI": false,
+      "maxChannelDifference": 0
+    },
+    {
+      "category": "unchanged-head-dark-caret",
+      "left": "0.jpg",
+      "right": "14.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/14.jpg",
+      "bytesEqual": true,
+      "leftSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "rightSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 0,
+      "changedPercent": 0.0,
+      "bbox": null,
+      "connected32pxTileRegions": [],
+      "productRegionsTouched": [],
+      "touchesProductUI": false,
+      "maxChannelDifference": 0
+    },
+    {
+      "category": "unchanged-head-dark-caret",
+      "left": "0.jpg",
+      "right": "15.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/15.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "rightSHA256": "d403380fe24866e4c22cedb55b474447f33912201dfdba26bbca53f5630cdc9d",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 170,
+      "changedPercent": 0.013117283950617283,
+      "bbox": [
+        512,
+        232,
+        520,
+        256
+      ],
+      "connected32pxTileRegions": [
+        [
+          512,
+          224,
+          544,
+          256
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "INPUT",
+          "changedPixels": 140,
+          "bounds": [
+            493.080322265625,
+            234.29620361328125,
+            441.2289733886719,
+            18.802520751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 140
+    },
+    {
+      "category": "unchanged-head-dark-caret",
+      "left": "0.jpg",
+      "right": "16.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/16.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "rightSHA256": "d403380fe24866e4c22cedb55b474447f33912201dfdba26bbca53f5630cdc9d",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 170,
+      "changedPercent": 0.013117283950617283,
+      "bbox": [
+        512,
+        232,
+        520,
+        256
+      ],
+      "connected32pxTileRegions": [
+        [
+          512,
+          224,
+          544,
+          256
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "INPUT",
+          "changedPixels": 140,
+          "bounds": [
+            493.080322265625,
+            234.29620361328125,
+            441.2289733886719,
+            18.802520751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 140
+    },
+    {
+      "category": "unchanged-head-dark-caret",
+      "left": "0.jpg",
+      "right": "17.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/17.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "rightSHA256": "d403380fe24866e4c22cedb55b474447f33912201dfdba26bbca53f5630cdc9d",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 170,
+      "changedPercent": 0.013117283950617283,
+      "bbox": [
+        512,
+        232,
+        520,
+        256
+      ],
+      "connected32pxTileRegions": [
+        [
+          512,
+          224,
+          544,
+          256
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "INPUT",
+          "changedPixels": 140,
+          "bounds": [
+            493.080322265625,
+            234.29620361328125,
+            441.2289733886719,
+            18.802520751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 140
+    },
+    {
+      "category": "unchanged-head-dark-caret",
+      "left": "0.jpg",
+      "right": "18.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/18.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "rightSHA256": "d403380fe24866e4c22cedb55b474447f33912201dfdba26bbca53f5630cdc9d",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 170,
+      "changedPercent": 0.013117283950617283,
+      "bbox": [
+        512,
+        232,
+        520,
+        256
+      ],
+      "connected32pxTileRegions": [
+        [
+          512,
+          224,
+          544,
+          256
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "INPUT",
+          "changedPixels": 140,
+          "bounds": [
+            493.080322265625,
+            234.29620361328125,
+            441.2289733886719,
+            18.802520751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 140
+    },
+    {
+      "category": "unchanged-head-dark-caret",
+      "left": "0.jpg",
+      "right": "19.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/19.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "rightSHA256": "d403380fe24866e4c22cedb55b474447f33912201dfdba26bbca53f5630cdc9d",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 170,
+      "changedPercent": 0.013117283950617283,
+      "bbox": [
+        512,
+        232,
+        520,
+        256
+      ],
+      "connected32pxTileRegions": [
+        [
+          512,
+          224,
+          544,
+          256
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "INPUT",
+          "changedPixels": 140,
+          "bounds": [
+            493.080322265625,
+            234.29620361328125,
+            441.2289733886719,
+            18.802520751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 140
+    },
+    {
+      "category": "unchanged-head-dark-caret",
+      "left": "0.jpg",
+      "right": "20.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/20.jpg",
+      "bytesEqual": true,
+      "leftSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "rightSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 0,
+      "changedPercent": 0.0,
+      "bbox": null,
+      "connected32pxTileRegions": [],
+      "productRegionsTouched": [],
+      "touchesProductUI": false,
+      "maxChannelDifference": 0
+    },
+    {
+      "category": "unchanged-head-dark-caret",
+      "left": "0.jpg",
+      "right": "21.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/21.jpg",
+      "bytesEqual": true,
+      "leftSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "rightSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 0,
+      "changedPercent": 0.0,
+      "bbox": null,
+      "connected32pxTileRegions": [],
+      "productRegionsTouched": [],
+      "touchesProductUI": false,
+      "maxChannelDifference": 0
+    },
+    {
+      "category": "unchanged-head-dark-caret",
+      "left": "0.jpg",
+      "right": "22.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/22.jpg",
+      "bytesEqual": true,
+      "leftSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "rightSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 0,
+      "changedPercent": 0.0,
+      "bbox": null,
+      "connected32pxTileRegions": [],
+      "productRegionsTouched": [],
+      "touchesProductUI": false,
+      "maxChannelDifference": 0
+    },
+    {
+      "category": "unchanged-head-dark-caret",
+      "left": "0.jpg",
+      "right": "23.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/23.jpg",
+      "bytesEqual": true,
+      "leftSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "rightSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 0,
+      "changedPercent": 0.0,
+      "bbox": null,
+      "connected32pxTileRegions": [],
+      "productRegionsTouched": [],
+      "touchesProductUI": false,
+      "maxChannelDifference": 0
+    },
+    {
+      "category": "unchanged-head-dark-caret",
+      "left": "0.jpg",
+      "right": "24.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/24.jpg",
+      "bytesEqual": true,
+      "leftSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "rightSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 0,
+      "changedPercent": 0.0,
+      "bbox": null,
+      "connected32pxTileRegions": [],
+      "productRegionsTouched": [],
+      "touchesProductUI": false,
+      "maxChannelDifference": 0
+    },
+    {
+      "category": "unchanged-head-dark-caret",
+      "left": "0.jpg",
+      "right": "25.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/25.jpg",
+      "bytesEqual": true,
+      "leftSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "rightSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 0,
+      "changedPercent": 0.0,
+      "bbox": null,
+      "connected32pxTileRegions": [],
+      "productRegionsTouched": [],
+      "touchesProductUI": false,
+      "maxChannelDifference": 0
+    },
+    {
+      "category": "unchanged-head-dark-caret",
+      "left": "0.jpg",
+      "right": "26.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/26.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "rightSHA256": "d403380fe24866e4c22cedb55b474447f33912201dfdba26bbca53f5630cdc9d",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 170,
+      "changedPercent": 0.013117283950617283,
+      "bbox": [
+        512,
+        232,
+        520,
+        256
+      ],
+      "connected32pxTileRegions": [
+        [
+          512,
+          224,
+          544,
+          256
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "INPUT",
+          "changedPixels": 140,
+          "bounds": [
+            493.080322265625,
+            234.29620361328125,
+            441.2289733886719,
+            18.802520751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 140
+    },
+    {
+      "category": "unchanged-head-dark-caret",
+      "left": "0.jpg",
+      "right": "27.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/27.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "rightSHA256": "d403380fe24866e4c22cedb55b474447f33912201dfdba26bbca53f5630cdc9d",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 170,
+      "changedPercent": 0.013117283950617283,
+      "bbox": [
+        512,
+        232,
+        520,
+        256
+      ],
+      "connected32pxTileRegions": [
+        [
+          512,
+          224,
+          544,
+          256
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "INPUT",
+          "changedPixels": 140,
+          "bounds": [
+            493.080322265625,
+            234.29620361328125,
+            441.2289733886719,
+            18.802520751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 140
+    },
+    {
+      "category": "unchanged-head-dark-caret",
+      "left": "0.jpg",
+      "right": "28.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/28.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "rightSHA256": "d403380fe24866e4c22cedb55b474447f33912201dfdba26bbca53f5630cdc9d",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 170,
+      "changedPercent": 0.013117283950617283,
+      "bbox": [
+        512,
+        232,
+        520,
+        256
+      ],
+      "connected32pxTileRegions": [
+        [
+          512,
+          224,
+          544,
+          256
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "INPUT",
+          "changedPixels": 140,
+          "bounds": [
+            493.080322265625,
+            234.29620361328125,
+            441.2289733886719,
+            18.802520751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 140
+    },
+    {
+      "category": "unchanged-head-dark-caret",
+      "left": "0.jpg",
+      "right": "29.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/29.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "rightSHA256": "d403380fe24866e4c22cedb55b474447f33912201dfdba26bbca53f5630cdc9d",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 170,
+      "changedPercent": 0.013117283950617283,
+      "bbox": [
+        512,
+        232,
+        520,
+        256
+      ],
+      "connected32pxTileRegions": [
+        [
+          512,
+          224,
+          544,
+          256
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "INPUT",
+          "changedPixels": 140,
+          "bounds": [
+            493.080322265625,
+            234.29620361328125,
+            441.2289733886719,
+            18.802520751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 140
+    },
+    {
+      "category": "unchanged-head-light-caret",
+      "left": "light-0.jpg",
+      "right": "light-1.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/light-0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/light-1.jpg",
+      "bytesEqual": true,
+      "leftSHA256": "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+      "rightSHA256": "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 0,
+      "changedPercent": 0.0,
+      "bbox": null,
+      "connected32pxTileRegions": [],
+      "productRegionsTouched": [],
+      "touchesProductUI": false,
+      "maxChannelDifference": 0
+    },
+    {
+      "category": "unchanged-head-light-caret",
+      "left": "light-0.jpg",
+      "right": "light-2.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/light-0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/light-2.jpg",
+      "bytesEqual": true,
+      "leftSHA256": "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+      "rightSHA256": "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 0,
+      "changedPercent": 0.0,
+      "bbox": null,
+      "connected32pxTileRegions": [],
+      "productRegionsTouched": [],
+      "touchesProductUI": false,
+      "maxChannelDifference": 0
+    },
+    {
+      "category": "unchanged-head-light-caret",
+      "left": "light-0.jpg",
+      "right": "light-3.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/light-0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/light-3.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+      "rightSHA256": "023919af96edcc3a1bcc2b9e39bec4347e802c0fedf7ee3e7c01c5354b45b529",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 205,
+      "changedPercent": 0.015817901234567902,
+      "bbox": [
+        511,
+        232,
+        522,
+        257
+      ],
+      "connected32pxTileRegions": [
+        [
+          480,
+          224,
+          544,
+          288
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "INPUT",
+          "changedPixels": 175,
+          "bounds": [
+            493.080322265625,
+            234.29620361328125,
+            441.2289733886719,
+            18.802520751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 163
+    },
+    {
+      "category": "unchanged-head-light-caret",
+      "left": "light-0.jpg",
+      "right": "light-4.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/light-0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/light-4.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+      "rightSHA256": "023919af96edcc3a1bcc2b9e39bec4347e802c0fedf7ee3e7c01c5354b45b529",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 205,
+      "changedPercent": 0.015817901234567902,
+      "bbox": [
+        511,
+        232,
+        522,
+        257
+      ],
+      "connected32pxTileRegions": [
+        [
+          480,
+          224,
+          544,
+          288
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "INPUT",
+          "changedPixels": 175,
+          "bounds": [
+            493.080322265625,
+            234.29620361328125,
+            441.2289733886719,
+            18.802520751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 163
+    },
+    {
+      "category": "unchanged-head-light-caret",
+      "left": "light-0.jpg",
+      "right": "light-5.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/light-0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/light-5.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+      "rightSHA256": "023919af96edcc3a1bcc2b9e39bec4347e802c0fedf7ee3e7c01c5354b45b529",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 205,
+      "changedPercent": 0.015817901234567902,
+      "bbox": [
+        511,
+        232,
+        522,
+        257
+      ],
+      "connected32pxTileRegions": [
+        [
+          480,
+          224,
+          544,
+          288
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "INPUT",
+          "changedPixels": 175,
+          "bounds": [
+            493.080322265625,
+            234.29620361328125,
+            441.2289733886719,
+            18.802520751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 163
+    },
+    {
+      "category": "unchanged-head-light-caret",
+      "left": "light-0.jpg",
+      "right": "light-6.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/light-0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/light-6.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+      "rightSHA256": "023919af96edcc3a1bcc2b9e39bec4347e802c0fedf7ee3e7c01c5354b45b529",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 205,
+      "changedPercent": 0.015817901234567902,
+      "bbox": [
+        511,
+        232,
+        522,
+        257
+      ],
+      "connected32pxTileRegions": [
+        [
+          480,
+          224,
+          544,
+          288
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "INPUT",
+          "changedPixels": 175,
+          "bounds": [
+            493.080322265625,
+            234.29620361328125,
+            441.2289733886719,
+            18.802520751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 163
+    },
+    {
+      "category": "unchanged-head-light-caret",
+      "left": "light-0.jpg",
+      "right": "light-7.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/light-0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/light-7.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+      "rightSHA256": "023919af96edcc3a1bcc2b9e39bec4347e802c0fedf7ee3e7c01c5354b45b529",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 205,
+      "changedPercent": 0.015817901234567902,
+      "bbox": [
+        511,
+        232,
+        522,
+        257
+      ],
+      "connected32pxTileRegions": [
+        [
+          480,
+          224,
+          544,
+          288
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "INPUT",
+          "changedPixels": 175,
+          "bounds": [
+            493.080322265625,
+            234.29620361328125,
+            441.2289733886719,
+            18.802520751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 163
+    },
+    {
+      "category": "unchanged-head-light-caret",
+      "left": "light-0.jpg",
+      "right": "light-8.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/light-0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/light-8.jpg",
+      "bytesEqual": true,
+      "leftSHA256": "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+      "rightSHA256": "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 0,
+      "changedPercent": 0.0,
+      "bbox": null,
+      "connected32pxTileRegions": [],
+      "productRegionsTouched": [],
+      "touchesProductUI": false,
+      "maxChannelDifference": 0
+    },
+    {
+      "category": "unchanged-head-light-caret",
+      "left": "light-0.jpg",
+      "right": "light-9.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/light-0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/light-9.jpg",
+      "bytesEqual": true,
+      "leftSHA256": "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+      "rightSHA256": "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 0,
+      "changedPercent": 0.0,
+      "bbox": null,
+      "connected32pxTileRegions": [],
+      "productRegionsTouched": [],
+      "touchesProductUI": false,
+      "maxChannelDifference": 0
+    },
+    {
+      "category": "unchanged-head-light-caret",
+      "left": "light-0.jpg",
+      "right": "light-10.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/light-0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/light-10.jpg",
+      "bytesEqual": true,
+      "leftSHA256": "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+      "rightSHA256": "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 0,
+      "changedPercent": 0.0,
+      "bbox": null,
+      "connected32pxTileRegions": [],
+      "productRegionsTouched": [],
+      "touchesProductUI": false,
+      "maxChannelDifference": 0
+    },
+    {
+      "category": "unchanged-head-light-caret",
+      "left": "light-0.jpg",
+      "right": "light-11.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/light-0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/light-11.jpg",
+      "bytesEqual": true,
+      "leftSHA256": "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+      "rightSHA256": "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 0,
+      "changedPercent": 0.0,
+      "bbox": null,
+      "connected32pxTileRegions": [],
+      "productRegionsTouched": [],
+      "touchesProductUI": false,
+      "maxChannelDifference": 0
+    },
+    {
+      "category": "unchanged-head-light-caret",
+      "left": "light-0.jpg",
+      "right": "light-12.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/light-0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/light-12.jpg",
+      "bytesEqual": true,
+      "leftSHA256": "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+      "rightSHA256": "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 0,
+      "changedPercent": 0.0,
+      "bbox": null,
+      "connected32pxTileRegions": [],
+      "productRegionsTouched": [],
+      "touchesProductUI": false,
+      "maxChannelDifference": 0
+    },
+    {
+      "category": "unchanged-head-light-caret",
+      "left": "light-0.jpg",
+      "right": "light-13.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/light-0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/light-13.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+      "rightSHA256": "023919af96edcc3a1bcc2b9e39bec4347e802c0fedf7ee3e7c01c5354b45b529",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 205,
+      "changedPercent": 0.015817901234567902,
+      "bbox": [
+        511,
+        232,
+        522,
+        257
+      ],
+      "connected32pxTileRegions": [
+        [
+          480,
+          224,
+          544,
+          288
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "INPUT",
+          "changedPixels": 175,
+          "bounds": [
+            493.080322265625,
+            234.29620361328125,
+            441.2289733886719,
+            18.802520751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 163
+    },
+    {
+      "category": "unchanged-head-light-caret",
+      "left": "light-0.jpg",
+      "right": "light-14.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/light-0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/light-14.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+      "rightSHA256": "023919af96edcc3a1bcc2b9e39bec4347e802c0fedf7ee3e7c01c5354b45b529",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 205,
+      "changedPercent": 0.015817901234567902,
+      "bbox": [
+        511,
+        232,
+        522,
+        257
+      ],
+      "connected32pxTileRegions": [
+        [
+          480,
+          224,
+          544,
+          288
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "INPUT",
+          "changedPixels": 175,
+          "bounds": [
+            493.080322265625,
+            234.29620361328125,
+            441.2289733886719,
+            18.802520751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 163
+    },
+    {
+      "category": "unchanged-head-light-caret",
+      "left": "light-0.jpg",
+      "right": "light-15.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/light-0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/light-15.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+      "rightSHA256": "023919af96edcc3a1bcc2b9e39bec4347e802c0fedf7ee3e7c01c5354b45b529",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 205,
+      "changedPercent": 0.015817901234567902,
+      "bbox": [
+        511,
+        232,
+        522,
+        257
+      ],
+      "connected32pxTileRegions": [
+        [
+          480,
+          224,
+          544,
+          288
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "INPUT",
+          "changedPixels": 175,
+          "bounds": [
+            493.080322265625,
+            234.29620361328125,
+            441.2289733886719,
+            18.802520751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 163
+    },
+    {
+      "category": "unchanged-head-light-caret",
+      "left": "light-0.jpg",
+      "right": "light-16.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/light-0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/light-16.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+      "rightSHA256": "023919af96edcc3a1bcc2b9e39bec4347e802c0fedf7ee3e7c01c5354b45b529",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 205,
+      "changedPercent": 0.015817901234567902,
+      "bbox": [
+        511,
+        232,
+        522,
+        257
+      ],
+      "connected32pxTileRegions": [
+        [
+          480,
+          224,
+          544,
+          288
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "INPUT",
+          "changedPixels": 175,
+          "bounds": [
+            493.080322265625,
+            234.29620361328125,
+            441.2289733886719,
+            18.802520751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 163
+    },
+    {
+      "category": "unchanged-head-light-caret",
+      "left": "light-0.jpg",
+      "right": "light-17.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/light-0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/light-17.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+      "rightSHA256": "023919af96edcc3a1bcc2b9e39bec4347e802c0fedf7ee3e7c01c5354b45b529",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 205,
+      "changedPercent": 0.015817901234567902,
+      "bbox": [
+        511,
+        232,
+        522,
+        257
+      ],
+      "connected32pxTileRegions": [
+        [
+          480,
+          224,
+          544,
+          288
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "INPUT",
+          "changedPixels": 175,
+          "bounds": [
+            493.080322265625,
+            234.29620361328125,
+            441.2289733886719,
+            18.802520751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 163
+    },
+    {
+      "category": "unchanged-head-light-caret",
+      "left": "light-0.jpg",
+      "right": "light-18.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/light-0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/light-18.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+      "rightSHA256": "023919af96edcc3a1bcc2b9e39bec4347e802c0fedf7ee3e7c01c5354b45b529",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 205,
+      "changedPercent": 0.015817901234567902,
+      "bbox": [
+        511,
+        232,
+        522,
+        257
+      ],
+      "connected32pxTileRegions": [
+        [
+          480,
+          224,
+          544,
+          288
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "INPUT",
+          "changedPixels": 175,
+          "bounds": [
+            493.080322265625,
+            234.29620361328125,
+            441.2289733886719,
+            18.802520751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 163
+    },
+    {
+      "category": "unchanged-head-light-caret",
+      "left": "light-0.jpg",
+      "right": "light-19.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/light-0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/light-19.jpg",
+      "bytesEqual": true,
+      "leftSHA256": "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+      "rightSHA256": "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 0,
+      "changedPercent": 0.0,
+      "bbox": null,
+      "connected32pxTileRegions": [],
+      "productRegionsTouched": [],
+      "touchesProductUI": false,
+      "maxChannelDifference": 0
+    },
+    {
+      "category": "unchanged-head-light-caret",
+      "left": "light-0.jpg",
+      "right": "light-20.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/light-0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/light-20.jpg",
+      "bytesEqual": true,
+      "leftSHA256": "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+      "rightSHA256": "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 0,
+      "changedPercent": 0.0,
+      "bbox": null,
+      "connected32pxTileRegions": [],
+      "productRegionsTouched": [],
+      "touchesProductUI": false,
+      "maxChannelDifference": 0
+    },
+    {
+      "category": "unchanged-head-light-caret",
+      "left": "light-0.jpg",
+      "right": "light-21.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/light-0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/light-21.jpg",
+      "bytesEqual": true,
+      "leftSHA256": "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+      "rightSHA256": "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 0,
+      "changedPercent": 0.0,
+      "bbox": null,
+      "connected32pxTileRegions": [],
+      "productRegionsTouched": [],
+      "touchesProductUI": false,
+      "maxChannelDifference": 0
+    },
+    {
+      "category": "unchanged-head-light-caret",
+      "left": "light-0.jpg",
+      "right": "light-22.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/light-0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/light-22.jpg",
+      "bytesEqual": true,
+      "leftSHA256": "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+      "rightSHA256": "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 0,
+      "changedPercent": 0.0,
+      "bbox": null,
+      "connected32pxTileRegions": [],
+      "productRegionsTouched": [],
+      "touchesProductUI": false,
+      "maxChannelDifference": 0
+    },
+    {
+      "category": "unchanged-head-light-caret",
+      "left": "light-0.jpg",
+      "right": "light-23.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/light-0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/light-23.jpg",
+      "bytesEqual": true,
+      "leftSHA256": "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+      "rightSHA256": "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 0,
+      "changedPercent": 0.0,
+      "bbox": null,
+      "connected32pxTileRegions": [],
+      "productRegionsTouched": [],
+      "touchesProductUI": false,
+      "maxChannelDifference": 0
+    },
+    {
+      "category": "unchanged-head-light-caret",
+      "left": "light-0.jpg",
+      "right": "light-24.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/light-0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/light-24.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+      "rightSHA256": "023919af96edcc3a1bcc2b9e39bec4347e802c0fedf7ee3e7c01c5354b45b529",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 205,
+      "changedPercent": 0.015817901234567902,
+      "bbox": [
+        511,
+        232,
+        522,
+        257
+      ],
+      "connected32pxTileRegions": [
+        [
+          480,
+          224,
+          544,
+          288
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "INPUT",
+          "changedPixels": 175,
+          "bounds": [
+            493.080322265625,
+            234.29620361328125,
+            441.2289733886719,
+            18.802520751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 163
+    },
+    {
+      "category": "unchanged-head-light-caret",
+      "left": "light-0.jpg",
+      "right": "light-25.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/light-0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/light-25.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+      "rightSHA256": "023919af96edcc3a1bcc2b9e39bec4347e802c0fedf7ee3e7c01c5354b45b529",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 205,
+      "changedPercent": 0.015817901234567902,
+      "bbox": [
+        511,
+        232,
+        522,
+        257
+      ],
+      "connected32pxTileRegions": [
+        [
+          480,
+          224,
+          544,
+          288
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "INPUT",
+          "changedPixels": 175,
+          "bounds": [
+            493.080322265625,
+            234.29620361328125,
+            441.2289733886719,
+            18.802520751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 163
+    },
+    {
+      "category": "unchanged-head-light-caret",
+      "left": "light-0.jpg",
+      "right": "light-26.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/light-0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/light-26.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+      "rightSHA256": "023919af96edcc3a1bcc2b9e39bec4347e802c0fedf7ee3e7c01c5354b45b529",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 205,
+      "changedPercent": 0.015817901234567902,
+      "bbox": [
+        511,
+        232,
+        522,
+        257
+      ],
+      "connected32pxTileRegions": [
+        [
+          480,
+          224,
+          544,
+          288
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "INPUT",
+          "changedPixels": 175,
+          "bounds": [
+            493.080322265625,
+            234.29620361328125,
+            441.2289733886719,
+            18.802520751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 163
+    },
+    {
+      "category": "unchanged-head-light-caret",
+      "left": "light-0.jpg",
+      "right": "light-27.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/light-0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/light-27.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+      "rightSHA256": "023919af96edcc3a1bcc2b9e39bec4347e802c0fedf7ee3e7c01c5354b45b529",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 205,
+      "changedPercent": 0.015817901234567902,
+      "bbox": [
+        511,
+        232,
+        522,
+        257
+      ],
+      "connected32pxTileRegions": [
+        [
+          480,
+          224,
+          544,
+          288
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "INPUT",
+          "changedPixels": 175,
+          "bounds": [
+            493.080322265625,
+            234.29620361328125,
+            441.2289733886719,
+            18.802520751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 163
+    },
+    {
+      "category": "unchanged-head-light-caret",
+      "left": "light-0.jpg",
+      "right": "light-28.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/light-0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/light-28.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+      "rightSHA256": "023919af96edcc3a1bcc2b9e39bec4347e802c0fedf7ee3e7c01c5354b45b529",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 205,
+      "changedPercent": 0.015817901234567902,
+      "bbox": [
+        511,
+        232,
+        522,
+        257
+      ],
+      "connected32pxTileRegions": [
+        [
+          480,
+          224,
+          544,
+          288
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "INPUT",
+          "changedPixels": 175,
+          "bounds": [
+            493.080322265625,
+            234.29620361328125,
+            441.2289733886719,
+            18.802520751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 163
+    },
+    {
+      "category": "unchanged-head-light-caret",
+      "left": "light-0.jpg",
+      "right": "light-29.jpg",
+      "leftPath": ".git/design04/captures/caret-reproduction/light-0.jpg",
+      "rightPath": ".git/design04/captures/caret-reproduction/light-29.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "1f89c590a4574d195436a130327bbb21e1ffe146727824b181e2555dd512d946",
+      "rightSHA256": "023919af96edcc3a1bcc2b9e39bec4347e802c0fedf7ee3e7c01c5354b45b529",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 205,
+      "changedPercent": 0.015817901234567902,
+      "bbox": [
+        511,
+        232,
+        522,
+        257
+      ],
+      "connected32pxTileRegions": [
+        [
+          480,
+          224,
+          544,
+          288
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "INPUT",
+          "changedPixels": 175,
+          "bounds": [
+            493.080322265625,
+            234.29620361328125,
+            441.2289733886719,
+            18.802520751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 163
+    }
+  ]
+}

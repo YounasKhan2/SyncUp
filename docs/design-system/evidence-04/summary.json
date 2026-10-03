@@ -1,0 +1,13 @@
+{
+  "cases": 96,
+  "screenshots": 576,
+  "focusedSearchAutomaticFocusPairs": 8,
+  "structuralDifferences": [],
+  "decodedComparisons": 1248,
+  "byteIdenticalComparisons": 1248,
+  "crossBuildComparisons": 288,
+  "crossBuildDifferences": [],
+  "sameBuildDifferences": [],
+  "algorithm": "Decode every RGB pixel; any unequal channel counts one changed pixel; zero tolerance, no masking/cropping.",
+  "imageTraceSteps": 7
+}

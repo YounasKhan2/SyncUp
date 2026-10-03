@@ -1,0 +1,98 @@
+[
+  {
+    "theme": "dark",
+    "foreground": "rgb(241, 236, 239)",
+    "background": "rgb(60, 44, 56)",
+    "ratio": 11.174047897735058,
+    "example": "head-desktop-system-dark-workspace-inbox.json",
+    "className": "avatar ui:relative ui:grid ui:place-items-center ui:overflow-hidden avatar-you avatar-has-image"
+  },
+  {
+    "theme": "dark",
+    "foreground": "rgb(92, 111, 88)",
+    "background": "rgb(231, 233, 220)",
+    "ratio": 4.41547730758375,
+    "example": "head-desktop-system-dark-workspace-inbox.json",
+    "className": "avatar ui:relative ui:grid ui:place-items-center ui:overflow-hidden"
+  },
+  {
+    "theme": "dark",
+    "foreground": "rgb(117, 95, 72)",
+    "background": "rgb(233, 223, 208)",
+    "ratio": 4.568780507272812,
+    "example": "head-desktop-system-dark-conversation-group-details.json",
+    "className": "avatar ui:relative ui:grid ui:place-items-center ui:overflow-hidden message-avatar"
+  },
+  {
+    "theme": "dark",
+    "foreground": "rgb(71, 100, 76)",
+    "background": "rgb(48, 66, 55)",
+    "ratio": 1.6300704209080246,
+    "example": "head-desktop-system-dark-conversation-welcome.json",
+    "className": "avatar ui:relative ui:grid ui:place-items-center ui:overflow-hidden avatar-card avatar-has-image"
+  },
+  {
+    "theme": "dark",
+    "foreground": "rgb(110, 100, 78)",
+    "background": "rgb(235, 228, 212)",
+    "ratio": 4.61096856073176,
+    "example": "head-desktop-system-dark-custom-requests.json",
+    "className": "avatar ui:relative ui:grid ui:place-items-center ui:overflow-hidden"
+  },
+  {
+    "theme": "dark",
+    "foreground": "rgb(35, 67, 45)",
+    "background": "rgb(201, 223, 200)",
+    "ratio": 7.777663782151515,
+    "example": "head-desktop-system-dark-custom-voice.json",
+    "className": "avatar ui:relative ui:grid ui:place-items-center ui:overflow-hidden call-voice-avatar"
+  },
+  {
+    "theme": "light",
+    "foreground": "rgb(39, 34, 40)",
+    "background": "rgb(234, 221, 230)",
+    "ratio": 11.87744938056402,
+    "example": "head-desktop-system-light-workspace-inbox.json",
+    "className": "avatar ui:relative ui:grid ui:place-items-center ui:overflow-hidden avatar-you avatar-has-image"
+  },
+  {
+    "theme": "light",
+    "foreground": "rgb(92, 111, 88)",
+    "background": "rgb(231, 233, 220)",
+    "ratio": 4.41547730758375,
+    "example": "head-desktop-system-light-workspace-inbox.json",
+    "className": "avatar ui:relative ui:grid ui:place-items-center ui:overflow-hidden"
+  },
+  {
+    "theme": "light",
+    "foreground": "rgb(117, 95, 72)",
+    "background": "rgb(233, 223, 208)",
+    "ratio": 4.568780507272812,
+    "example": "head-desktop-system-light-conversation-group-details.json",
+    "className": "avatar ui:relative ui:grid ui:place-items-center ui:overflow-hidden message-avatar"
+  },
+  {
+    "theme": "light",
+    "foreground": "rgb(71, 100, 76)",
+    "background": "rgb(220, 231, 215)",
+    "ratio": 5.149919519718681,
+    "example": "head-desktop-system-light-conversation-welcome.json",
+    "className": "avatar ui:relative ui:grid ui:place-items-center ui:overflow-hidden avatar-card avatar-has-image"
+  },
+  {
+    "theme": "light",
+    "foreground": "rgb(110, 100, 78)",
+    "background": "rgb(235, 228, 212)",
+    "ratio": 4.61096856073176,
+    "example": "head-desktop-system-light-custom-requests.json",
+    "className": "avatar ui:relative ui:grid ui:place-items-center ui:overflow-hidden"
+  },
+  {
+    "theme": "light",
+    "foreground": "rgb(35, 67, 45)",
+    "background": "rgb(201, 223, 200)",
+    "ratio": 7.777663782151515,
+    "example": "head-desktop-system-light-custom-voice.json",
+    "className": "avatar ui:relative ui:grid ui:place-items-center ui:overflow-hidden call-voice-avatar"
+  }
+]

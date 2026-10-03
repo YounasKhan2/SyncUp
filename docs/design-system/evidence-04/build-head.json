@@ -1,0 +1,47 @@
+[
+  {
+    "side": "head",
+    "family": "workspace",
+    "base": "aabff6a4e15cfa73c33fd30287e1771914c3c60f",
+    "archiveSHA256": "fc724ea287c2074aba7be6a1ce2014e6df68436e0238cb2680d67990f3aa877c",
+    "fixtureSHA256": "b547be7aca30fde1606682fd3fbd15ad072a784c99ef552db449e9edff5317a0",
+    "bootstrapSHA256": "89cd3a99fb0b9595db623aaccf90c3d7f1aab8df46f4d3f33d2b660c5cc2cfba",
+    "overlaySHA256": {
+      "src/shared/components/Avatar.tsx": "b4fa6713d16d0a89624f111894600d73508310c3b45b0d06185e92270fee15e7",
+      "src/shared/styles/platform.css": "f102f3822f3e1db28abdeaa9bcf03d8f2b9399f89b91d6fb39ba75e10c6df2a8"
+    },
+    "cssSHA256": {
+      "index-B5QyZfqy.css": "ed0674a04536461f88a458f2c8fd3cd416ac19a73bf12d92f8a3e7660f14f77c"
+    }
+  },
+  {
+    "side": "head",
+    "family": "conversation",
+    "base": "aabff6a4e15cfa73c33fd30287e1771914c3c60f",
+    "archiveSHA256": "fc724ea287c2074aba7be6a1ce2014e6df68436e0238cb2680d67990f3aa877c",
+    "fixtureSHA256": "b547be7aca30fde1606682fd3fbd15ad072a784c99ef552db449e9edff5317a0",
+    "bootstrapSHA256": "89cd3a99fb0b9595db623aaccf90c3d7f1aab8df46f4d3f33d2b660c5cc2cfba",
+    "overlaySHA256": {
+      "src/shared/components/Avatar.tsx": "b4fa6713d16d0a89624f111894600d73508310c3b45b0d06185e92270fee15e7",
+      "src/shared/styles/platform.css": "f102f3822f3e1db28abdeaa9bcf03d8f2b9399f89b91d6fb39ba75e10c6df2a8"
+    },
+    "cssSHA256": {
+      "index-B5QyZfqy.css": "ed0674a04536461f88a458f2c8fd3cd416ac19a73bf12d92f8a3e7660f14f77c"
+    }
+  },
+  {
+    "side": "head",
+    "family": "custom",
+    "base": "aabff6a4e15cfa73c33fd30287e1771914c3c60f",
+    "archiveSHA256": "fc724ea287c2074aba7be6a1ce2014e6df68436e0238cb2680d67990f3aa877c",
+    "fixtureSHA256": "b547be7aca30fde1606682fd3fbd15ad072a784c99ef552db449e9edff5317a0",
+    "bootstrapSHA256": "89cd3a99fb0b9595db623aaccf90c3d7f1aab8df46f4d3f33d2b660c5cc2cfba",
+    "overlaySHA256": {
+      "src/shared/components/Avatar.tsx": "b4fa6713d16d0a89624f111894600d73508310c3b45b0d06185e92270fee15e7",
+      "src/shared/styles/platform.css": "f102f3822f3e1db28abdeaa9bcf03d8f2b9399f89b91d6fb39ba75e10c6df2a8"
+    },
+    "cssSHA256": {
+      "index-B5QyZfqy.css": "ed0674a04536461f88a458f2c8fd3cd416ac19a73bf12d92f8a3e7660f14f77c"
+    }
+  }
+]

@@ -6,6 +6,7 @@ import test from 'node:test'
 import postcss from 'postcss'
 import {buildProof,proofClasses} from './helpers/design-system-wiring-proof.mjs'
 import {restoreButtonMigration} from './helpers/button-migration-parity.mjs'
+import {restoreAvatarMigration} from './helpers/avatar-migration-parity.mjs'
 
 const base='d9324b16475783681aece801fcb5b0a7935ad77d'
 const contract=JSON.parse(fs.readFileSync('docs/design-system/semantic-contract.json','utf8'))
@@ -59,7 +60,7 @@ test('Tailwind source detection is client-only, prefixed and excludes Preflight/
 
 test('Phase 02 leaves all feature JSX, appearance and frozen legacy CSS identical after Git checkout newline normalization',()=>{
   const files=execFileSync('git',['ls-tree','-r','--name-only',base,'client/src'],{encoding:'utf8'}).trim().split('\n').filter(file=>/\.tsx?$/.test(file)||/\/(platform-shell|spaces|platform|primitives)\.css$/.test(file)||file.endsWith('/App.css'))
-  for(const file of files)assert.equal(restoreButtonMigration(file,fs.readFileSync(file,'utf8').replaceAll('\r\n','\n')),execFileSync('git',['show',`${base}:${file}`],{encoding:'utf8'}),file)
+  for(const file of files)assert.equal(restoreButtonMigration(file,restoreAvatarMigration(file,fs.readFileSync(file,'utf8').replaceAll('\r\n','\n'))),execFileSync('git',['show',`${base}:${file}`],{encoding:'utf8'}),file)
   assert.ok(files.length>=70)
 })
 

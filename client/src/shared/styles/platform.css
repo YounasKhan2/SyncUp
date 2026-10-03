@@ -8,7 +8,7 @@
 .rail-glyph { font-size: var(--type-title); line-height: 20px; }
 .rail-spacer { flex: 1; }
 .profile-trigger { padding: 0; border: 0; background: transparent; cursor: pointer; }
-.avatar { position: relative; display: grid; width: 31px; height: 31px; flex: 0 0 auto; place-items: center; overflow: hidden; border-radius: 50%; font-size: var(--type-body-xs); font-weight: 600; }
+.avatar { width: 31px; height: 31px; flex: 0 0 auto; border-radius: 50%; font-size: var(--type-body-xs); font-weight: 600; }
 .avatar > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .avatar-has-image > span { visibility: hidden; }
 .profile-avatar-editor { display: flex; align-items: center; gap: 14px; padding: 2px 0 4px; }

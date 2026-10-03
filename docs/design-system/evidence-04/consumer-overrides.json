@@ -1,0 +1,897 @@
+{
+  "base": "aabff6a4e15cfa73c33fd30287e1771914c3c60f",
+  "consumerCount": 16,
+  "consumerFiles": 12,
+  "consumers": [
+    {
+      "file": "client/src/features/account/AccountPanel.tsx",
+      "line": 161,
+      "jsx": "<Avatar name={user.display_name} src={avatarPreview || user.avatar_url} className=\"profile-avatar\" />",
+      "props": [
+        "name={user.display_name}",
+        "src={avatarPreview || user.avatar_url}",
+        "className=\"profile-avatar\""
+      ]
+    },
+    {
+      "file": "client/src/features/calls/CallWindow.tsx",
+      "line": 329,
+      "jsx": "<Avatar name={participant.display_name} src={participant.avatar_url} className=\"call-voice-avatar\" />",
+      "props": [
+        "name={participant.display_name}",
+        "src={participant.avatar_url}",
+        "className=\"call-voice-avatar\""
+      ]
+    },
+    {
+      "file": "client/src/features/messaging/ChatDetailsScreen.tsx",
+      "line": 122,
+      "jsx": "<Avatar name={isGroup ? title : peer?.displayName ?? title} src={isGroup ? undefined : peer?.avatar_url} className=\"chat-details-avatar\" />",
+      "props": [
+        "name={isGroup ? title : peer?.displayName ?? title}",
+        "src={isGroup ? undefined : peer?.avatar_url}",
+        "className=\"chat-details-avatar\""
+      ]
+    },
+    {
+      "file": "client/src/features/messaging/ChatDetailsScreen.tsx",
+      "line": 138,
+      "jsx": "<Avatar name={member.displayName} src={member.avatar_url} />",
+      "props": [
+        "name={member.displayName}",
+        "src={member.avatar_url}"
+      ]
+    },
+    {
+      "file": "client/src/features/messaging/ChatDetailsScreen.tsx",
+      "line": 161,
+      "jsx": "<Avatar name={match.display_name} src={match.avatar_url} />",
+      "props": [
+        "name={match.display_name}",
+        "src={match.avatar_url}"
+      ]
+    },
+    {
+      "file": "client/src/features/messaging/components/ConversationHeader.tsx",
+      "line": 23,
+      "jsx": "<Avatar name={title} src={avatarUrl} className=\"chat-avatar\" />",
+      "props": [
+        "name={title}",
+        "src={avatarUrl}",
+        "className=\"chat-avatar\""
+      ]
+    },
+    {
+      "file": "client/src/features/messaging/components/ConversationWelcome.tsx",
+      "line": 23,
+      "jsx": "<Avatar name={user.display_name} src={user.avatar_url} className=\"avatar-card\" />",
+      "props": [
+        "name={user.display_name}",
+        "src={user.avatar_url}",
+        "className=\"avatar-card\""
+      ]
+    },
+    {
+      "file": "client/src/features/messaging/MessageList.tsx",
+      "line": 103,
+      "jsx": "<Avatar name={sender?.displayName ?? 'Member'} src={sender?.avatar_url} className=\"message-avatar\" />",
+      "props": [
+        "name={sender?.displayName ?? 'Member'}",
+        "src={sender?.avatar_url}",
+        "className=\"message-avatar\""
+      ]
+    },
+    {
+      "file": "client/src/features/messaging/RequestsPanel.tsx",
+      "line": 40,
+      "jsx": "<Avatar name={item.display_name} src={item.avatar_url} />",
+      "props": [
+        "name={item.display_name}",
+        "src={item.avatar_url}"
+      ]
+    },
+    {
+      "file": "client/src/features/messaging/SearchDialog.tsx",
+      "line": 119,
+      "jsx": "<Avatar name={person.display_name} src={person.avatar_url} />",
+      "props": [
+        "name={person.display_name}",
+        "src={person.avatar_url}"
+      ]
+    },
+    {
+      "file": "client/src/features/messaging/SearchDialog.tsx",
+      "line": 128,
+      "jsx": "<Avatar name={chat.display_title} src={chat.peer_avatar_url} />",
+      "props": [
+        "name={chat.display_title}",
+        "src={chat.peer_avatar_url}"
+      ]
+    },
+    {
+      "file": "client/src/features/workspace/components/ChatRow.tsx",
+      "line": 12,
+      "jsx": "<Avatar name={chat.display_title} src={chat.peer_avatar_url} className={chat.kind === 'group' ? 'group-avatar' : ''} />",
+      "props": [
+        "name={chat.display_title}",
+        "src={chat.peer_avatar_url}",
+        "className={chat.kind === 'group' ? 'group-avatar' : ''}"
+      ]
+    },
+    {
+      "file": "client/src/features/workspace/components/InboxPane.tsx",
+      "line": 122,
+      "jsx": "<Avatar name={callTitle(call)} src={call.is_group ? undefined : call.other_avatar_url} />",
+      "props": [
+        "name={callTitle(call)}",
+        "src={call.is_group ? undefined : call.other_avatar_url}"
+      ]
+    },
+    {
+      "file": "client/src/features/workspace/components/InboxPane.tsx",
+      "line": 139,
+      "jsx": "<Avatar name={item.display_name} src={item.avatar_url} />",
+      "props": [
+        "name={item.display_name}",
+        "src={item.avatar_url}"
+      ]
+    },
+    {
+      "file": "client/src/features/workspace/components/IncomingCallBanner.tsx",
+      "line": 13,
+      "jsx": "<Avatar name={incomingCall.group_title ?? incomingCall.caller_name} src={incomingCall.is_group ? undefined : incomingCall.caller_avatar_url} />",
+      "props": [
+        "name={incomingCall.group_title ?? incomingCall.caller_name}",
+        "src={incomingCall.is_group ? undefined : incomingCall.caller_avatar_url}"
+      ]
+    },
+    {
+      "file": "client/src/features/workspace/components/WorkspaceRail.tsx",
+      "line": 37,
+      "jsx": "<Avatar name={user.display_name} src={user.avatar_url} className=\"avatar-you\" />",
+      "props": [
+        "name={user.display_name}",
+        "src={user.avatar_url}",
+        "className=\"avatar-you\""
+      ]
+    }
+  ],
+  "overrides": [
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".avatar",
+      "nesting": null,
+      "declarations": [
+        {
+          "property": "width",
+          "value": "31px"
+        },
+        {
+          "property": "height",
+          "value": "31px"
+        },
+        {
+          "property": "flex",
+          "value": "0 0 auto"
+        },
+        {
+          "property": "border-radius",
+          "value": "50%"
+        },
+        {
+          "property": "font-size",
+          "value": "var(--type-body-xs)"
+        },
+        {
+          "property": "font-weight",
+          "value": "600"
+        }
+      ],
+      "owner": "primitive"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".avatar > img",
+      "nesting": null,
+      "declarations": [
+        {
+          "property": "position",
+          "value": "absolute"
+        },
+        {
+          "property": "inset",
+          "value": "0"
+        },
+        {
+          "property": "width",
+          "value": "100%"
+        },
+        {
+          "property": "height",
+          "value": "100%"
+        },
+        {
+          "property": "object-fit",
+          "value": "cover"
+        }
+      ],
+      "owner": "primitive"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".avatar-has-image > span",
+      "nesting": null,
+      "declarations": [
+        {
+          "property": "visibility",
+          "value": "hidden"
+        }
+      ],
+      "owner": "primitive"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".profile-avatar-editor",
+      "nesting": null,
+      "declarations": [
+        {
+          "property": "display",
+          "value": "flex"
+        },
+        {
+          "property": "align-items",
+          "value": "center"
+        },
+        {
+          "property": "gap",
+          "value": "14px"
+        },
+        {
+          "property": "padding",
+          "value": "2px 0 4px"
+        }
+      ],
+      "owner": "contextual/consumer (unchanged)"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".profile-avatar",
+      "nesting": null,
+      "declarations": [
+        {
+          "property": "width",
+          "value": "64px"
+        },
+        {
+          "property": "height",
+          "value": "64px"
+        },
+        {
+          "property": "color",
+          "value": "#47644c"
+        },
+        {
+          "property": "background",
+          "value": "#dce7d7"
+        },
+        {
+          "property": "font-size",
+          "value": "var(--type-heading)"
+        }
+      ],
+      "owner": "contextual/consumer (unchanged)"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".profile-avatar-actions",
+      "nesting": null,
+      "declarations": [
+        {
+          "property": "display",
+          "value": "flex"
+        },
+        {
+          "property": "min-width",
+          "value": "0"
+        },
+        {
+          "property": "flex-direction",
+          "value": "column"
+        },
+        {
+          "property": "align-items",
+          "value": "flex-start"
+        },
+        {
+          "property": "gap",
+          "value": "6px"
+        }
+      ],
+      "owner": "contextual/consumer (unchanged)"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".profile-avatar-actions > strong",
+      "nesting": null,
+      "declarations": [
+        {
+          "property": "color",
+          "value": "#3e4a43"
+        },
+        {
+          "property": "font-size",
+          "value": "var(--type-body-xs)"
+        }
+      ],
+      "owner": "contextual/consumer (unchanged)"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".profile-avatar-actions > span",
+      "nesting": null,
+      "declarations": [
+        {
+          "property": "color",
+          "value": "#929b94"
+        },
+        {
+          "property": "font-size",
+          "value": "var(--type-small)"
+        }
+      ],
+      "owner": "contextual/consumer (unchanged)"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".profile-avatar-actions > div",
+      "nesting": null,
+      "declarations": [
+        {
+          "property": "display",
+          "value": "flex"
+        },
+        {
+          "property": "flex-wrap",
+          "value": "wrap"
+        },
+        {
+          "property": "gap",
+          "value": "6px"
+        }
+      ],
+      "owner": "contextual/consumer (unchanged)"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".avatar-you, .avatar-card",
+      "nesting": null,
+      "declarations": [
+        {
+          "property": "color",
+          "value": "#47644c"
+        },
+        {
+          "property": "background",
+          "value": "#dce7d7"
+        }
+      ],
+      "owner": "contextual/consumer (unchanged)"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".avatar-small",
+      "nesting": null,
+      "declarations": [
+        {
+          "property": "width",
+          "value": "25px"
+        },
+        {
+          "property": "height",
+          "value": "25px"
+        },
+        {
+          "property": "font-size",
+          "value": "var(--type-small)"
+        }
+      ],
+      "owner": "contextual/consumer (unchanged)"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".avatar-card",
+      "nesting": null,
+      "declarations": [
+        {
+          "property": "width",
+          "value": "29px"
+        },
+        {
+          "property": "height",
+          "value": "29px"
+        }
+      ],
+      "owner": "contextual/consumer (unchanged)"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".chat-list-item .avatar",
+      "nesting": null,
+      "declarations": [
+        {
+          "property": "width",
+          "value": "30px"
+        },
+        {
+          "property": "height",
+          "value": "30px"
+        },
+        {
+          "property": "color",
+          "value": "#5c6f58"
+        },
+        {
+          "property": "background",
+          "value": "#e7e9dc"
+        }
+      ],
+      "owner": "contextual/consumer (unchanged)"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".chat-list-item .group-avatar",
+      "nesting": null,
+      "declarations": [
+        {
+          "property": "color",
+          "value": "#69577a"
+        },
+        {
+          "property": "background",
+          "value": "#e9e3ef"
+        }
+      ],
+      "owner": "contextual/consumer (unchanged)"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".chat-avatar",
+      "nesting": null,
+      "declarations": [
+        {
+          "property": "width",
+          "value": "29px"
+        },
+        {
+          "property": "height",
+          "value": "29px"
+        },
+        {
+          "property": "color",
+          "value": "#4f6d50"
+        },
+        {
+          "property": "background",
+          "value": "#e2eadf"
+        }
+      ],
+      "owner": "contextual/consumer (unchanged)"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".message-avatar",
+      "nesting": null,
+      "declarations": [
+        {
+          "property": "width",
+          "value": "26px"
+        },
+        {
+          "property": "height",
+          "value": "26px"
+        },
+        {
+          "property": "margin-top",
+          "value": "3px"
+        },
+        {
+          "property": "color",
+          "value": "#755f48"
+        },
+        {
+          "property": "background",
+          "value": "#e9dfd0"
+        },
+        {
+          "property": "font-size",
+          "value": "var(--type-small)"
+        }
+      ],
+      "owner": "contextual/consumer (unchanged)"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".request-card > .avatar",
+      "nesting": null,
+      "declarations": [
+        {
+          "property": "color",
+          "value": "#6e644e"
+        },
+        {
+          "property": "background",
+          "value": "#ebe4d4"
+        }
+      ],
+      "owner": "contextual/consumer (unchanged)"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".account-menu-button > span:not(.avatar):not(.chevron)",
+      "nesting": "media (max-width: 420px)",
+      "declarations": [
+        {
+          "property": "display",
+          "value": "none"
+        }
+      ],
+      "owner": "contextual/consumer (unchanged)"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".chat-details-avatar",
+      "nesting": null,
+      "declarations": [
+        {
+          "property": "width",
+          "value": "76px"
+        },
+        {
+          "property": "height",
+          "value": "76px"
+        },
+        {
+          "property": "font-size",
+          "value": "var(--type-display-sm)"
+        }
+      ],
+      "owner": "contextual/consumer (unchanged)"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".chat-details-members li > span:not(.avatar)",
+      "nesting": null,
+      "declarations": [
+        {
+          "property": "display",
+          "value": "flex"
+        },
+        {
+          "property": "min-width",
+          "value": "0"
+        },
+        {
+          "property": "flex",
+          "value": "1"
+        },
+        {
+          "property": "flex-direction",
+          "value": "column"
+        },
+        {
+          "property": "gap",
+          "value": "3px"
+        }
+      ],
+      "owner": "contextual/consumer (unchanged)"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".call-history-avatar",
+      "nesting": null,
+      "declarations": [
+        {
+          "property": "position",
+          "value": "relative"
+        },
+        {
+          "property": "display",
+          "value": "inline-flex"
+        },
+        {
+          "property": "flex",
+          "value": "0 0 auto"
+        }
+      ],
+      "owner": "contextual/consumer (unchanged)"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".call-history-avatar > svg",
+      "nesting": null,
+      "declarations": [
+        {
+          "property": "position",
+          "value": "absolute"
+        },
+        {
+          "property": "right",
+          "value": "-3px"
+        },
+        {
+          "property": "bottom",
+          "value": "-2px"
+        },
+        {
+          "property": "width",
+          "value": "17px"
+        },
+        {
+          "property": "height",
+          "value": "17px"
+        },
+        {
+          "property": "padding",
+          "value": "2px"
+        },
+        {
+          "property": "border",
+          "value": "2px solid var(--color-canvas)"
+        },
+        {
+          "property": "border-radius",
+          "value": "50%"
+        },
+        {
+          "property": "color",
+          "value": "#467451"
+        },
+        {
+          "property": "background",
+          "value": "#e7f1e6"
+        }
+      ],
+      "owner": "contextual/consumer (unchanged)"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".call-history-item.is-missed .call-history-avatar > svg,\r\n.call-history-item.is-missed .call-history-copy small",
+      "nesting": null,
+      "declarations": [
+        {
+          "property": "color",
+          "value": "#bd4c4c"
+        }
+      ],
+      "owner": "contextual/consumer (unchanged)"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".call-history-item.is-missed .call-history-avatar > svg",
+      "nesting": null,
+      "declarations": [
+        {
+          "property": "background",
+          "value": "#fff0ef"
+        }
+      ],
+      "owner": "contextual/consumer (unchanged)"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".call-voice-avatar-wrap",
+      "nesting": null,
+      "declarations": [
+        {
+          "property": "position",
+          "value": "relative"
+        },
+        {
+          "property": "margin-bottom",
+          "value": "3px"
+        }
+      ],
+      "owner": "contextual/consumer (unchanged)"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".avatar.call-voice-avatar",
+      "nesting": null,
+      "declarations": [
+        {
+          "property": "width",
+          "value": "68px"
+        },
+        {
+          "property": "height",
+          "value": "68px"
+        },
+        {
+          "property": "color",
+          "value": "#23432d"
+        },
+        {
+          "property": "background",
+          "value": "#c9dfc8"
+        },
+        {
+          "property": "font-size",
+          "value": "var(--type-heading-sm)"
+        }
+      ],
+      "owner": "contextual/consumer (unchanged)"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".call-voice-avatar img",
+      "nesting": null,
+      "declarations": [
+        {
+          "property": "width",
+          "value": "100%"
+        },
+        {
+          "property": "height",
+          "value": "100%"
+        },
+        {
+          "property": "object-fit",
+          "value": "cover"
+        }
+      ],
+      "owner": "contextual/consumer (unchanged)"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".incoming-call-banner > .avatar",
+      "nesting": "media (max-width: 700px)",
+      "declarations": [
+        {
+          "property": "width",
+          "value": "76px"
+        },
+        {
+          "property": "height",
+          "value": "76px"
+        },
+        {
+          "property": "color",
+          "value": "#47644c"
+        },
+        {
+          "property": "background",
+          "value": "#dce7d7"
+        },
+        {
+          "property": "font-size",
+          "value": "var(--type-display-sm)"
+        }
+      ],
+      "owner": "contextual/consumer (unchanged)"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ".avatar.call-voice-avatar",
+      "nesting": "media (max-width: 700px)",
+      "declarations": [
+        {
+          "property": "width",
+          "value": "56px"
+        },
+        {
+          "property": "height",
+          "value": "56px"
+        }
+      ],
+      "owner": "contextual/consumer (unchanged)"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .auth-panel h2,\r\n:root[data-theme=\"dark\"] .account-dialog h2,\r\n:root[data-theme=\"dark\"] .pane-heading h1,\r\n:root[data-theme=\"dark\"] .conversation-heading,\r\n:root[data-theme=\"dark\"] .welcome-content h2,\r\n:root[data-theme=\"dark\"] .chat-row-copy strong,\r\n:root[data-theme=\"dark\"] .request-list-header h2,\r\n:root[data-theme=\"dark\"] .request-card-content strong,\r\n:root[data-theme=\"dark\"] .chat-details-header h1,\r\n:root[data-theme=\"dark\"] .chat-details-identity h2,\r\n:root[data-theme=\"dark\"] .chat-details-section h2,\r\n:root[data-theme=\"dark\"] .chat-details-members strong,\r\n:root[data-theme=\"dark\"] .sessions-heading h3,\r\n:root[data-theme=\"dark\"] .profile-avatar-actions > strong,\r\n:root[data-theme=\"dark\"] .profile-form label > span,\r\n:root[data-theme=\"dark\"] .profile-form .profile-checkbox > span > strong,\r\n:root[data-theme=\"dark\"] .safety-form label > span,\r\n:root[data-theme=\"dark\"] .call-dialog-header h2,\r\n:root[data-theme=\"dark\"] .incoming-call-banner strong",
+      "nesting": null,
+      "declarations": [
+        {
+          "property": "color",
+          "value": "var(--color-text)"
+        }
+      ],
+      "owner": "contextual/consumer (unchanged)"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .message-mine .message-bubble,\r\n:root[data-theme=\"dark\"] .welcome-profile,\r\n:root[data-theme=\"dark\"] .chat-avatar,\r\n:root[data-theme=\"dark\"] .profile-avatar,\r\n:root[data-theme=\"dark\"] .avatar-you,\r\n:root[data-theme=\"dark\"] .avatar-card",
+      "nesting": null,
+      "declarations": [
+        {
+          "property": "background-color",
+          "value": "#304237"
+        }
+      ],
+      "owner": "contextual/consumer (unchanged)"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .call-history-avatar > svg",
+      "nesting": null,
+      "declarations": [
+        {
+          "property": "border-color",
+          "value": "var(--color-canvas)"
+        },
+        {
+          "property": "color",
+          "value": "#d8ebd8"
+        },
+        {
+          "property": "background",
+          "value": "#304237"
+        }
+      ],
+      "owner": "contextual/consumer (unchanged)"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .call-history-item.is-missed .call-history-avatar > svg,\r\n:root[data-theme=\"dark\"] .call-history-item.is-missed .call-history-copy small",
+      "nesting": null,
+      "declarations": [
+        {
+          "property": "color",
+          "value": "#ff9a96"
+        }
+      ],
+      "owner": "contextual/consumer (unchanged)"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .call-history-item.is-missed .call-history-avatar > svg",
+      "nesting": null,
+      "declarations": [
+        {
+          "property": "background",
+          "value": "#4b2d2c"
+        }
+      ],
+      "owner": "contextual/consumer (unchanged)"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root[data-theme=\"dark\"] .chat-row-copy small,\r\n:root[data-theme=\"dark\"] .message-meta strong,\r\n:root[data-theme=\"dark\"] .chat-details-identity p,\r\n:root[data-theme=\"dark\"] .chat-details-identity small,\r\n:root[data-theme=\"dark\"] .chat-details-security p,\r\n:root[data-theme=\"dark\"] .request-card-content p,\r\n:root[data-theme=\"dark\"] .profile-avatar-actions > span,\r\n:root[data-theme=\"dark\"] .profile-form .profile-checkbox > span > small,\r\n:root[data-theme=\"dark\"] .search-result strong,\r\n:root[data-theme=\"dark\"] .search-message-result .search-message-snippet",
+      "nesting": null,
+      "declarations": [
+        {
+          "property": "color",
+          "value": "var(--color-text-secondary)"
+        }
+      ],
+      "owner": "contextual/consumer (unchanged)"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root:is([data-theme], :not([data-theme])) .eyebrow,\r\n:root:is([data-theme], :not([data-theme])) .story-copy .eyebrow,\r\n:root:is([data-theme], :not([data-theme])) .story-subtitle,\r\n:root:is([data-theme], :not([data-theme])) .story-note,\r\n:root:is([data-theme], :not([data-theme])) .form-intro,\r\n:root:is([data-theme], :not([data-theme])) .auth-form label small,\r\n:root:is([data-theme], :not([data-theme])) .auth-switch,\r\n:root:is([data-theme], :not([data-theme])) .privacy-note,\r\n:root:is([data-theme], :not([data-theme])) .username-input > span,\r\n:root:is([data-theme], :not([data-theme])) .chat-row-copy small,\r\n:root:is([data-theme], :not([data-theme])) .chat-row-meta,\r\n:root:is([data-theme], :not([data-theme])) .list-section-label,\r\n:root:is([data-theme], :not([data-theme])) .inbox-footnote,\r\n:root:is([data-theme], :not([data-theme])) .empty-title,\r\n:root:is([data-theme], :not([data-theme])) .composer-hint,\r\n:root:is([data-theme], :not([data-theme])) .message-time,\r\n:root:is([data-theme], :not([data-theme])) .message-edited,\r\n:root:is([data-theme], :not([data-theme])) .message-meta strong,\r\n:root:is([data-theme], :not([data-theme])) .conversation-identity-button,\r\n:root:is([data-theme], :not([data-theme])) .profile-avatar-actions > span",
+      "nesting": null,
+      "declarations": [
+        {
+          "property": "color",
+          "value": "var(--color-text-secondary)"
+        }
+      ],
+      "owner": "contextual/consumer (unchanged)"
+    },
+    {
+      "file": "client/src/shared/styles/platform.css",
+      "selector": ":root:is([data-theme], :not([data-theme])) .avatar-you,\r\n:root:is([data-theme], :not([data-theme])) .chat-avatar,\r\n:root:is([data-theme], :not([data-theme])) .profile-avatar",
+      "nesting": null,
+      "declarations": [
+        {
+          "property": "color",
+          "value": "var(--color-text-primary)"
+        },
+        {
+          "property": "background",
+          "value": "var(--color-primary-soft)"
+        }
+      ],
+      "owner": "contextual/consumer (unchanged)"
+    }
+  ]
+}

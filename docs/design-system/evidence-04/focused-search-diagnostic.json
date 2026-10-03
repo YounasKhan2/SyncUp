@@ -1,0 +1,265 @@
+{
+  "cases": 42,
+  "screenshots": 252,
+  "structuralDifferences": [],
+  "decodedComparisons": 546,
+  "byteIdenticalComparisons": 543,
+  "crossBuildComparisons": 126,
+  "crossBuildDifferences": [
+    {
+      "category": "base-versus-head",
+      "left": "base-desktop-dark-light-custom-search-1.jpg",
+      "right": "head-desktop-dark-light-custom-search-1.jpg",
+      "leftPath": ".git/design04/captures/base-desktop-dark-light-custom-search-1.jpg",
+      "rightPath": ".git/design04/captures/head-desktop-dark-light-custom-search-1.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "d403380fe24866e4c22cedb55b474447f33912201dfdba26bbca53f5630cdc9d",
+      "rightSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 170,
+      "changedPercent": 0.013117283950617283,
+      "bbox": [
+        512,
+        232,
+        520,
+        256
+      ],
+      "connected32pxTileRegions": [
+        [
+          512,
+          224,
+          544,
+          256
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "BODY",
+          "changedPixels": 170,
+          "bounds": [
+            0,
+            0,
+            1440.3360595703125,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "overlay search-overlay",
+          "changedPixels": 170,
+          "bounds": [
+            0,
+            0,
+            1440.3360595703125,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "account-dialog search-dialog",
+          "changedPixels": 170,
+          "bounds": [
+            440.1654052734375,
+            139.99473571777344,
+            559.9920654296875,
+            455.1864318847656
+          ]
+        },
+        {
+          "label": "global-search-input",
+          "changedPixels": 170,
+          "bounds": [
+            460.0052185058594,
+            223.20114135742188,
+            520.3124389648438,
+            40.992645263671875
+          ]
+        },
+        {
+          "label": "INPUT",
+          "changedPixels": 140,
+          "bounds": [
+            493.080322265625,
+            234.29620361328125,
+            441.2289733886719,
+            18.802520751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 140
+    }
+  ],
+  "sameBuildDifferences": [
+    {
+      "category": "same-head-build",
+      "left": "head-desktop-dark-light-custom-search-1.jpg",
+      "right": "head-desktop-dark-light-custom-search-2.jpg",
+      "leftPath": ".git/design04/captures/head-desktop-dark-light-custom-search-1.jpg",
+      "rightPath": ".git/design04/captures/head-desktop-dark-light-custom-search-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "rightSHA256": "d403380fe24866e4c22cedb55b474447f33912201dfdba26bbca53f5630cdc9d",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 170,
+      "changedPercent": 0.013117283950617283,
+      "bbox": [
+        512,
+        232,
+        520,
+        256
+      ],
+      "connected32pxTileRegions": [
+        [
+          512,
+          224,
+          544,
+          256
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "BODY",
+          "changedPixels": 170,
+          "bounds": [
+            0,
+            0,
+            1440.3360595703125,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "overlay search-overlay",
+          "changedPixels": 170,
+          "bounds": [
+            0,
+            0,
+            1440.3360595703125,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "account-dialog search-dialog",
+          "changedPixels": 170,
+          "bounds": [
+            440.1654052734375,
+            139.99473571777344,
+            559.9920654296875,
+            455.1864318847656
+          ]
+        },
+        {
+          "label": "global-search-input",
+          "changedPixels": 170,
+          "bounds": [
+            460.0052185058594,
+            223.20114135742188,
+            520.3124389648438,
+            40.992645263671875
+          ]
+        },
+        {
+          "label": "INPUT",
+          "changedPixels": 140,
+          "bounds": [
+            493.080322265625,
+            234.29620361328125,
+            441.2289733886719,
+            18.802520751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 140
+    },
+    {
+      "category": "same-head-build",
+      "left": "head-desktop-dark-light-custom-search-1.jpg",
+      "right": "head-desktop-dark-light-custom-search-3.jpg",
+      "leftPath": ".git/design04/captures/head-desktop-dark-light-custom-search-1.jpg",
+      "rightPath": ".git/design04/captures/head-desktop-dark-light-custom-search-3.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "f6ca3476c9dd15ef7248ebd54dbd6b864a056a3d016e650ffc0bde386c737d06",
+      "rightSHA256": "d403380fe24866e4c22cedb55b474447f33912201dfdba26bbca53f5630cdc9d",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 170,
+      "changedPercent": 0.013117283950617283,
+      "bbox": [
+        512,
+        232,
+        520,
+        256
+      ],
+      "connected32pxTileRegions": [
+        [
+          512,
+          224,
+          544,
+          256
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "BODY",
+          "changedPixels": 170,
+          "bounds": [
+            0,
+            0,
+            1440.3360595703125,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "overlay search-overlay",
+          "changedPixels": 170,
+          "bounds": [
+            0,
+            0,
+            1440.3360595703125,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "account-dialog search-dialog",
+          "changedPixels": 170,
+          "bounds": [
+            440.1654052734375,
+            139.99473571777344,
+            559.9920654296875,
+            455.1864318847656
+          ]
+        },
+        {
+          "label": "global-search-input",
+          "changedPixels": 170,
+          "bounds": [
+            460.0052185058594,
+            223.20114135742188,
+            520.3124389648438,
+            40.992645263671875
+          ]
+        },
+        {
+          "label": "INPUT",
+          "changedPixels": 140,
+          "bounds": [
+            493.080322265625,
+            234.29620361328125,
+            441.2289733886719,
+            18.802520751953125
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 140
+    }
+  ],
+  "algorithm": "Decode every RGB pixel; any unequal channel counts one changed pixel; zero tolerance, no masking/cropping."
+}
