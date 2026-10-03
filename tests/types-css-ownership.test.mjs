@@ -1,3 +1,4 @@
+import {restoreSharedPrimitives} from './helpers/shared-primitives-parity.mjs'
 import {execFileSync} from 'node:child_process'
 import { restoreButtonMigration } from './helpers/button-migration-parity.mjs'
 import { restoreAvatarMigration } from './helpers/avatar-migration-parity.mjs'
@@ -138,7 +139,7 @@ test('Ownership: legacy token values, primitives and token-before-App import gra
     const old = declarations(original, selector), current = declarations(read('client/src/shared/styles/tokens.css'), selector)
     for (const [name, value] of Object.entries(old)) assert.equal(name.startsWith('--') ? resolve(name,current) : current[name], name.startsWith('--') ? resolve(name,old) : value, selector+' '+name)
   }
-  assert.equal(digest(restoreButtonMigration('client/src/shared/styles/primitives.css', read('client/src/shared/styles/primitives.css'))), baseline.css.primitivesDigest)
+  assert.equal(digest(restoreButtonMigration('client/src/shared/styles/primitives.css', restoreSharedPrimitives('client/src/shared/styles/primitives.css', read('client/src/shared/styles/primitives.css')))), baseline.css.primitivesDigest)
   assert.equal(cssImports('client/src/index.css')[0], 'client/src/shared/styles/tokens.css')
   assert.ok(read('client/src/main.tsx').indexOf("import './index.css'") < read('client/src/main.tsx').indexOf("import App from './App.tsx'"))
 })

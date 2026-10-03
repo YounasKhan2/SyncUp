@@ -1,0 +1,20 @@
+import fs from 'node:fs'
+import path from 'node:path'
+import {execFileSync} from 'node:child_process'
+import {createHash} from 'node:crypto'
+import {build} from 'vite'
+import tailwindcss from '@tailwindcss/vite'
+const base='fe285890cb8bebc71fcceaaea280dc7c50038227',root=path.resolve('.git/design05'),files=['client/src/shared/components/Dialog.tsx','client/src/shared/styles/primitives.css']
+fs.mkdirSync(root,{recursive:true});const archive=execFileSync('git',['archive',base,'client'],{maxBuffer:32*1024*1024});fs.writeFileSync(root+'/client.tar',archive)
+const hash=x=>createHash('sha256').update(x).digest('hex')
+for(const side of process.argv.slice(2).length?process.argv.slice(2):['base','head']){
+ const dir=root+'/'+side;fs.mkdirSync(dir+'/tests/fixtures',{recursive:true});execFileSync('tar',['-xf',root+'/client.tar','-C',dir])
+ if(side==='head')for(const file of files)fs.copyFileSync(file,dir+'/'+file)
+ fs.copyFileSync('tests/fixtures/shared-primitives-preview.tsx',dir+'/tests/fixtures/shared-primitives-preview.tsx')
+ const bootstrap=fs.readFileSync('tests/fixtures/spaces-visual-bootstrap.js','utf8'),observer=fs.readFileSync('tests/fixtures/final-observer.js','utf8')
+ fs.writeFileSync(dir+'/index.html',`<!doctype html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>SyncUp primitive verification</title><script>${bootstrap}</script><script>${observer}</script></head><body><div id="root"></div><pre id="fixture-events" hidden>[]</pre><script type="module" src="./tests/fixtures/shared-primitives-preview.tsx"></script></body></html>`)
+ const api=`const user=${JSON.stringify({id:'me',display_name:'Sam Rivera',username:'sam',email:'sam@example.test'})};export async function api(url,options){const el=document.getElementById('fixture-events');const calls=JSON.parse(el.textContent);calls.push({url,options:options??null});el.textContent=JSON.stringify(calls);if(url==='/api/auth/sessions')return{sessions:[],currentSessionId:'current'};if(url==='/api/blocks')return{blockedUsers:[]};if(url==='/api/reports'){const scene=new URLSearchParams(location.search).get('scene');if(scene==='report-busy')return new Promise(()=>{});if(scene==='report-error')throw Error('Denied');return{};}return{user};}export const apiUpload=api;`
+ const isolate={name:'fixture-api-only',load(id){if(id.replaceAll('\\','/').endsWith('/client/src/shared/api.ts'))return api}}
+ await build({configFile:false,root:dir,base:'./',logLevel:'error',plugins:[tailwindcss({optimize:false}),isolate],build:{outDir:'dist',emptyOutDir:true}})
+ fs.writeFileSync(root+'/build-'+side+'.json',JSON.stringify({base,side,archiveSHA256:hash(archive),fixtureSHA256:hash(fs.readFileSync('tests/fixtures/shared-primitives-preview.tsx')),bootstrapSHA256:hash(bootstrap),apiBoundarySHA256:hash(api),production:Object.fromEntries(files.map(file=>[file,hash(fs.readFileSync(dir+'/'+file))]))},null,2))
+}

@@ -1,0 +1,12 @@
+{
+  "base": "fe285890cb8bebc71fcceaaea280dc7c50038227",
+  "side": "base",
+  "archiveSHA256": "c5447919f0d290391abd10028258093d21564b66e21d0e72fbc00e9a8b6b9f5f",
+  "fixtureSHA256": "5ac9a22ccf99f49b1f99ba770193a8b7c10e81632826f15bb06f1b3c15549d3a",
+  "bootstrapSHA256": "89cd3a99fb0b9595db623aaccf90c3d7f1aab8df46f4d3f33d2b660c5cc2cfba",
+  "apiBoundarySHA256": "3043d22e11fb0d58dfeef0efc0d64cd2517570526179e0b9f4895fe31228cc71",
+  "production": {
+    "client/src/shared/components/Dialog.tsx": "b629cf7468ff802e0598f1461195d646eb258d4d3cc6d9c0d0b9cd6bfc9afa72",
+    "client/src/shared/styles/primitives.css": "fa9c0f0c5ef758cf533e0abf105382ef05386a842781afe3e28c3f9f4c701098"
+  }
+}

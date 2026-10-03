@@ -1,0 +1,1547 @@
+{
+  "cases": 32,
+  "screenshots": 192,
+  "interactionPairs": 52,
+  "structuralDifferences": [],
+  "decodedComparisons": 422,
+  "byteIdenticalComparisons": 416,
+  "crossBuildComparisons": 96,
+  "crossBuildDifferences": [],
+  "sameBuildDifferences": [
+    {
+      "category": "same-build-warmup",
+      "left": "base-desktop-dark-light-report-error-1.jpg",
+      "right": "base-desktop-dark-light-report-error-2.jpg",
+      "leftPath": ".git/design05/captures/warmups/base-desktop-dark-light-report-error-1.jpg",
+      "rightPath": ".git/design05/captures/warmups/base-desktop-dark-light-report-error-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "1dc5b5a79973aa2f69410e8d3a34a4cd3fc2a7502784fdc33bba6f2850f18d95",
+      "rightSHA256": "25a3b832c0cc5259da3eb6bd08c7e19a240109393d5518c425823edfd0ece445",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 21743,
+      "changedPercent": 1.6777006172839506,
+      "bbox": [
+        527,
+        528,
+        920,
+        625
+      ],
+      "connected32pxTileRegions": [
+        [
+          512,
+          512,
+          928,
+          640
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "BODY",
+          "changedPixels": 21743,
+          "bounds": [
+            0,
+            0,
+            1440.3360595703125,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "ui-dialog-overlay",
+          "changedPixels": 21743,
+          "bounds": [
+            0,
+            0,
+            1440.3360595703125,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "ui-dialog account-dialog report-dialog",
+          "changedPixels": 21743,
+          "bounds": [
+            505.17327880859375,
+            253.9127960205078,
+            429.9894714355469,
+            392.1743469238281
+          ]
+        },
+        {
+          "label": "safety-form",
+          "changedPixels": 20140,
+          "bounds": [
+            530.0026245117188,
+            373.3849487304687,
+            380.3308715820313,
+            247.8728790283203
+          ]
+        },
+        {
+          "label": "form-error",
+          "changedPixels": 761,
+          "bounds": [
+            530.0026245117188,
+            524.448486328125,
+            380.3308715820313,
+            39.82405090332031
+          ]
+        },
+        {
+          "label": "ui-button ui:flex ui:w-full ui:items-center ui:justify-center ui:rounded-md ui:text-brand-foreground ui:bg-brand ui:cursor-pointer ui:[&:hover:not(:disabled)]:bg-brand-hover ui:disabled:cursor-wait ui:disabled:opacity-70",
+          "changedPixels": 17145,
+          "bounds": [
+            530.0026245117188,
+            577.2583618164062,
+            380.3308715820313,
+            43.999473571777344
+          ]
+        },
+        {
+          "label": "lucide lucide-flag",
+          "changedPixels": 196,
+          "bounds": [
+            760.6617431640625,
+            592.7520751953125,
+            12.99894905090332,
+            12.99894905090332
+          ]
+        },
+        {
+          "label": "path",
+          "changedPixels": 120,
+          "bounds": [
+            762.8281860351562,
+            593.8353271484375,
+            8.665966033935547,
+            10.832457542419434
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 98
+    },
+    {
+      "category": "same-build-warmup",
+      "left": "head-desktop-dark-light-report-error-1.jpg",
+      "right": "head-desktop-dark-light-report-error-2.jpg",
+      "leftPath": ".git/design05/captures/warmups/head-desktop-dark-light-report-error-1.jpg",
+      "rightPath": ".git/design05/captures/warmups/head-desktop-dark-light-report-error-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "1dc5b5a79973aa2f69410e8d3a34a4cd3fc2a7502784fdc33bba6f2850f18d95",
+      "rightSHA256": "25a3b832c0cc5259da3eb6bd08c7e19a240109393d5518c425823edfd0ece445",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 21743,
+      "changedPercent": 1.6777006172839506,
+      "bbox": [
+        527,
+        528,
+        920,
+        625
+      ],
+      "connected32pxTileRegions": [
+        [
+          512,
+          512,
+          928,
+          640
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "BODY",
+          "changedPixels": 21743,
+          "bounds": [
+            0,
+            0,
+            1440.3360595703125,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "ui-dialog-overlay",
+          "changedPixels": 21743,
+          "bounds": [
+            0,
+            0,
+            1440.3360595703125,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "ui-dialog account-dialog report-dialog",
+          "changedPixels": 21743,
+          "bounds": [
+            505.17327880859375,
+            253.9127960205078,
+            429.9894714355469,
+            392.1743469238281
+          ]
+        },
+        {
+          "label": "safety-form",
+          "changedPixels": 20140,
+          "bounds": [
+            530.0026245117188,
+            373.3849487304687,
+            380.3308715820313,
+            247.8728790283203
+          ]
+        },
+        {
+          "label": "form-error",
+          "changedPixels": 761,
+          "bounds": [
+            530.0026245117188,
+            524.448486328125,
+            380.3308715820313,
+            39.82405090332031
+          ]
+        },
+        {
+          "label": "ui-button ui:flex ui:w-full ui:items-center ui:justify-center ui:rounded-md ui:text-brand-foreground ui:bg-brand ui:cursor-pointer ui:[&:hover:not(:disabled)]:bg-brand-hover ui:disabled:cursor-wait ui:disabled:opacity-70",
+          "changedPixels": 17145,
+          "bounds": [
+            530.0026245117188,
+            577.2583618164062,
+            380.3308715820313,
+            43.999473571777344
+          ]
+        },
+        {
+          "label": "lucide lucide-flag",
+          "changedPixels": 196,
+          "bounds": [
+            760.6617431640625,
+            592.7520751953125,
+            12.99894905090332,
+            12.99894905090332
+          ]
+        },
+        {
+          "label": "path",
+          "changedPixels": 120,
+          "bounds": [
+            762.8281860351562,
+            593.8353271484375,
+            8.665966033935547,
+            10.832457542419434
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 98
+    },
+    {
+      "category": "same-build-warmup",
+      "left": "base-desktop-light-light-report-error-1.jpg",
+      "right": "base-desktop-light-light-report-error-2.jpg",
+      "leftPath": ".git/design05/captures/warmups/base-desktop-light-light-report-error-1.jpg",
+      "rightPath": ".git/design05/captures/warmups/base-desktop-light-light-report-error-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "c7e5bb7b36486326abbff492f3c84c4545c241aa4c8b8b787411805b989b2c04",
+      "rightSHA256": "e885a79f08d5a4e713e894504fb8bf8cde0906a7102b2a9022c80f8ae274c06e",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 21515,
+      "changedPercent": 1.660108024691358,
+      "bbox": [
+        527,
+        504,
+        917,
+        625
+      ],
+      "connected32pxTileRegions": [
+        [
+          512,
+          480,
+          928,
+          640
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "BODY",
+          "changedPixels": 21515,
+          "bounds": [
+            0,
+            0,
+            1440.3360595703125,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "ui-dialog-overlay",
+          "changedPixels": 21515,
+          "bounds": [
+            0,
+            0,
+            1440.3360595703125,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "ui-dialog account-dialog report-dialog",
+          "changedPixels": 21515,
+          "bounds": [
+            505.17327880859375,
+            253.9127960205078,
+            429.9894714355469,
+            392.1743469238281
+          ]
+        },
+        {
+          "label": "safety-form",
+          "changedPixels": 20384,
+          "bounds": [
+            530.0026245117188,
+            373.3849487304687,
+            380.3308715820313,
+            247.8728790283203
+          ]
+        },
+        {
+          "label": "LABEL",
+          "changedPixels": 59,
+          "bounds": [
+            530.0026245117188,
+            436.6465148925781,
+            380.3308715820313,
+            77.80986785888672
+          ]
+        },
+        {
+          "label": "TEXTAREA",
+          "changedPixels": 59,
+          "bounds": [
+            530.0026245117188,
+            455.9217224121094,
+            380.3308715820313,
+            58.53466033935547
+          ]
+        },
+        {
+          "label": "form-error",
+          "changedPixels": 590,
+          "bounds": [
+            530.0026245117188,
+            524.448486328125,
+            380.3308715820313,
+            39.82405090332031
+          ]
+        },
+        {
+          "label": "ui-button ui:flex ui:w-full ui:items-center ui:justify-center ui:rounded-md ui:text-brand-foreground ui:bg-brand ui:cursor-pointer ui:[&:hover:not(:disabled)]:bg-brand-hover ui:disabled:cursor-wait ui:disabled:opacity-70",
+          "changedPixels": 17144,
+          "bounds": [
+            530.0026245117188,
+            577.2583618164062,
+            380.3308715820313,
+            43.999473571777344
+          ]
+        },
+        {
+          "label": "lucide lucide-flag",
+          "changedPixels": 196,
+          "bounds": [
+            760.6617431640625,
+            592.7520751953125,
+            12.99894905090332,
+            12.99894905090332
+          ]
+        },
+        {
+          "label": "path",
+          "changedPixels": 120,
+          "bounds": [
+            762.8281860351562,
+            593.8353271484375,
+            8.665966033935547,
+            10.832457542419434
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 127
+    },
+    {
+      "category": "same-build-warmup",
+      "left": "head-desktop-light-light-report-error-1.jpg",
+      "right": "head-desktop-light-light-report-error-2.jpg",
+      "leftPath": ".git/design05/captures/warmups/head-desktop-light-light-report-error-1.jpg",
+      "rightPath": ".git/design05/captures/warmups/head-desktop-light-light-report-error-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "c7e5bb7b36486326abbff492f3c84c4545c241aa4c8b8b787411805b989b2c04",
+      "rightSHA256": "e885a79f08d5a4e713e894504fb8bf8cde0906a7102b2a9022c80f8ae274c06e",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 21515,
+      "changedPercent": 1.660108024691358,
+      "bbox": [
+        527,
+        504,
+        917,
+        625
+      ],
+      "connected32pxTileRegions": [
+        [
+          512,
+          480,
+          928,
+          640
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "BODY",
+          "changedPixels": 21515,
+          "bounds": [
+            0,
+            0,
+            1440.3360595703125,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "ui-dialog-overlay",
+          "changedPixels": 21515,
+          "bounds": [
+            0,
+            0,
+            1440.3360595703125,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "ui-dialog account-dialog report-dialog",
+          "changedPixels": 21515,
+          "bounds": [
+            505.17327880859375,
+            253.9127960205078,
+            429.9894714355469,
+            392.1743469238281
+          ]
+        },
+        {
+          "label": "safety-form",
+          "changedPixels": 20384,
+          "bounds": [
+            530.0026245117188,
+            373.3849487304687,
+            380.3308715820313,
+            247.8728790283203
+          ]
+        },
+        {
+          "label": "LABEL",
+          "changedPixels": 59,
+          "bounds": [
+            530.0026245117188,
+            436.6465148925781,
+            380.3308715820313,
+            77.80986785888672
+          ]
+        },
+        {
+          "label": "TEXTAREA",
+          "changedPixels": 59,
+          "bounds": [
+            530.0026245117188,
+            455.9217224121094,
+            380.3308715820313,
+            58.53466033935547
+          ]
+        },
+        {
+          "label": "form-error",
+          "changedPixels": 590,
+          "bounds": [
+            530.0026245117188,
+            524.448486328125,
+            380.3308715820313,
+            39.82405090332031
+          ]
+        },
+        {
+          "label": "ui-button ui:flex ui:w-full ui:items-center ui:justify-center ui:rounded-md ui:text-brand-foreground ui:bg-brand ui:cursor-pointer ui:[&:hover:not(:disabled)]:bg-brand-hover ui:disabled:cursor-wait ui:disabled:opacity-70",
+          "changedPixels": 17144,
+          "bounds": [
+            530.0026245117188,
+            577.2583618164062,
+            380.3308715820313,
+            43.999473571777344
+          ]
+        },
+        {
+          "label": "lucide lucide-flag",
+          "changedPixels": 196,
+          "bounds": [
+            760.6617431640625,
+            592.7520751953125,
+            12.99894905090332,
+            12.99894905090332
+          ]
+        },
+        {
+          "label": "path",
+          "changedPixels": 120,
+          "bounds": [
+            762.8281860351562,
+            593.8353271484375,
+            8.665966033935547,
+            10.832457542419434
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 127
+    },
+    {
+      "category": "same-build-warmup",
+      "left": "base-desktop-system-light-report-error-1.jpg",
+      "right": "base-desktop-system-light-report-error-2.jpg",
+      "leftPath": ".git/design05/captures/warmups/base-desktop-system-light-report-error-1.jpg",
+      "rightPath": ".git/design05/captures/warmups/base-desktop-system-light-report-error-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "c7e5bb7b36486326abbff492f3c84c4545c241aa4c8b8b787411805b989b2c04",
+      "rightSHA256": "e885a79f08d5a4e713e894504fb8bf8cde0906a7102b2a9022c80f8ae274c06e",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 21515,
+      "changedPercent": 1.660108024691358,
+      "bbox": [
+        527,
+        504,
+        917,
+        625
+      ],
+      "connected32pxTileRegions": [
+        [
+          512,
+          480,
+          928,
+          640
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "BODY",
+          "changedPixels": 21515,
+          "bounds": [
+            0,
+            0,
+            1440.3360595703125,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "ui-dialog-overlay",
+          "changedPixels": 21515,
+          "bounds": [
+            0,
+            0,
+            1440.3360595703125,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "ui-dialog account-dialog report-dialog",
+          "changedPixels": 21515,
+          "bounds": [
+            505.17327880859375,
+            253.9127960205078,
+            429.9894714355469,
+            392.1743469238281
+          ]
+        },
+        {
+          "label": "safety-form",
+          "changedPixels": 20384,
+          "bounds": [
+            530.0026245117188,
+            373.3849487304687,
+            380.3308715820313,
+            247.8728790283203
+          ]
+        },
+        {
+          "label": "LABEL",
+          "changedPixels": 59,
+          "bounds": [
+            530.0026245117188,
+            436.6465148925781,
+            380.3308715820313,
+            77.80986785888672
+          ]
+        },
+        {
+          "label": "TEXTAREA",
+          "changedPixels": 59,
+          "bounds": [
+            530.0026245117188,
+            455.9217224121094,
+            380.3308715820313,
+            58.53466033935547
+          ]
+        },
+        {
+          "label": "form-error",
+          "changedPixels": 590,
+          "bounds": [
+            530.0026245117188,
+            524.448486328125,
+            380.3308715820313,
+            39.82405090332031
+          ]
+        },
+        {
+          "label": "ui-button ui:flex ui:w-full ui:items-center ui:justify-center ui:rounded-md ui:text-brand-foreground ui:bg-brand ui:cursor-pointer ui:[&:hover:not(:disabled)]:bg-brand-hover ui:disabled:cursor-wait ui:disabled:opacity-70",
+          "changedPixels": 17144,
+          "bounds": [
+            530.0026245117188,
+            577.2583618164062,
+            380.3308715820313,
+            43.999473571777344
+          ]
+        },
+        {
+          "label": "lucide lucide-flag",
+          "changedPixels": 196,
+          "bounds": [
+            760.6617431640625,
+            592.7520751953125,
+            12.99894905090332,
+            12.99894905090332
+          ]
+        },
+        {
+          "label": "path",
+          "changedPixels": 120,
+          "bounds": [
+            762.8281860351562,
+            593.8353271484375,
+            8.665966033935547,
+            10.832457542419434
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 127
+    },
+    {
+      "category": "same-build-warmup",
+      "left": "head-desktop-system-light-report-error-1.jpg",
+      "right": "head-desktop-system-light-report-error-2.jpg",
+      "leftPath": ".git/design05/captures/warmups/head-desktop-system-light-report-error-1.jpg",
+      "rightPath": ".git/design05/captures/warmups/head-desktop-system-light-report-error-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "c7e5bb7b36486326abbff492f3c84c4545c241aa4c8b8b787411805b989b2c04",
+      "rightSHA256": "e885a79f08d5a4e713e894504fb8bf8cde0906a7102b2a9022c80f8ae274c06e",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 21515,
+      "changedPercent": 1.660108024691358,
+      "bbox": [
+        527,
+        504,
+        917,
+        625
+      ],
+      "connected32pxTileRegions": [
+        [
+          512,
+          480,
+          928,
+          640
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "BODY",
+          "changedPixels": 21515,
+          "bounds": [
+            0,
+            0,
+            1440.3360595703125,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "ui-dialog-overlay",
+          "changedPixels": 21515,
+          "bounds": [
+            0,
+            0,
+            1440.3360595703125,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "ui-dialog account-dialog report-dialog",
+          "changedPixels": 21515,
+          "bounds": [
+            505.17327880859375,
+            253.9127960205078,
+            429.9894714355469,
+            392.1743469238281
+          ]
+        },
+        {
+          "label": "safety-form",
+          "changedPixels": 20384,
+          "bounds": [
+            530.0026245117188,
+            373.3849487304687,
+            380.3308715820313,
+            247.8728790283203
+          ]
+        },
+        {
+          "label": "LABEL",
+          "changedPixels": 59,
+          "bounds": [
+            530.0026245117188,
+            436.6465148925781,
+            380.3308715820313,
+            77.80986785888672
+          ]
+        },
+        {
+          "label": "TEXTAREA",
+          "changedPixels": 59,
+          "bounds": [
+            530.0026245117188,
+            455.9217224121094,
+            380.3308715820313,
+            58.53466033935547
+          ]
+        },
+        {
+          "label": "form-error",
+          "changedPixels": 590,
+          "bounds": [
+            530.0026245117188,
+            524.448486328125,
+            380.3308715820313,
+            39.82405090332031
+          ]
+        },
+        {
+          "label": "ui-button ui:flex ui:w-full ui:items-center ui:justify-center ui:rounded-md ui:text-brand-foreground ui:bg-brand ui:cursor-pointer ui:[&:hover:not(:disabled)]:bg-brand-hover ui:disabled:cursor-wait ui:disabled:opacity-70",
+          "changedPixels": 17144,
+          "bounds": [
+            530.0026245117188,
+            577.2583618164062,
+            380.3308715820313,
+            43.999473571777344
+          ]
+        },
+        {
+          "label": "lucide lucide-flag",
+          "changedPixels": 196,
+          "bounds": [
+            760.6617431640625,
+            592.7520751953125,
+            12.99894905090332,
+            12.99894905090332
+          ]
+        },
+        {
+          "label": "path",
+          "changedPixels": 120,
+          "bounds": [
+            762.8281860351562,
+            593.8353271484375,
+            8.665966033935547,
+            10.832457542419434
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 127
+    }
+  ],
+  "algorithm": "All RGB pixels, zero tolerance, no masking or cropping.",
+  "finalComparisons": 288,
+  "finalByteIdenticalComparisons": 288,
+  "sameBuildFinalDifferences": [],
+  "warmupComparisons": 134,
+  "warmupDifferences": [
+    {
+      "category": "same-build-warmup",
+      "left": "base-desktop-dark-light-report-error-1.jpg",
+      "right": "base-desktop-dark-light-report-error-2.jpg",
+      "leftPath": ".git/design05/captures/warmups/base-desktop-dark-light-report-error-1.jpg",
+      "rightPath": ".git/design05/captures/warmups/base-desktop-dark-light-report-error-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "1dc5b5a79973aa2f69410e8d3a34a4cd3fc2a7502784fdc33bba6f2850f18d95",
+      "rightSHA256": "25a3b832c0cc5259da3eb6bd08c7e19a240109393d5518c425823edfd0ece445",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 21743,
+      "changedPercent": 1.6777006172839506,
+      "bbox": [
+        527,
+        528,
+        920,
+        625
+      ],
+      "connected32pxTileRegions": [
+        [
+          512,
+          512,
+          928,
+          640
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "BODY",
+          "changedPixels": 21743,
+          "bounds": [
+            0,
+            0,
+            1440.3360595703125,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "ui-dialog-overlay",
+          "changedPixels": 21743,
+          "bounds": [
+            0,
+            0,
+            1440.3360595703125,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "ui-dialog account-dialog report-dialog",
+          "changedPixels": 21743,
+          "bounds": [
+            505.17327880859375,
+            253.9127960205078,
+            429.9894714355469,
+            392.1743469238281
+          ]
+        },
+        {
+          "label": "safety-form",
+          "changedPixels": 20140,
+          "bounds": [
+            530.0026245117188,
+            373.3849487304687,
+            380.3308715820313,
+            247.8728790283203
+          ]
+        },
+        {
+          "label": "form-error",
+          "changedPixels": 761,
+          "bounds": [
+            530.0026245117188,
+            524.448486328125,
+            380.3308715820313,
+            39.82405090332031
+          ]
+        },
+        {
+          "label": "ui-button ui:flex ui:w-full ui:items-center ui:justify-center ui:rounded-md ui:text-brand-foreground ui:bg-brand ui:cursor-pointer ui:[&:hover:not(:disabled)]:bg-brand-hover ui:disabled:cursor-wait ui:disabled:opacity-70",
+          "changedPixels": 17145,
+          "bounds": [
+            530.0026245117188,
+            577.2583618164062,
+            380.3308715820313,
+            43.999473571777344
+          ]
+        },
+        {
+          "label": "lucide lucide-flag",
+          "changedPixels": 196,
+          "bounds": [
+            760.6617431640625,
+            592.7520751953125,
+            12.99894905090332,
+            12.99894905090332
+          ]
+        },
+        {
+          "label": "path",
+          "changedPixels": 120,
+          "bounds": [
+            762.8281860351562,
+            593.8353271484375,
+            8.665966033935547,
+            10.832457542419434
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 98
+    },
+    {
+      "category": "same-build-warmup",
+      "left": "head-desktop-dark-light-report-error-1.jpg",
+      "right": "head-desktop-dark-light-report-error-2.jpg",
+      "leftPath": ".git/design05/captures/warmups/head-desktop-dark-light-report-error-1.jpg",
+      "rightPath": ".git/design05/captures/warmups/head-desktop-dark-light-report-error-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "1dc5b5a79973aa2f69410e8d3a34a4cd3fc2a7502784fdc33bba6f2850f18d95",
+      "rightSHA256": "25a3b832c0cc5259da3eb6bd08c7e19a240109393d5518c425823edfd0ece445",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 21743,
+      "changedPercent": 1.6777006172839506,
+      "bbox": [
+        527,
+        528,
+        920,
+        625
+      ],
+      "connected32pxTileRegions": [
+        [
+          512,
+          512,
+          928,
+          640
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "BODY",
+          "changedPixels": 21743,
+          "bounds": [
+            0,
+            0,
+            1440.3360595703125,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "ui-dialog-overlay",
+          "changedPixels": 21743,
+          "bounds": [
+            0,
+            0,
+            1440.3360595703125,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "ui-dialog account-dialog report-dialog",
+          "changedPixels": 21743,
+          "bounds": [
+            505.17327880859375,
+            253.9127960205078,
+            429.9894714355469,
+            392.1743469238281
+          ]
+        },
+        {
+          "label": "safety-form",
+          "changedPixels": 20140,
+          "bounds": [
+            530.0026245117188,
+            373.3849487304687,
+            380.3308715820313,
+            247.8728790283203
+          ]
+        },
+        {
+          "label": "form-error",
+          "changedPixels": 761,
+          "bounds": [
+            530.0026245117188,
+            524.448486328125,
+            380.3308715820313,
+            39.82405090332031
+          ]
+        },
+        {
+          "label": "ui-button ui:flex ui:w-full ui:items-center ui:justify-center ui:rounded-md ui:text-brand-foreground ui:bg-brand ui:cursor-pointer ui:[&:hover:not(:disabled)]:bg-brand-hover ui:disabled:cursor-wait ui:disabled:opacity-70",
+          "changedPixels": 17145,
+          "bounds": [
+            530.0026245117188,
+            577.2583618164062,
+            380.3308715820313,
+            43.999473571777344
+          ]
+        },
+        {
+          "label": "lucide lucide-flag",
+          "changedPixels": 196,
+          "bounds": [
+            760.6617431640625,
+            592.7520751953125,
+            12.99894905090332,
+            12.99894905090332
+          ]
+        },
+        {
+          "label": "path",
+          "changedPixels": 120,
+          "bounds": [
+            762.8281860351562,
+            593.8353271484375,
+            8.665966033935547,
+            10.832457542419434
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 98
+    },
+    {
+      "category": "same-build-warmup",
+      "left": "base-desktop-light-light-report-error-1.jpg",
+      "right": "base-desktop-light-light-report-error-2.jpg",
+      "leftPath": ".git/design05/captures/warmups/base-desktop-light-light-report-error-1.jpg",
+      "rightPath": ".git/design05/captures/warmups/base-desktop-light-light-report-error-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "c7e5bb7b36486326abbff492f3c84c4545c241aa4c8b8b787411805b989b2c04",
+      "rightSHA256": "e885a79f08d5a4e713e894504fb8bf8cde0906a7102b2a9022c80f8ae274c06e",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 21515,
+      "changedPercent": 1.660108024691358,
+      "bbox": [
+        527,
+        504,
+        917,
+        625
+      ],
+      "connected32pxTileRegions": [
+        [
+          512,
+          480,
+          928,
+          640
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "BODY",
+          "changedPixels": 21515,
+          "bounds": [
+            0,
+            0,
+            1440.3360595703125,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "ui-dialog-overlay",
+          "changedPixels": 21515,
+          "bounds": [
+            0,
+            0,
+            1440.3360595703125,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "ui-dialog account-dialog report-dialog",
+          "changedPixels": 21515,
+          "bounds": [
+            505.17327880859375,
+            253.9127960205078,
+            429.9894714355469,
+            392.1743469238281
+          ]
+        },
+        {
+          "label": "safety-form",
+          "changedPixels": 20384,
+          "bounds": [
+            530.0026245117188,
+            373.3849487304687,
+            380.3308715820313,
+            247.8728790283203
+          ]
+        },
+        {
+          "label": "LABEL",
+          "changedPixels": 59,
+          "bounds": [
+            530.0026245117188,
+            436.6465148925781,
+            380.3308715820313,
+            77.80986785888672
+          ]
+        },
+        {
+          "label": "TEXTAREA",
+          "changedPixels": 59,
+          "bounds": [
+            530.0026245117188,
+            455.9217224121094,
+            380.3308715820313,
+            58.53466033935547
+          ]
+        },
+        {
+          "label": "form-error",
+          "changedPixels": 590,
+          "bounds": [
+            530.0026245117188,
+            524.448486328125,
+            380.3308715820313,
+            39.82405090332031
+          ]
+        },
+        {
+          "label": "ui-button ui:flex ui:w-full ui:items-center ui:justify-center ui:rounded-md ui:text-brand-foreground ui:bg-brand ui:cursor-pointer ui:[&:hover:not(:disabled)]:bg-brand-hover ui:disabled:cursor-wait ui:disabled:opacity-70",
+          "changedPixels": 17144,
+          "bounds": [
+            530.0026245117188,
+            577.2583618164062,
+            380.3308715820313,
+            43.999473571777344
+          ]
+        },
+        {
+          "label": "lucide lucide-flag",
+          "changedPixels": 196,
+          "bounds": [
+            760.6617431640625,
+            592.7520751953125,
+            12.99894905090332,
+            12.99894905090332
+          ]
+        },
+        {
+          "label": "path",
+          "changedPixels": 120,
+          "bounds": [
+            762.8281860351562,
+            593.8353271484375,
+            8.665966033935547,
+            10.832457542419434
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 127
+    },
+    {
+      "category": "same-build-warmup",
+      "left": "head-desktop-light-light-report-error-1.jpg",
+      "right": "head-desktop-light-light-report-error-2.jpg",
+      "leftPath": ".git/design05/captures/warmups/head-desktop-light-light-report-error-1.jpg",
+      "rightPath": ".git/design05/captures/warmups/head-desktop-light-light-report-error-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "c7e5bb7b36486326abbff492f3c84c4545c241aa4c8b8b787411805b989b2c04",
+      "rightSHA256": "e885a79f08d5a4e713e894504fb8bf8cde0906a7102b2a9022c80f8ae274c06e",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 21515,
+      "changedPercent": 1.660108024691358,
+      "bbox": [
+        527,
+        504,
+        917,
+        625
+      ],
+      "connected32pxTileRegions": [
+        [
+          512,
+          480,
+          928,
+          640
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "BODY",
+          "changedPixels": 21515,
+          "bounds": [
+            0,
+            0,
+            1440.3360595703125,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "ui-dialog-overlay",
+          "changedPixels": 21515,
+          "bounds": [
+            0,
+            0,
+            1440.3360595703125,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "ui-dialog account-dialog report-dialog",
+          "changedPixels": 21515,
+          "bounds": [
+            505.17327880859375,
+            253.9127960205078,
+            429.9894714355469,
+            392.1743469238281
+          ]
+        },
+        {
+          "label": "safety-form",
+          "changedPixels": 20384,
+          "bounds": [
+            530.0026245117188,
+            373.3849487304687,
+            380.3308715820313,
+            247.8728790283203
+          ]
+        },
+        {
+          "label": "LABEL",
+          "changedPixels": 59,
+          "bounds": [
+            530.0026245117188,
+            436.6465148925781,
+            380.3308715820313,
+            77.80986785888672
+          ]
+        },
+        {
+          "label": "TEXTAREA",
+          "changedPixels": 59,
+          "bounds": [
+            530.0026245117188,
+            455.9217224121094,
+            380.3308715820313,
+            58.53466033935547
+          ]
+        },
+        {
+          "label": "form-error",
+          "changedPixels": 590,
+          "bounds": [
+            530.0026245117188,
+            524.448486328125,
+            380.3308715820313,
+            39.82405090332031
+          ]
+        },
+        {
+          "label": "ui-button ui:flex ui:w-full ui:items-center ui:justify-center ui:rounded-md ui:text-brand-foreground ui:bg-brand ui:cursor-pointer ui:[&:hover:not(:disabled)]:bg-brand-hover ui:disabled:cursor-wait ui:disabled:opacity-70",
+          "changedPixels": 17144,
+          "bounds": [
+            530.0026245117188,
+            577.2583618164062,
+            380.3308715820313,
+            43.999473571777344
+          ]
+        },
+        {
+          "label": "lucide lucide-flag",
+          "changedPixels": 196,
+          "bounds": [
+            760.6617431640625,
+            592.7520751953125,
+            12.99894905090332,
+            12.99894905090332
+          ]
+        },
+        {
+          "label": "path",
+          "changedPixels": 120,
+          "bounds": [
+            762.8281860351562,
+            593.8353271484375,
+            8.665966033935547,
+            10.832457542419434
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 127
+    },
+    {
+      "category": "same-build-warmup",
+      "left": "base-desktop-system-light-report-error-1.jpg",
+      "right": "base-desktop-system-light-report-error-2.jpg",
+      "leftPath": ".git/design05/captures/warmups/base-desktop-system-light-report-error-1.jpg",
+      "rightPath": ".git/design05/captures/warmups/base-desktop-system-light-report-error-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "c7e5bb7b36486326abbff492f3c84c4545c241aa4c8b8b787411805b989b2c04",
+      "rightSHA256": "e885a79f08d5a4e713e894504fb8bf8cde0906a7102b2a9022c80f8ae274c06e",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 21515,
+      "changedPercent": 1.660108024691358,
+      "bbox": [
+        527,
+        504,
+        917,
+        625
+      ],
+      "connected32pxTileRegions": [
+        [
+          512,
+          480,
+          928,
+          640
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "BODY",
+          "changedPixels": 21515,
+          "bounds": [
+            0,
+            0,
+            1440.3360595703125,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "ui-dialog-overlay",
+          "changedPixels": 21515,
+          "bounds": [
+            0,
+            0,
+            1440.3360595703125,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "ui-dialog account-dialog report-dialog",
+          "changedPixels": 21515,
+          "bounds": [
+            505.17327880859375,
+            253.9127960205078,
+            429.9894714355469,
+            392.1743469238281
+          ]
+        },
+        {
+          "label": "safety-form",
+          "changedPixels": 20384,
+          "bounds": [
+            530.0026245117188,
+            373.3849487304687,
+            380.3308715820313,
+            247.8728790283203
+          ]
+        },
+        {
+          "label": "LABEL",
+          "changedPixels": 59,
+          "bounds": [
+            530.0026245117188,
+            436.6465148925781,
+            380.3308715820313,
+            77.80986785888672
+          ]
+        },
+        {
+          "label": "TEXTAREA",
+          "changedPixels": 59,
+          "bounds": [
+            530.0026245117188,
+            455.9217224121094,
+            380.3308715820313,
+            58.53466033935547
+          ]
+        },
+        {
+          "label": "form-error",
+          "changedPixels": 590,
+          "bounds": [
+            530.0026245117188,
+            524.448486328125,
+            380.3308715820313,
+            39.82405090332031
+          ]
+        },
+        {
+          "label": "ui-button ui:flex ui:w-full ui:items-center ui:justify-center ui:rounded-md ui:text-brand-foreground ui:bg-brand ui:cursor-pointer ui:[&:hover:not(:disabled)]:bg-brand-hover ui:disabled:cursor-wait ui:disabled:opacity-70",
+          "changedPixels": 17144,
+          "bounds": [
+            530.0026245117188,
+            577.2583618164062,
+            380.3308715820313,
+            43.999473571777344
+          ]
+        },
+        {
+          "label": "lucide lucide-flag",
+          "changedPixels": 196,
+          "bounds": [
+            760.6617431640625,
+            592.7520751953125,
+            12.99894905090332,
+            12.99894905090332
+          ]
+        },
+        {
+          "label": "path",
+          "changedPixels": 120,
+          "bounds": [
+            762.8281860351562,
+            593.8353271484375,
+            8.665966033935547,
+            10.832457542419434
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 127
+    },
+    {
+      "category": "same-build-warmup",
+      "left": "head-desktop-system-light-report-error-1.jpg",
+      "right": "head-desktop-system-light-report-error-2.jpg",
+      "leftPath": ".git/design05/captures/warmups/head-desktop-system-light-report-error-1.jpg",
+      "rightPath": ".git/design05/captures/warmups/head-desktop-system-light-report-error-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "c7e5bb7b36486326abbff492f3c84c4545c241aa4c8b8b787411805b989b2c04",
+      "rightSHA256": "e885a79f08d5a4e713e894504fb8bf8cde0906a7102b2a9022c80f8ae274c06e",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 21515,
+      "changedPercent": 1.660108024691358,
+      "bbox": [
+        527,
+        504,
+        917,
+        625
+      ],
+      "connected32pxTileRegions": [
+        [
+          512,
+          480,
+          928,
+          640
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "BODY",
+          "changedPixels": 21515,
+          "bounds": [
+            0,
+            0,
+            1440.3360595703125,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "ui-dialog-overlay",
+          "changedPixels": 21515,
+          "bounds": [
+            0,
+            0,
+            1440.3360595703125,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "ui-dialog account-dialog report-dialog",
+          "changedPixels": 21515,
+          "bounds": [
+            505.17327880859375,
+            253.9127960205078,
+            429.9894714355469,
+            392.1743469238281
+          ]
+        },
+        {
+          "label": "safety-form",
+          "changedPixels": 20384,
+          "bounds": [
+            530.0026245117188,
+            373.3849487304687,
+            380.3308715820313,
+            247.8728790283203
+          ]
+        },
+        {
+          "label": "LABEL",
+          "changedPixels": 59,
+          "bounds": [
+            530.0026245117188,
+            436.6465148925781,
+            380.3308715820313,
+            77.80986785888672
+          ]
+        },
+        {
+          "label": "TEXTAREA",
+          "changedPixels": 59,
+          "bounds": [
+            530.0026245117188,
+            455.9217224121094,
+            380.3308715820313,
+            58.53466033935547
+          ]
+        },
+        {
+          "label": "form-error",
+          "changedPixels": 590,
+          "bounds": [
+            530.0026245117188,
+            524.448486328125,
+            380.3308715820313,
+            39.82405090332031
+          ]
+        },
+        {
+          "label": "ui-button ui:flex ui:w-full ui:items-center ui:justify-center ui:rounded-md ui:text-brand-foreground ui:bg-brand ui:cursor-pointer ui:[&:hover:not(:disabled)]:bg-brand-hover ui:disabled:cursor-wait ui:disabled:opacity-70",
+          "changedPixels": 17144,
+          "bounds": [
+            530.0026245117188,
+            577.2583618164062,
+            380.3308715820313,
+            43.999473571777344
+          ]
+        },
+        {
+          "label": "lucide lucide-flag",
+          "changedPixels": 196,
+          "bounds": [
+            760.6617431640625,
+            592.7520751953125,
+            12.99894905090332,
+            12.99894905090332
+          ]
+        },
+        {
+          "label": "path",
+          "changedPixels": 120,
+          "bounds": [
+            762.8281860351562,
+            593.8353271484375,
+            8.665966033935547,
+            10.832457542419434
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 127
+    }
+  ]
+}
