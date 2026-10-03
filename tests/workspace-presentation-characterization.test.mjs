@@ -20,7 +20,7 @@ function surface(name, props, DateValue = Date) {
 }
 const text = node => node == null || typeof node === 'boolean' ? '' : typeof node !== 'object' ? String(node)
   : Array.isArray(node) ? node.map(text).join('') : text(node.props?.children)
-const find = (tree, cls) => nodes(tree, n => n.props?.className === cls)
+const find = (tree, cls) => nodes(tree, n => n.props?.className?.split(' ').includes(cls))
 class FixedDate extends Date {
   constructor(...args) { super(...(args.length ? args : ['2026-10-07T12:00:00+05:00'])) }
 }
@@ -87,9 +87,9 @@ test('Workspace actual ChatRow preserves selected/draft DOM and forwards the cha
   const selected = [], chat = { id: 'chat', kind: 'group', display_title: 'Team', unread_count: 2 }
   const row = surface('ChatRow', { chat, draft: 'x'.repeat(61), selected: true, onSelect: id => selected.push(id) })
   assert.equal(row.type, 'button'); assert.equal(row.props.type, 'button')
-  assert.equal(row.props.className, 'chat-list-item selected has-draft')
+  assert.deepEqual(row.props.className.split(' ').filter(c => !c.startsWith('ui:')), ['chat-list-item', 'selected', 'has-draft'])
   assert.ok(text(row).includes(`Draft: ${'x'.repeat(60)}…`))
-  assert.equal(nodes(row, n => n.type === 'Avatar')[0].props.className, 'group-avatar')
+  assert.deepEqual(nodes(row, n => n.type === 'Avatar')[0].props.className.split(' ').filter(c => !c.startsWith('ui:')), ['group-avatar'])
   row.props.onClick(); assert.deepEqual(selected, ['chat'])
 })
 

@@ -1,0 +1,23 @@
+{
+  "method": "Every pair uses the same fixture epoch on base and candidate. Production base remains the immutable required Git archive in both epochs. Epoch 2 only adds the actual production active-conversation class to the selected conditional pane. Inactive scenes render exactly the same branch; the 12 affected selected/open scenes are recaptured on both sides. Native interaction traces are all rerun.",
+  "epochs": [
+    {
+      "name": "before-active-pane",
+      "fixture": "tests/fixtures/inbox-preview-before-active-pane.tsx",
+      "canonicalLF_SHA256": "b77aaf7f0162d902a9470e2ca67de2b133f92f54f4463fd73b63dcdd18d28a56"
+    },
+    {
+      "name": "active-pane-corrected",
+      "fixture": "tests/fixtures/inbox-preview.tsx",
+      "canonicalLF_SHA256": "24150ac26fa174b878e0534af2080646090118842943058220e3625834b04584"
+    }
+  ],
+  "correctedScenes": [
+    "desktop-*-selected",
+    "desktop-*-selected-focus",
+    "mobile-*-open",
+    "boundary-*"
+  ],
+  "unchangedInactiveScenes": "All remaining desktop/mobile cases use epoch 1; no selected pane is rendered.",
+  "productionChangesDuringFixtureCorrection": false
+}

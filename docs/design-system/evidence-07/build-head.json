@@ -1,0 +1,18 @@
+{
+  "base": "5e03916584781f7769243de88d4a9f785dbfe03f",
+  "side": "head",
+  "archiveSHA256": "fba147838941427023a863d93845b6fe9e6b6ddf4d8f3175c57c0c80a810b56e",
+  "fixtureSHA256": "24150ac26fa174b878e0534af2080646090118842943058220e3625834b04584",
+  "bootstrapSHA256": "89cd3a99fb0b9595db623aaccf90c3d7f1aab8df46f4d3f33d2b660c5cc2cfba",
+  "apiBoundarySHA256": "c93e8ccc9b7965f788838d500c0331e301309a1f985c74d425ecf40193a1cb81",
+  "production": {
+    "client/src/features/workspace/components/InboxPane.tsx": "4491258ad5a0a797645cd1f7312a746985f0d14ff132583f8eb79e4db1ebc012",
+    "client/src/features/workspace/components/ChatRow.tsx": "90658336182ca992733050947554a7bda822bac79e5d318cd4869557724ca77a",
+    "client/src/shared/styles/platform.css": "be2d83d23c382cc851ea25730598354ac355fd494611ba4cf3d79929be8f93ca"
+  },
+  "productionCanonicalLF": {
+    "client/src/features/workspace/components/InboxPane.tsx": "4491258ad5a0a797645cd1f7312a746985f0d14ff132583f8eb79e4db1ebc012",
+    "client/src/features/workspace/components/ChatRow.tsx": "90658336182ca992733050947554a7bda822bac79e5d318cd4869557724ca77a",
+    "client/src/shared/styles/platform.css": "be2d83d23c382cc851ea25730598354ac355fd494611ba4cf3d79929be8f93ca"
+  }
+}

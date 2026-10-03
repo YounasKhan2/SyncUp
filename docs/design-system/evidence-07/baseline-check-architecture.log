@@ -1,0 +1,29 @@
+
+> check:architecture
+> node scripts/check-architecture.mjs
+
+Checked 276 resolved internal import/export edges (including literal dynamic imports and type imports).
+Known cross-feature dependencies (informational; no public-API allowlist yet):
+  client/src/features/calls/groupCallCrypto.ts -> client/src/features/auth/crypto/crypto.ts
+  client/src/features/media/mediaHydrator.ts -> client/src/features/auth/crypto/crypto.ts
+  client/src/features/media/v2/mediaHydratorV2.ts -> client/src/features/auth/crypto/crypto.ts
+  client/src/features/media/v2/prepareVideo.ts -> client/src/features/auth/crypto/crypto.ts
+  client/src/features/media/v2/prepareVoice.ts -> client/src/features/auth/crypto/crypto.ts
+  client/src/features/messaging/Conversation.tsx -> client/src/features/auth/crypto/crypto.ts
+  client/src/features/messaging/Conversation.tsx -> client/src/features/calls/groupCallCrypto.ts
+  client/src/features/messaging/Conversation.tsx -> client/src/features/media/v2/jobStore.ts
+  client/src/features/messaging/Conversation.tsx -> client/src/features/media/v2/prepareVideo.ts
+  client/src/features/messaging/Conversation.tsx -> client/src/features/media/v2/prepareVoice.ts
+  client/src/features/messaging/Conversation.tsx -> client/src/features/media/v2/runtime.ts
+  client/src/features/messaging/Conversation.tsx -> client/src/features/media/v2/uploadManager.ts
+  client/src/features/messaging/MessageAttachment.tsx -> client/src/features/media/mediaHydrator.ts
+  client/src/features/messaging/MessageAttachment.tsx -> client/src/features/media/v2/localMediaCache.ts
+  client/src/features/messaging/MessageAttachment.tsx -> client/src/features/media/v2/mediaHydratorV2.ts
+  client/src/features/messaging/MessageList.tsx -> client/src/features/media/MediaViewer.tsx
+  client/src/features/messaging/MessageList.tsx -> client/src/features/media/v2/uploadManager.ts
+  client/src/features/messaging/NewConversation.tsx -> client/src/features/auth/crypto/crypto.ts
+  client/src/features/messaging/RequestsPanel.tsx -> client/src/features/auth/crypto/crypto.ts
+  client/src/features/spaces/SpacesPage.tsx -> client/src/features/auth/crypto/crypto.ts
+  client/src/features/spaces/components/SpaceLegacyHistoryView.tsx -> client/src/features/messaging/MessageAttachment.tsx
+Workspace composition is excluded from the debt listing, not from shared dependency enforcement.
+PASS: no shared -> features dependencies; private feature APIs stay within their owner and do not import React/UI.

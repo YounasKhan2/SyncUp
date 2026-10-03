@@ -1,0 +1,3518 @@
+{
+  "base": "5e03916584781f7769243de88d4a9f785dbfe03f",
+  "rules": [
+    {
+      "line": 2,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".avatar",
+          "classification": "SHARED_PRIMITIVE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "width",
+          "31px",
+          false
+        ],
+        [
+          "height",
+          "31px",
+          false
+        ],
+        [
+          "flex",
+          "0 0 auto",
+          false
+        ],
+        [
+          "border-radius",
+          "50%",
+          false
+        ],
+        [
+          "font-size",
+          "var(--type-body-xs)",
+          false
+        ],
+        [
+          "font-weight",
+          "600",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 3,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".avatar > img",
+          "classification": "SHARED_PRIMITIVE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "position",
+          "absolute",
+          false
+        ],
+        [
+          "inset",
+          "0",
+          false
+        ],
+        [
+          "width",
+          "100%",
+          false
+        ],
+        [
+          "height",
+          "100%",
+          false
+        ],
+        [
+          "object-fit",
+          "cover",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 4,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".avatar-has-image > span",
+          "classification": "SHARED_PRIMITIVE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "visibility",
+          "hidden",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 5,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".profile-avatar-editor",
+          "classification": "SHARED_PRIMITIVE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "display",
+          "flex",
+          false
+        ],
+        [
+          "align-items",
+          "center",
+          false
+        ],
+        [
+          "gap",
+          "14px",
+          false
+        ],
+        [
+          "padding",
+          "2px 0 4px",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 6,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".profile-avatar",
+          "classification": "SHARED_PRIMITIVE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "width",
+          "64px",
+          false
+        ],
+        [
+          "height",
+          "64px",
+          false
+        ],
+        [
+          "color",
+          "#47644c",
+          false
+        ],
+        [
+          "background",
+          "#dce7d7",
+          false
+        ],
+        [
+          "font-size",
+          "var(--type-heading)",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 7,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".profile-avatar-actions",
+          "classification": "SHARED_PRIMITIVE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "display",
+          "flex",
+          false
+        ],
+        [
+          "min-width",
+          "0",
+          false
+        ],
+        [
+          "flex-direction",
+          "column",
+          false
+        ],
+        [
+          "align-items",
+          "flex-start",
+          false
+        ],
+        [
+          "gap",
+          "6px",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 8,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".profile-avatar-actions > strong",
+          "classification": "SHARED_PRIMITIVE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "color",
+          "#3e4a43",
+          false
+        ],
+        [
+          "font-size",
+          "var(--type-body-xs)",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 9,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".profile-avatar-actions > span",
+          "classification": "SHARED_PRIMITIVE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "color",
+          "#929b94",
+          false
+        ],
+        [
+          "font-size",
+          "var(--type-small)",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 10,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".profile-avatar-actions > div",
+          "classification": "SHARED_PRIMITIVE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "display",
+          "flex",
+          false
+        ],
+        [
+          "flex-wrap",
+          "wrap",
+          false
+        ],
+        [
+          "gap",
+          "6px",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 14,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".avatar-card",
+          "classification": "SHARED_PRIMITIVE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "color",
+          "#47644c",
+          false
+        ],
+        [
+          "background",
+          "#dce7d7",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 17,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".pane-heading",
+          "classification": "INBOX_SHELL"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "display",
+          "flex",
+          false
+        ],
+        [
+          "height",
+          "54px",
+          false
+        ],
+        [
+          "align-items",
+          "center",
+          false
+        ],
+        [
+          "justify-content",
+          "space-between",
+          false
+        ],
+        [
+          "padding",
+          "0 14px 0 17px",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 18,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".pane-heading h1",
+          "classification": "INBOX_SHELL"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "margin",
+          "0",
+          false
+        ],
+        [
+          "color",
+          "#27372f",
+          false
+        ],
+        [
+          "font-size",
+          "var(--type-title-sm)",
+          false
+        ],
+        [
+          "font-weight",
+          "650",
+          false
+        ],
+        [
+          "letter-spacing",
+          "-.3px",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 21,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".search-box",
+          "classification": "SEARCH"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "display",
+          "flex",
+          false
+        ],
+        [
+          "width",
+          "calc(100% - 24px)",
+          false
+        ],
+        [
+          "height",
+          "32px",
+          false
+        ],
+        [
+          "align-items",
+          "center",
+          false
+        ],
+        [
+          "gap",
+          "7px",
+          false
+        ],
+        [
+          "margin",
+          "0 12px 10px",
+          false
+        ],
+        [
+          "padding",
+          "0 9px",
+          false
+        ],
+        [
+          "border",
+          "0",
+          false
+        ],
+        [
+          "border-radius",
+          "7px",
+          false
+        ],
+        [
+          "color",
+          "#929c94",
+          false
+        ],
+        [
+          "background",
+          "var(--color-surface-muted)",
+          false
+        ],
+        [
+          "font",
+          "inherit",
+          false
+        ],
+        [
+          "font-size",
+          "var(--type-label)",
+          false
+        ],
+        [
+          "text-align",
+          "left",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 22,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".search-box > span:first-child",
+          "classification": "SEARCH"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "font-size",
+          "var(--type-subtitle)",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 23,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".search-box kbd",
+          "classification": "SEARCH"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "margin-left",
+          "auto",
+          false
+        ],
+        [
+          "padding",
+          "2px 4px",
+          false
+        ],
+        [
+          "border",
+          "1px solid #e2e6df",
+          false
+        ],
+        [
+          "border-radius",
+          "4px",
+          false
+        ],
+        [
+          "color",
+          "#98a198",
+          false
+        ],
+        [
+          "background",
+          "var(--color-surface-subtle)",
+          false
+        ],
+        [
+          "font",
+          "inherit",
+          false
+        ],
+        [
+          "font-size",
+          "var(--type-small)",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 24,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".inbox-filters",
+          "classification": "ACTION"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "display",
+          "flex",
+          false
+        ],
+        [
+          "height",
+          "28px",
+          false
+        ],
+        [
+          "align-items",
+          "center",
+          false
+        ],
+        [
+          "justify-content",
+          "space-around",
+          false
+        ],
+        [
+          "margin",
+          "0 12px",
+          false
+        ],
+        [
+          "border-radius",
+          "7px",
+          false
+        ],
+        [
+          "color",
+          "#808b83",
+          false
+        ],
+        [
+          "background",
+          "#f6f7f3",
+          false
+        ],
+        [
+          "font-size",
+          "var(--type-label)",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 25,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".inbox-filters > span",
+          "classification": "ACTION"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "padding",
+          "5px 9px",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 26,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".inbox-filters .filter-active",
+          "classification": "ACTION"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "border-radius",
+          "5px",
+          false
+        ],
+        [
+          "color",
+          "#36463c",
+          false
+        ],
+        [
+          "background",
+          "var(--color-surface)",
+          false
+        ],
+        [
+          "font-weight",
+          "600",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 28,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".empty-symbol",
+          "classification": "EMPTY_STATE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "display",
+          "grid",
+          false
+        ],
+        [
+          "width",
+          "35px",
+          false
+        ],
+        [
+          "height",
+          "35px",
+          false
+        ],
+        [
+          "place-items",
+          "center",
+          false
+        ],
+        [
+          "border",
+          "1px solid #e5e9e1",
+          false
+        ],
+        [
+          "border-radius",
+          "11px",
+          false
+        ],
+        [
+          "color",
+          "#56765d",
+          false
+        ],
+        [
+          "background",
+          "#f4f6f0",
+          false
+        ],
+        [
+          "font-size",
+          "var(--type-title-sm)",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 29,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".empty-title",
+          "classification": "EMPTY_STATE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "margin",
+          "12px 0 5px",
+          false
+        ],
+        [
+          "color",
+          "#36443b",
+          false
+        ],
+        [
+          "font-size",
+          "var(--type-body-xs)",
+          false
+        ],
+        [
+          "font-weight",
+          "600",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 30,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".empty-copy",
+          "classification": "EMPTY_STATE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "max-width",
+          "210px",
+          false
+        ],
+        [
+          "margin",
+          "0",
+          false
+        ],
+        [
+          "color",
+          "#919b93",
+          false
+        ],
+        [
+          "font-size",
+          "var(--type-label)",
+          false
+        ],
+        [
+          "line-height",
+          "1.6",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 31,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".inbox-footnote",
+          "classification": "INBOX_SHELL"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "display",
+          "flex",
+          false
+        ],
+        [
+          "align-items",
+          "center",
+          false
+        ],
+        [
+          "gap",
+          "7px",
+          false
+        ],
+        [
+          "padding",
+          "12px 16px",
+          false
+        ],
+        [
+          "border-top",
+          "1px solid #eceee9",
+          false
+        ],
+        [
+          "color",
+          "#929a93",
+          false
+        ],
+        [
+          "font-size",
+          "var(--type-small)",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 32,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".inbox-footnote .status-dot",
+          "classification": "INBOX_SHELL"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "width",
+          "6px",
+          false
+        ],
+        [
+          "height",
+          "6px",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 40,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".avatar-small",
+          "classification": "SHARED_PRIMITIVE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "width",
+          "25px",
+          false
+        ],
+        [
+          "height",
+          "25px",
+          false
+        ],
+        [
+          "font-size",
+          "var(--type-small)",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 51,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".avatar-card",
+          "classification": "SHARED_PRIMITIVE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "width",
+          "29px",
+          false
+        ],
+        [
+          "height",
+          "29px",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 152,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".search-box",
+          "classification": "SEARCH"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "cursor",
+          "pointer",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 153,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".search-box:hover",
+          "classification": "SEARCH"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "color",
+          "#637268",
+          false
+        ],
+        [
+          "background",
+          "#eef1eb",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 154,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".search-box > svg:first-child",
+          "classification": "SEARCH"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "width",
+          "13px",
+          false
+        ],
+        [
+          "flex",
+          "0 0 auto",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 155,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".inbox-filters",
+          "classification": "ACTION"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "justify-content",
+          "space-between",
+          false
+        ],
+        [
+          "padding",
+          "0 3px",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 156,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".inbox-filters button",
+          "classification": "ACTION"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "display",
+          "inline-flex",
+          false
+        ],
+        [
+          "height",
+          "23px",
+          false
+        ],
+        [
+          "align-items",
+          "center",
+          false
+        ],
+        [
+          "gap",
+          "4px",
+          false
+        ],
+        [
+          "padding",
+          "0 7px",
+          false
+        ],
+        [
+          "border",
+          "0",
+          false
+        ],
+        [
+          "border-radius",
+          "5px",
+          false
+        ],
+        [
+          "color",
+          "#808b83",
+          false
+        ],
+        [
+          "background",
+          "transparent",
+          false
+        ],
+        [
+          "font",
+          "inherit",
+          false
+        ],
+        [
+          "font-size",
+          "var(--type-small)",
+          false
+        ],
+        [
+          "cursor",
+          "pointer",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 157,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".inbox-filters button.filter-active",
+          "classification": "ACTION"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "color",
+          "#36463c",
+          false
+        ],
+        [
+          "background",
+          "var(--color-surface)",
+          false
+        ],
+        [
+          "font-weight",
+          "600",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 158,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".request-count",
+          "classification": "ACTION"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "display",
+          "inline-grid",
+          false
+        ],
+        [
+          "min-width",
+          "14px",
+          false
+        ],
+        [
+          "height",
+          "14px",
+          false
+        ],
+        [
+          "place-items",
+          "center",
+          false
+        ],
+        [
+          "border-radius",
+          "7px",
+          false
+        ],
+        [
+          "color",
+          "var(--color-surface)",
+          false
+        ],
+        [
+          "background",
+          "#44664c",
+          false
+        ],
+        [
+          "font-size",
+          "var(--type-caption)",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 159,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".chat-list",
+          "classification": "LEGACY_COUPLING"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "flex",
+          "1",
+          false
+        ],
+        [
+          "overflow-y",
+          "auto",
+          false
+        ],
+        [
+          "padding",
+          "8px 7px",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 160,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".list-section-label",
+          "classification": "LEGACY_COUPLING"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "margin",
+          "12px 8px 6px",
+          false
+        ],
+        [
+          "color",
+          "#89948d",
+          false
+        ],
+        [
+          "font-size",
+          "var(--type-small)",
+          false
+        ],
+        [
+          "font-weight",
+          "700",
+          false
+        ],
+        [
+          "letter-spacing",
+          ".8px",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 161,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".group-label",
+          "classification": "CHAT_ROW"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "margin-top",
+          "16px",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 162,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".chat-list-item",
+          "classification": "CHAT_ROW"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "display",
+          "flex",
+          false
+        ],
+        [
+          "width",
+          "100%",
+          false
+        ],
+        [
+          "min-height",
+          "50px",
+          false
+        ],
+        [
+          "align-items",
+          "center",
+          false
+        ],
+        [
+          "gap",
+          "9px",
+          false
+        ],
+        [
+          "padding",
+          "6px 8px",
+          false
+        ],
+        [
+          "border",
+          "0",
+          false
+        ],
+        [
+          "border-radius",
+          "7px",
+          false
+        ],
+        [
+          "color",
+          "var(--color-text)",
+          false
+        ],
+        [
+          "background",
+          "transparent",
+          false
+        ],
+        [
+          "text-align",
+          "left",
+          false
+        ],
+        [
+          "cursor",
+          "pointer",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 163,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".chat-list-item:hover",
+          "classification": "CHAT_ROW_STATE"
+        },
+        {
+          "selector": ".chat-list-item.selected",
+          "classification": "CHAT_ROW_STATE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "background",
+          "#edf3ec",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 164,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".chat-list-item .avatar",
+          "classification": "CHAT_ROW"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "width",
+          "30px",
+          false
+        ],
+        [
+          "height",
+          "30px",
+          false
+        ],
+        [
+          "color",
+          "#5c6f58",
+          false
+        ],
+        [
+          "background",
+          "#e7e9dc",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 165,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".chat-list-item .group-avatar",
+          "classification": "CHAT_ROW"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "color",
+          "#69577a",
+          false
+        ],
+        [
+          "background",
+          "#e9e3ef",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 166,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".chat-row-copy",
+          "classification": "CHAT_ROW"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "display",
+          "flex",
+          false
+        ],
+        [
+          "min-width",
+          "0",
+          false
+        ],
+        [
+          "flex",
+          "1",
+          false
+        ],
+        [
+          "flex-direction",
+          "column",
+          false
+        ],
+        [
+          "gap",
+          "3px",
+          false
+        ],
+        [
+          "overflow",
+          "hidden",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 167,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".chat-row-copy strong",
+          "classification": "CHAT_ROW"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "overflow",
+          "hidden",
+          false
+        ],
+        [
+          "color",
+          "#334239",
+          false
+        ],
+        [
+          "font-size",
+          "var(--type-label)",
+          false
+        ],
+        [
+          "font-weight",
+          "600",
+          false
+        ],
+        [
+          "text-overflow",
+          "ellipsis",
+          false
+        ],
+        [
+          "white-space",
+          "nowrap",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 168,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".chat-row-copy small",
+          "classification": "CHAT_ROW"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "overflow",
+          "hidden",
+          false
+        ],
+        [
+          "color",
+          "var(--color-text-secondary)",
+          false
+        ],
+        [
+          "font-size",
+          "var(--type-small)",
+          false
+        ],
+        [
+          "text-overflow",
+          "ellipsis",
+          false
+        ],
+        [
+          "white-space",
+          "nowrap",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 169,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".draft-label",
+          "classification": "CHAT_ROW_STATE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "display",
+          "inline-flex",
+          false
+        ],
+        [
+          "align-items",
+          "center",
+          false
+        ],
+        [
+          "gap",
+          "3px",
+          false
+        ],
+        [
+          "color",
+          "#4a7a52",
+          false
+        ],
+        [
+          "font-weight",
+          "600",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 170,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".has-draft .chat-row-copy small",
+          "classification": "CHAT_ROW_STATE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "color",
+          "#5a7d5c",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 171,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".chat-row-meta",
+          "classification": "CHAT_ROW"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "display",
+          "flex",
+          false
+        ],
+        [
+          "min-width",
+          "24px",
+          false
+        ],
+        [
+          "align-items",
+          "flex-end",
+          false
+        ],
+        [
+          "flex-direction",
+          "column",
+          false
+        ],
+        [
+          "gap",
+          "5px",
+          false
+        ],
+        [
+          "color",
+          "#949d95",
+          false
+        ],
+        [
+          "font-size",
+          "var(--type-caption)",
+          false
+        ],
+        [
+          "white-space",
+          "nowrap",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 172,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".chat-row-meta b",
+          "classification": "CHAT_ROW"
+        },
+        {
+          "selector": ".unread-pill",
+          "classification": "CHAT_ROW"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "display",
+          "inline-grid",
+          false
+        ],
+        [
+          "min-width",
+          "15px",
+          false
+        ],
+        [
+          "height",
+          "15px",
+          false
+        ],
+        [
+          "place-items",
+          "center",
+          false
+        ],
+        [
+          "padding",
+          "0 4px",
+          false
+        ],
+        [
+          "border-radius",
+          "8px",
+          false
+        ],
+        [
+          "color",
+          "var(--color-surface)",
+          false
+        ],
+        [
+          "background",
+          "#45664d",
+          false
+        ],
+        [
+          "font-size",
+          "var(--type-caption)",
+          false
+        ],
+        [
+          "font-weight",
+          "600",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 173,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".list-empty",
+          "classification": "EMPTY_STATE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "display",
+          "flex",
+          false
+        ],
+        [
+          "height",
+          "100%",
+          false
+        ],
+        [
+          "align-items",
+          "center",
+          false
+        ],
+        [
+          "flex-direction",
+          "column",
+          false
+        ],
+        [
+          "justify-content",
+          "center",
+          false
+        ],
+        [
+          "padding",
+          "15px",
+          false
+        ],
+        [
+          "text-align",
+          "center",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 174,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".list-empty .empty-symbol",
+          "classification": "EMPTY_STATE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "width",
+          "32px",
+          false
+        ],
+        [
+          "height",
+          "32px",
+          false
+        ],
+        [
+          "font-size",
+          "var(--type-subtitle)",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 175,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".list-empty .empty-title",
+          "classification": "EMPTY_STATE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "margin-top",
+          "10px",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 176,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".list-empty .empty-copy",
+          "classification": "EMPTY_STATE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "max-width",
+          "205px",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 177,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".list-empty > button",
+          "classification": "EMPTY_STATE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "margin-top",
+          "12px",
+          false
+        ],
+        [
+          "padding",
+          "7px 10px",
+          false
+        ],
+        [
+          "border",
+          "0",
+          false
+        ],
+        [
+          "border-radius",
+          "6px",
+          false
+        ],
+        [
+          "color",
+          "var(--color-surface)",
+          false
+        ],
+        [
+          "background",
+          "var(--color-brand-accent)",
+          false
+        ],
+        [
+          "font",
+          "inherit",
+          false
+        ],
+        [
+          "font-size",
+          "var(--type-small)",
+          false
+        ],
+        [
+          "cursor",
+          "pointer",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 178,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".list-error",
+          "classification": "LEGACY_COUPLING"
+        },
+        {
+          "selector": ".inline-error",
+          "classification": "FEATURE_LOGIC"
+        }
+      ],
+      "mixed": true,
+      "declarations": [
+        [
+          "margin",
+          "8px",
+          false
+        ],
+        [
+          "padding",
+          "9px 10px",
+          false
+        ],
+        [
+          "border",
+          "1px solid #efd8d2",
+          false
+        ],
+        [
+          "border-radius",
+          "7px",
+          false
+        ],
+        [
+          "color",
+          "#8d4b42",
+          false
+        ],
+        [
+          "background",
+          "var(--color-danger-soft)",
+          false
+        ],
+        [
+          "font-size",
+          "var(--type-label)",
+          false
+        ],
+        [
+          "line-height",
+          "1.5",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 184,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".chat-avatar",
+          "classification": "SHARED_PRIMITIVE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "width",
+          "29px",
+          false
+        ],
+        [
+          "height",
+          "29px",
+          false
+        ],
+        [
+          "color",
+          "#4f6d50",
+          false
+        ],
+        [
+          "background",
+          "#e2eadf",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 193,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".message-avatar",
+          "classification": "SHARED_PRIMITIVE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "width",
+          "26px",
+          false
+        ],
+        [
+          "height",
+          "26px",
+          false
+        ],
+        [
+          "margin-top",
+          "3px",
+          false
+        ],
+        [
+          "color",
+          "#755f48",
+          false
+        ],
+        [
+          "background",
+          "#e9dfd0",
+          false
+        ],
+        [
+          "font-size",
+          "var(--type-small)",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 272,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".request-card > .avatar",
+          "classification": "SHARED_PRIMITIVE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "color",
+          "#6e644e",
+          false
+        ],
+        [
+          "background",
+          "#ebe4d4",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 280,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".empty-request",
+          "classification": "EMPTY_STATE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "display",
+          "flex",
+          false
+        ],
+        [
+          "flex",
+          "1",
+          false
+        ],
+        [
+          "align-items",
+          "center",
+          false
+        ],
+        [
+          "flex-direction",
+          "column",
+          false
+        ],
+        [
+          "justify-content",
+          "center",
+          false
+        ],
+        [
+          "text-align",
+          "center",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 281,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".empty-request .empty-copy",
+          "classification": "EMPTY_STATE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "max-width",
+          "230px",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 371,
+      "nesting": [
+        "@media (max-width: 700px)"
+      ],
+      "selectors": [
+        {
+          "selector": ".search-box kbd",
+          "classification": "SEARCH"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "display",
+          "none",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 381,
+      "nesting": [
+        "@media (max-width: 420px)"
+      ],
+      "selectors": [
+        {
+          "selector": ".account-menu-button > span:not(.avatar):not(.chevron)",
+          "classification": "SHARED_PRIMITIVE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "display",
+          "none",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 410,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".chat-details-avatar",
+          "classification": "SHARED_PRIMITIVE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "width",
+          "76px",
+          false
+        ],
+        [
+          "height",
+          "76px",
+          false
+        ],
+        [
+          "font-size",
+          "var(--type-display-sm)",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 420,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".chat-details-members li > span:not(.avatar)",
+          "classification": "SHARED_PRIMITIVE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "display",
+          "flex",
+          false
+        ],
+        [
+          "min-width",
+          "0",
+          false
+        ],
+        [
+          "flex",
+          "1",
+          false
+        ],
+        [
+          "flex-direction",
+          "column",
+          false
+        ],
+        [
+          "gap",
+          "3px",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 467,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".call-history-day > .list-section-label",
+          "classification": "LEGACY_COUPLING"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "padding",
+          "0 5px",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 471,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".call-history-avatar",
+          "classification": "SHARED_PRIMITIVE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "position",
+          "relative",
+          false
+        ],
+        [
+          "display",
+          "inline-flex",
+          false
+        ],
+        [
+          "flex",
+          "0 0 auto",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 472,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".call-history-avatar > svg",
+          "classification": "SHARED_PRIMITIVE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "position",
+          "absolute",
+          false
+        ],
+        [
+          "right",
+          "-3px",
+          false
+        ],
+        [
+          "bottom",
+          "-2px",
+          false
+        ],
+        [
+          "width",
+          "17px",
+          false
+        ],
+        [
+          "height",
+          "17px",
+          false
+        ],
+        [
+          "padding",
+          "2px",
+          false
+        ],
+        [
+          "border",
+          "2px solid var(--color-canvas)",
+          false
+        ],
+        [
+          "border-radius",
+          "50%",
+          false
+        ],
+        [
+          "color",
+          "#467451",
+          false
+        ],
+        [
+          "background",
+          "#e7f1e6",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 473,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".call-history-item.is-missed .call-history-avatar > svg",
+          "classification": "SHARED_PRIMITIVE"
+        },
+        {
+          "selector": ".call-history-item.is-missed .call-history-copy small",
+          "classification": "FEATURE_LOGIC"
+        }
+      ],
+      "mixed": true,
+      "declarations": [
+        [
+          "color",
+          "#bd4c4c",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 475,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".call-history-item.is-missed .call-history-avatar > svg",
+          "classification": "SHARED_PRIMITIVE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "background",
+          "#fff0ef",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 556,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".call-voice-avatar-wrap",
+          "classification": "SHARED_PRIMITIVE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "position",
+          "relative",
+          false
+        ],
+        [
+          "margin-bottom",
+          "3px",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 557,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".avatar.call-voice-avatar",
+          "classification": "SHARED_PRIMITIVE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "width",
+          "68px",
+          false
+        ],
+        [
+          "height",
+          "68px",
+          false
+        ],
+        [
+          "color",
+          "#23432d",
+          false
+        ],
+        [
+          "background",
+          "#c9dfc8",
+          false
+        ],
+        [
+          "font-size",
+          "var(--type-heading-sm)",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 558,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ".call-voice-avatar img",
+          "classification": "SHARED_PRIMITIVE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "width",
+          "100%",
+          false
+        ],
+        [
+          "height",
+          "100%",
+          false
+        ],
+        [
+          "object-fit",
+          "cover",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 572,
+      "nesting": [
+        "@media (max-width: 700px)"
+      ],
+      "selectors": [
+        {
+          "selector": ".incoming-call-banner > .avatar",
+          "classification": "SHARED_PRIMITIVE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "width",
+          "76px",
+          false
+        ],
+        [
+          "height",
+          "76px",
+          false
+        ],
+        [
+          "color",
+          "#47644c",
+          false
+        ],
+        [
+          "background",
+          "#dce7d7",
+          false
+        ],
+        [
+          "font-size",
+          "var(--type-display-sm)",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 584,
+      "nesting": [
+        "@media (max-width: 700px)"
+      ],
+      "selectors": [
+        {
+          "selector": ".avatar.call-voice-avatar",
+          "classification": "SHARED_PRIMITIVE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "width",
+          "56px",
+          false
+        ],
+        [
+          "height",
+          "56px",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 666,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ":root[data-theme=\"dark\"] .auth-panel h2",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .account-dialog h2",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .pane-heading h1",
+          "classification": "INBOX_SHELL"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .conversation-heading",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .welcome-content h2",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .chat-row-copy strong",
+          "classification": "CHAT_ROW"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .request-list-header h2",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .request-card-content strong",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .chat-details-header h1",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .chat-details-identity h2",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .chat-details-section h2",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .chat-details-members strong",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .sessions-heading h3",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .profile-avatar-actions > strong",
+          "classification": "SHARED_PRIMITIVE"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .profile-form label > span",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .profile-form .profile-checkbox > span > strong",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .safety-form label > span",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .call-dialog-header h2",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .incoming-call-banner strong",
+          "classification": "FEATURE_LOGIC"
+        }
+      ],
+      "mixed": true,
+      "declarations": [
+        [
+          "color",
+          "var(--color-text)",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 706,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ":root[data-theme=\"dark\"] .search-box",
+          "classification": "SEARCH"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .inbox-filters",
+          "classification": "ACTION"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .icon-button",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .empty-symbol",
+          "classification": "EMPTY_STATE"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .chat-list-item:hover",
+          "classification": "CHAT_ROW_STATE"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .chat-list-item.selected",
+          "classification": "CHAT_ROW_STATE"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .inbox-filters button.filter-active",
+          "classification": "ACTION"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .search-result:hover",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .search-result:focus-visible",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .username-match:hover",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .username-match.is-selected",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .call-history-item:hover",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .chat-details-back:hover",
+          "classification": "FEATURE_LOGIC"
+        }
+      ],
+      "mixed": true,
+      "declarations": [
+        [
+          "color",
+          "var(--color-text)",
+          false
+        ],
+        [
+          "background-color",
+          "var(--color-surface-muted)",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 720,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ":root[data-theme=\"dark\"] .message-mine .message-bubble",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .welcome-profile",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .chat-avatar",
+          "classification": "SHARED_PRIMITIVE"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .profile-avatar",
+          "classification": "SHARED_PRIMITIVE"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .avatar-card",
+          "classification": "SHARED_PRIMITIVE"
+        }
+      ],
+      "mixed": true,
+      "declarations": [
+        [
+          "background-color",
+          "#304237",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 726,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ":root[data-theme=\"dark\"] .chat-row-meta b",
+          "classification": "CHAT_ROW"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .unread-pill",
+          "classification": "CHAT_ROW"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "color",
+          "#17231b",
+          false
+        ],
+        [
+          "background",
+          "#a8c5a6",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 750,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ":root[data-theme=\"dark\"] .call-history-avatar > svg",
+          "classification": "SHARED_PRIMITIVE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "border-color",
+          "var(--color-canvas)",
+          false
+        ],
+        [
+          "color",
+          "#d8ebd8",
+          false
+        ],
+        [
+          "background",
+          "#304237",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 751,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ":root[data-theme=\"dark\"] .call-history-item.is-missed .call-history-avatar > svg",
+          "classification": "SHARED_PRIMITIVE"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .call-history-item.is-missed .call-history-copy small",
+          "classification": "FEATURE_LOGIC"
+        }
+      ],
+      "mixed": true,
+      "declarations": [
+        [
+          "color",
+          "#ff9a96",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 753,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ":root[data-theme=\"dark\"] .call-history-item.is-missed .call-history-avatar > svg",
+          "classification": "SHARED_PRIMITIVE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "background",
+          "#4b2d2c",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 758,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ":root[data-theme=\"dark\"] .chat-row-copy small",
+          "classification": "CHAT_ROW"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .message-meta strong",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .chat-details-identity p",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .chat-details-identity small",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .chat-details-security p",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .request-card-content p",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .profile-avatar-actions > span",
+          "classification": "SHARED_PRIMITIVE"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .profile-form .profile-checkbox > span > small",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .search-result strong",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .search-message-result .search-message-snippet",
+          "classification": "FEATURE_LOGIC"
+        }
+      ],
+      "mixed": true,
+      "declarations": [
+        [
+          "color",
+          "var(--color-text-secondary)",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 785,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ":root[data-theme=\"dark\"] .form-error",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .list-error",
+          "classification": "LEGACY_COUPLING"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .inline-error",
+          "classification": "FEATURE_LOGIC"
+        }
+      ],
+      "mixed": true,
+      "declarations": [
+        [
+          "color",
+          "#ffc0b5",
+          false
+        ],
+        [
+          "border-color",
+          "#75443d",
+          false
+        ],
+        [
+          "background",
+          "#382724",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 789,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ":root[data-theme=\"dark\"] .pane-heading h1",
+          "classification": "INBOX_SHELL"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .conversation-heading",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .chat-row-copy strong",
+          "classification": "CHAT_ROW"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .list-section-label",
+          "classification": "LEGACY_COUPLING"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .inbox-filters button",
+          "classification": "ACTION"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .search-box",
+          "classification": "SEARCH"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .search-box kbd",
+          "classification": "SEARCH"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .chat-row-meta",
+          "classification": "CHAT_ROW"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .inbox-footnote",
+          "classification": "INBOX_SHELL"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .empty-title",
+          "classification": "EMPTY_STATE"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .connection-status",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .composer-hint",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .encryption-indicator",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .conversation-loading",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .message-empty",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .older-messages-loading",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .message-meta strong",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .message-meta span",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .message-time",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .message-edited",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .message-receipt",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .message-actions button",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .composer-reply",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .composer-reply button",
+          "classification": "FEATURE_LOGIC"
+        }
+      ],
+      "mixed": true,
+      "declarations": [
+        [
+          "color",
+          "#c0cbc2",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 815,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ":root[data-theme=\"dark\"] .pane-heading h1",
+          "classification": "INBOX_SHELL"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .conversation-heading",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .chat-row-copy strong",
+          "classification": "CHAT_ROW"
+        }
+      ],
+      "mixed": true,
+      "declarations": [
+        [
+          "color",
+          "#e8efe9",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 917,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ":root[data-theme=\"dark\"] .list-section-label",
+          "classification": "LEGACY_COUPLING"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .inbox-footnote",
+          "classification": "INBOX_SHELL"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .chat-row-meta",
+          "classification": "CHAT_ROW"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .empty-title",
+          "classification": "EMPTY_STATE"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .composer-hint",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .older-messages-loading",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .message-time",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .message-edited",
+          "classification": "FEATURE_LOGIC"
+        }
+      ],
+      "mixed": true,
+      "declarations": [
+        [
+          "color",
+          "#aebbb1",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 927,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ":root[data-theme=\"dark\"] .search-box:hover",
+          "classification": "SEARCH"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .chat-list-item:hover",
+          "classification": "CHAT_ROW_STATE"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .chat-list-item.selected",
+          "classification": "CHAT_ROW_STATE"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .inbox-filters button:hover",
+          "classification": "ACTION"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .message-actions button:hover",
+          "classification": "FEATURE_LOGIC"
+        }
+      ],
+      "mixed": true,
+      "declarations": [
+        [
+          "color",
+          "#f0f5f0",
+          false
+        ],
+        [
+          "background-color",
+          "#344239",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 935,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ":root[data-theme=\"dark\"] .has-draft .chat-row-copy small",
+          "classification": "CHAT_ROW_STATE"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .draft-label",
+          "classification": "CHAT_ROW_STATE"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .message-receipt.delivered",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root[data-theme=\"dark\"] .message-receipt.read",
+          "classification": "FEATURE_LOGIC"
+        }
+      ],
+      "mixed": true,
+      "declarations": [
+        [
+          "color",
+          "#b4d5b5",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 1157,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .conversation-header",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .message-composer",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .search-box",
+          "classification": "SEARCH"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .inbox-filters",
+          "classification": "ACTION"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .spaces-intro",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .spaces-list",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .space-channel-header",
+          "classification": "FEATURE_LOGIC"
+        }
+      ],
+      "mixed": true,
+      "declarations": [
+        [
+          "color",
+          "var(--color-text-primary)",
+          false
+        ],
+        [
+          "background",
+          "var(--color-bg-surface)",
+          false
+        ],
+        [
+          "border-color",
+          "var(--color-border)",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 1172,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .story-copy h1",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .auth-panel h2",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .account-dialog h2",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .pane-heading h1",
+          "classification": "INBOX_SHELL"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .conversation-heading",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .chat-row-copy strong",
+          "classification": "CHAT_ROW"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .welcome-content h2",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .space-server-header strong",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .space-channel-header > div > span",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .spaces-intro h2",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .spaces-list h2",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .profile-form label > span",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .auth-form label > span",
+          "classification": "FEATURE_LOGIC"
+        }
+      ],
+      "mixed": true,
+      "declarations": [
+        [
+          "color",
+          "var(--color-text-primary)",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 1189,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .eyebrow",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .story-copy .eyebrow",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .story-subtitle",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .story-note",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .form-intro",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .auth-form label small",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .auth-switch",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .privacy-note",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .username-input > span",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .chat-row-copy small",
+          "classification": "CHAT_ROW"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .chat-row-meta",
+          "classification": "CHAT_ROW"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .list-section-label",
+          "classification": "LEGACY_COUPLING"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .inbox-footnote",
+          "classification": "INBOX_SHELL"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .empty-title",
+          "classification": "EMPTY_STATE"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .composer-hint",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .message-time",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .message-edited",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .message-meta strong",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .conversation-identity-button",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .profile-avatar-actions > span",
+          "classification": "SHARED_PRIMITIVE"
+        }
+      ],
+      "mixed": true,
+      "declarations": [
+        [
+          "color",
+          "var(--color-text-secondary)",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 1218,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .primary-button",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .composer-toolbar > .composer-send-button",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .unread-pill",
+          "classification": "CHAT_ROW"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .chat-row-meta b",
+          "classification": "CHAT_ROW"
+        }
+      ],
+      "mixed": true,
+      "declarations": [
+        [
+          "color",
+          "var(--color-on-primary)",
+          false
+        ],
+        [
+          "background",
+          "var(--color-primary)",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 1225,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .icon-button",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .inbox-filters button",
+          "classification": "ACTION"
+        }
+      ],
+      "mixed": true,
+      "declarations": [
+        [
+          "color",
+          "var(--color-text-secondary)",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 1227,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .chat-list-item:hover",
+          "classification": "CHAT_ROW_STATE"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .search-box:hover",
+          "classification": "SEARCH"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .inbox-filters button:hover",
+          "classification": "ACTION"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .username-match:hover",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .message-actions button:hover",
+          "classification": "FEATURE_LOGIC"
+        }
+      ],
+      "mixed": true,
+      "declarations": [
+        [
+          "color",
+          "var(--color-text-primary)",
+          false
+        ],
+        [
+          "background",
+          "var(--color-bg-hover)",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 1232,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .chat-list-item.selected",
+          "classification": "CHAT_ROW_STATE"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .inbox-filters button.filter-active",
+          "classification": "ACTION"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .username-match.is-selected",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .space-channel.is-active",
+          "classification": "FEATURE_LOGIC"
+        }
+      ],
+      "mixed": true,
+      "declarations": [
+        [
+          "color",
+          "var(--color-text-primary)",
+          false
+        ],
+        [
+          "background",
+          "var(--color-selected)",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 1241,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .form-error",
+          "classification": "FEATURE_LOGIC"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .list-error",
+          "classification": "LEGACY_COUPLING"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .inline-error",
+          "classification": "FEATURE_LOGIC"
+        }
+      ],
+      "mixed": true,
+      "declarations": [
+        [
+          "color",
+          "var(--color-text-primary)",
+          false
+        ],
+        [
+          "border-color",
+          "var(--color-danger)",
+          false
+        ],
+        [
+          "background",
+          "var(--color-danger-soft)",
+          false
+        ]
+      ]
+    },
+    {
+      "line": 1262,
+      "nesting": [],
+      "selectors": [
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .chat-avatar",
+          "classification": "SHARED_PRIMITIVE"
+        },
+        {
+          "selector": ":root:is([data-theme], :not([data-theme])) .profile-avatar",
+          "classification": "SHARED_PRIMITIVE"
+        }
+      ],
+      "mixed": false,
+      "declarations": [
+        [
+          "color",
+          "var(--color-text-primary)",
+          false
+        ],
+        [
+          "background",
+          "var(--color-primary-soft)",
+          false
+        ]
+      ]
+    }
+  ],
+  "contracts": {
+    "loading": "No Inbox loading branch exists",
+    "search": "Native button opens SearchDialog; no Inbox input",
+    "typing": "No separate typing state",
+    "sending": "No separate sending/failure state",
+    "unread": "Positive Number(unread_count); render original value without cap",
+    "calls": "Header shared; history and empty state remain unchanged",
+    "requests": "Inline rows clearly Inbox-owned; RequestsPanel workflow excluded"
+  }
+}

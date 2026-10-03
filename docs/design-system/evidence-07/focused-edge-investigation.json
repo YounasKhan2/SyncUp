@@ -1,0 +1,1862 @@
+{
+  "sourceHead": "899196aa9e2fd3886af87b574374da4ab881c028",
+  "classification": "RASTER_JPEG_EDGE_ARTIFACTS_NO_CSS_LAYOUT_SPILL",
+  "accepted": true,
+  "productionCanonicalLF": {
+    "client/src/features/workspace/components/InboxPane.tsx": "4491258ad5a0a797645cd1f7312a746985f0d14ff132583f8eb79e4db1ebc012",
+    "client/src/features/workspace/components/ChatRow.tsx": "90658336182ca992733050947554a7bda822bac79e5d318cd4869557724ca77a",
+    "client/src/shared/styles/platform.css": "be2d83d23c382cc851ea25730598354ac355fd494611ba4cf3d79929be8f93ca"
+  },
+  "scope": "Only this frozen Phase 07 implementation; five representative cases, not a new full-matrix certification.",
+  "rule": "Require exact unowned DOM/attributes/classes/IDs/ARIA/order/focus/computed styles/bounds, contained owned paint, and stable same-build captures. Preserve every raw pixel difference as diagnostic evidence. Investigate unexplained non-edge changes; no masks or pixel thresholds. Documented scroll integration remains a separate explicit exception.",
+  "limitations": "Lossy originals cannot separate pre-encoding antialias/resampling from JPEG quantization. Normal/hover/Dark exterior changes are isolated to shared chroma blocks. Selected-focus also has edge-adjacent luminance blocks x=352..359, while the row/list clip ends at x=351.142 and the outline is inset. No CSS paint mechanism reaches those exterior pixels.",
+  "sourceHashesVerifiedAgainstCommittedArchive": 20,
+  "newAcceptedScreenshots": 0,
+  "cases": [
+    {
+      "case": "desktop-light-light-normal",
+      "unownedNodeDifferences": [],
+      "outsidePixels": 65,
+      "outsideBBox": [
+        64,
+        832,
+        68,
+        849
+      ],
+      "outsideMaxChannelDifference": 2,
+      "outsidePixelsBeyondChangedCodecSupport": 0,
+      "components": [
+        {
+          "component": 1,
+          "changedBlocksTouchingOutsidePixels": []
+        },
+        {
+          "component": 2,
+          "changedBlocksTouchingOutsidePixels": [
+            {
+              "bounds": [
+                64,
+                832,
+                16,
+                16
+              ],
+              "intersectsOwned": true
+            }
+          ]
+        },
+        {
+          "component": 3,
+          "changedBlocksTouchingOutsidePixels": [
+            {
+              "bounds": [
+                64,
+                832,
+                16,
+                16
+              ],
+              "intersectsOwned": true
+            }
+          ]
+        }
+      ],
+      "rowPaintGeometry": [
+        {
+          "bounds": [
+            71.99317169189453,
+            200.89285278320312,
+            279.1491394042969,
+            56.249996185302734
+          ],
+          "outlineWidth": 2.52101,
+          "outlineOffset": 0.0,
+          "outlineStyle": "none",
+          "outerOutlineReach": 0,
+          "boxShadow": "none",
+          "filter": "none"
+        },
+        {
+          "bounds": [
+            71.99317169189453,
+            257.1428527832031,
+            279.1491394042969,
+            56.249996185302734
+          ],
+          "outlineWidth": 2.52101,
+          "outlineOffset": 0.0,
+          "outlineStyle": "none",
+          "outerOutlineReach": 0,
+          "boxShadow": "none",
+          "filter": "none"
+        },
+        {
+          "bounds": [
+            71.99317169189453,
+            313.3928527832031,
+            279.1491394042969,
+            56.249996185302734
+          ],
+          "outlineWidth": 2.52101,
+          "outlineOffset": 0.0,
+          "outlineStyle": "none",
+          "outerOutlineReach": 0,
+          "boxShadow": "none",
+          "filter": "none"
+        },
+        {
+          "bounds": [
+            71.99317169189453,
+            369.642822265625,
+            279.1491394042969,
+            56.32877731323242
+          ],
+          "outlineWidth": 2.52101,
+          "outlineOffset": 0.0,
+          "outlineStyle": "none",
+          "outerOutlineReach": 0,
+          "boxShadow": "none",
+          "filter": "none"
+        },
+        {
+          "bounds": [
+            71.99317169189453,
+            425.97161865234375,
+            279.1491394042969,
+            56.249996185302734
+          ],
+          "outlineWidth": 2.52101,
+          "outlineOffset": 0.0,
+          "outlineStyle": "none",
+          "outerOutlineReach": 0,
+          "boxShadow": "none",
+          "filter": "none"
+        },
+        {
+          "bounds": [
+            71.99317169189453,
+            521.1396484375,
+            279.1491394042969,
+            56.249996185302734
+          ],
+          "outlineWidth": 2.52101,
+          "outlineOffset": 0.0,
+          "outlineStyle": "none",
+          "outerOutlineReach": 0,
+          "boxShadow": "none",
+          "filter": "none"
+        },
+        {
+          "bounds": [
+            71.99317169189453,
+            577.3896484375,
+            279.1491394042969,
+            56.249996185302734
+          ],
+          "outlineWidth": 2.52101,
+          "outlineOffset": 0.0,
+          "outlineStyle": "none",
+          "outerOutlineReach": 0,
+          "boxShadow": "none",
+          "filter": "none"
+        }
+      ],
+      "sameBuildRepeatsIdentical": true,
+      "mcu": [
+        16,
+        16
+      ],
+      "quantizationTables": {
+        "0": [
+          6,
+          4,
+          5,
+          6,
+          5,
+          4,
+          6,
+          6,
+          5,
+          6,
+          7,
+          7,
+          6,
+          8,
+          10,
+          16,
+          10,
+          10,
+          9,
+          9,
+          10,
+          20,
+          14,
+          15,
+          12,
+          16,
+          23,
+          20,
+          24,
+          24,
+          23,
+          20,
+          22,
+          22,
+          26,
+          29,
+          37,
+          31,
+          26,
+          27,
+          35,
+          28,
+          22,
+          22,
+          32,
+          44,
+          32,
+          35,
+          38,
+          39,
+          41,
+          42,
+          41,
+          25,
+          31,
+          45,
+          48,
+          45,
+          40,
+          48,
+          37,
+          40,
+          41,
+          40
+        ],
+        "1": [
+          7,
+          7,
+          7,
+          10,
+          8,
+          10,
+          19,
+          10,
+          10,
+          19,
+          40,
+          26,
+          22,
+          26,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40
+        ]
+      },
+      "sources": {
+        "base-desktop-light-light-normal.json": "c7a15aa925a38a7f580749dff3afcbd1a45ce69ad8edee23559b399b86e10159",
+        "base-desktop-light-light-normal-1.jpg": "27c2e3c8273e84473bb8030233adb7fb4bcaed526519b94dc1ff49a430738351",
+        "head-desktop-light-light-normal.json": "9a9433ece3b10f7d07f595fea42e7bb092e54196540e9df0a97d4e9d91f724e9",
+        "head-desktop-light-light-normal-1.jpg": "e33ecead654e37367f71e1a90cd3730256a53d55e42847b37ca9b20159007747"
+      },
+      "listClip": {
+        "bounds": [
+          71.99317169189453,
+          157.98318481445312,
+          279.1491394042969,
+          683.3245239257812
+        ],
+        "overflowX": "hidden",
+        "overflowY": "auto"
+      }
+    },
+    {
+      "case": "desktop-light-light-hover",
+      "unownedNodeDifferences": [],
+      "outsidePixels": 728,
+      "outsideBBox": [
+        63,
+        160,
+        353,
+        849
+      ],
+      "outsideMaxChannelDifference": 2,
+      "outsidePixelsBeyondChangedCodecSupport": 0,
+      "components": [
+        {
+          "component": 1,
+          "changedBlocksTouchingOutsidePixels": []
+        },
+        {
+          "component": 2,
+          "changedBlocksTouchingOutsidePixels": [
+            {
+              "bounds": [
+                64,
+                192,
+                16,
+                16
+              ],
+              "intersectsOwned": true
+            },
+            {
+              "bounds": [
+                64,
+                208,
+                16,
+                16
+              ],
+              "intersectsOwned": true
+            },
+            {
+              "bounds": [
+                64,
+                224,
+                16,
+                16
+              ],
+              "intersectsOwned": true
+            },
+            {
+              "bounds": [
+                64,
+                240,
+                16,
+                16
+              ],
+              "intersectsOwned": true
+            },
+            {
+              "bounds": [
+                64,
+                256,
+                16,
+                16
+              ],
+              "intersectsOwned": true
+            },
+            {
+              "bounds": [
+                64,
+                832,
+                16,
+                16
+              ],
+              "intersectsOwned": true
+            }
+          ]
+        },
+        {
+          "component": 3,
+          "changedBlocksTouchingOutsidePixels": [
+            {
+              "bounds": [
+                64,
+                160,
+                16,
+                16
+              ],
+              "intersectsOwned": true
+            },
+            {
+              "bounds": [
+                64,
+                176,
+                16,
+                16
+              ],
+              "intersectsOwned": true
+            },
+            {
+              "bounds": [
+                64,
+                192,
+                16,
+                16
+              ],
+              "intersectsOwned": true
+            },
+            {
+              "bounds": [
+                64,
+                208,
+                16,
+                16
+              ],
+              "intersectsOwned": true
+            },
+            {
+              "bounds": [
+                64,
+                224,
+                16,
+                16
+              ],
+              "intersectsOwned": true
+            },
+            {
+              "bounds": [
+                64,
+                240,
+                16,
+                16
+              ],
+              "intersectsOwned": true
+            },
+            {
+              "bounds": [
+                64,
+                256,
+                16,
+                16
+              ],
+              "intersectsOwned": true
+            },
+            {
+              "bounds": [
+                64,
+                832,
+                16,
+                16
+              ],
+              "intersectsOwned": true
+            }
+          ]
+        }
+      ],
+      "rowPaintGeometry": [
+        {
+          "bounds": [
+            71.99317169189453,
+            200.89285278320312,
+            279.1491394042969,
+            56.249996185302734
+          ],
+          "outlineWidth": 2.52101,
+          "outlineOffset": 0.0,
+          "outlineStyle": "none",
+          "outerOutlineReach": 0,
+          "boxShadow": "none",
+          "filter": "none"
+        },
+        {
+          "bounds": [
+            71.99317169189453,
+            257.1428527832031,
+            279.1491394042969,
+            56.249996185302734
+          ],
+          "outlineWidth": 2.52101,
+          "outlineOffset": 0.0,
+          "outlineStyle": "none",
+          "outerOutlineReach": 0,
+          "boxShadow": "none",
+          "filter": "none"
+        },
+        {
+          "bounds": [
+            71.99317169189453,
+            313.3928527832031,
+            279.1491394042969,
+            56.249996185302734
+          ],
+          "outlineWidth": 2.52101,
+          "outlineOffset": 0.0,
+          "outlineStyle": "none",
+          "outerOutlineReach": 0,
+          "boxShadow": "none",
+          "filter": "none"
+        },
+        {
+          "bounds": [
+            71.99317169189453,
+            369.642822265625,
+            279.1491394042969,
+            56.32877731323242
+          ],
+          "outlineWidth": 2.52101,
+          "outlineOffset": 0.0,
+          "outlineStyle": "none",
+          "outerOutlineReach": 0,
+          "boxShadow": "none",
+          "filter": "none"
+        },
+        {
+          "bounds": [
+            71.99317169189453,
+            425.97161865234375,
+            279.1491394042969,
+            56.249996185302734
+          ],
+          "outlineWidth": 2.52101,
+          "outlineOffset": 0.0,
+          "outlineStyle": "none",
+          "outerOutlineReach": 0,
+          "boxShadow": "none",
+          "filter": "none"
+        },
+        {
+          "bounds": [
+            71.99317169189453,
+            521.1396484375,
+            279.1491394042969,
+            56.249996185302734
+          ],
+          "outlineWidth": 2.52101,
+          "outlineOffset": 0.0,
+          "outlineStyle": "none",
+          "outerOutlineReach": 0,
+          "boxShadow": "none",
+          "filter": "none"
+        },
+        {
+          "bounds": [
+            71.99317169189453,
+            577.3896484375,
+            279.1491394042969,
+            56.249996185302734
+          ],
+          "outlineWidth": 2.52101,
+          "outlineOffset": 0.0,
+          "outlineStyle": "none",
+          "outerOutlineReach": 0,
+          "boxShadow": "none",
+          "filter": "none"
+        }
+      ],
+      "sameBuildRepeatsIdentical": true,
+      "mcu": [
+        16,
+        16
+      ],
+      "quantizationTables": {
+        "0": [
+          6,
+          4,
+          5,
+          6,
+          5,
+          4,
+          6,
+          6,
+          5,
+          6,
+          7,
+          7,
+          6,
+          8,
+          10,
+          16,
+          10,
+          10,
+          9,
+          9,
+          10,
+          20,
+          14,
+          15,
+          12,
+          16,
+          23,
+          20,
+          24,
+          24,
+          23,
+          20,
+          22,
+          22,
+          26,
+          29,
+          37,
+          31,
+          26,
+          27,
+          35,
+          28,
+          22,
+          22,
+          32,
+          44,
+          32,
+          35,
+          38,
+          39,
+          41,
+          42,
+          41,
+          25,
+          31,
+          45,
+          48,
+          45,
+          40,
+          48,
+          37,
+          40,
+          41,
+          40
+        ],
+        "1": [
+          7,
+          7,
+          7,
+          10,
+          8,
+          10,
+          19,
+          10,
+          10,
+          19,
+          40,
+          26,
+          22,
+          26,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40
+        ]
+      },
+      "sources": {
+        "base-desktop-light-light-hover.json": "239175a7fc51d2e0ae3c1e2f24db80e9dd0208d8f5c6eea252ac637f3747d999",
+        "base-desktop-light-light-hover-1.jpg": "46c55df20eb19c4e902b540b60456b0314caf859619005e3c5f99ea7c84338cd",
+        "head-desktop-light-light-hover.json": "0c16b6e31fe2c6eee4a847dde0ae4403a6b242847158b0914d8c706fe53276b3",
+        "head-desktop-light-light-hover-1.jpg": "007e48d4314316a94369fae1264b83f339ab2930b2d569738d1cbaa302c877f5"
+      },
+      "listClip": {
+        "bounds": [
+          71.99317169189453,
+          157.98318481445312,
+          279.1491394042969,
+          683.3245239257812
+        ],
+        "overflowX": "hidden",
+        "overflowY": "auto"
+      }
+    },
+    {
+      "case": "desktop-light-light-selected-focus",
+      "unownedNodeDifferences": [],
+      "outsidePixels": 1213,
+      "outsideBBox": [
+        63,
+        159,
+        360,
+        848
+      ],
+      "outsideMaxChannelDifference": 10,
+      "outsidePixelsBeyondChangedCodecSupport": 0,
+      "components": [
+        {
+          "component": 1,
+          "changedBlocksTouchingOutsidePixels": [
+            {
+              "bounds": [
+                64,
+                200,
+                8,
+                8
+              ],
+              "intersectsOwned": true
+            },
+            {
+              "bounds": [
+                352,
+                200,
+                8,
+                8
+              ],
+              "intersectsOwned": false
+            },
+            {
+              "bounds": [
+                64,
+                208,
+                8,
+                8
+              ],
+              "intersectsOwned": true
+            },
+            {
+              "bounds": [
+                64,
+                216,
+                8,
+                8
+              ],
+              "intersectsOwned": true
+            },
+            {
+              "bounds": [
+                352,
+                208,
+                8,
+                8
+              ],
+              "intersectsOwned": false
+            },
+            {
+              "bounds": [
+                352,
+                216,
+                8,
+                8
+              ],
+              "intersectsOwned": false
+            },
+            {
+              "bounds": [
+                64,
+                224,
+                8,
+                8
+              ],
+              "intersectsOwned": true
+            },
+            {
+              "bounds": [
+                64,
+                232,
+                8,
+                8
+              ],
+              "intersectsOwned": true
+            },
+            {
+              "bounds": [
+                352,
+                224,
+                8,
+                8
+              ],
+              "intersectsOwned": false
+            },
+            {
+              "bounds": [
+                352,
+                232,
+                8,
+                8
+              ],
+              "intersectsOwned": false
+            },
+            {
+              "bounds": [
+                64,
+                240,
+                8,
+                8
+              ],
+              "intersectsOwned": true
+            },
+            {
+              "bounds": [
+                64,
+                248,
+                8,
+                8
+              ],
+              "intersectsOwned": true
+            },
+            {
+              "bounds": [
+                352,
+                240,
+                8,
+                8
+              ],
+              "intersectsOwned": false
+            },
+            {
+              "bounds": [
+                352,
+                248,
+                8,
+                8
+              ],
+              "intersectsOwned": false
+            },
+            {
+              "bounds": [
+                64,
+                256,
+                8,
+                8
+              ],
+              "intersectsOwned": true
+            },
+            {
+              "bounds": [
+                352,
+                256,
+                8,
+                8
+              ],
+              "intersectsOwned": false
+            }
+          ]
+        },
+        {
+          "component": 2,
+          "changedBlocksTouchingOutsidePixels": [
+            {
+              "bounds": [
+                64,
+                160,
+                16,
+                16
+              ],
+              "intersectsOwned": true
+            },
+            {
+              "bounds": [
+                64,
+                176,
+                16,
+                16
+              ],
+              "intersectsOwned": true
+            },
+            {
+              "bounds": [
+                64,
+                192,
+                16,
+                16
+              ],
+              "intersectsOwned": true
+            },
+            {
+              "bounds": [
+                64,
+                208,
+                16,
+                16
+              ],
+              "intersectsOwned": true
+            },
+            {
+              "bounds": [
+                64,
+                224,
+                16,
+                16
+              ],
+              "intersectsOwned": true
+            },
+            {
+              "bounds": [
+                64,
+                240,
+                16,
+                16
+              ],
+              "intersectsOwned": true
+            },
+            {
+              "bounds": [
+                64,
+                256,
+                16,
+                16
+              ],
+              "intersectsOwned": true
+            }
+          ]
+        },
+        {
+          "component": 3,
+          "changedBlocksTouchingOutsidePixels": [
+            {
+              "bounds": [
+                64,
+                160,
+                16,
+                16
+              ],
+              "intersectsOwned": true
+            },
+            {
+              "bounds": [
+                64,
+                176,
+                16,
+                16
+              ],
+              "intersectsOwned": true
+            },
+            {
+              "bounds": [
+                64,
+                192,
+                16,
+                16
+              ],
+              "intersectsOwned": true
+            },
+            {
+              "bounds": [
+                64,
+                208,
+                16,
+                16
+              ],
+              "intersectsOwned": true
+            },
+            {
+              "bounds": [
+                64,
+                224,
+                16,
+                16
+              ],
+              "intersectsOwned": true
+            },
+            {
+              "bounds": [
+                64,
+                240,
+                16,
+                16
+              ],
+              "intersectsOwned": true
+            },
+            {
+              "bounds": [
+                64,
+                256,
+                16,
+                16
+              ],
+              "intersectsOwned": true
+            },
+            {
+              "bounds": [
+                64,
+                832,
+                16,
+                16
+              ],
+              "intersectsOwned": true
+            }
+          ]
+        }
+      ],
+      "rowPaintGeometry": [
+        {
+          "bounds": [
+            71.99317169189453,
+            200.89285278320312,
+            279.1491394042969,
+            56.249996185302734
+          ],
+          "outlineWidth": 1.68067,
+          "outlineOffset": -1.68067,
+          "outlineStyle": "solid",
+          "outerOutlineReach": 0,
+          "boxShadow": "none",
+          "filter": "none"
+        },
+        {
+          "bounds": [
+            71.99317169189453,
+            257.1428527832031,
+            279.1491394042969,
+            56.249996185302734
+          ],
+          "outlineWidth": 2.52101,
+          "outlineOffset": 0.0,
+          "outlineStyle": "none",
+          "outerOutlineReach": 0,
+          "boxShadow": "none",
+          "filter": "none"
+        },
+        {
+          "bounds": [
+            71.99317169189453,
+            313.3928527832031,
+            279.1491394042969,
+            56.249996185302734
+          ],
+          "outlineWidth": 2.52101,
+          "outlineOffset": 0.0,
+          "outlineStyle": "none",
+          "outerOutlineReach": 0,
+          "boxShadow": "none",
+          "filter": "none"
+        },
+        {
+          "bounds": [
+            71.99317169189453,
+            369.642822265625,
+            279.1491394042969,
+            56.32877731323242
+          ],
+          "outlineWidth": 2.52101,
+          "outlineOffset": 0.0,
+          "outlineStyle": "none",
+          "outerOutlineReach": 0,
+          "boxShadow": "none",
+          "filter": "none"
+        },
+        {
+          "bounds": [
+            71.99317169189453,
+            425.97161865234375,
+            279.1491394042969,
+            56.249996185302734
+          ],
+          "outlineWidth": 2.52101,
+          "outlineOffset": 0.0,
+          "outlineStyle": "none",
+          "outerOutlineReach": 0,
+          "boxShadow": "none",
+          "filter": "none"
+        },
+        {
+          "bounds": [
+            71.99317169189453,
+            521.1396484375,
+            279.1491394042969,
+            56.249996185302734
+          ],
+          "outlineWidth": 2.52101,
+          "outlineOffset": 0.0,
+          "outlineStyle": "none",
+          "outerOutlineReach": 0,
+          "boxShadow": "none",
+          "filter": "none"
+        },
+        {
+          "bounds": [
+            71.99317169189453,
+            577.3896484375,
+            279.1491394042969,
+            56.249996185302734
+          ],
+          "outlineWidth": 2.52101,
+          "outlineOffset": 0.0,
+          "outlineStyle": "none",
+          "outerOutlineReach": 0,
+          "boxShadow": "none",
+          "filter": "none"
+        }
+      ],
+      "sameBuildRepeatsIdentical": true,
+      "mcu": [
+        16,
+        16
+      ],
+      "quantizationTables": {
+        "0": [
+          6,
+          4,
+          5,
+          6,
+          5,
+          4,
+          6,
+          6,
+          5,
+          6,
+          7,
+          7,
+          6,
+          8,
+          10,
+          16,
+          10,
+          10,
+          9,
+          9,
+          10,
+          20,
+          14,
+          15,
+          12,
+          16,
+          23,
+          20,
+          24,
+          24,
+          23,
+          20,
+          22,
+          22,
+          26,
+          29,
+          37,
+          31,
+          26,
+          27,
+          35,
+          28,
+          22,
+          22,
+          32,
+          44,
+          32,
+          35,
+          38,
+          39,
+          41,
+          42,
+          41,
+          25,
+          31,
+          45,
+          48,
+          45,
+          40,
+          48,
+          37,
+          40,
+          41,
+          40
+        ],
+        "1": [
+          7,
+          7,
+          7,
+          10,
+          8,
+          10,
+          19,
+          10,
+          10,
+          19,
+          40,
+          26,
+          22,
+          26,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40
+        ]
+      },
+      "sources": {
+        "base-desktop-light-light-selected-focus.json": "c4a9e987dc4ec65c869349a73530cd9b6c34336d6548f4fb4941e6612f95b672",
+        "base-desktop-light-light-selected-focus-1.jpg": "47873e38e1fc8ad4cc95ca9768189f97b6750d496f3ff1a01dc3fdfe7d72a380",
+        "head-desktop-light-light-selected-focus.json": "4da3228b2085e579ab8a13978278a97bd347f19f31595cd5a7283e66202338a8",
+        "head-desktop-light-light-selected-focus-1.jpg": "5edf5045028974c6baed872d0de19d3279ac25ec14481a3ede16700ae7793654"
+      },
+      "listClip": {
+        "bounds": [
+          71.99317169189453,
+          157.98318481445312,
+          279.1491394042969,
+          683.3245239257812
+        ],
+        "overflowX": "hidden",
+        "overflowY": "auto"
+      }
+    },
+    {
+      "case": "desktop-dark-light-normal",
+      "unownedNodeDifferences": [],
+      "outsidePixels": 112,
+      "outsideBBox": [
+        64,
+        832,
+        71,
+        848
+      ],
+      "outsideMaxChannelDifference": 1,
+      "outsidePixelsBeyondChangedCodecSupport": 0,
+      "components": [
+        {
+          "component": 1,
+          "changedBlocksTouchingOutsidePixels": []
+        },
+        {
+          "component": 2,
+          "changedBlocksTouchingOutsidePixels": [
+            {
+              "bounds": [
+                64,
+                832,
+                16,
+                16
+              ],
+              "intersectsOwned": true
+            }
+          ]
+        },
+        {
+          "component": 3,
+          "changedBlocksTouchingOutsidePixels": []
+        }
+      ],
+      "rowPaintGeometry": [
+        {
+          "bounds": [
+            71.99317169189453,
+            200.89285278320312,
+            279.1491394042969,
+            56.249996185302734
+          ],
+          "outlineWidth": 2.52101,
+          "outlineOffset": 0.0,
+          "outlineStyle": "none",
+          "outerOutlineReach": 0,
+          "boxShadow": "none",
+          "filter": "none"
+        },
+        {
+          "bounds": [
+            71.99317169189453,
+            257.1428527832031,
+            279.1491394042969,
+            56.249996185302734
+          ],
+          "outlineWidth": 2.52101,
+          "outlineOffset": 0.0,
+          "outlineStyle": "none",
+          "outerOutlineReach": 0,
+          "boxShadow": "none",
+          "filter": "none"
+        },
+        {
+          "bounds": [
+            71.99317169189453,
+            313.3928527832031,
+            279.1491394042969,
+            56.249996185302734
+          ],
+          "outlineWidth": 2.52101,
+          "outlineOffset": 0.0,
+          "outlineStyle": "none",
+          "outerOutlineReach": 0,
+          "boxShadow": "none",
+          "filter": "none"
+        },
+        {
+          "bounds": [
+            71.99317169189453,
+            369.642822265625,
+            279.1491394042969,
+            56.32877731323242
+          ],
+          "outlineWidth": 2.52101,
+          "outlineOffset": 0.0,
+          "outlineStyle": "none",
+          "outerOutlineReach": 0,
+          "boxShadow": "none",
+          "filter": "none"
+        },
+        {
+          "bounds": [
+            71.99317169189453,
+            425.97161865234375,
+            279.1491394042969,
+            56.249996185302734
+          ],
+          "outlineWidth": 2.52101,
+          "outlineOffset": 0.0,
+          "outlineStyle": "none",
+          "outerOutlineReach": 0,
+          "boxShadow": "none",
+          "filter": "none"
+        },
+        {
+          "bounds": [
+            71.99317169189453,
+            521.1396484375,
+            279.1491394042969,
+            56.249996185302734
+          ],
+          "outlineWidth": 2.52101,
+          "outlineOffset": 0.0,
+          "outlineStyle": "none",
+          "outerOutlineReach": 0,
+          "boxShadow": "none",
+          "filter": "none"
+        },
+        {
+          "bounds": [
+            71.99317169189453,
+            577.3896484375,
+            279.1491394042969,
+            56.249996185302734
+          ],
+          "outlineWidth": 2.52101,
+          "outlineOffset": 0.0,
+          "outlineStyle": "none",
+          "outerOutlineReach": 0,
+          "boxShadow": "none",
+          "filter": "none"
+        }
+      ],
+      "sameBuildRepeatsIdentical": true,
+      "mcu": [
+        16,
+        16
+      ],
+      "quantizationTables": {
+        "0": [
+          6,
+          4,
+          5,
+          6,
+          5,
+          4,
+          6,
+          6,
+          5,
+          6,
+          7,
+          7,
+          6,
+          8,
+          10,
+          16,
+          10,
+          10,
+          9,
+          9,
+          10,
+          20,
+          14,
+          15,
+          12,
+          16,
+          23,
+          20,
+          24,
+          24,
+          23,
+          20,
+          22,
+          22,
+          26,
+          29,
+          37,
+          31,
+          26,
+          27,
+          35,
+          28,
+          22,
+          22,
+          32,
+          44,
+          32,
+          35,
+          38,
+          39,
+          41,
+          42,
+          41,
+          25,
+          31,
+          45,
+          48,
+          45,
+          40,
+          48,
+          37,
+          40,
+          41,
+          40
+        ],
+        "1": [
+          7,
+          7,
+          7,
+          10,
+          8,
+          10,
+          19,
+          10,
+          10,
+          19,
+          40,
+          26,
+          22,
+          26,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40
+        ]
+      },
+      "sources": {
+        "base-desktop-dark-light-normal.json": "d23a0b1e79f09cfea6cb16ccd97c9f88e0ea2e219c9ad82af99721f64e48f220",
+        "base-desktop-dark-light-normal-1.jpg": "5b8c51e8bc6aa003dc9058fef3112cd1fd801ff9ce0db512a13c379c59952143",
+        "head-desktop-dark-light-normal.json": "52db78d5a99b2db755fab84810f8a46f5a8810705f124d35eb1eecba4665e47b",
+        "head-desktop-dark-light-normal-1.jpg": "75dcd150d0e531d65fa1f3282d63bb4437aa280dc796897895a8812b7765f562"
+      },
+      "listClip": {
+        "bounds": [
+          71.99317169189453,
+          157.98318481445312,
+          279.1491394042969,
+          683.3245239257812
+        ],
+        "overflowX": "hidden",
+        "overflowY": "auto"
+      }
+    },
+    {
+      "case": "mobile-light-light-normal",
+      "unownedNodeDifferences": [],
+      "outsidePixels": 0,
+      "outsideBBox": null,
+      "outsideMaxChannelDifference": 0,
+      "outsidePixelsBeyondChangedCodecSupport": 0,
+      "components": [
+        {
+          "component": 1,
+          "changedBlocksTouchingOutsidePixels": []
+        },
+        {
+          "component": 2,
+          "changedBlocksTouchingOutsidePixels": []
+        },
+        {
+          "component": 3,
+          "changedBlocksTouchingOutsidePixels": []
+        }
+      ],
+      "rowPaintGeometry": [
+        {
+          "bounds": [
+            0,
+            200.89285278320312,
+            389.0755920410156,
+            56.249996185302734
+          ],
+          "outlineWidth": 2.52101,
+          "outlineOffset": 0.0,
+          "outlineStyle": "none",
+          "outerOutlineReach": 0,
+          "boxShadow": "none",
+          "filter": "none"
+        },
+        {
+          "bounds": [
+            0,
+            257.1428527832031,
+            389.0755920410156,
+            56.249996185302734
+          ],
+          "outlineWidth": 2.52101,
+          "outlineOffset": 0.0,
+          "outlineStyle": "none",
+          "outerOutlineReach": 0,
+          "boxShadow": "none",
+          "filter": "none"
+        },
+        {
+          "bounds": [
+            0,
+            313.3928527832031,
+            389.0755920410156,
+            56.249996185302734
+          ],
+          "outlineWidth": 2.52101,
+          "outlineOffset": 0.0,
+          "outlineStyle": "none",
+          "outerOutlineReach": 0,
+          "boxShadow": "none",
+          "filter": "none"
+        },
+        {
+          "bounds": [
+            0,
+            369.642822265625,
+            389.0755920410156,
+            56.32877731323242
+          ],
+          "outlineWidth": 2.52101,
+          "outlineOffset": 0.0,
+          "outlineStyle": "none",
+          "outerOutlineReach": 0,
+          "boxShadow": "none",
+          "filter": "none"
+        },
+        {
+          "bounds": [
+            0,
+            425.97161865234375,
+            389.0755920410156,
+            56.249996185302734
+          ],
+          "outlineWidth": 2.52101,
+          "outlineOffset": 0.0,
+          "outlineStyle": "none",
+          "outerOutlineReach": 0,
+          "boxShadow": "none",
+          "filter": "none"
+        },
+        {
+          "bounds": [
+            0,
+            521.1396484375,
+            389.0755920410156,
+            56.249996185302734
+          ],
+          "outlineWidth": 2.52101,
+          "outlineOffset": 0.0,
+          "outlineStyle": "none",
+          "outerOutlineReach": 0,
+          "boxShadow": "none",
+          "filter": "none"
+        },
+        {
+          "bounds": [
+            0,
+            577.3896484375,
+            389.0755920410156,
+            56.249996185302734
+          ],
+          "outlineWidth": 2.52101,
+          "outlineOffset": 0.0,
+          "outlineStyle": "none",
+          "outerOutlineReach": 0,
+          "boxShadow": "none",
+          "filter": "none"
+        }
+      ],
+      "sameBuildRepeatsIdentical": true,
+      "mcu": [
+        16,
+        16
+      ],
+      "quantizationTables": {
+        "0": [
+          6,
+          4,
+          5,
+          6,
+          5,
+          4,
+          6,
+          6,
+          5,
+          6,
+          7,
+          7,
+          6,
+          8,
+          10,
+          16,
+          10,
+          10,
+          9,
+          9,
+          10,
+          20,
+          14,
+          15,
+          12,
+          16,
+          23,
+          20,
+          24,
+          24,
+          23,
+          20,
+          22,
+          22,
+          26,
+          29,
+          37,
+          31,
+          26,
+          27,
+          35,
+          28,
+          22,
+          22,
+          32,
+          44,
+          32,
+          35,
+          38,
+          39,
+          41,
+          42,
+          41,
+          25,
+          31,
+          45,
+          48,
+          45,
+          40,
+          48,
+          37,
+          40,
+          41,
+          40
+        ],
+        "1": [
+          7,
+          7,
+          7,
+          10,
+          8,
+          10,
+          19,
+          10,
+          10,
+          19,
+          40,
+          26,
+          22,
+          26,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40
+        ]
+      },
+      "sources": {
+        "base-mobile-light-light-normal.json": "753a53ace71d15893686a9155989aa6e2c360a0b3ca821a2f83253ef084f0915",
+        "base-mobile-light-light-normal-1.jpg": "74b11ea17e95547c9eb9d3eeaa37597503c3db8726dd0d306b2f9f2c1aabc794",
+        "head-mobile-light-light-normal.json": "f76207957a86fb1fc24c9ef3ba651f1287f9c8ec1a4f99d43f5010d743b66606",
+        "head-mobile-light-light-normal-1.jpg": "f851414cb39480f9d9af624d48298c2fabe2025da75d2318a44af10ce39a1020"
+      },
+      "listClip": {
+        "bounds": [
+          0,
+          157.98318481445312,
+          389.0755920410156,
+          583.9679565429688
+        ],
+        "overflowX": "hidden",
+        "overflowY": "auto"
+      }
+    }
+  ]
+}

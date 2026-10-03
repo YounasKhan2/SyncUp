@@ -1,0 +1,284 @@
+[
+  {
+    "path": "base-desktop-light-light-normal-1.jpg",
+    "bytes": 46844,
+    "sha256": "27c2e3c8273e84473bb8030233adb7fb4bcaed526519b94dc1ff49a430738351",
+    "normalization": "binary, unchanged"
+  },
+  {
+    "path": "baseline-build.log",
+    "bytes": 1567,
+    "sha256": "1dcf671aa990859b909bf23c3fd3bbebd571c9a14e16f2ec54674d255858f075",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "baseline-check-architecture.log",
+    "bytes": 2488,
+    "sha256": "153a3bb86cf7d3509913ed47256b4b209b2f01771035bbdf734b3d9d22c64865",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "baseline-test-integration.log",
+    "bytes": 1183,
+    "sha256": "5cccebdc8b11634e08e154002bb06b8adf0b049167376fa1a64c6fee55fb4a5e",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "baseline-test-media-v2.log",
+    "bytes": 847,
+    "sha256": "79a82b8a2b86dad0a3bf6eac4035734ae65cb10f2e6ce80656986b08befa0abd",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "baseline-test.log",
+    "bytes": 30172,
+    "sha256": "f87e53a02f768fce37a37f0ffcf327eaf7840b8a09885cefaa58d61e127021be",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "baseline-typecheck.log",
+    "bytes": 349,
+    "sha256": "702029cc428a789dbec79dc7e5c69dc4bce21033fa7940be5f423d00f1eb4c3e",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "build-base-before-active-pane.json",
+    "bytes": 1225,
+    "sha256": "cff12222f11c36c768c833aa92e05d9b8fdbcd97ba88683ab34cc59b8d138846",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "build-base.json",
+    "bytes": 1225,
+    "sha256": "833f1cdb1510c4c84d30631113c80554ea91e8cb172ac314f801b7993a446273",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "build-head-before-active-pane.json",
+    "bytes": 1225,
+    "sha256": "52b51ba9456445692bbba88e3eed0ec76a49b8c372c075fe985501f455819f23",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "build-head.json",
+    "bytes": 1225,
+    "sha256": "1d43627b8048265c00eeffe74952e23c9fb8c8176e10cfd52825fec3eae3ad54",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "captures.ndjson.gz",
+    "bytes": 25643880,
+    "sha256": "ab4ca4982099760be1216c3319bee1d0372b5a2c195b2589ba53c112e8027528",
+    "normalization": "binary, unchanged"
+  },
+  {
+    "path": "captures/desktop-dark-base-trace.json",
+    "bytes": 15608,
+    "sha256": "9bde686a83f4ecd7331188829aafa3dd575478c9cef168f4c64406ac26c7edf8",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "captures/desktop-dark-head-trace.json",
+    "bytes": 15608,
+    "sha256": "6dd795e99c70320b5d0bebbf285e966eb2ca03bdf06f8a048b8300a90a71480a",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "captures/desktop-dark-interactions.json",
+    "bytes": 31219,
+    "sha256": "76be34313359358ad9145458158be31b013cf9865a8d1dd849baf77000a8ad13",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "captures/desktop-light-base-trace.json",
+    "bytes": 15609,
+    "sha256": "19fd3c0371400890af23d0386129bbad7b4ae36c362033402fb3c5619640ce25",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "captures/desktop-light-head-trace.json",
+    "bytes": 15609,
+    "sha256": "3ffd102f31f8c18e6695db8dd628e25f64ff7edc1cd00015ae7920d4f4ae1c68",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "captures/desktop-light-interactions.json",
+    "bytes": 31221,
+    "sha256": "0062183cc537ac266f3bd10b475629e121d94be670149008834ef826ce520cd8",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "captures/mobile-dark-base-trace.json",
+    "bytes": 15379,
+    "sha256": "55bd63f265a4aa7dfc7412231378fa9b21b71b89698db1a687575713a11f3f2d",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "captures/mobile-dark-head-trace.json",
+    "bytes": 15379,
+    "sha256": "b416c59037630b89b0e08c4abd51edcd1b366d30a65e7bc3d31fe3e291d250fc",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "captures/mobile-dark-interactions.json",
+    "bytes": 30761,
+    "sha256": "0044fef58023ea0b5b59dbc8a9c670a2d0cf52ba602ea4ec4bfbca089f0e83c4",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "captures/mobile-light-base-trace.json",
+    "bytes": 15380,
+    "sha256": "c52d57ca1c4e0476fafc08645ac9bcb6deb826e2e6cbd0686cb7156d59d4d5eb",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "captures/mobile-light-head-trace.json",
+    "bytes": 15380,
+    "sha256": "f398cd030f8095db1c8d8409f6daf5105ef9c26e8713749cf33ad8dc05511e70",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "captures/mobile-light-interactions.json",
+    "bytes": 30763,
+    "sha256": "2d45de2482e6a6c3677f4fb9e9f16cc8790408df4c58be0d09eddb8a5a1c6dee",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "comparisons.json.gz",
+    "bytes": 1060587,
+    "sha256": "24eb01442db1016f8be066195c9546b01a13f7874207220a33264ae88ff69881",
+    "normalization": "binary, unchanged"
+  },
+  {
+    "path": "contrast-measured.json",
+    "bytes": 909592,
+    "sha256": "aadbe264af3dd8cc69bc65c6239b032a5f46e24d53e0c367de57f553f04dbcf2",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "css-ownership.json",
+    "bytes": 46892,
+    "sha256": "cfd7e6d960b886b40911d55d68713842c7d9b0bbd8143f8cbca49f36d2fce9b1",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "fixture-provenance.json",
+    "bytes": 1132,
+    "sha256": "03c1f88d8697bd30ea3a6a4f8285546679dc116d3a1b6b601ce4c9eb297623cd",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "focused-edge-crops.png",
+    "bytes": 27268,
+    "sha256": "4adda48cb6ac6bea97f4a7cd698293b91f5d42b15c436ba8368e99e4d5440bc9",
+    "normalization": "binary, unchanged"
+  },
+  {
+    "path": "focused-edge-investigation.json",
+    "bytes": 40208,
+    "sha256": "9e8a57ae06a53b96c37d136ffe223cf4e3729bef279063b6ba778e9fb5b89807",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "head-boundary-320-light-1.jpg",
+    "bytes": 25970,
+    "sha256": "9de9672c9630df1ad7c99c55df887adeb618ef287e47a5c9ffd1d45db35d7792",
+    "normalization": "binary, unchanged"
+  },
+  {
+    "path": "head-desktop-dark-light-empty-1.jpg",
+    "bytes": 41822,
+    "sha256": "f76f13036c0fee36f7b5100aa91b9b75428aa503c91a98ed146ab386a008b7fa",
+    "normalization": "binary, unchanged"
+  },
+  {
+    "path": "head-desktop-dark-light-normal-1.jpg",
+    "bytes": 53576,
+    "sha256": "75dcd150d0e531d65fa1f3282d63bb4437aa280dc796897895a8812b7765f562",
+    "normalization": "binary, unchanged"
+  },
+  {
+    "path": "head-desktop-light-light-normal-1.jpg",
+    "bytes": 51643,
+    "sha256": "e33ecead654e37367f71e1a90cd3730256a53d55e42847b37ca9b20159007747",
+    "normalization": "binary, unchanged"
+  },
+  {
+    "path": "head-desktop-light-light-scroll-1.jpg",
+    "bytes": 61101,
+    "sha256": "0dba5723c312c45464f45e12d4b4d2247626e8b57fc84de16edb1f326b93a13f",
+    "normalization": "binary, unchanged"
+  },
+  {
+    "path": "head-desktop-light-light-search-1.jpg",
+    "bytes": 47518,
+    "sha256": "d435e5767f2af1c9c95cc2463bb8f0dff6b8e6750abc8126f9a941bbe64066ea",
+    "normalization": "binary, unchanged"
+  },
+  {
+    "path": "head-desktop-light-light-selected-focus-1.jpg",
+    "bytes": 33841,
+    "sha256": "5edf5045028974c6baed872d0de19d3279ac25ec14481a3ede16700ae7793654",
+    "normalization": "binary, unchanged"
+  },
+  {
+    "path": "head-mobile-dark-light-normal-1.jpg",
+    "bytes": 28644,
+    "sha256": "3be96bd25f16d6baee2856c44e1a3ef9e28d894b4e75234ce08f68d95f201750",
+    "normalization": "binary, unchanged"
+  },
+  {
+    "path": "head-mobile-light-light-normal-1.jpg",
+    "bytes": 30347,
+    "sha256": "f851414cb39480f9d9af624d48298c2fabe2025da75d2318a44af10ce39a1020",
+    "normalization": "binary, unchanged"
+  },
+  {
+    "path": "ownership-before.json",
+    "bytes": 72501,
+    "sha256": "4ecd706ec7f4851923ff36aee1432a79611fcbc029fa89ecfdca3138de579389",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "precommit-build.log",
+    "bytes": 1567,
+    "sha256": "a0893bf50d8f0acefbdaedc3bdca29b209eb7641cb9ccac2e193065705a07118",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "precommit-check-architecture.log",
+    "bytes": 2488,
+    "sha256": "153a3bb86cf7d3509913ed47256b4b209b2f01771035bbdf734b3d9d22c64865",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "precommit-test-integration.log",
+    "bytes": 1184,
+    "sha256": "129e4f0cd8ab5f630a70c91c076de669b0ed76c4a0dfc9bd359bf8ec2d6be40e",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "precommit-test-media-v2.log",
+    "bytes": 845,
+    "sha256": "783290731c50b0e9552581bef698e20130cdc79482286a3243eda085c81b8025",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "precommit-test.log",
+    "bytes": 32290,
+    "sha256": "9f20927e2623101c1a8767b41fc2acd4c3f575963a6707478e95a7af4e55bf25",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "precommit-typecheck.log",
+    "bytes": 349,
+    "sha256": "702029cc428a789dbec79dc7e5c69dc4bce21033fa7940be5f423d00f1eb4c3e",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
+    "path": "summary.json",
+    "bytes": 1161631,
+    "sha256": "22030604917607a13082bd0e14faac60c7d8d097df2a7486be40c363ec12e606",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  }
+]
