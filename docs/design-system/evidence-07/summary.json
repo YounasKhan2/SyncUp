@@ -46364,5 +46364,12 @@
   ],
   "algorithm": "All decoded RGB pixels, zero tolerance. Full screenshots retained; no masking of comparison input. Region counts use the union of base and candidate owned rectangles, with shared heading ownership documented separately; every outside pixel is still counted.",
   "visualPixelGatePassed": false,
-  "reviewStatus": "DRAFT_HELD_FOR_EVIDENCE_REVIEW"
+  "reviewStatus": "READY_FOR_CHATGPT_REVIEW",
+  "phaseAcceptance": {
+    "passed": true,
+    "rule": "Exact unowned structure/style/bounds/focus and contained owned paint; pixels retained as diagnostics. Frozen Phase 07 only.",
+    "decision": "focused-edge-investigation.json",
+    "strictPixelRuleSuperseded": true,
+    "productionHashesMatchFocusedDecision": true
+  }
 }

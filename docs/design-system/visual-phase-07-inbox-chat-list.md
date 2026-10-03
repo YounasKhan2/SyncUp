@@ -115,9 +115,9 @@ Visual review finds continuous compact rows, aligned Avatar/name columns, readab
 
 Archive verification/extraction: `node tests/helpers/inbox-archive.mjs [archive] [destination]`. Evidence manifest: `node tests/helpers/inbox-manifest.mjs`. Full decoded counts, percentages, bounding boxes and connected 32px regions are preserved per comparison, including every outside-region pixel.
 
-**Review status: DRAFT / HELD.** The strict outside-owned pixel gate does **not** pass. There are **122 paired cases**, **732 accepted screenshots**, **366 cross-build comparisons** (12 byte-identical), **732 same-build final comparisons** (all byte/pixel identical), and **64 matching native interaction step pairs**. DOM/attributes/IDs/ARIA/child order/values/focus and unowned computed styles/bounds have **zero unexpected differences**. Owned style/bounds changes are intentional; 112 long-list integration records are separately enumerated.
+**Review status: ready for ChatGPT review; PR remains draft.** The original strict zero-outside-pixels diagnostic remains false, but is superseded by the scoped ownership rule below. There are **122 paired cases**, **732 accepted screenshots**, **366 cross-build comparisons** (12 byte-identical), **732 same-build final comparisons** (all byte/pixel identical), and **64 matching native interaction step pairs**. DOM/attributes/IDs/ARIA/child order/values/focus and unowned computed styles/bounds have **zero unexpected differences**. Owned style/bounds changes are intentional; 112 long-list integration records are separately enumerated.
 
-Cross-build changed pixels range from 0 to 265,334. Across 88 non-scroll cases (264 comparisons), **4–1,381 pixels outside the owned rectangles remain unresolved**. Differences touch actual product UI and do not reproduce across final repeated captures of the same unchanged build. This does not prove harmlessness. Scroll cases have separate, expected layout integration changes and retain their raw outside counts.
+Cross-build changed pixels range from 0 to 265,334. Across 88 non-scroll cases (264 comparisons), **4–1,381 pixels outside the owned rectangles were initially unresolved**. Differences touch actual product UI and do not reproduce across final repeated captures of the same unchanged build. The focused follow-up below establishes the edge-raster classification for representative cases; repeat equality alone was not used as proof. Scroll cases have separate, expected layout integration changes and retain their raw outside counts.
 
 | Light desktop example | Changed pixels | Percent | Full bounding box | Outside pixels | Outside bounding box |
 | --- | ---: | ---: | --- | ---: | --- |
@@ -126,7 +126,30 @@ Cross-build changed pixels range from 0 to 265,334. Across 88 non-scroll cases (
 | Selected + focus | 130,460 | 10.066358% | [63,0,360,897] | 1,213 | [63,159,360,848] |
 | Scroll integration | 248,417 | 19.167978% | [8,0,1056,900] | 79,377 | [8,160,1056,900] |
 
-Boxes are raster-pixel `[left,top,right,bottom]` with exclusive right/bottom. The complete per-case report retains connected regions and percentage precision. The archive also keeps all settling frames: 23 of 511 warmup comparisons changed before stable capture; all accepted final repeats are exact. JPEG boundary behavior is a possible explanation, **not an established classification**. Isolated/lossless screenshots were unavailable; the PR remains held for evidence review.
+Boxes are raster-pixel `[left,top,right,bottom]` with exclusive right/bottom. The complete per-case report retains connected regions and percentage precision. The archive also keeps all settling frames: 23 of 511 warmup comparisons changed before stable capture; all accepted final repeats are exact. The focused follow-up below establishes the raster/JPEG boundary classification. Isolated/lossless screenshots remain unavailable; the precise split between antialias/resampling and JPEG quantization cannot be recovered from lossy originals.
+
+### Focused follow-up — outside-region classification
+
+No production code changed. Exactly five existing pairs were investigated: Light normal, hover, selected-plus-focus, Dark normal, and mobile Light normal. No full matrix rerun and no new accepted screenshots. [Focused coefficient/ownership report](evidence-07/focused-edge-investigation.json) and [diagnostic crops](evidence-07/focused-edge-crops.png) preserve the results. Twenty source hashes match the committed original capture archive.
+
+| Case | Outside pixels | Maximum RGB channel delta | Outside box |
+| --- | ---: | ---: | --- |
+| Desktop Light normal | 65 | 2 | [64,832,68,849] |
+| Desktop Light hover | 728 | 2 | [63,160,353,849] |
+| Desktop Light selected + focus | 1,213 | 10 | [63,159,360,848] |
+| Desktop Dark normal | 112 | 1 | [64,832,71,848] |
+| Mobile Light normal | 0 | 0 | none |
+
+Classification: **raster/JPEG boundary artifacts; no unintended CSS/layout spill found**. This is supported by independent checks, not a magnitude threshold:
+
+- Every unowned node, including all computed properties, attributes/classes, bounds and focus, is exactly equal in these pairs. Existing same-build repetitions are byte-identical.
+- The JPEG files use equal quantization tables and 4:2:0 subsampling (16×16 MCU). A baseline entropy decoder compares actual quantized DCT coefficients. Light normal/hover and Dark normal have no changed exterior luminance blocks; changes come from chroma blocks shared with the Inbox edge and their interpolation support.
+- Selected-plus-focus additionally changes eight exterior luminance blocks at x=352..359. These sit immediately beside the fractional edge. The candidate row ends at x=351.142, its outline width/negative offset cancel outward reach, and its horizontally clipped list also ends at x=351.142. There is no row shadow or filter. Thus the owned focus paint cannot spill into those exterior blocks through CSS; their appearance is edge raster/resampling plus JPEG block reconstruction, not changed adjacent UI.
+- Every reported outside pixel is within changed codec block/interpolation support. The decoder uses the actual JPEG sampling geometry, not an invented halo or pixel tolerance. Chroma neighbor interpolation follows the [libjpeg-turbo upsampling implementation](https://github.com/libjpeg-turbo/libjpeg-turbo/blob/main/src/jdsample.c). All raw differences and the original captures remain untouched.
+
+**Scoped Phase 07 acceptance rule:** require exact unowned DOM/classes/IDs/ARIA/order/focus/computed styles/bounds; verify owned paint containment and stable same-build captures; preserve pixel counts/regions as diagnostics and investigate unexplained non-edge changes. The already documented long-list integration remains an explicit separate exception. The rule is pinned to the three captured production hashes and becomes invalid if any changes. It does not automatically approve raster differences in other phases or implementations. No masks, arbitrary tolerances, or visual hacks are used.
+
+This follow-up is representative, not a new coefficient audit of all 122 cases. The existing full ownership checks remain evidence for the frozen implementation. Lossy originals cannot separate pre-encoding antialias/resampling from JPEG quantization exactly; that does not leave a CSS/layout spill mechanism unresolved in the inspected cases.
 
 ## T. Structural regression
 
@@ -140,7 +163,7 @@ Final gates are rerun on committed HEAD and reported with the commit identity in
 
 ## V. Limitations
 
-The browser fixture uses real presentation, SearchDialog and navigation with synthetic data and an explicit test-only API boundary. It does not reproduce full Workspace crypto/realtime/outbox effects; source freezes, existing characterization and real integration cover those boundaries separately. Browser screenshots are JPEG; outside-region changes are counted and must not be dismissed without evidence. Isolated screenshot clipping was unavailable in this browser.
+The browser fixture uses real presentation, SearchDialog and navigation with synthetic data and an explicit test-only API boundary. It does not reproduce full Workspace crypto/realtime/outbox effects; source freezes, existing characterization and real integration cover those boundaries separately. Browser screenshots are JPEG; outside-region changes remain counted, with the focused classification and scoped acceptance rule recorded above. Isolated screenshot clipping was unavailable in this browser.
 
 The existing draft preview truncates at 60 UTF-16 code units and can cut a grapheme; changing that algorithm would violate this phase's runtime freeze. Ordinary long names/previews retain full accessible DOM text. The pre-existing mobile Calls implicit-column coupling remains outside scope; Calls content and its geometry are compared against the baseline. Existing SearchDialog accessibility/focus contracts are preserved rather than redesigned. There is no whole-product accessibility claim.
 

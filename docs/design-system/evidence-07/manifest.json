@@ -168,6 +168,18 @@
     "normalization": "UTF-8 text, CRLF normalized to LF"
   },
   {
+    "path": "focused-edge-crops.png",
+    "bytes": 27268,
+    "sha256": "4adda48cb6ac6bea97f4a7cd698293b91f5d42b15c436ba8368e99e4d5440bc9",
+    "normalization": "binary, unchanged"
+  },
+  {
+    "path": "focused-edge-investigation.json",
+    "bytes": 40208,
+    "sha256": "9e8a57ae06a53b96c37d136ffe223cf4e3729bef279063b6ba778e9fb5b89807",
+    "normalization": "UTF-8 text, CRLF normalized to LF"
+  },
+  {
     "path": "head-boundary-320-light-1.jpg",
     "bytes": 25970,
     "sha256": "9de9672c9630df1ad7c99c55df887adeb618ef287e47a5c9ffd1d45db35d7792",
@@ -265,8 +277,8 @@
   },
   {
     "path": "summary.json",
-    "bytes": 1161311,
-    "sha256": "00e86bc96b7d781b2e4dcf3b489af9abeca1285e3869d97adc817ccfad7ab268",
+    "bytes": 1161631,
+    "sha256": "22030604917607a13082bd0e14faac60c7d8d097df2a7486be40c363ec12e606",
     "normalization": "UTF-8 text, CRLF normalized to LF"
   }
 ]

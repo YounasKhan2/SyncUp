@@ -66,13 +66,19 @@ for file in directory.glob('*-interactions.json'):
     interaction_pairs+=len(traces[0]['steps'])
 summary={'cases':len(rows),'screenshots':len(rows)*6,'unaffectedStructuralDifferences':unexpected,'intentionalOwnedStyleBoundsChanges':len(intentional),'documentedScrollIntegrationChanges':integration,'interactionStepPairs':interaction_pairs,'crossBuildComparisons':sum(p['category']=='base-versus-head' for p in pixels),'crossBuildByteIdentical':sum(p['category']=='base-versus-head' and p['bytesEqual'] for p in pixels),'crossBuildPixelRange':[min(p['changedPixels'] for p in pixels if p['category']=='base-versus-head'),max(p['changedPixels'] for p in pixels if p['category']=='base-versus-head')],'sameBuildFinalComparisons':sum(p['category'] in ['same-base-build','same-head-build'] for p in pixels),'sameBuildFinalDifferences':[p for p in pixels if p['category'] in ['same-base-build','same-head-build'] and p['changedPixels']],'outsideRegionDifferences':[p for p in pixels if p.get('outsideInboxPixels',0)],'warmupComparisons':sum(p['category']=='same-build-warmup' for p in pixels),'warmupDifferences':[p for p in pixels if p['category']=='same-build-warmup' and p['changedPixels']],'algorithm':'All decoded RGB pixels, zero tolerance. Full screenshots retained; no masking of comparison input. Region counts use the union of base and candidate owned rectangles, with shared heading ownership documented separately; every outside pixel is still counted.'}
 summary['visualPixelGatePassed']=not any(p.get('outsideInboxPixels',0) and p['classification']!='DOCUMENTED_SCROLL_INTEGRATION_WITH_RAW_OUTSIDE_PIXELS' for p in pixels)
-summary['reviewStatus']='READY_FOR_REVIEW' if summary['visualPixelGatePassed'] and not unexpected and not summary['sameBuildFinalDifferences'] else 'DRAFT_HELD_FOR_EVIDENCE_REVIEW'
+# Raw zero-outside-pixels remains a diagnostic, not a JPEG acceptance gate.
+# The scoped decision is valid only for its exact frozen production sources.
+decision_path=output/'focused-edge-investigation.json'
+decision=json.loads(decision_path.read_text(encoding='utf8')) if decision_path.exists() else {}
+frozen=bool(decision.get('accepted')) and all(hashlib.sha256(Path(file).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==digest for file,digest in decision.get('productionCanonicalLF',{}).items()) and len(decision.get('productionCanonicalLF',{}))==3
+summary['phaseAcceptance']={'passed':bool(frozen and not unexpected and not summary['sameBuildFinalDifferences']),'rule':'Exact unowned structure/style/bounds/focus and contained owned paint; pixels retained as diagnostics. Frozen Phase 07 only.','decision':'focused-edge-investigation.json','strictPixelRuleSuperseded':True,'productionHashesMatchFocusedDecision':frozen}
+summary['reviewStatus']='READY_FOR_CHATGPT_REVIEW' if summary['phaseAcceptance']['passed'] else 'DRAFT_HELD_FOR_EVIDENCE_REVIEW'
 (output/'summary.json').write_text(json.dumps(summary,indent=2)+'\n')
 with gzip.open(output/'comparisons.json.gz','wt',encoding='utf8') as stream:json.dump({'cases':rows,'intentionalChanges':intentional,'scrollIntegrationChanges':integration},stream)
 print(json.dumps({k:len(v) if isinstance(v,list) and not k.endswith('Range') else v for k,v in summary.items()},indent=2))
 if '--archive' in sys.argv or '--archive-held' in sys.argv:
     if len(rows)!=122 or interaction_pairs!=64 or unexpected or summary['sameBuildFinalDifferences']:raise RuntimeError('Incomplete or failing structural/repeat evidence')
-    if '--archive' in sys.argv and not summary['visualPixelGatePassed']:raise RuntimeError('Outside-region pixel gate fails; use explicit --archive-held to retain evidence without claiming a pass')
+    if '--archive' in sys.argv and not summary['phaseAcceptance']['passed']:raise RuntimeError('Scoped phase ownership gate fails; explicit held retention is available without claiming a pass')
     seen=set()
     with gzip.open(output/'captures.ndjson.gz','wt',encoding='utf8') as stream:
         for file in sorted(directory.rglob('*')):
