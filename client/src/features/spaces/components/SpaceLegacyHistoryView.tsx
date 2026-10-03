@@ -1,7 +1,7 @@
 import { LockKeyhole } from 'lucide-react'
-import { MessageAttachment } from '../messaging/MessageAttachment'
-import type { DisplayMessage } from '../../shared/types'
-import type { SpaceChannelMember } from './types'
+import { MessageAttachment } from '../../messaging/MessageAttachment'
+import type { DisplayMessage } from '../../../shared/types'
+import type { SpaceChannelMember } from '../types'
 
 // Already decrypted data and display identity only; access and pagination stay
 // with SpacesPage. This component owns no crypto, transport or lifecycle.

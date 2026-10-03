@@ -1,0 +1,32 @@
+[
+  {
+    "command": "typecheck",
+    "exit": 0,
+    "log": ".git/spaces-visual-correction/final-typecheck.log"
+  },
+  {
+    "command": "test",
+    "exit": 0,
+    "log": ".git/spaces-visual-correction/final-test.log"
+  },
+  {
+    "command": "check:architecture",
+    "exit": 0,
+    "log": ".git/spaces-visual-correction/final-check-architecture.log"
+  },
+  {
+    "command": "build",
+    "exit": 0,
+    "log": ".git/spaces-visual-correction/final-build.log"
+  },
+  {
+    "command": "test:media-v2",
+    "exit": 0,
+    "log": ".git/spaces-visual-correction/final-test-media-v2.log"
+  },
+  {
+    "command": "test:integration",
+    "exit": 0,
+    "log": ".git/spaces-visual-correction/final-test-integration.log"
+  }
+]

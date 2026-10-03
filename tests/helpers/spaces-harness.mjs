@@ -46,7 +46,7 @@ export function spacesPage({ seed = {}, props = {}, api, decrypt, target = null,
     'lucide-react': new Proxy({}, { get: (_, name) => props => jsx.jsx(`icon:${String(name)}`, props) }),
     '../../shared/api': { api: transport, async apiUpload(...args) { trace.push(['upload', ...args]) } },
     '../auth/crypto/crypto': { async decryptMessage(input) { trace.push(['decrypt', input]); return decrypt ? decrypt(input) : 'clear text' } },
-    '../messaging/MessageAttachment': child('MessageAttachment'), './SharedObjectCard': child('SharedObjectCard'),
+    '../messaging/MessageAttachment': child('MessageAttachment'), '../../messaging/MessageAttachment': child('MessageAttachment'), './SharedObjectCard': child('SharedObjectCard'),
   }
   function transformed(path, text = source(path)) {
     const tree = ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX), edits = []
@@ -63,9 +63,9 @@ export function spacesPage({ seed = {}, props = {}, api, decrypt, target = null,
     visit(tree)
     return edits.sort((a, b) => b[0] - a[0]).reduce((text, [start, end, value]) => text.slice(0, start) + value + text.slice(end), text)
   }
-  for (const name of ['SpaceVoiceChannelView', 'SpaceLegacyHistoryView']) {
-    const path = `client/src/features/spaces/${name}.tsx`
-    try { mocks[`./${name}`] = load(path, mocks) } catch (error) { if (error.code !== 'ENOENT') throw error }
+  for (const name of ['SpaceVoiceChannelView', 'SpaceLegacyHistoryView', 'SpaceChannelHeader']) {
+    const path = `client/src/features/spaces/components/${name}.tsx`
+    try { mocks[`./components/${name}`] = load(path, mocks) } catch (error) { if (error.code !== 'ENOENT') throw error }
   }
   const path = 'client/src/features/spaces/SpacesPage.tsx'
   const module = load(path, mocks, globals, transformed(path, pageSource))

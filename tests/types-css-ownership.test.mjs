@@ -7,7 +7,8 @@ import ts from 'typescript'
 import postcss from 'postcss'
 
 const root = new URL('../', import.meta.url)
-const read = file => fs.readFileSync(new URL(file, root), 'utf8').replace(/\r\n/gu, '\n')
+const currentFile = file => file.replace('/spaces/SpaceLegacyHistoryView.tsx', '/spaces/components/SpaceLegacyHistoryView.tsx')
+const read = file => fs.readFileSync(new URL(currentFile(file), root), 'utf8').replace(/\r\n/gu, '\n')
 const exists = file => fs.existsSync(new URL(file, root))
 const digest = text => createHash('sha256').update(text).digest('hex')
 const baseline = JSON.parse(read('tests/fixtures/ownership-baseline.json'))
@@ -43,7 +44,7 @@ test('Ownership: every selected baseline consumer imports the contract directly 
       const imports = parse(file).statements.filter(ts.isImportDeclaration)
       const matching = imports.filter(n => n.importClause?.namedBindings?.elements?.some(s => (s.propertyName ?? s.name).text === name))
       assert.equal(matching.length, 1, `${file}: ${name}`)
-      const target = path.posix.normalize(path.posix.join(path.posix.dirname(file), matching[0].moduleSpecifier.text))
+      const target = path.posix.normalize(path.posix.join(path.posix.dirname(currentFile(file)), matching[0].moduleSpecifier.text))
       assert.equal(target, (migrated ? owner : 'client/src/shared/types.ts').replace(/\.ts$/u, ''))
       assert.equal(matching[0].importClause.isTypeOnly, true)
     }
@@ -55,8 +56,21 @@ test('Ownership: selected consumer emitted JavaScript remains identical after ty
   for (const [file, hash] of Object.entries(baseline.emittedConsumers)) {
     // Phase 02 relocates Workspace presentation imports in the Spaces fixture.
     // Canonicalize only those approved paths; preserve the frozen Phase 10 hash.
-    const input = ['WorkspaceRail', 'MobileNavigation'].reduce((text, name) =>
+    let input = ['WorkspaceRail', 'MobileNavigation'].reduce((text, name) =>
       text.replaceAll(`/features/workspace/components/${name}`, `/features/workspace/${name}`), read(file))
+    // Phase 04 reconstructs only the frozen approved header and relocation imports.
+    // The original Phase 10 emitted-JavaScript digests remain unchanged.
+    if (file.endsWith('/SpacesPage.tsx')) {
+      const header = JSON.parse(read('tests/fixtures/spaces-presentation-baseline.json')).header
+      assert.ok(input.includes(header.replacement))
+      input = input.replace(header.replacement, header.original)
+        .replace("import { SpaceChannelHeader } from './components/SpaceChannelHeader'\n", '')
+        .replace('Megaphone, Plus', 'Megaphone, Mic, Plus')
+        .replaceAll("'./components/SpaceVoiceChannelView'", "'./SpaceVoiceChannelView'")
+        .replaceAll("'./components/SpaceLegacyHistoryView'", "'./SpaceLegacyHistoryView'")
+    }
+    if (file.endsWith('/SpaceLegacyHistoryView.tsx')) input = input.replaceAll("'../../messaging/", "'../messaging/").replaceAll("'../../../shared/", "'../../shared/")
+    if (file.endsWith('/spaces-preview.tsx')) for (const name of ['SpaceVoiceChannelView', 'SpaceLegacyHistoryView']) input = input.replaceAll('/spaces/components/' + name, '/spaces/' + name)
     const js = ts.transpileModule(input, { fileName: file, compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022, jsx: ts.JsxEmit.ReactJSX } }).outputText
     assert.equal(digest(js), hash, file)
   }

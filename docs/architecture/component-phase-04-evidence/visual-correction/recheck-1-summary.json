@@ -1,0 +1,13 @@
+{
+  "cases": 2,
+  "screenshots": 12,
+  "exactDOMStyleBoundsFocusPairs": 2,
+  "decodedComparisons": 18,
+  "byteIdenticalComparisons": 18,
+  "decodedPixelIdenticalComparisons": 18,
+  "crossBuildPixelDifferences": [],
+  "sameBuildPixelDifferences": [],
+  "warmupComparisons": 12,
+  "warmupPixelDifferences": [],
+  "algorithm": "RGB decoded pixels; any unequal channel counts one changed pixel; zero tolerance; all pixels included"
+}

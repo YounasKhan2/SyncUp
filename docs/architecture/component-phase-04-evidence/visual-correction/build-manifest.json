@@ -1,0 +1,25 @@
+{
+  "base": "c8ae377c756038992dd0f02fe303e66f83a6c698",
+  "head": "5ec4e3532df83b68be3f695f961f115598b3761a",
+  "frozenBaselineSHA256": "70d624ef81bc4e54c694a7b0184e19d455a659cb658ffe8f42c40a86179d234f",
+  "builds": [
+    {
+      "side": "base",
+      "revision": "c8ae377c756038992dd0f02fe303e66f83a6c698",
+      "gitArchiveSHA256": "03be5db8b57b6baaf84834e838ab795fdf6f7aa45499d44c4e6087077a211579",
+      "fixtureSHA256": "fc5dec8e8a6a5c1b2239a7e7ed229b0c3e7e9ac5e6120a30a329f9f581faacae",
+      "adaptedFixtureSHA256": "69fee9447c817d90b63157ea07bb42483ca4656df8ea6b69336b87f4fa734cb0",
+      "bootstrapSHA256": "b228cac880dfb5ff451e70cc83b309ab8fcd227cefaabf471743005f7682e8a1",
+      "htmlSHA256": "7bdbc669bf4ffee0654ba2f6f3e90d8a83353a7d9a150bf9ae153e0c625f0960"
+    },
+    {
+      "side": "head",
+      "revision": "5ec4e3532df83b68be3f695f961f115598b3761a",
+      "gitArchiveSHA256": "138f343d6b5d935cf3b26ab1366e204c2cbe10a88aba29fd098fec2583002faa",
+      "fixtureSHA256": "9c504f5095de7d984ddb4127d1c5ca679dc6b7dafeda10a66500a18e0102cb7c",
+      "adaptedFixtureSHA256": "7f599134c68a2b5c1f284de2fbdd11ab160a534dc49bdb45b958a47aa79c431b",
+      "bootstrapSHA256": "b228cac880dfb5ff451e70cc83b309ab8fcd227cefaabf471743005f7682e8a1",
+      "htmlSHA256": "7bdbc669bf4ffee0654ba2f6f3e90d8a83353a7d9a150bf9ae153e0c625f0960"
+    }
+  ]
+}

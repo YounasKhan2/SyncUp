@@ -1,0 +1,181 @@
+{
+  "cases": 74,
+  "screenshots": 444,
+  "exactDOMStyleBoundsFocusPairs": 74,
+  "decodedComparisons": 666,
+  "byteIdenticalComparisons": 662,
+  "decodedPixelIdenticalComparisons": 662,
+  "crossBuildPixelDifferences": [
+    {
+      "category": "base-versus-head",
+      "left": "base-mobile-light-light-home-1.jpg",
+      "right": "head-mobile-light-light-home-1.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "d49d77ea0ba28aae87cbfd2ed90d7a942c5b222b4bc83107843649c4ab3c9c0e",
+      "rightSHA256": "2b2b47253083297b20781aee03a1b39de1be84f8bb0c6497f788d5ac369e0ac6",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 18623,
+      "changedPercent": 5.6577348401992955,
+      "bbox": [
+        72,
+        479,
+        320,
+        560
+      ],
+      "connected32pxTileRegions": [
+        [
+          64,
+          448,
+          320,
+          576
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-space",
+          "changedPixels": 18623,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 37
+    },
+    {
+      "category": "base-versus-head",
+      "left": "base-mobile-light-light-home-2.jpg",
+      "right": "head-mobile-light-light-home-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "d49d77ea0ba28aae87cbfd2ed90d7a942c5b222b4bc83107843649c4ab3c9c0e",
+      "rightSHA256": "2b2b47253083297b20781aee03a1b39de1be84f8bb0c6497f788d5ac369e0ac6",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 18623,
+      "changedPercent": 5.6577348401992955,
+      "bbox": [
+        72,
+        479,
+        320,
+        560
+      ],
+      "connected32pxTileRegions": [
+        [
+          64,
+          448,
+          320,
+          576
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-space",
+          "changedPixels": 18623,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 37
+    }
+  ],
+  "sameBuildPixelDifferences": [
+    {
+      "category": "same-base-build",
+      "left": "base-mobile-light-light-home-1.jpg",
+      "right": "base-mobile-light-light-home-3.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "d49d77ea0ba28aae87cbfd2ed90d7a942c5b222b4bc83107843649c4ab3c9c0e",
+      "rightSHA256": "2b2b47253083297b20781aee03a1b39de1be84f8bb0c6497f788d5ac369e0ac6",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 18623,
+      "changedPercent": 5.6577348401992955,
+      "bbox": [
+        72,
+        479,
+        320,
+        560
+      ],
+      "connected32pxTileRegions": [
+        [
+          64,
+          448,
+          320,
+          576
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-space",
+          "changedPixels": 18623,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 37
+    },
+    {
+      "category": "same-base-build",
+      "left": "base-mobile-light-light-home-2.jpg",
+      "right": "base-mobile-light-light-home-3.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "d49d77ea0ba28aae87cbfd2ed90d7a942c5b222b4bc83107843649c4ab3c9c0e",
+      "rightSHA256": "2b2b47253083297b20781aee03a1b39de1be84f8bb0c6497f788d5ac369e0ac6",
+      "raster": [
+        390,
+        844
+      ],
+      "changedPixels": 18623,
+      "changedPercent": 5.6577348401992955,
+      "bbox": [
+        72,
+        479,
+        320,
+        560
+      ],
+      "connected32pxTileRegions": [
+        [
+          64,
+          448,
+          320,
+          576
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-space",
+          "changedPixels": 18623,
+          "bounds": [
+            0,
+            0,
+            389.91595458984375,
+            843.6974487304688
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 37
+    }
+  ],
+  "algorithm": "RGB decoded pixels; any unequal channel counts one changed pixel; zero tolerance; all pixels included"
+}

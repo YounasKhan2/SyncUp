@@ -1,0 +1,524 @@
+{
+  "cases": 74,
+  "screenshots": 444,
+  "exactDOMStyleBoundsFocusPairs": 74,
+  "decodedComparisons": 666,
+  "byteIdenticalComparisons": 660,
+  "decodedPixelIdenticalComparisons": 660,
+  "crossBuildPixelDifferences": [
+    {
+      "category": "base-versus-head",
+      "left": "base-desktop-system-dark-announcement-1.jpg",
+      "right": "head-desktop-system-dark-announcement-1.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "dd7f407f12ffbff3106f50ef1064a02581750cbc3d9e0a17519efdc59457c441",
+      "rightSHA256": "cf693ff4e035173f1ad000f761e95e72574dbe62cf36c5245947c4ed5d399128",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 105695,
+      "changedPercent": 8.155478395061728,
+      "bbox": [
+        0,
+        0,
+        1440,
+        900
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          1440,
+          900
+        ],
+        [
+          0,
+          832,
+          64,
+          896
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-space",
+          "changedPixels": 105695,
+          "bounds": [
+            0,
+            0,
+            1440.3360595703125,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "space-sidebar",
+          "changedPixels": 25456,
+          "bounds": [
+            71.99317169189453,
+            0,
+            264.9947204589844,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "space-channel-header",
+          "changedPixels": 20834,
+          "bounds": [
+            336.9879150390625,
+            0,
+            1103.34814453125,
+            54.98949432373047
+          ]
+        },
+        {
+          "label": "space-message-list",
+          "changedPixels": 16958,
+          "bounds": [
+            336.9879150390625,
+            54.98949432373047,
+            1103.34814453125,
+            725.6696166992188
+          ]
+        },
+        {
+          "label": "space-message-composer",
+          "changedPixels": 35599,
+          "bounds": [
+            352.9805603027344,
+            780.6591186523438,
+            1071.3629150390625,
+            104.34610748291016
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 204
+    },
+    {
+      "category": "base-versus-head",
+      "left": "base-desktop-system-dark-announcement-2.jpg",
+      "right": "head-desktop-system-dark-announcement-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "dd7f407f12ffbff3106f50ef1064a02581750cbc3d9e0a17519efdc59457c441",
+      "rightSHA256": "cf693ff4e035173f1ad000f761e95e72574dbe62cf36c5245947c4ed5d399128",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 105695,
+      "changedPercent": 8.155478395061728,
+      "bbox": [
+        0,
+        0,
+        1440,
+        900
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          1440,
+          900
+        ],
+        [
+          0,
+          832,
+          64,
+          896
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-space",
+          "changedPixels": 105695,
+          "bounds": [
+            0,
+            0,
+            1440.3360595703125,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "space-sidebar",
+          "changedPixels": 25456,
+          "bounds": [
+            71.99317169189453,
+            0,
+            264.9947204589844,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "space-channel-header",
+          "changedPixels": 20834,
+          "bounds": [
+            336.9879150390625,
+            0,
+            1103.34814453125,
+            54.98949432373047
+          ]
+        },
+        {
+          "label": "space-message-list",
+          "changedPixels": 16958,
+          "bounds": [
+            336.9879150390625,
+            54.98949432373047,
+            1103.34814453125,
+            725.6696166992188
+          ]
+        },
+        {
+          "label": "space-message-composer",
+          "changedPixels": 35599,
+          "bounds": [
+            352.9805603027344,
+            780.6591186523438,
+            1071.3629150390625,
+            104.34610748291016
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 204
+    },
+    {
+      "category": "base-versus-head",
+      "left": "base-desktop-system-dark-announcement-3.jpg",
+      "right": "head-desktop-system-dark-announcement-3.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "dd7f407f12ffbff3106f50ef1064a02581750cbc3d9e0a17519efdc59457c441",
+      "rightSHA256": "cf693ff4e035173f1ad000f761e95e72574dbe62cf36c5245947c4ed5d399128",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 105695,
+      "changedPercent": 8.155478395061728,
+      "bbox": [
+        0,
+        0,
+        1440,
+        900
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          1440,
+          900
+        ],
+        [
+          0,
+          832,
+          64,
+          896
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-space",
+          "changedPixels": 105695,
+          "bounds": [
+            0,
+            0,
+            1440.3360595703125,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "space-sidebar",
+          "changedPixels": 25456,
+          "bounds": [
+            71.99317169189453,
+            0,
+            264.9947204589844,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "space-channel-header",
+          "changedPixels": 20834,
+          "bounds": [
+            336.9879150390625,
+            0,
+            1103.34814453125,
+            54.98949432373047
+          ]
+        },
+        {
+          "label": "space-message-list",
+          "changedPixels": 16958,
+          "bounds": [
+            336.9879150390625,
+            54.98949432373047,
+            1103.34814453125,
+            725.6696166992188
+          ]
+        },
+        {
+          "label": "space-message-composer",
+          "changedPixels": 35599,
+          "bounds": [
+            352.9805603027344,
+            780.6591186523438,
+            1071.3629150390625,
+            104.34610748291016
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 204
+    },
+    {
+      "category": "base-versus-head",
+      "left": "base-desktop-system-dark-private-1.jpg",
+      "right": "head-desktop-system-dark-private-1.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "44097cc64eaab5c845da4c45b00248988bb66c326c08b00c3a14450d9f5c2635",
+      "rightSHA256": "2810c281c013b0096d9ed31c46d92111884f84f87ca0c66f3e61cdef107a6c6e",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 124159,
+      "changedPercent": 9.58016975308642,
+      "bbox": [
+        0,
+        0,
+        1440,
+        900
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          1440,
+          900
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-space",
+          "changedPixels": 124159,
+          "bounds": [
+            0,
+            0,
+            1440.3360595703125,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "space-sidebar",
+          "changedPixels": 26517,
+          "bounds": [
+            71.99317169189453,
+            0,
+            264.9947204589844,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "space-channel-header",
+          "changedPixels": 20853,
+          "bounds": [
+            336.9879150390625,
+            0,
+            1103.34814453125,
+            54.98949432373047
+          ]
+        },
+        {
+          "label": "space-message-list",
+          "changedPixels": 24793,
+          "bounds": [
+            336.9879150390625,
+            54.98949432373047,
+            1103.34814453125,
+            725.6696166992188
+          ]
+        },
+        {
+          "label": "space-message-composer",
+          "changedPixels": 36260,
+          "bounds": [
+            352.9805603027344,
+            780.6591186523438,
+            1071.3629150390625,
+            104.34610748291016
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 162
+    },
+    {
+      "category": "base-versus-head",
+      "left": "base-desktop-system-dark-private-2.jpg",
+      "right": "head-desktop-system-dark-private-2.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "44097cc64eaab5c845da4c45b00248988bb66c326c08b00c3a14450d9f5c2635",
+      "rightSHA256": "2810c281c013b0096d9ed31c46d92111884f84f87ca0c66f3e61cdef107a6c6e",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 124159,
+      "changedPercent": 9.58016975308642,
+      "bbox": [
+        0,
+        0,
+        1440,
+        900
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          1440,
+          900
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-space",
+          "changedPixels": 124159,
+          "bounds": [
+            0,
+            0,
+            1440.3360595703125,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "space-sidebar",
+          "changedPixels": 26517,
+          "bounds": [
+            71.99317169189453,
+            0,
+            264.9947204589844,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "space-channel-header",
+          "changedPixels": 20853,
+          "bounds": [
+            336.9879150390625,
+            0,
+            1103.34814453125,
+            54.98949432373047
+          ]
+        },
+        {
+          "label": "space-message-list",
+          "changedPixels": 24793,
+          "bounds": [
+            336.9879150390625,
+            54.98949432373047,
+            1103.34814453125,
+            725.6696166992188
+          ]
+        },
+        {
+          "label": "space-message-composer",
+          "changedPixels": 36260,
+          "bounds": [
+            352.9805603027344,
+            780.6591186523438,
+            1071.3629150390625,
+            104.34610748291016
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 162
+    },
+    {
+      "category": "base-versus-head",
+      "left": "base-desktop-system-dark-private-3.jpg",
+      "right": "head-desktop-system-dark-private-3.jpg",
+      "bytesEqual": false,
+      "leftSHA256": "44097cc64eaab5c845da4c45b00248988bb66c326c08b00c3a14450d9f5c2635",
+      "rightSHA256": "2810c281c013b0096d9ed31c46d92111884f84f87ca0c66f3e61cdef107a6c6e",
+      "raster": [
+        1440,
+        900
+      ],
+      "changedPixels": 124159,
+      "changedPercent": 9.58016975308642,
+      "bbox": [
+        0,
+        0,
+        1440,
+        900
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          0,
+          1440,
+          900
+        ]
+      ],
+      "productRegionsTouched": [
+        {
+          "label": "workspace has-active-space",
+          "changedPixels": 124159,
+          "bounds": [
+            0,
+            0,
+            1440.3360595703125,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "space-sidebar",
+          "changedPixels": 26517,
+          "bounds": [
+            71.99317169189453,
+            0,
+            264.9947204589844,
+            899.9999389648438
+          ]
+        },
+        {
+          "label": "space-channel-header",
+          "changedPixels": 20853,
+          "bounds": [
+            336.9879150390625,
+            0,
+            1103.34814453125,
+            54.98949432373047
+          ]
+        },
+        {
+          "label": "space-message-list",
+          "changedPixels": 24793,
+          "bounds": [
+            336.9879150390625,
+            54.98949432373047,
+            1103.34814453125,
+            725.6696166992188
+          ]
+        },
+        {
+          "label": "space-message-composer",
+          "changedPixels": 36260,
+          "bounds": [
+            352.9805603027344,
+            780.6591186523438,
+            1071.3629150390625,
+            104.34610748291016
+          ]
+        }
+      ],
+      "touchesProductUI": true,
+      "maxChannelDifference": 162
+    }
+  ],
+  "sameBuildPixelDifferences": [],
+  "warmupComparisons": 444,
+  "warmupPixelDifferences": [],
+  "algorithm": "RGB decoded pixels; any unequal channel counts one changed pixel; zero tolerance; all pixels included"
+}
