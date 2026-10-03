@@ -1,0 +1,12 @@
+{
+  "base": "0c74acf8f54a7dc1a8a235eae43dea9893d264fd",
+  "cases": 64,
+  "finalScreenshots": 192,
+  "comparisons": 384,
+  "byteEqual": 384,
+  "pixelEqual": 384,
+  "differences": [],
+  "uniqueRasters": 36,
+  "indexedArtifacts": 512,
+  "limitations": "Isolated presentation fixtures. No authenticated runtime or CallsWindow/LiveKit media session. No production edits, so these are preserved pre-migration captures, not a migration before/after claim."
+}

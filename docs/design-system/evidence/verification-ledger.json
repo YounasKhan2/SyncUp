@@ -1,0 +1,86 @@
+[
+  {
+    "stage": "baseline",
+    "command": "typecheck",
+    "exit": 0,
+    "log": ".git/design01/baseline-typecheck.log",
+    "durationMs": null
+  },
+  {
+    "stage": "baseline",
+    "command": "test",
+    "exit": 0,
+    "log": ".git/design01/baseline-test.log",
+    "durationMs": 40616.4396
+  },
+  {
+    "stage": "baseline",
+    "command": "check:architecture",
+    "exit": 0,
+    "log": ".git/design01/baseline-check-architecture.log",
+    "durationMs": null
+  },
+  {
+    "stage": "baseline",
+    "command": "build",
+    "exit": 0,
+    "log": ".git/design01/baseline-build.log",
+    "durationMs": null
+  },
+  {
+    "stage": "baseline",
+    "command": "test:media-v2",
+    "exit": 0,
+    "log": ".git/design01/baseline-test-media-v2.log",
+    "durationMs": 251.3207
+  },
+  {
+    "stage": "baseline",
+    "command": "test:integration",
+    "exit": 0,
+    "log": ".git/design01/baseline-test-integration.log",
+    "durationMs": 24106.8389
+  },
+  {
+    "stage": "final",
+    "command": "typecheck",
+    "exit": 0,
+    "log": ".git/design01/final-typecheck.log",
+    "durationMs": null
+  },
+  {
+    "stage": "final",
+    "command": "test",
+    "exit": 0,
+    "log": ".git/design01/final-test.log",
+    "durationMs": 41203.6562
+  },
+  {
+    "stage": "final",
+    "command": "check:architecture",
+    "exit": 0,
+    "log": ".git/design01/final-check-architecture.log",
+    "durationMs": null
+  },
+  {
+    "stage": "final",
+    "command": "build",
+    "exit": 0,
+    "log": ".git/design01/final-build.log",
+    "durationMs": null
+  },
+  {
+    "stage": "final",
+    "command": "test:media-v2",
+    "exit": 0,
+    "log": ".git/design01/final-test-media-v2.log",
+    "durationMs": 212.2041
+  },
+  {
+    "stage": "final",
+    "command": "test:integration",
+    "exit": 0,
+    "log": ".git/design01/final-test-integration.log",
+    "durationMs": 31759.6095
+  }
+]
