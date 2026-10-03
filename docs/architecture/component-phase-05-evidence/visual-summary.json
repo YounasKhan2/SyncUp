@@ -1,0 +1,1537 @@
+{
+  "cases": 40,
+  "screenshots": 240,
+  "exactDOMStyleBoundsFocusPairs": 40,
+  "decodedComparisons": 360,
+  "byteIdenticalComparisons": 168,
+  "decodedPixelIdenticalComparisons": 168,
+  "crossBuildPixelDifferences": 57,
+  "sameBuildPixelDifferences": 135,
+  "warmupComparisons": 289,
+  "warmupPixelDifferences": 52,
+  "algorithm": "RGB decoded pixels; any unequal channel counts one changed pixel; zero tolerance; all pixels included",
+  "exactSameBuildHashPairReproductions": 57,
+  "crossBuildDifferenceDetails": [
+    {
+      "left": "base-desktop-dark-light-category-busy-error-3.jpg",
+      "right": "head-desktop-dark-light-category-busy-error-3.jpg",
+      "changedPixels": 228,
+      "changedPercent": 0.017592592592592594,
+      "bbox": [
+        576,
+        448,
+        584,
+        480
+      ],
+      "connected32pxTileRegions": [
+        [
+          576,
+          448,
+          608,
+          480
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-desktop-dark-light-channel-busy-error-2.jpg",
+      "right": "head-desktop-dark-light-channel-busy-error-2.jpg",
+      "changedPixels": 391,
+      "changedPercent": 0.030169753086419754,
+      "bbox": [
+        632,
+        400,
+        648,
+        432
+      ],
+      "connected32pxTileRegions": [
+        [
+          608,
+          384,
+          672,
+          448
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "space-message-composer",
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-desktop-dark-light-channel-voice-2.jpg",
+      "right": "head-desktop-dark-light-channel-voice-2.jpg",
+      "changedPixels": 487,
+      "changedPercent": 0.03757716049382716,
+      "bbox": [
+        624,
+        431,
+        648,
+        456
+      ],
+      "connected32pxTileRegions": [
+        [
+          608,
+          416,
+          672,
+          480
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "space-message-composer",
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-desktop-dark-light-channel-1.jpg",
+      "right": "head-desktop-dark-light-channel-1.jpg",
+      "changedPixels": 487,
+      "changedPercent": 0.03757716049382716,
+      "bbox": [
+        624,
+        431,
+        648,
+        456
+      ],
+      "connected32pxTileRegions": [
+        [
+          608,
+          416,
+          672,
+          480
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "space-message-composer",
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-desktop-dark-light-channel-2.jpg",
+      "right": "head-desktop-dark-light-channel-2.jpg",
+      "changedPixels": 487,
+      "changedPercent": 0.03757716049382716,
+      "bbox": [
+        624,
+        431,
+        648,
+        456
+      ],
+      "connected32pxTileRegions": [
+        [
+          608,
+          416,
+          672,
+          480
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "space-message-composer",
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-desktop-dark-light-channel-3.jpg",
+      "right": "head-desktop-dark-light-channel-3.jpg",
+      "changedPixels": 487,
+      "changedPercent": 0.03757716049382716,
+      "bbox": [
+        624,
+        431,
+        648,
+        456
+      ],
+      "connected32pxTileRegions": [
+        [
+          608,
+          416,
+          672,
+          480
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "space-message-composer",
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-desktop-light-light-category-busy-error-3.jpg",
+      "right": "head-desktop-light-light-category-busy-error-3.jpg",
+      "changedPixels": 226,
+      "changedPercent": 0.01743827160493827,
+      "bbox": [
+        576,
+        448,
+        584,
+        480
+      ],
+      "connected32pxTileRegions": [
+        [
+          576,
+          448,
+          608,
+          480
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-desktop-light-light-category-2.jpg",
+      "right": "head-desktop-light-light-category-2.jpg",
+      "changedPixels": 177,
+      "changedPercent": 0.013657407407407408,
+      "bbox": [
+        576,
+        480,
+        584,
+        504
+      ],
+      "connected32pxTileRegions": [
+        [
+          576,
+          480,
+          608,
+          512
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-desktop-light-light-channel-busy-error-2.jpg",
+      "right": "head-desktop-light-light-channel-busy-error-2.jpg",
+      "changedPixels": 396,
+      "changedPercent": 0.030555555555555555,
+      "bbox": [
+        632,
+        400,
+        648,
+        432
+      ],
+      "connected32pxTileRegions": [
+        [
+          608,
+          384,
+          672,
+          448
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "space-message-composer",
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-desktop-light-light-channel-busy-error-3.jpg",
+      "right": "head-desktop-light-light-channel-busy-error-3.jpg",
+      "changedPixels": 396,
+      "changedPercent": 0.030555555555555555,
+      "bbox": [
+        632,
+        400,
+        648,
+        432
+      ],
+      "connected32pxTileRegions": [
+        [
+          608,
+          384,
+          672,
+          448
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "space-message-composer",
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-desktop-light-light-channel-voice-1.jpg",
+      "right": "head-desktop-light-light-channel-voice-1.jpg",
+      "changedPixels": 338,
+      "changedPercent": 0.026080246913580248,
+      "bbox": [
+        632,
+        432,
+        648,
+        456
+      ],
+      "connected32pxTileRegions": [
+        [
+          608,
+          416,
+          672,
+          480
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "space-message-composer",
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-desktop-system-dark-category-busy-error-3.jpg",
+      "right": "head-desktop-system-dark-category-busy-error-3.jpg",
+      "changedPixels": 228,
+      "changedPercent": 0.017592592592592594,
+      "bbox": [
+        576,
+        448,
+        584,
+        480
+      ],
+      "connected32pxTileRegions": [
+        [
+          576,
+          448,
+          608,
+          480
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-desktop-system-dark-category-1.jpg",
+      "right": "head-desktop-system-dark-category-1.jpg",
+      "changedPixels": 185,
+      "changedPercent": 0.01427469135802469,
+      "bbox": [
+        576,
+        480,
+        584,
+        504
+      ],
+      "connected32pxTileRegions": [
+        [
+          576,
+          480,
+          608,
+          512
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-desktop-system-dark-category-2.jpg",
+      "right": "head-desktop-system-dark-category-2.jpg",
+      "changedPixels": 185,
+      "changedPercent": 0.01427469135802469,
+      "bbox": [
+        576,
+        480,
+        584,
+        504
+      ],
+      "connected32pxTileRegions": [
+        [
+          576,
+          480,
+          608,
+          512
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-desktop-system-dark-category-3.jpg",
+      "right": "head-desktop-system-dark-category-3.jpg",
+      "changedPixels": 185,
+      "changedPercent": 0.01427469135802469,
+      "bbox": [
+        576,
+        480,
+        584,
+        504
+      ],
+      "connected32pxTileRegions": [
+        [
+          576,
+          480,
+          608,
+          512
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-desktop-system-dark-channel-busy-error-1.jpg",
+      "right": "head-desktop-system-dark-channel-busy-error-1.jpg",
+      "changedPixels": 391,
+      "changedPercent": 0.030169753086419754,
+      "bbox": [
+        632,
+        400,
+        648,
+        432
+      ],
+      "connected32pxTileRegions": [
+        [
+          608,
+          384,
+          672,
+          448
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "space-message-composer",
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-desktop-system-dark-channel-busy-error-2.jpg",
+      "right": "head-desktop-system-dark-channel-busy-error-2.jpg",
+      "changedPixels": 391,
+      "changedPercent": 0.030169753086419754,
+      "bbox": [
+        632,
+        400,
+        648,
+        432
+      ],
+      "connected32pxTileRegions": [
+        [
+          608,
+          384,
+          672,
+          448
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "space-message-composer",
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-desktop-system-dark-channel-busy-error-3.jpg",
+      "right": "head-desktop-system-dark-channel-busy-error-3.jpg",
+      "changedPixels": 391,
+      "changedPercent": 0.030169753086419754,
+      "bbox": [
+        632,
+        400,
+        648,
+        432
+      ],
+      "connected32pxTileRegions": [
+        [
+          608,
+          384,
+          672,
+          448
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "space-message-composer",
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-desktop-system-dark-channel-voice-2.jpg",
+      "right": "head-desktop-system-dark-channel-voice-2.jpg",
+      "changedPixels": 487,
+      "changedPercent": 0.03757716049382716,
+      "bbox": [
+        624,
+        431,
+        648,
+        456
+      ],
+      "connected32pxTileRegions": [
+        [
+          608,
+          416,
+          672,
+          480
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "space-message-composer",
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-desktop-system-dark-channel-2.jpg",
+      "right": "head-desktop-system-dark-channel-2.jpg",
+      "changedPixels": 487,
+      "changedPercent": 0.03757716049382716,
+      "bbox": [
+        624,
+        431,
+        648,
+        456
+      ],
+      "connected32pxTileRegions": [
+        [
+          608,
+          416,
+          672,
+          480
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "space-message-composer",
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-desktop-system-light-category-busy-error-1.jpg",
+      "right": "head-desktop-system-light-category-busy-error-1.jpg",
+      "changedPixels": 226,
+      "changedPercent": 0.01743827160493827,
+      "bbox": [
+        576,
+        448,
+        584,
+        480
+      ],
+      "connected32pxTileRegions": [
+        [
+          576,
+          448,
+          608,
+          480
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-desktop-system-light-category-busy-error-3.jpg",
+      "right": "head-desktop-system-light-category-busy-error-3.jpg",
+      "changedPixels": 226,
+      "changedPercent": 0.01743827160493827,
+      "bbox": [
+        576,
+        448,
+        584,
+        480
+      ],
+      "connected32pxTileRegions": [
+        [
+          576,
+          448,
+          608,
+          480
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-desktop-system-light-category-2.jpg",
+      "right": "head-desktop-system-light-category-2.jpg",
+      "changedPixels": 177,
+      "changedPercent": 0.013657407407407408,
+      "bbox": [
+        576,
+        480,
+        584,
+        504
+      ],
+      "connected32pxTileRegions": [
+        [
+          576,
+          480,
+          608,
+          512
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-desktop-system-light-category-3.jpg",
+      "right": "head-desktop-system-light-category-3.jpg",
+      "changedPixels": 177,
+      "changedPercent": 0.013657407407407408,
+      "bbox": [
+        576,
+        480,
+        584,
+        504
+      ],
+      "connected32pxTileRegions": [
+        [
+          576,
+          480,
+          608,
+          512
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-desktop-system-light-channel-busy-error-2.jpg",
+      "right": "head-desktop-system-light-channel-busy-error-2.jpg",
+      "changedPixels": 396,
+      "changedPercent": 0.030555555555555555,
+      "bbox": [
+        632,
+        400,
+        648,
+        432
+      ],
+      "connected32pxTileRegions": [
+        [
+          608,
+          384,
+          672,
+          448
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "space-message-composer",
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-desktop-system-light-channel-busy-error-3.jpg",
+      "right": "head-desktop-system-light-channel-busy-error-3.jpg",
+      "changedPixels": 396,
+      "changedPercent": 0.030555555555555555,
+      "bbox": [
+        632,
+        400,
+        648,
+        432
+      ],
+      "connected32pxTileRegions": [
+        [
+          608,
+          384,
+          672,
+          448
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "space-message-composer",
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-desktop-system-light-channel-voice-2.jpg",
+      "right": "head-desktop-system-light-channel-voice-2.jpg",
+      "changedPixels": 338,
+      "changedPercent": 0.026080246913580248,
+      "bbox": [
+        632,
+        432,
+        648,
+        456
+      ],
+      "connected32pxTileRegions": [
+        [
+          608,
+          416,
+          672,
+          480
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "space-message-composer",
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-desktop-system-light-channel-2.jpg",
+      "right": "head-desktop-system-light-channel-2.jpg",
+      "changedPixels": 338,
+      "changedPercent": 0.026080246913580248,
+      "bbox": [
+        632,
+        432,
+        648,
+        456
+      ],
+      "connected32pxTileRegions": [
+        [
+          608,
+          416,
+          672,
+          480
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "space-message-composer",
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-desktop-system-light-channel-3.jpg",
+      "right": "head-desktop-system-light-channel-3.jpg",
+      "changedPixels": 338,
+      "changedPercent": 0.026080246913580248,
+      "bbox": [
+        632,
+        432,
+        648,
+        456
+      ],
+      "connected32pxTileRegions": [
+        [
+          608,
+          416,
+          672,
+          480
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "space-message-composer",
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-mobile-dark-light-category-busy-error-1.jpg",
+      "right": "head-mobile-dark-light-category-busy-error-1.jpg",
+      "changedPixels": 180,
+      "changedPercent": 0.054684651841049946,
+      "bbox": [
+        88,
+        424,
+        96,
+        448
+      ],
+      "connected32pxTileRegions": [
+        [
+          64,
+          416,
+          96,
+          448
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "space-sidebar",
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-mobile-dark-light-category-busy-error-2.jpg",
+      "right": "head-mobile-dark-light-category-busy-error-2.jpg",
+      "changedPixels": 180,
+      "changedPercent": 0.054684651841049946,
+      "bbox": [
+        88,
+        424,
+        96,
+        448
+      ],
+      "connected32pxTileRegions": [
+        [
+          64,
+          416,
+          96,
+          448
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "space-sidebar",
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-mobile-dark-light-category-busy-error-3.jpg",
+      "right": "head-mobile-dark-light-category-busy-error-3.jpg",
+      "changedPixels": 180,
+      "changedPercent": 0.054684651841049946,
+      "bbox": [
+        88,
+        424,
+        96,
+        448
+      ],
+      "connected32pxTileRegions": [
+        [
+          64,
+          416,
+          96,
+          448
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "space-sidebar",
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-mobile-dark-light-category-1.jpg",
+      "right": "head-mobile-dark-light-category-1.jpg",
+      "changedPixels": 179,
+      "changedPercent": 0.05438084821971078,
+      "bbox": [
+        88,
+        448,
+        96,
+        472
+      ],
+      "connected32pxTileRegions": [
+        [
+          64,
+          448,
+          96,
+          480
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-mobile-dark-light-category-2.jpg",
+      "right": "head-mobile-dark-light-category-2.jpg",
+      "changedPixels": 179,
+      "changedPercent": 0.05438084821971078,
+      "bbox": [
+        88,
+        448,
+        96,
+        472
+      ],
+      "connected32pxTileRegions": [
+        [
+          64,
+          448,
+          96,
+          480
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-mobile-dark-light-category-3.jpg",
+      "right": "head-mobile-dark-light-category-3.jpg",
+      "changedPixels": 179,
+      "changedPercent": 0.05438084821971078,
+      "bbox": [
+        88,
+        448,
+        96,
+        472
+      ],
+      "connected32pxTileRegions": [
+        [
+          64,
+          448,
+          96,
+          480
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-mobile-dark-light-channel-busy-error-1.jpg",
+      "right": "head-mobile-dark-light-channel-busy-error-1.jpg",
+      "changedPixels": 179,
+      "changedPercent": 0.05438084821971078,
+      "bbox": [
+        144,
+        376,
+        152,
+        400
+      ],
+      "connected32pxTileRegions": [
+        [
+          128,
+          352,
+          160,
+          416
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "space-message-composer",
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-mobile-dark-light-channel-busy-error-3.jpg",
+      "right": "head-mobile-dark-light-channel-busy-error-3.jpg",
+      "changedPixels": 179,
+      "changedPercent": 0.05438084821971078,
+      "bbox": [
+        144,
+        376,
+        152,
+        400
+      ],
+      "connected32pxTileRegions": [
+        [
+          128,
+          352,
+          160,
+          416
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "space-message-composer",
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-mobile-dark-light-channel-voice-1.jpg",
+      "right": "head-mobile-dark-light-channel-voice-1.jpg",
+      "changedPixels": 14163,
+      "changedPercent": 4.302770689026613,
+      "bbox": [
+        31,
+        623,
+        360,
+        689
+      ],
+      "connected32pxTileRegions": [
+        [
+          0,
+          608,
+          384,
+          704
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-mobile-dark-light-channel-voice-2.jpg",
+      "right": "head-mobile-dark-light-channel-voice-2.jpg",
+      "changedPixels": 186,
+      "changedPercent": 0.05650747356908494,
+      "bbox": [
+        144,
+        400,
+        152,
+        424
+      ],
+      "connected32pxTileRegions": [
+        [
+          128,
+          384,
+          160,
+          448
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "space-message-composer",
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-mobile-dark-light-channel-voice-3.jpg",
+      "right": "head-mobile-dark-light-channel-voice-3.jpg",
+      "changedPixels": 186,
+      "changedPercent": 0.05650747356908494,
+      "bbox": [
+        144,
+        400,
+        152,
+        424
+      ],
+      "connected32pxTileRegions": [
+        [
+          128,
+          384,
+          160,
+          448
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "space-message-composer",
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-mobile-dark-light-channel-2.jpg",
+      "right": "head-mobile-dark-light-channel-2.jpg",
+      "changedPixels": 186,
+      "changedPercent": 0.05650747356908494,
+      "bbox": [
+        144,
+        400,
+        152,
+        424
+      ],
+      "connected32pxTileRegions": [
+        [
+          128,
+          384,
+          160,
+          448
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "space-message-composer",
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-mobile-light-light-category-1.jpg",
+      "right": "head-mobile-light-light-category-1.jpg",
+      "changedPixels": 177,
+      "changedPercent": 0.05377324097703245,
+      "bbox": [
+        88,
+        448,
+        96,
+        472
+      ],
+      "connected32pxTileRegions": [
+        [
+          64,
+          448,
+          96,
+          480
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-mobile-light-light-category-3.jpg",
+      "right": "head-mobile-light-light-category-3.jpg",
+      "changedPixels": 177,
+      "changedPercent": 0.05377324097703245,
+      "bbox": [
+        88,
+        448,
+        96,
+        472
+      ],
+      "connected32pxTileRegions": [
+        [
+          64,
+          448,
+          96,
+          480
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-mobile-light-light-channel-busy-error-3.jpg",
+      "right": "head-mobile-light-light-channel-busy-error-3.jpg",
+      "changedPixels": 176,
+      "changedPercent": 0.05346943735569328,
+      "bbox": [
+        144,
+        376,
+        152,
+        400
+      ],
+      "connected32pxTileRegions": [
+        [
+          128,
+          352,
+          160,
+          416
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "space-message-composer",
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-mobile-light-light-channel-1.jpg",
+      "right": "head-mobile-light-light-channel-1.jpg",
+      "changedPixels": 186,
+      "changedPercent": 0.05650747356908494,
+      "bbox": [
+        144,
+        400,
+        152,
+        424
+      ],
+      "connected32pxTileRegions": [
+        [
+          128,
+          384,
+          160,
+          448
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "space-message-composer",
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-mobile-light-light-channel-2.jpg",
+      "right": "head-mobile-light-light-channel-2.jpg",
+      "changedPixels": 186,
+      "changedPercent": 0.05650747356908494,
+      "bbox": [
+        144,
+        400,
+        152,
+        424
+      ],
+      "connected32pxTileRegions": [
+        [
+          128,
+          384,
+          160,
+          448
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "space-message-composer",
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-mobile-light-light-channel-3.jpg",
+      "right": "head-mobile-light-light-channel-3.jpg",
+      "changedPixels": 186,
+      "changedPercent": 0.05650747356908494,
+      "bbox": [
+        144,
+        400,
+        152,
+        424
+      ],
+      "connected32pxTileRegions": [
+        [
+          128,
+          384,
+          160,
+          448
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "space-message-composer",
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-mobile-system-dark-category-3.jpg",
+      "right": "head-mobile-system-dark-category-3.jpg",
+      "changedPixels": 179,
+      "changedPercent": 0.05438084821971078,
+      "bbox": [
+        88,
+        448,
+        96,
+        472
+      ],
+      "connected32pxTileRegions": [
+        [
+          64,
+          448,
+          96,
+          480
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-mobile-system-dark-channel-busy-error-2.jpg",
+      "right": "head-mobile-system-dark-channel-busy-error-2.jpg",
+      "changedPixels": 179,
+      "changedPercent": 0.05438084821971078,
+      "bbox": [
+        144,
+        376,
+        152,
+        400
+      ],
+      "connected32pxTileRegions": [
+        [
+          128,
+          352,
+          160,
+          416
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "space-message-composer",
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-mobile-system-dark-channel-voice-3.jpg",
+      "right": "head-mobile-system-dark-channel-voice-3.jpg",
+      "changedPixels": 186,
+      "changedPercent": 0.05650747356908494,
+      "bbox": [
+        144,
+        400,
+        152,
+        424
+      ],
+      "connected32pxTileRegions": [
+        [
+          128,
+          384,
+          160,
+          448
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "space-message-composer",
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-mobile-system-dark-channel-1.jpg",
+      "right": "head-mobile-system-dark-channel-1.jpg",
+      "changedPixels": 186,
+      "changedPercent": 0.05650747356908494,
+      "bbox": [
+        144,
+        400,
+        152,
+        424
+      ],
+      "connected32pxTileRegions": [
+        [
+          128,
+          384,
+          160,
+          448
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "space-message-composer",
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-mobile-system-light-category-busy-error-2.jpg",
+      "right": "head-mobile-system-light-category-busy-error-2.jpg",
+      "changedPixels": 181,
+      "changedPercent": 0.05498845546238911,
+      "bbox": [
+        88,
+        424,
+        96,
+        448
+      ],
+      "connected32pxTileRegions": [
+        [
+          64,
+          416,
+          96,
+          448
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "space-sidebar",
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-mobile-system-light-category-busy-error-3.jpg",
+      "right": "head-mobile-system-light-category-busy-error-3.jpg",
+      "changedPixels": 181,
+      "changedPercent": 0.05498845546238911,
+      "bbox": [
+        88,
+        424,
+        96,
+        448
+      ],
+      "connected32pxTileRegions": [
+        [
+          64,
+          416,
+          96,
+          448
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "space-sidebar",
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-mobile-system-light-channel-busy-error-2.jpg",
+      "right": "head-mobile-system-light-channel-busy-error-2.jpg",
+      "changedPixels": 176,
+      "changedPercent": 0.05346943735569328,
+      "bbox": [
+        144,
+        376,
+        152,
+        400
+      ],
+      "connected32pxTileRegions": [
+        [
+          128,
+          352,
+          160,
+          416
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "space-message-composer",
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-mobile-system-light-channel-busy-error-3.jpg",
+      "right": "head-mobile-system-light-channel-busy-error-3.jpg",
+      "changedPixels": 176,
+      "changedPercent": 0.05346943735569328,
+      "bbox": [
+        144,
+        376,
+        152,
+        400
+      ],
+      "connected32pxTileRegions": [
+        [
+          128,
+          352,
+          160,
+          416
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "space-message-composer",
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-mobile-system-light-channel-1.jpg",
+      "right": "head-mobile-system-light-channel-1.jpg",
+      "changedPixels": 186,
+      "changedPercent": 0.05650747356908494,
+      "bbox": [
+        144,
+        400,
+        152,
+        424
+      ],
+      "connected32pxTileRegions": [
+        [
+          128,
+          384,
+          160,
+          448
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "space-message-composer",
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    },
+    {
+      "left": "base-mobile-system-light-channel-3.jpg",
+      "right": "head-mobile-system-light-channel-3.jpg",
+      "changedPixels": 186,
+      "changedPercent": 0.05650747356908494,
+      "bbox": [
+        144,
+        400,
+        152,
+        424
+      ],
+      "connected32pxTileRegions": [
+        [
+          128,
+          384,
+          160,
+          448
+        ]
+      ],
+      "touchesProductUI": true,
+      "productRegionLabels": [
+        "space-message-composer",
+        "overlay space-dialog-overlay",
+        "account-dialog space-dialog"
+      ],
+      "exactSameBuildReproduced": true
+    }
+  ]
+}

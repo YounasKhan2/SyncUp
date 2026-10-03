@@ -18,7 +18,16 @@ def compare(left, right, state, category):
     ys, xs = np.nonzero(mask)
     bbox = [int(xs.min()), int(ys.min()), int(xs.max()) + 1, int(ys.max()) + 1] if changed else None
     regions = []
-    for region in state['regions']:
+    product_regions = list(state['regions'])
+    def dialog_regions(node):
+        attributes = node.get('attributes', {})
+        if attributes.get('role') == 'dialog' or 'space-dialog-overlay' in attributes.get('class', '').split():
+            product_regions.append({'label': attributes.get('class', 'dialog'), 'bounds': node['bounds'], 'display': node['style'].get('display', '')})
+        for child in node.get('children', []):
+            if 'tag' in child:
+                dialog_regions(child)
+    dialog_regions(state['tree'])
+    for region in product_regions:
         x, y, w, h = region['bounds']
         if region['display'] == 'none' or w <= 0 or h <= 0:
             continue
@@ -47,6 +56,7 @@ def compare(left, right, state, category):
         boxes.append([int(min(p[1] for p in component)*32), int(min(p[0] for p in component)*32),
                       int(min(width, (max(p[1] for p in component)+1)*32)), int(min(height, (max(p[0] for p in component)+1)*32))])
     return {'category': category, 'left': left.name, 'right': right.name,
+            'leftPath': left.as_posix(), 'rightPath': right.as_posix(),
             'bytesEqual': left.read_bytes() == right.read_bytes(),
             'leftSHA256': hashlib.sha256(left.read_bytes()).hexdigest(),
             'rightSHA256': hashlib.sha256(right.read_bytes()).hexdigest(),

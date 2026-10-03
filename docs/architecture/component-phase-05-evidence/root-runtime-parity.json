@@ -1,0 +1,17 @@
+{
+  "base": "558d9764a44fafe2b991315c20bd7a16e86f5325",
+  "effects": 7,
+  "refs": 2,
+  "namedFunctions": 29,
+  "effectsIdentical": true,
+  "refsIdentical": true,
+  "runtimeFunctionsIdentical": true,
+  "beforeLines": 1155,
+  "afterLines": 1143,
+  "stateDeclarations": 52,
+  "baseSourceByteExact": true,
+  "approvedRegions": [
+    "CreateChannelDialog",
+    "CreateCategoryDialog"
+  ]
+}

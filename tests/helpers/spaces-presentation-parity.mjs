@@ -2,6 +2,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { createHash } from 'node:crypto'
 import ts from 'typescript'
+import { restoreSpacesDialogs } from './spaces-dialog-parity.mjs'
 
 export const root = new URL('../../', import.meta.url)
 export const read = file => fs.readFileSync(new URL(file, root), 'utf8').replace(/\r\n/gu, '\n')
@@ -20,6 +21,7 @@ export function headerRegion(tree) {
   return result
 }
 export function canonical(file, text, files) {
+  if (file.endsWith('/SpacesPage.tsx')) text = restoreSpacesDialogs(text)
   const tree = parse(file, text), edits = []
   const targets = new Map(Object.entries(files).map(([old, value]) => [value.relocatedPath.replace(/\.tsx?$/u, ''), old.replace(/\.tsx?$/u, '')]))
   for (const node of tree.statements.filter(ts.isImportDeclaration)) {
