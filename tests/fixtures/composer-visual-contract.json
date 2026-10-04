@@ -1,0 +1,7 @@
+{
+  "base": "346c0698aadb1f933ed7cce1eefdf5423e579c16",
+  "files": {
+    "client/src/features/messaging/MessageComposer.tsx": "6bdbcf17d25986dab1b31a4e0c4de2b2ae181c95039475d83d6da2f1ba52cc81",
+    "client/src/shared/styles/platform.css": "8be1fdf95a073c40a24295dcefc2f4237153049dd81c332827a665d375814840"
+  }
+}

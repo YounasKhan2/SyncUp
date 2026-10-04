@@ -67,14 +67,14 @@ export function MessageComposer(props: MessageComposerProps) {
   }
 
   return (
-    <form className="message-composer" onSubmit={props.onSubmit}>
+    <form className="message-composer ui:bg-surface ui:text-primary ui:rounded-md" onSubmit={props.onSubmit}>
       {replyTo && <div className="composer-reply"><span>{editing ? 'Editing message' : `Replying to ${replyAuthor}: ${replyPreview}`}</span><button type="button" onClick={props.onClearReply} aria-label={editing ? 'Cancel editing' : 'Cancel reply'}><X size={13} /></button></div>}
 
       {attachments.length > 0 && <div className="staged-attachments">
         {attachments.map((attachment) => <span key={attachment.id}>{attachment.filename}<button type="button" onClick={() => props.onRemoveAttachment(attachment.id)} aria-label={`Remove ${attachment.filename}`}><X size={12} /></button></span>)}
       </div>}
 
-      <textarea ref={textareaRef} rows={1} aria-label="Message" placeholder={`Message ${chatTitle}`} value={draft} maxLength={32000}
+      <textarea className="ui:text-body ui:text-primary" ref={textareaRef} rows={1} aria-label="Message" placeholder={`Message ${chatTitle}`} value={draft} maxLength={32000}
         onChange={(event) => { props.onDraftChange(event.target.value); props.onTypingChange(event.target.value) }}
         onBlur={() => props.onTypingChange('')}
         onKeyDown={(event) => { if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); event.currentTarget.form?.requestSubmit() } }} />
@@ -92,8 +92,8 @@ export function MessageComposer(props: MessageComposerProps) {
         </label>}
           {!editing && !props.voiceDraft && <VoiceRecorder disabled={uploading || submitting} onReady={props.onVoiceReady} />}
         </div>
-        <span className="composer-hint">Enter to send · Shift+Enter for a new line</span>
-        <button type="submit" className="composer-send-button" disabled={uploading || submitting || (!draft.trim() && attachments.length === 0)} aria-label="Send message"><Send size={17} aria-hidden="true" /><span>Send</span></button>
+        <span className="composer-hint ui:text-caption ui:text-secondary">Enter to send · Shift+Enter for a new line</span>
+        <button type="submit" className="composer-send-button ui:bg-brand ui:text-brand-foreground ui:text-label" disabled={uploading || submitting || (!draft.trim() && attachments.length === 0)} aria-label="Send message"><Send size={17} aria-hidden="true" /><span>Send</span></button>
       </div>
       {emojiPickerOpen && <div id="composer-emoji-picker" className="emoji-picker-popover">
         <FullEmojiPicker onSelect={insertEmoji} onClose={() => setEmojiPickerOpen(false)} />
