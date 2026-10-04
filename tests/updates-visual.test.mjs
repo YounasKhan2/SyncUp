@@ -1,11 +1,12 @@
 import fs from 'node:fs'
+import {restoreSpacesModernVisual} from './helpers/spaces-modern-visual-parity.mjs'
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import {execFileSync} from 'node:child_process'
 import ts from 'typescript'
 import postcss from 'postcss'
 const contract=JSON.parse(fs.readFileSync('tests/fixtures/updates-visual-contract.json','utf8'))
-const read=f=>fs.readFileSync(f,'utf8').replaceAll('\r\n','\n')
+const read=f=>restoreSpacesModernVisual(f,fs.readFileSync(f,'utf8')).replaceAll('\r\n','\n')
 const before=f=>execFileSync('git',['show',`${contract.base}:${f}`],{encoding:'utf8'})
 function behavior(file,text){const tree=ts.createSourceFile(file,text,99,true,ts.ScriptKind.TSX);const result=ts.transform(tree,[context=>{const visit=node=>ts.isJsxAttributes(node)?context.factory.updateJsxAttributes(node,node.properties.filter(p=>!ts.isJsxAttribute(p)||p.name.text!=='className')):ts.visitEachChild(node,visit,context);return node=>ts.visitNode(node,visit)}]);return ts.createPrinter().printFile(result.transformed[0])}
 test('Updates preserves complete fetching/state/effects/search/filter/order/identity/navigation/respond/state-change/ARIA contracts outside classes',()=>{
