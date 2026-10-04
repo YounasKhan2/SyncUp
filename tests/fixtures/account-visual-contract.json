@@ -1,0 +1,9 @@
+{
+  "base": "0b34a98e87e0714855a12ece8e3010192b3f0c8a",
+  "files": {
+    "client/src/features/account/AccountPanel.tsx": "6abf71e7971c976945aede8bc236aadfd8197ad38b207f36dffe2efc3d6faeb1",
+    "client/src/features/account/components/AccountSessionsSection.tsx": "3a7af9fb2666bd74f98fcdc90e005c3b19c9926df5cd5fd4f53770462b32eacd",
+    "client/src/features/account/SafetySettings.tsx": "88668ee1b8365587cc20be8fa0621941d0bdb9bd9dbd7bf846904701c709a3ba",
+    "client/src/shared/styles/platform.css": "ad3e949c6a36bf1b4c6763cb5225006d0dfd6db0cbfc33a680f309dee2d98f36"
+  }
+}

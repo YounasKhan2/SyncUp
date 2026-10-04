@@ -8,7 +8,7 @@ export function AccountSessionsSection({ rows, error, onRefresh }: {
   onRefresh: () => void
 }) {
   return (
-        <div className="sessions-section">
+        <div className="sessions-section ui:text-primary">
           <div className="sessions-heading"><h3>Active sessions</h3><button type="button" onClick={onRefresh}>Refresh</button></div>
           <p className="sessions-caption">Sign out devices you no longer use.</p>
           {error && <div className="form-error" role="alert">{error}</div>}
