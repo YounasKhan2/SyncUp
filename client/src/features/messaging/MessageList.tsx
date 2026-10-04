@@ -57,17 +57,17 @@ export function MessageList({ messages, calls, members, currentUserId, loading, 
 
   return (
     <>
-      <div className="message-list" aria-live="polite" ref={scrollContainerRef} onScroll={onScroll}>
-        {loadingOlder && <div className="older-messages-loading" role="status">Loading earlier messages…</div>}
-        {loading && <div className="conversation-loading">Loading messages…</div>}
+      <div className="message-list ui:bg-canvas ui:text-primary" aria-live="polite" ref={scrollContainerRef} onScroll={onScroll}>
+        {loadingOlder && <div className="older-messages-loading ui:text-caption ui:text-secondary" role="status">Loading earlier messages…</div>}
+        {loading && <div className="conversation-loading ui:text-body-sm ui:text-secondary">Loading messages…</div>}
         {error && <div className="inline-error" role="alert">{error}</div>}
-        {!loading && messages.length === 0 && <div className="message-empty">{emptyMessage ?? 'This is the beginning of your conversation.'}</div>}
+        {!loading && messages.length === 0 && <div className="message-empty ui:text-body-sm ui:text-secondary">{emptyMessage ?? 'This is the beginning of your conversation.'}</div>}
         {timeline.map((entry) => {
           if (entry.type === 'call') {
             const call = entry.call
             const duration = call.accepted_at && call.ended_at ? Math.max(1, Math.round((Date.parse(call.ended_at) - Date.parse(call.accepted_at)) / 60_000)) : 0
             return (
-              <div className="call-history-message" key={call.id}>
+              <div className="call-history-message ui:text-caption ui:text-secondary ui:bg-surface ui:rounded-md" key={call.id}>
                 {call.call_type === 'video' ? <Video size={13} aria-hidden="true" /> : <Phone size={13} aria-hidden="true" />}
                 <span>{call.status === 'declined' ? 'Call declined' : call.status === 'ended' ? `${call.is_group ? 'Group ' : ''}${call.call_type === 'video' ? 'Video' : 'Audio'} call · ${duration} min` : call.end_reason === 'cancelled' ? 'Call cancelled' : 'Missed call'}</span>
                 <time>{new Date(call.created_at).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}</time>
@@ -100,13 +100,13 @@ export function MessageList({ messages, calls, members, currentUserId, loading, 
             }))
           return (
             <article id={`message-${message.id}`} data-message-id={message.id} className={`message-row${mine ? ' message-mine' : ''}${message.pinned_at ? ' message-pinned' : ''}`} key={message.id}>
-              {!mine && <Avatar name={sender?.displayName ?? 'Member'} src={sender?.avatar_url} className="message-avatar" />}
+              {!mine && <Avatar name={sender?.displayName ?? 'Member'} src={sender?.avatar_url} className="message-avatar ui:bg-brand-soft ui:text-primary" />}
               <div className="message-content">
-                {!mine && <div className="message-meta"><strong>{sender?.displayName ?? 'Member'}</strong><span>@{sender?.username}</span></div>}
-                <div className="message-bubble">
+                {!mine && <div className="message-meta ui:text-caption ui:text-secondary"><strong>{sender?.displayName ?? 'Member'}</strong><span>@{sender?.username}</span></div>}
+                <div className="message-bubble ui:bg-message-incoming ui:text-primary ui:rounded-md">
                   {message.reply_to_id && <button
                     type="button"
-                    className="reply-quote"
+                    className="reply-quote ui:bg-surface ui:text-secondary ui:rounded-xs"
                     disabled={!parent}
                     onClick={() => parent && onJumpToMessage(parent.id, parent.server_seq)}
                     aria-label={parent ? `Go to message from ${membersById.get(parent.sender_id)?.displayName ?? 'member'}` : 'Original message unavailable'}
@@ -132,21 +132,21 @@ export function MessageList({ messages, calls, members, currentUserId, loading, 
                                 : parent.attachments?.length ? 'Attachment' : 'Message')
                       : 'Original message unavailable'}</span>
                   </button>}
-                  {message.pinned_at && <span className="message-pinned-label"><Pin size={10} aria-hidden="true" /> Pinned in this chat</span>}
+                  {message.pinned_at && <span className="message-pinned-label ui:text-caption ui:text-primary"><Pin size={10} aria-hidden="true" /> Pinned in this chat</span>}
                   <p>{message.deleted_at ? 'This message was deleted.' : message.pending ? (message.attachments?.some((a: {content_type: string}) => a.content_type.startsWith('audio/')) && !message.text ? '' : 'Sending…') : textParts.map((part, index) => part.href
                     ? <a href={part.href} target="_blank" rel="noopener noreferrer" key={`${index}:${part.href}`}>{part.text}</a>
                     : <span key={index}>{part.text}</span>)}</p>
                   {!message.deleted_at && message.attachments?.filter((attachment) => !attachment.is_preview).map((attachment) => <MessageAttachment key={attachment.id} attachment={attachment} pending={message.pending} onOpen={(attachment.content_type.startsWith('image/') || attachment.content_type.startsWith('video/')) && !message.pending ? () => setViewerAttachmentId(attachment.id) : undefined} />)}
-                  {message.edited_at && !message.deleted_at && <span className="message-edited">edited</span>}
+                  {message.edited_at && !message.deleted_at && <span className="message-edited ui:text-caption ui:text-primary">edited</span>}
                   <span className="message-footer">
-                    <time className="message-time">{message.pending ? (message.failed ? 'Waiting to reconnect' : 'Pending') : new Date(message.created_at).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}</time>
+                    <time className="message-time ui:text-caption ui:text-primary">{message.pending ? (message.failed ? 'Waiting to reconnect' : 'Pending') : new Date(message.created_at).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}</time>
                     {!message.pending && mine && !message.deleted_at && <span className={`message-receipt ${receiptState}`} role="img" aria-label={receiptLabel} title={receiptLabel}>
                       {receiptState === 'sent' ? <Check size={10} aria-hidden="true" /> : <CheckCheck size={12} aria-hidden="true" />}
                       {groupReceipt && (readCount > 0 || deliveredCount > 0) && <span>{readCount > 0 ? readCount : deliveredCount}/{recipients.length}</span>}
                     </span>}
                   </span>
                 </div>
-                {reactions.length > 0 && <div className="message-reactions" aria-label="Reactions">
+                {reactions.length > 0 && <div className="message-reactions conversation-reactions ui:flex ui:flex-wrap ui:gap-2" aria-label="Reactions">
                   {reactions.map(({ emoji, users }) => {
                     const mineReacted = users.some((reaction) => reaction.user_id === currentUserId)
                     return <button key={emoji} type="button" aria-pressed={mineReacted} aria-label={`${emoji}, ${users.length} ${users.length === 1 ? 'reaction' : 'reactions'}${mineReacted ? ', reacted by you' : ''}`} onClick={() => onReact(message, emoji)}>
