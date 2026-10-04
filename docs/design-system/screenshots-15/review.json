@@ -1,0 +1,161 @@
+{
+  "captures": [
+    {
+      "dpr": 1.190000057220459,
+      "height": 900,
+      "overflow": false,
+      "surface": "auth",
+      "theme": "light",
+      "width": 1440
+    },
+    {
+      "dpr": 1.190000057220459,
+      "height": 900,
+      "overflow": false,
+      "surface": "unlock",
+      "theme": "dark",
+      "width": 1440
+    },
+    {
+      "dpr": 1.190000057220459,
+      "focus": "Message",
+      "height": 900,
+      "overflow": false,
+      "surface": "messaging-focus",
+      "theme": "light",
+      "width": 1440
+    },
+    {
+      "dpr": 1.190000057220459,
+      "height": 900,
+      "overflow": false,
+      "surface": "messaging-voice",
+      "theme": "dark",
+      "width": 1440
+    },
+    {
+      "dpr": 1.190000057220459,
+      "height": 900,
+      "overflow": false,
+      "surface": "spaces",
+      "theme": "light",
+      "width": 1440
+    },
+    {
+      "dpr": 1.190000057220459,
+      "height": 900,
+      "overflow": false,
+      "surface": "spaces",
+      "theme": "dark",
+      "width": 1440
+    },
+    {
+      "dpr": 1.190000057220459,
+      "height": 900,
+      "overflow": false,
+      "surface": "calls-history",
+      "theme": "light",
+      "width": 1440
+    },
+    {
+      "dpr": 1.190000057220459,
+      "height": 900,
+      "overflow": false,
+      "surface": "calls-audio",
+      "theme": "dark",
+      "width": 1440
+    },
+    {
+      "dpr": 1.190000057220459,
+      "height": 844,
+      "overflow": false,
+      "surface": "messaging",
+      "theme": "light",
+      "width": 390
+    },
+    {
+      "dpr": 1.190000057220459,
+      "height": 844,
+      "overflow": false,
+      "surface": "messaging-voice",
+      "theme": "dark",
+      "width": 390
+    },
+    {
+      "dpr": 1.190000057220459,
+      "height": 844,
+      "overflow": false,
+      "surface": "spaces",
+      "theme": "light",
+      "width": 390
+    },
+    {
+      "dpr": 1.190000057220459,
+      "height": 844,
+      "overflow": false,
+      "surface": "spaces",
+      "theme": "dark",
+      "width": 390
+    },
+    {
+      "dpr": 1.190000057220459,
+      "height": 844,
+      "overflow": false,
+      "surface": "auth",
+      "theme": "light",
+      "width": 390
+    },
+    {
+      "dpr": 1.190000057220459,
+      "height": 844,
+      "overflow": false,
+      "surface": "unlock-error",
+      "theme": "dark",
+      "width": 390
+    }
+  ],
+  "system": [
+    {
+      "avatar": {
+        "background": "rgb(60, 44, 56)",
+        "color": "rgb(241, 236, 239)",
+        "height": 28.991594314575195,
+        "width": 28.991594314575195
+      },
+      "card": {
+        "background": "rgb(33, 30, 36)",
+        "border": "rgb(61, 55, 65)"
+      },
+      "effective": "dark",
+      "os": "dark",
+      "overflow": false,
+      "preference": "system",
+      "scheme": "dark"
+    },
+    {
+      "avatar": {
+        "background": "rgb(234, 221, 230)",
+        "color": "rgb(39, 34, 40)",
+        "height": 28.991594314575195,
+        "width": 28.991594314575195
+      },
+      "card": {
+        "background": "rgb(250, 248, 245)",
+        "border": "rgb(217, 210, 205)"
+      },
+      "effective": "light",
+      "os": "light",
+      "overflow": false,
+      "preference": "system",
+      "scheme": "light"
+    }
+  ],
+  "dialog": {
+    "ariaModal": "true",
+    "background": "rgb(41, 37, 44)",
+    "radius": "14px",
+    "role": "dialog",
+    "shadow": "rgba(0, 0, 0, 0.18) 0px 18px 50px 0px",
+    "width": 429.9894714355469
+  }
+}
