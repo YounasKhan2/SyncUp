@@ -1,0 +1,8 @@
+{
+  "base": "1cf130ed5ff675b3c1de7d57f14cffe6ecb6a981",
+  "files": {
+    "client/src/features/messaging/MessageList.tsx": "d0fa5549eb163fac00a869fa1f08bfa85d4d2d729b9ac1f06bfa700e25d90ff8",
+    "client/src/features/messaging/components/ConversationHeader.tsx": "8b006861ce6242e70b5cab3c26e7d76a22db96bf64f0bef15e6e18d3cb079312",
+    "client/src/shared/styles/platform.css": "ba837deecb5d5cfa34895094d5d13ea066cb63f2ea0b930663b31c0fb9144c07"
+  }
+}
