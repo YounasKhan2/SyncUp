@@ -230,11 +230,6 @@
   .workspace.has-active-chat .active-conversation:not(.conversation-hidden) { display: flex; }
   .workspace.has-active-chat .chat-details-screen { display: flex; }
   .mobile-bottom-nav { position: relative; z-index: 8; display: grid; grid-column: 1; grid-row: 2; grid-template-columns: repeat(5, minmax(0, 1fr)); align-items: stretch; }
-  .updates-page { padding: 18px 13px; }
-  .updates-header { align-items: stretch; flex-direction: column; gap: 13px; margin-bottom: 16px; }
-  .updates-search { min-width: 0; width: 100%; box-sizing: border-box; }
-  .updates-sections { gap: 18px; }
-  .updates-section > header > span { width: 31px; height: 31px; }
   .shared-object-card { padding: 11px; }
   .workspace-footer { padding-inline: 14px; }
   .workspace-footer > span { text-align: right; }
@@ -593,24 +588,12 @@
 :root[data-theme="dark"] .space-permission-fixed { background: var(--color-surface); }
 :root[data-theme="dark"] .space-permission-table thead th,
 :root[data-theme="dark"] .space-channel-type-card { background: var(--color-surface); }
-:root[data-theme="dark"] .updates-page { color: var(--color-text); background: var(--color-canvas); }
-:root[data-theme="dark"] .updates-search,
-:root[data-theme="dark"] .updates-live-call,
-:root[data-theme="dark"] .updates-item,
 :root[data-theme="dark"] .shared-object-card { border-color: var(--color-border); background: var(--color-surface); }
-:root[data-theme="dark"] .updates-live-call button { color: var(--color-text); border-color: var(--color-border); background: var(--color-surface-muted); }
-:root[data-theme="dark"] .updates-search input { color: var(--color-text); }
-:root[data-theme="dark"] .updates-search button,
-:root[data-theme="dark"] .updates-filters button.is-active { color: #d8ebd8; background: #304237; }
-:root[data-theme="dark"] .updates-filters button { color: var(--color-text-secondary); border-color: var(--color-border); background: var(--color-surface); }
-:root[data-theme="dark"] .updates-empty,
-:root[data-theme="dark"] .space-object-options,
-:root[data-theme="dark"] .shared-poll-options > label { border-color: var(--color-border); }
+:root[data-theme="dark"] .space-object-options, :root[data-theme="dark"] .shared-poll-options > label { border-color: var(--color-border); }
 :root[data-theme="dark"] .shared-poll-options > label.is-selected,
 :root[data-theme="dark"] .shared-rsvp-actions button:hover,
 :root[data-theme="dark"] .shared-rsvp-actions button.is-selected { color: #d8ebd8; border-color: #45684f; background: #304237; }
-:root[data-theme="dark"] .shared-object-icon,
-:root[data-theme="dark"] .updates-section > header > span { color: #d8ebd8; background: #304237; }
+:root[data-theme="dark"] .shared-object-icon { color: #d8ebd8; background: #304237; }
 :root[data-theme="dark"] .shared-object-card blockquote { background: var(--color-surface-muted); }
 :root[data-theme="dark"] .space-object-menu { border-color: var(--color-border); background: var(--color-canvas); }
 :root[data-theme="dark"] .space-object-menu button { color: var(--color-text); }

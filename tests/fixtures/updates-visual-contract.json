@@ -1,0 +1,9 @@
+{
+  "base": "df4f1751fb8df0fee3bcf21926444a63dc00de0a",
+  "files": {
+    "client/src/features/spaces/UpdatesPage.tsx": "c7d8396506bf87d129860b557ec3913f9e44a0999af80afe1e8db39aceebd121",
+    "client/src/features/spaces/components/UpdateItem.tsx": "415d1fc744946ce04aac9ce6fa6263c4f63de02bd128b3f14c24a1036d70a023",
+    "client/src/shared/styles/platform.css": "7a5c6ed8be97812c016a392a61c31cf1cdb8dcbe0d1f3ff4ae86671596929e4f",
+    "client/src/features/spaces/spaces.css": "b0eb9a3356e340d13f6da703b5fd18a2739ddbf1ac35b5afa7d00df1318c81f2"
+  }
+}
