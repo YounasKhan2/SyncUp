@@ -1,3 +1,4 @@
+import {authVisualFiles} from './helpers/auth-visual-parity.mjs'
 import fs from 'node:fs'
 import {restoreSpacesModernVisual} from './helpers/spaces-modern-visual-parity.mjs'
 import test from 'node:test'
@@ -12,7 +13,7 @@ function behavior(file,text){const tree=ts.createSourceFile(file,text,99,true,ts
 test('Updates preserves complete fetching/state/effects/search/filter/order/identity/navigation/respond/state-change/ARIA contracts outside classes',()=>{
  for(const f of Object.keys(contract.files).filter(f=>f.endsWith('.tsx')))assert.equal(behavior(f,read(f)),behavior(f,before(f)),f)
  assert.equal(read('client/src/features/spaces/SharedObjectCard.tsx'),before('client/src/features/spaces/SharedObjectCard.tsx'))
- assert.deepEqual(execFileSync('git',['diff','--name-only',contract.base,'--','client','server','package.json','package-lock.json'],{encoding:'utf8'}).trim().split('\n').sort(),Object.keys(contract.files).sort())
+ assert.deepEqual(execFileSync('git',['diff','--name-only',contract.base,'--','client','server','package.json','package-lock.json'],{encoding:'utf8'}).trim().split('\n').sort(),[...new Set([...Object.keys(contract.files),...authVisualFiles])].sort())
 })
 test('Updates CSS preserves all unowned declarations/nesting/cascade including Spaces shared objects, Account and Shell placement',()=>{
  function unowned(text){const rows=[];postcss.parse(text).walkRules(rule=>{const nesting=[];for(let p=rule.parent;p;p=p.parent)if(p.type==='atrule')nesting.unshift([p.name,p.params]);for(const selector of rule.selectors)if(!(/\.updates-[\w-]+/.test(selector)&&!selector.includes('.workspace.has-active-updates')))rows.push({selector,nesting,decls:rule.nodes.filter(n=>n.type==='decl').map(n=>[n.prop,n.value,n.important])})});return rows}
