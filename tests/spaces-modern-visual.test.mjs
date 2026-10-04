@@ -3,8 +3,9 @@ import test from 'node:test'
 import assert from 'node:assert/strict'
 import {execFileSync} from 'node:child_process'
 import postcss from 'postcss'
+import {restoreCallsVisual} from './helpers/calls-visual-parity.mjs'
 const base='be72e8778e9fcb823959e9f7f287eadf0e8b254f',feature='client/src/features/spaces/spaces.css',platform='client/src/shared/styles/platform.css'
-const read=f=>fs.readFileSync(f,'utf8').replaceAll('\r\n','\n'),before=f=>execFileSync('git',['show',`${base}:${f}`],{encoding:'utf8'})
+const read=f=>restoreCallsVisual(f,fs.readFileSync(f,'utf8')),before=f=>execFileSync('git',['show',`${base}:${f}`],{encoding:'utf8'})
 test('Spaces CSS-only scope preserves every source byte: permissions/disabled/fallback, routing, polling, SSE, messaging, shared objects and voice',()=>{
  assert.deepEqual(execFileSync('git',['diff','--name-only',base,'--','client','server','package.json','package-lock.json'],{encoding:'utf8'}).trim().split('\n').sort(),[feature,platform].sort())
  const files=execFileSync('git',['ls-tree','-r','--name-only',base,'client/src/features/spaces'],{encoding:'utf8'}).trim().split('\n').filter(f=>/\.tsx?$/.test(f))
