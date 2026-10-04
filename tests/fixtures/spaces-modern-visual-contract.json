@@ -1,0 +1,7 @@
+{
+  "base": "be72e8778e9fcb823959e9f7f287eadf0e8b254f",
+  "files": {
+    "client/src/features/spaces/spaces.css": "ae9900c5e08afb677a501e946d8a62d6348a5de57a2d2e1c077e6456e61166e7",
+    "client/src/shared/styles/platform.css": "3e2d7e5a2b01b06173f1c7e1a38bf340f2f372bbe168e1053d17250fe756e8ba"
+  }
+}
