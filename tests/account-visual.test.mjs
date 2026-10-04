@@ -1,3 +1,4 @@
+import {authVisualFiles} from './helpers/auth-visual-parity.mjs'
 import {restoreUpdatesVisual} from './helpers/updates-visual-parity.mjs'
 import fs from 'node:fs'
 import test from 'node:test'
@@ -11,7 +12,7 @@ const before=f=>execFileSync('git',['show',`${contract.base}:${f}`],{encoding:'u
 function behavior(file,text){const tree=ts.createSourceFile(file,text,99,true,ts.ScriptKind.TSX);const result=ts.transform(tree,[context=>{const visit=node=>ts.isJsxAttributes(node)?context.factory.updateJsxAttributes(node,node.properties.filter(p=>!ts.isJsxAttribute(p)||p.name.text!=='className')):ts.visitEachChild(node,visit,context);return node=>ts.visitNode(node,visit)}]);return ts.createPrinter().printFile(result.transformed[0])}
 test('Account presentation preserves all state/effects, profile/avatar/session/privacy/theme handlers, labels, ARIA, field rules and current-device gating',()=>{
  for(const f of Object.keys(contract.files).filter(f=>f.endsWith('.tsx')))assert.equal(behavior(f,read(f)),behavior(f,before(f)),f)
- assert.deepEqual(execFileSync('git',['diff','--name-only',contract.base,'--','client','server','package.json','package-lock.json'],{encoding:'utf8'}).trim().split('\n').sort(),[...new Set([...Object.keys(contract.files),...Object.keys(JSON.parse(fs.readFileSync('tests/fixtures/updates-visual-contract.json','utf8')).files)])].sort())
+ assert.deepEqual(execFileSync('git',['diff','--name-only',contract.base,'--','client','server','package.json','package-lock.json'],{encoding:'utf8'}).trim().split('\n').sort(),[...new Set([...authVisualFiles,...Object.keys(contract.files),...Object.keys(JSON.parse(fs.readFileSync('tests/fixtures/updates-visual-contract.json','utf8')).files)])].sort())
 })
 test('Account CSS preserves unowned declarations/order/nesting and zero-specificity shared-form exclusions protect other dialogs',()=>{
  const owned=/\.(?:profile-avatar(?:-editor|-actions)?|profile-checkbox|appearance-caption|sessions-section|sessions-heading|sessions-caption|session-list|session-row|session-device|safety-settings|safety-inline-form|blocked-user-list|blocked-user-row)(?![\w-])/

@@ -1,3 +1,4 @@
+import {restoreAuthVisual,authVisualFiles} from './helpers/auth-visual-parity.mjs'
 import fs from 'node:fs'
 import test from 'node:test'
 import assert from 'node:assert/strict'
@@ -5,10 +6,10 @@ import {execFileSync} from 'node:child_process'
 import postcss from 'postcss'
 import {restoreCallsVisual} from './helpers/calls-visual-parity.mjs'
 const base='8df5b5f9d00c9a1ae22c136c866bceec4978ee78',file='client/src/shared/styles/platform.css'
-const read=f=>fs.readFileSync(f,'utf8').replaceAll('\r\n','\n'),before=execFileSync('git',['show',`${base}:${file}`],{encoding:'utf8'})
+const read=f=>restoreAuthVisual(f,fs.readFileSync(f,'utf8')),before=execFileSync('git',['show',`${base}:${file}`],{encoding:'utf8'})
 const owned=s=>/\.(?:calls?-|incoming-call-banner|answer-call-button|decline-call-button|voice-room-)/.test(s)&&!s.includes('.call-history-message')||s.includes('.inbox-pane:not(.inbox-content)')||s==='.workspace.has-active-calls > .inbox-pane'
-test('Calls production diff is one CSS file; every runtime, security, API, callback, history and Space voice source is frozen',()=>{
- assert.deepEqual(execFileSync('git',['diff','--name-only',base,'--','client','server','package.json','package-lock.json'],{encoding:'utf8'}).trim().split('\n'),[file])
+test('Calls approved CSS plus exact later Auth presentation preserves every runtime, security, API, callback, history and Space voice source',()=>{
+ assert.deepEqual(execFileSync('git',['diff','--name-only',base,'--','client','server','package.json','package-lock.json'],{encoding:'utf8'}).trim().split('\n').sort(),[...new Set([file,...authVisualFiles])].sort())
  assert.equal(restoreCallsVisual(file,read(file)),before)
 })
 test('Calls preserves every unowned selector, declaration, nesting and order including Conversation call history and Spaces',()=>{

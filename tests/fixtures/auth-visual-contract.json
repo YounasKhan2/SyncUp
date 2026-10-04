@@ -1,0 +1,7 @@
+{
+  "base": "90e5a8517f4e58dd8670a2d3e744809b0a031a3e",
+  "files": {
+    "client/src/shared/styles/platform-shell.css": "4c29039ae00a596a290bcb750822c332ad12061658255861978a7129c75da383",
+    "client/src/shared/styles/platform.css": "4bd068c9d204f259be3d269194c7efe83761b69568b4b06f3e06ac03aad0da5b"
+  }
+}
