@@ -6,12 +6,12 @@
     "client"
   ],
   "scripts": {
-    "dev": "concurrently -k \"npm:dev:server\" \"npm:dev:client\"",
-    "dev:server": "tsx watch server/index.ts",
-    "dev:client": "npm run dev --workspace client",
+    "dev": "node api.js && concurrently -k \"npm:dev:server\" \"npm:dev:client\"",
+    "dev:server": "node api.js && tsx watch server/index.ts",
+    "dev:client": "node api.js && npm run dev --workspace client",
     "build": "npm run build --workspace client && npm run build:server",
     "build:server": "tsc -p tsconfig.server.json",
-    "start": "node dist/server/index.js",
+    "start": "node api.js && node dist/server/index.js",
     "test:integration": "node --test tests/messaging.integration.test.mjs",
     "typecheck": "npm run typecheck:client && npm run typecheck:server",
     "typecheck:client": "npm run typecheck --workspace client",
@@ -29,6 +29,7 @@
     "helmet": "^8.1.0",
     "livekit-server-sdk": "^2.19.1",
     "node-appwrite": "^29.0.0",
+    "node-fetch": "^3.3.2",
     "pg": "^8.16.3",
     "uuid": "^13.0.0",
     "zod": "^4.1.12"
