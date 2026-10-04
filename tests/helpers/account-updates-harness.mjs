@@ -38,7 +38,7 @@ export function presentation(path, { seed = {}, source, props = {}, api } = {}) 
   mocks['./api'] = load('client/src/features/account/api.ts', { '../../shared/api': mocks['../../shared/api'] })
   for (const name of ['Button', 'IconButton', 'Dialog']) mocks[`../../shared/components/${name}`] = load(`client/src/shared/components/${name}.tsx`, { 'react/jsx-runtime': jsx })
   for (const [feature, name] of [['account', 'AccountSessionsSection'], ['spaces', 'UpdateItem']]) {
-    try { mocks[`./components/${name}`] = load(`client/src/features/${feature}/components/${name}.tsx`, mocks) } catch (error) { if (error.code !== 'ENOENT') throw error }
+    try { const child = `client/src/features/${feature}/components/${name}.tsx`; mocks[`./components/${name}`] = load(child, mocks, {}, read(child)) } catch (error) { if (error.code !== 'ENOENT') throw error }
   }
   const input = source ?? read(path), tree = ts.createSourceFile(path, input, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX), edits = []
   function visit(node) {

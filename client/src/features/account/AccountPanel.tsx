@@ -149,14 +149,14 @@ export function AccountPanel({ user, appearance, onAppearanceChange, onClose, on
   }
 
   return (
-    <Dialog aria-labelledby="account-title" onBackdropMouseDown={(event) => {
+    <Dialog className="account-settings-dialog ui:bg-surface ui:text-primary" aria-labelledby="account-title" onBackdropMouseDown={(event) => {
       if (event.target === event.currentTarget) onClose()
     }}>
-        <div className="dialog-heading">
+        <div className="dialog-heading account-settings-heading">
           <div><p className="eyebrow">YOUR ACCOUNT</p><h2 id="account-title">Profile & settings</h2></div>
           <IconButton type="button" onClick={onClose} aria-label="Close profile"><X size={15} aria-hidden="true" /></IconButton>
         </div>
-        <form className="profile-form" onSubmit={saveProfile}>
+        <form className="profile-form account-profile-form" onSubmit={saveProfile}>
           <div className="profile-avatar-editor">
             <Avatar name={user.display_name} src={avatarPreview || user.avatar_url} className="profile-avatar" />
             <div className="profile-avatar-actions">
@@ -177,14 +177,14 @@ export function AccountPanel({ user, appearance, onAppearanceChange, onClose, on
                 {avatarFile && <button type="button" className="secondary-button" disabled={avatarBusy} onClick={() => void saveAvatar()}>
                   {avatarBusy ? 'Uploading…' : 'Upload photo'}
                 </button>}
-                {!avatarFile && user.avatar_url && <button type="button" className="secondary-button" disabled={avatarBusy} onClick={() => void removeAvatar()}>
+                {!avatarFile && user.avatar_url && <button type="button" className="secondary-button account-danger-action" disabled={avatarBusy} onClick={() => void removeAvatar()}>
                   <Trash2 size={13} aria-hidden="true" /> Remove
                 </button>}
               </div>
             </div>
           </div>
           <label><span>Display name</span><input name="displayName" defaultValue={user.display_name} maxLength={60} required /></label>
-          <label><span>Username</span><div className="username-input"><span>@</span><input name="username" defaultValue={user.username} minLength={3} maxLength={24} pattern="[A-Za-z0-9_]+" required /></div></label>
+          <label><span>Username</span><div className="username-input account-username-input"><span>@</span><input name="username" defaultValue={user.username} minLength={3} maxLength={24} pattern="[A-Za-z0-9_]+" required /></div></label>
           <label><span>About</span><textarea name="about" defaultValue={user.about ?? ''} rows={3} maxLength={160} placeholder="A little about you" /></label>
           <label className="profile-checkbox">
             <input type="checkbox" name="discoverable" defaultChecked={user.discoverable ?? true} />

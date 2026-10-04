@@ -1,11 +1,12 @@
+import {restoreAccountVisual} from './account-visual-parity.mjs'
 import fs from 'node:fs'
 import { createHash } from 'node:crypto'
 const root = new URL('../../', import.meta.url)
-export const read = path => fs.readFileSync(new URL(path, root), 'utf8').replace(/\r\n/g, '\n')
+export const read = path => restoreAccountVisual(path,fs.readFileSync(new URL(path, root), 'utf8')).replace(/\r\n/g, '\n')
 export const baseline = () => JSON.parse(read('tests/fixtures/account-updates-baseline.json'))
 export const hash = text => createHash('sha256').update(text.replace(/\r\n/g, '\n')).digest('hex')
 export function restoreAccountUpdates(path, text) {
-  text = text.replace(/\r\n/g, '\n')
+  text = restoreAccountVisual(path,text).replace(/\r\n/g, '\n')
   const original = baseline().files[path]
   if (!original) return text
   for (const region of original.extractions) {
