@@ -93,15 +93,6 @@
 .secondary-button:disabled { cursor: wait; opacity: .55; }
 .report-dialog { max-height: calc(100svh - 40px); overflow-y: auto; }
 
-.loading-screen, .service-error { display: flex; min-height: 100vh; align-items: center; flex-direction: column; justify-content: center; gap: 12px; color: #77847a; background: var(--color-surface-subtle); font-size: var(--type-body); }
-.loading-screen .brand-mark { margin-bottom: 4px; }
-.service-error { padding: 24px; text-align: center; }
-.service-error .brand-mark { margin-bottom: 12px; }
-.service-error .eyebrow { margin-bottom: 0; }
-.service-error h1 { margin: 0; color: #293a31; font-size: var(--type-display-sm); }
-.service-error > p:not(.eyebrow) { max-width: 420px; margin: 0 0 10px; color: #7d8980; font-size: var(--type-body); line-height: 1.6; }
-.service-error .primary-button { width: 180px; }
-
 .workspace { position: relative; }
 .workspace-footer { display: none; }
 .chat-list:not(.inbox-chat-list) { flex: 1; overflow-y: auto; padding: 8px 7px; }
@@ -167,13 +158,6 @@
 }
 
 @media (max-width: 700px) {
-  .auth-page { display: block; min-height: 100svh; }
-  .auth-story { display: none; }
-  .auth-panel { min-height: 100svh; box-sizing: border-box; align-items: start; padding: 27px 23px 35px; }
-  .auth-panel-inner { max-width: 410px; margin: auto; }
-  .mobile-brand { display: flex; margin-bottom: 54px; color: #234735; font-family: Georgia, "Times New Roman", serif; font-size: var(--type-display); font-weight: 500; letter-spacing: .2px; }
-  .mobile-brand .brand-mark { width: 33px; height: 33px; }
-  .privacy-note { margin-top: 35px; }
   .workspace { height: 100svh; height: 100dvh; min-height: 0; grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) calc(60px + env(safe-area-inset-bottom)); }
   .workspace.has-active-space { grid-template-columns: minmax(0, 1fr); }
   .workspace.has-active-updates { grid-template-columns: minmax(0, 1fr); }
@@ -198,8 +182,6 @@
 }
 
 @media (max-width: 420px) {
-  .auth-panel { padding-inline: 19px; }
-  .auth-panel h2 { font-size: var(--type-display-xs); }
   .account-menu-button > span:not(.avatar):not(.chevron) { display: none; }
 }
 
@@ -308,17 +290,12 @@
 .attachment-v2-video-ready .attachment-v2-video-poster { max-width: none; max-height: none; border-radius: 0; }
 
 :root[data-theme="dark"] body { color: var(--color-text); background: var(--color-surface-subtle); }
-:root[data-theme="dark"] .auth-page, :root[data-theme="dark"] .auth-panel, :root[data-theme="dark"] .conversation-pane, :root[data-theme="dark"] .chat-details-screen, :root[data-theme="dark"] .chat-details-header, :root[data-theme="dark"] .account-dialog:not(:where(.account-settings-dialog)), :root[data-theme="dark"] .search-dialog, :root[data-theme="dark"] .request-list-panel, :root[data-theme="dark"] .chat-details-section, :root[data-theme="dark"] .chat-details-back:hover { background-color: var(--color-canvas); }
+:root[data-theme="dark"] .conversation-pane, :root[data-theme="dark"] .chat-details-screen, :root[data-theme="dark"] .chat-details-header, :root[data-theme="dark"] .account-dialog:not(:where(.account-settings-dialog)), :root[data-theme="dark"] .search-dialog, :root[data-theme="dark"] .request-list-panel, :root[data-theme="dark"] .chat-details-section, :root[data-theme="dark"] .chat-details-back:hover { background-color: var(--color-canvas); }
 :root[data-theme="dark"] .chat-details-header, :root[data-theme="dark"] .chat-details-identity, :root[data-theme="dark"] .account-dialog:not(:where(.account-settings-dialog)), :root[data-theme="dark"] .chat-details-section, :root[data-theme="dark"] .chat-details-members li, :root[data-theme="dark"] .global-search-input { border-color: var(--color-border); }
-:root[data-theme="dark"] .auth-panel h2, :root[data-theme="dark"] .account-dialog:not(:where(.account-settings-dialog)) h2, :root[data-theme="dark"] .welcome-content h2, :root[data-theme="dark"] .request-list-header h2, :root[data-theme="dark"] .request-card-content strong, :root[data-theme="dark"] .chat-details-header h1, :root[data-theme="dark"] .chat-details-identity h2, :root[data-theme="dark"] .chat-details-section h2, :root[data-theme="dark"] .chat-details-members strong, :root[data-theme="dark"] .profile-form:not(:where(.account-profile-form)) label > span, :root[data-theme="dark"] .safety-form:not(:where(.account-safety-form)) label > span { color: var(--color-text); }
-:root[data-theme="dark"] .story-copy h1,
-:root[data-theme="dark"] .story-copy h1 em,
-:root[data-theme="dark"] .story-copy .eyebrow,
-:root[data-theme="dark"] .story-subtitle,
-:root[data-theme="dark"] .story-note { color: #e0e9df; }
-:root[data-theme="dark"] .auth-form input, :root[data-theme="dark"] .profile-form:not(:where(.account-profile-form)) input, :root[data-theme="dark"] .profile-form:not(:where(.account-profile-form)) textarea, :root[data-theme="dark"] .profile-form:not(:where(.account-profile-form)) select, :root[data-theme="dark"] .safety-form:not(:where(.account-safety-form)) input, :root[data-theme="dark"] .safety-form:not(:where(.account-safety-form)) select, :root[data-theme="dark"] .safety-form:not(:where(.account-safety-form)) textarea, :root[data-theme="dark"] .global-search-input, :root[data-theme="dark"] .conversation-search-bar, :root[data-theme="dark"] .username-input:not(:where(.account-username-input)) { color: var(--color-text); background-color: var(--color-surface); }
+:root[data-theme="dark"] .account-dialog:not(:where(.account-settings-dialog)) h2, :root[data-theme="dark"] .welcome-content h2, :root[data-theme="dark"] .request-list-header h2, :root[data-theme="dark"] .request-card-content strong, :root[data-theme="dark"] .chat-details-header h1, :root[data-theme="dark"] .chat-details-identity h2, :root[data-theme="dark"] .chat-details-section h2, :root[data-theme="dark"] .chat-details-members strong, :root[data-theme="dark"] .profile-form:not(:where(.account-profile-form)) label > span, :root[data-theme="dark"] .safety-form:not(:where(.account-safety-form)) label > span { color: var(--color-text); }
+:root[data-theme="dark"] .profile-form:not(:where(.account-profile-form)) input, :root[data-theme="dark"] .profile-form:not(:where(.account-profile-form)) textarea, :root[data-theme="dark"] .profile-form:not(:where(.account-profile-form)) select, :root[data-theme="dark"] .safety-form:not(:where(.account-safety-form)) input, :root[data-theme="dark"] .safety-form:not(:where(.account-safety-form)) select, :root[data-theme="dark"] .safety-form:not(:where(.account-safety-form)) textarea, :root[data-theme="dark"] .global-search-input, :root[data-theme="dark"] .conversation-search-bar, :root[data-theme="dark"] .username-input:not(:where(.account-username-input)) { color: var(--color-text); background-color: var(--color-surface); }
 :root[data-theme="dark"] .profile-form:not(:where(.account-profile-form)) input[readonly] { color: var(--color-text-secondary); background: var(--color-surface-muted); }
-:root[data-theme="dark"] .auth-form input::placeholder, :root[data-theme="dark"] .profile-form:not(:where(.account-profile-form)) input::placeholder, :root[data-theme="dark"] .profile-form:not(:where(.account-profile-form)) textarea::placeholder { color: #9eaaa1; }
+:root[data-theme="dark"] .profile-form:not(:where(.account-profile-form)) input::placeholder, :root[data-theme="dark"] .profile-form:not(:where(.account-profile-form)) textarea::placeholder { color: #9eaaa1; }
 :root[data-theme="dark"] .icon-button,
 :root[data-theme="dark"] .empty-symbol:not(.inbox-empty-symbol),
 :root[data-theme="dark"] .search-result:hover,
@@ -381,15 +358,13 @@
 /* Theme foundation slice: color roles only; existing geometry and interactions remain.
    Equal theme specificity supersedes legacy dark patches for these core roles. */
 :root:is([data-theme], :not([data-theme])) body { background: var(--color-bg-app); }
-:root:is([data-theme], :not([data-theme])) .auth-page, :root:is([data-theme], :not([data-theme])) .auth-panel, :root:is([data-theme], :not([data-theme])) .conversation-pane { background: var(--color-bg-app); }
+:root:is([data-theme], :not([data-theme])) .conversation-pane { background: var(--color-bg-app); }
 :root:is([data-theme], :not([data-theme])) .account-dialog:not(:where(.account-settings-dialog)), :root:is([data-theme], :not([data-theme])) .search-dialog, :root:is([data-theme], :not([data-theme])) .username-search-results, :root:is([data-theme], :not([data-theme])) .reaction-picker-popover { background: var(--color-bg-elevated); border-color: var(--color-border); }
-:root:is([data-theme], :not([data-theme])) .auth-story { color: var(--color-text-primary); background: var(--color-bg-navigation); }
-:root:is([data-theme], :not([data-theme])) .story-topline .brand-mark { background: var(--color-primary-soft); }
-:root:is([data-theme], :not([data-theme])) .story-copy h1, :root:is([data-theme], :not([data-theme])) .auth-panel h2, :root:is([data-theme], :not([data-theme])) .account-dialog:not(:where(.account-settings-dialog)) h2, :root:is([data-theme], :not([data-theme])) .welcome-content h2, :root:is([data-theme], :not([data-theme])) .profile-form:not(:where(.account-profile-form)) label > span, :root:is([data-theme], :not([data-theme])) .auth-form label > span { color: var(--color-text-primary); }
-:root:is([data-theme], :not([data-theme])) .story-copy h1 em, :root:is([data-theme], :not([data-theme])) .welcome-content h2 em, :root:is([data-theme], :not([data-theme])) .auth-switch button, :root:is([data-theme], :not([data-theme])) .selected-username strong { color: var(--color-primary); }
-:root:is([data-theme], :not([data-theme])) .eyebrow, :root:is([data-theme], :not([data-theme])) .story-copy .eyebrow, :root:is([data-theme], :not([data-theme])) .story-subtitle, :root:is([data-theme], :not([data-theme])) .story-note, :root:is([data-theme], :not([data-theme])) .form-intro, :root:is([data-theme], :not([data-theme])) .auth-form label small, :root:is([data-theme], :not([data-theme])) .auth-switch, :root:is([data-theme], :not([data-theme])) .privacy-note, :root:is([data-theme], :not([data-theme])) .username-input:not(:where(.account-username-input)) > span, :root:is([data-theme], :not([data-theme])) .list-section-label:not(.inbox-section-label), :root:is([data-theme], :not([data-theme])) .empty-title:not(.inbox-empty-title) { color: var(--color-text-secondary); }
-:root:is([data-theme], :not([data-theme])) .auth-form input, :root:is([data-theme], :not([data-theme])) .profile-form:not(:where(.account-profile-form)) input, :root:is([data-theme], :not([data-theme])) .profile-form:not(:where(.account-profile-form)) textarea, :root:is([data-theme], :not([data-theme])) .profile-form:not(:where(.account-profile-form)) select, :root:is([data-theme], :not([data-theme])) .username-input:not(:where(.account-username-input)) { color: var(--color-text-primary); background: var(--color-bg-surface); border-color: var(--color-border); }
-:root:is([data-theme], :not([data-theme])) .auth-form input::placeholder, :root:is([data-theme], :not([data-theme])) .profile-form:not(:where(.account-profile-form)) input::placeholder, :root:is([data-theme], :not([data-theme])) .profile-form:not(:where(.account-profile-form)) textarea::placeholder { color: var(--color-text-secondary); }
+:root:is([data-theme], :not([data-theme])) .account-dialog:not(:where(.account-settings-dialog)) h2, :root:is([data-theme], :not([data-theme])) .welcome-content h2, :root:is([data-theme], :not([data-theme])) .profile-form:not(:where(.account-profile-form)) label > span { color: var(--color-text-primary); }
+:root:is([data-theme], :not([data-theme])) .welcome-content h2 em, :root:is([data-theme], :not([data-theme])) .selected-username strong { color: var(--color-primary); }
+:root:is([data-theme], :not([data-theme])) .eyebrow, :root:is([data-theme], :not([data-theme])) .username-input:not(:where(.account-username-input)) > span, :root:is([data-theme], :not([data-theme])) .list-section-label:not(.inbox-section-label), :root:is([data-theme], :not([data-theme])) .empty-title:not(.inbox-empty-title) { color: var(--color-text-secondary); }
+:root:is([data-theme], :not([data-theme])) .profile-form:not(:where(.account-profile-form)) input, :root:is([data-theme], :not([data-theme])) .profile-form:not(:where(.account-profile-form)) textarea, :root:is([data-theme], :not([data-theme])) .profile-form:not(:where(.account-profile-form)) select, :root:is([data-theme], :not([data-theme])) .username-input:not(:where(.account-username-input)) { color: var(--color-text-primary); background: var(--color-bg-surface); border-color: var(--color-border); }
+:root:is([data-theme], :not([data-theme])) .profile-form:not(:where(.account-profile-form)) input::placeholder, :root:is([data-theme], :not([data-theme])) .profile-form:not(:where(.account-profile-form)) textarea::placeholder { color: var(--color-text-secondary); }
 :root:is([data-theme], :not([data-theme])) .primary-button { color: var(--color-on-primary); background: var(--color-primary); }
 :root:is([data-theme], :not([data-theme])) .primary-button:hover:not(:disabled) { background: var(--color-primary-hover); }
 :root:is([data-theme], :not([data-theme])) .icon-button { color: var(--color-text-secondary); }
@@ -400,11 +375,10 @@
 :root:is([data-theme], :not([data-theme])) .form-error, :root:is([data-theme], :not([data-theme])) .list-error:not(.inbox-error), :root:is([data-theme], :not([data-theme])) .inline-error { color: var(--color-text-primary); border-color: var(--color-danger); background: var(--color-danger-soft); }
 :root:is([data-theme], :not([data-theme])) .form-success { color: var(--color-success); }
 :root:is([data-theme], :not([data-theme])) .status-dot { background: var(--color-success); }
-:root:is([data-theme], :not([data-theme])) .auth-form input:focus, :root:is([data-theme], :not([data-theme])) .profile-form:not(:where(.account-profile-form)) input:focus, :root:is([data-theme], :not([data-theme])) .profile-form:not(:where(.account-profile-form)) textarea:focus, :root:is([data-theme], :not([data-theme])) .username-input:not(:where(.account-username-input)):focus-within { border-color: var(--color-focus-ring); box-shadow: 0 0 0 2px var(--color-focus-ring); }
+:root:is([data-theme], :not([data-theme])) .profile-form:not(:where(.account-profile-form)) input:focus, :root:is([data-theme], :not([data-theme])) .profile-form:not(:where(.account-profile-form)) textarea:focus, :root:is([data-theme], :not([data-theme])) .username-input:not(:where(.account-username-input)):focus-within { border-color: var(--color-focus-ring); box-shadow: 0 0 0 2px var(--color-focus-ring); }
 :root:is([data-theme], :not([data-theme])) .overlay { background: var(--color-overlay); }
 /* Secondary text is too faint on the approved message fills in Light mode. */
 :root:is([data-theme], :not([data-theme])) .muted, :root:is([data-theme], :not([data-theme])) .welcome-description, :root:is([data-theme], :not([data-theme])) .workspace-footer, :root:is([data-theme], :not([data-theme])) .workspace-footer button { color: var(--color-text-secondary); }
-:root:is([data-theme], :not([data-theme])) .mobile-brand { color: var(--color-text-primary); }
 /* Shell-only focus: global and feature focus contracts remain unchanged. */
 .primary-rail button:focus-visible, .mobile-bottom-nav button:focus-visible { outline: 2px solid var(--ds-color-focus); outline-offset: 2px; }
 
@@ -709,4 +683,46 @@
   .call-controls button { min-height: 44px; padding: 8px 10px; }
   .voice-room-dialog { width: calc(100vw - 24px); height: calc(100dvh - 24px); }
   .voice-room-stage { min-height: 0; grid-template-columns: repeat(auto-fit,minmax(min(140px,100%),1fr)); align-content: start; }
+}
+/* Auth presentation only. Submission, session and key lifecycle are frozen. */
+:root .auth-page { display: grid; min-height: 100svh; grid-template-columns: minmax(0,1fr); align-items: center; justify-items: center; padding: 32px 24px; color: var(--ds-color-text-primary); background: var(--ds-color-canvas); }
+:root .auth-page .auth-story { display: none; }
+:root .auth-page .auth-panel { display: block; width: min(440px,100%); min-width: 0; min-height: 0; padding: 24px; border: 1px solid var(--ds-color-border); border-radius: var(--ds-radius-lg); color: var(--ds-color-text-primary); background: var(--ds-color-elevated); }
+:root .auth-page .auth-panel-inner { width: 100%; max-width: none; margin: 0; }
+:root .auth-page .mobile-brand { display: flex; align-items: center; gap: 12px; margin: 0 0 24px; color: var(--ds-color-text-primary); font-family: var(--ds-type-h3-family); font-size: var(--ds-type-h3-size); font-weight: var(--ds-type-h3-weight); letter-spacing: normal; }
+:root .auth-page .mobile-brand .brand-mark { width: 32px; height: 32px; border-radius: var(--ds-radius-md); background: var(--ds-color-brand-soft); }
+:root .auth-page .eyebrow { margin: 0 0 8px; color: var(--ds-color-text-secondary); font-size: var(--ds-type-overline-size); font-weight: var(--ds-type-overline-weight); line-height: var(--ds-type-overline-line-height); letter-spacing: var(--ds-type-overline-tracking); }
+:root .auth-page .auth-panel h2 { margin: 0; color: var(--ds-color-text-primary); font-size: var(--ds-type-h1-size); font-weight: var(--ds-type-h1-weight); line-height: var(--ds-type-h1-line-height); letter-spacing: normal; }
+:root .auth-page .form-intro { margin: 8px 0 20px; color: var(--ds-color-text-secondary); font-size: var(--ds-type-body-size); line-height: var(--ds-type-body-line-height); }
+:root .auth-page .auth-form { display: flex; min-width: 0; flex-direction: column; gap: 16px; }
+:root .auth-page .auth-form label { display: flex; min-width: 0; flex-direction: column; gap: 6px; }
+:root .auth-page .auth-form label > span { color: var(--ds-color-text-primary); font-size: var(--ds-type-label-size); font-weight: var(--ds-type-label-weight); line-height: var(--ds-type-label-line-height); }
+:root .auth-page .auth-form input { width: 100%; min-width: 0; min-height: 44px; box-sizing: border-box; padding: 8px 12px; border: 1px solid var(--ds-color-border); border-radius: var(--ds-radius-sm); color: var(--ds-color-text-primary); background: var(--ds-color-surface); font-family: var(--ds-type-body-family); font-size: var(--ds-type-body-size); line-height: var(--ds-type-body-line-height); box-shadow: none; }
+:root .auth-page .auth-form input::placeholder { color: var(--ds-color-text-secondary); opacity: 1; }
+:root .auth-page .auth-form input:focus { border-color: var(--ds-color-focus); box-shadow: none; }
+:root .auth-page .auth-form input:focus-visible { outline: 2px solid var(--ds-color-focus); outline-offset: 2px; }
+:root .auth-page .auth-form label small { margin: 0; color: var(--ds-color-text-secondary); font-size: var(--ds-type-caption-size); line-height: var(--ds-type-caption-line-height); }
+:root .auth-page .username-input { display: flex; min-width: 0; height: 44px; align-items: center; border: 1px solid var(--ds-color-border); border-radius: var(--ds-radius-sm); color: var(--ds-color-text-secondary); background: var(--ds-color-surface); }
+:root .auth-page .username-input > span { padding-left: 12px; color: var(--ds-color-text-secondary); font-size: var(--ds-type-body-size); }
+:root .auth-page .username-input input { height: 42px; min-height: 0; border: 0; background: transparent; }
+:root .auth-page .username-input:focus-within { border-color: var(--ds-color-focus); box-shadow: none; outline: 2px solid var(--ds-color-focus); outline-offset: 2px; }
+:root .auth-page .username-input input:focus-visible { outline: none; }
+:root .auth-page .form-error { margin: 0; padding: 8px 12px; border: 1px solid var(--ds-color-danger); border-radius: var(--ds-radius-sm); color: var(--ds-color-status-soft-foreground); background: var(--ds-color-danger-soft); font-size: var(--ds-type-body-sm-size); line-height: var(--ds-type-body-sm-line-height); overflow-wrap: anywhere; }
+:root .auth-page .auth-form .ui-button { min-height: 44px; height: auto; margin: 0; gap: 8px; font-family: var(--ds-type-label-family); font-size: var(--ds-type-label-size); font-weight: var(--ds-type-label-weight); line-height: var(--ds-type-label-line-height); transform: none; }
+:root .auth-page .auth-switch { margin: 20px 0 0; color: var(--ds-color-text-secondary); text-align: center; font-size: var(--ds-type-body-sm-size); line-height: var(--ds-type-body-sm-line-height); }
+:root .auth-page .auth-switch button { min-height: 32px; padding: 4px; border: 0; border-radius: var(--ds-radius-sm); color: var(--ds-color-brand); background: transparent; font: inherit; font-weight: var(--ds-type-label-weight); cursor: pointer; }
+:root .auth-page .auth-switch button:hover { color: var(--ds-color-brand-hover); background: var(--ds-color-brand-soft); }
+:root .auth-page .privacy-note { display: flex; align-items: center; justify-content: center; gap: 6px; margin: 16px 0 0; color: var(--ds-color-text-secondary); font-size: var(--ds-type-caption-size); line-height: var(--ds-type-caption-line-height); text-align: center; }
+:root .auth-page .privacy-note svg { flex: 0 0 auto; }
+:root :is(.loading-screen,.service-error) { display: flex; min-height: 100svh; align-items: center; justify-content: center; flex-direction: column; gap: 12px; padding: 24px; color: var(--ds-color-text-secondary); background: var(--ds-color-canvas); font-size: var(--ds-type-body-size); line-height: var(--ds-type-body-line-height); text-align: center; }
+:root .service-error .eyebrow { margin: 0; color: var(--ds-color-danger); font-size: var(--ds-type-overline-size); line-height: var(--ds-type-overline-line-height); letter-spacing: var(--ds-type-overline-tracking); }
+:root .service-error h1 { max-width: 420px; margin: 0; color: var(--ds-color-text-primary); font-size: var(--ds-type-h1-size); font-weight: var(--ds-type-h1-weight); line-height: var(--ds-type-h1-line-height); }
+:root .service-error > p:not(.eyebrow) { max-width: 420px; margin: 0; color: var(--ds-color-text-secondary); font-size: var(--ds-type-body-size); line-height: var(--ds-type-body-line-height); overflow-wrap: anywhere; }
+:root .service-error .primary-button { width: min(180px,100%); min-height: 44px; margin: 8px 0 0; border-radius: var(--ds-radius-sm); color: var(--ds-color-brand-foreground); background: var(--ds-color-brand); font-size: var(--ds-type-label-size); font-weight: var(--ds-type-label-weight); transform: none; }
+:root .service-error .primary-button:hover { background: var(--ds-color-brand-hover); }
+:root :is(.auth-page button,.service-error button):focus-visible { outline: 2px solid var(--ds-color-focus); outline-offset: 2px; }
+@media (max-width: 700px) {
+  :root .auth-page { align-items: start; padding: 16px; }
+  :root .auth-page .auth-panel { padding: 20px; }
+  :root .auth-page .auth-form input { font-size: 16px; }
 }

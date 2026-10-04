@@ -1,3 +1,4 @@
+import {authVisualFiles} from './helpers/auth-visual-parity.mjs'
 import {restoreAccountVisual} from './helpers/account-visual-parity.mjs'
 import fs from 'node:fs'
 import test from 'node:test'
@@ -12,7 +13,7 @@ function behavior(file,text){const tree=ts.createSourceFile(file,text,99,true,ts
 test('Composer preserves every handler, state/effect, draft/typing, emoji selection, reply, upload, submit/keyboard, voice and disabled contract',()=>{
  const file='client/src/features/messaging/MessageComposer.tsx';assert.equal(behavior(file,read(file)),behavior(file,before(file)))
  for(const f of ['client/src/features/messaging/VoiceRecorder.tsx','client/src/shared/components/FullEmojiPicker.tsx','client/src/features/messaging/Conversation.tsx'])assert.equal(read(f),before(f),f)
- const files=execFileSync('git',['diff','--name-only',contract.base,'--','client','server','package.json','package-lock.json'],{encoding:'utf8'}).trim().split('\n').sort();assert.deepEqual(files,[...new Set([...Object.keys(contract.files),...Object.keys(JSON.parse(fs.readFileSync('tests/fixtures/account-visual-contract.json','utf8')).files),...Object.keys(JSON.parse(fs.readFileSync('tests/fixtures/updates-visual-contract.json','utf8')).files)])].sort())
+ const files=execFileSync('git',['diff','--name-only',contract.base,'--','client','server','package.json','package-lock.json'],{encoding:'utf8'}).trim().split('\n').sort();assert.deepEqual(files,[...new Set([...authVisualFiles,...Object.keys(contract.files),...Object.keys(JSON.parse(fs.readFileSync('tests/fixtures/account-visual-contract.json','utf8')).files),...Object.keys(JSON.parse(fs.readFileSync('tests/fixtures/updates-visual-contract.json','utf8')).files)])].sort())
 })
 test('Composer CSS migration preserves every unowned selector/declaration/nesting/cascade including sent attachments, voice and other screens',()=>{
  const owned=/\.(?:message-composer|composer-toolbar|composer-tools|composer-hint|composer-reply|composer-send-button|emoji-picker-popover|staged-attachments|attach-file-button)(?![\w-])/
