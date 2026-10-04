@@ -72,7 +72,7 @@ export function UpdatesPage({ userId, onOpenTarget, onOpenCall }: {
   ]
   const visibleCalls = filter === 'spaces' ? activeCalls.filter((call) => call.space_id) : activeCalls
 
-  return <section className="updates-page">
+  return <section className="updates-page ui:bg-canvas ui:text-primary">
     <header className="updates-header">
       <div><p className="eyebrow">YOUR WORKSPACE</p><h1>Updates</h1><p>Keep track of the things your conversations need from you.</p></div>
       <label className="updates-search"><Search size={16} aria-hidden="true" /><input type="search" name="updatesSearch" autoComplete="off" value={query} onChange={(event) => setQuery(event.target.value)} onKeyDown={(event) => {
@@ -83,7 +83,7 @@ export function UpdatesPage({ userId, onOpenTarget, onOpenCall }: {
       <button type="button" aria-pressed={filter === 'all'} className={filter === 'all' ? 'is-active' : ''} onClick={() => setFilter('all')}>All</button>
       <button type="button" aria-pressed={filter === 'spaces'} className={filter === 'spaces' ? 'is-active' : ''} onClick={() => setFilter('spaces')}>Spaces</button>
     </div>
-    {error && <p className="spaces-error" role="alert">{error}</p>}
+    {error && <p className="spaces-error updates-error" role="alert">{error}</p>}
     <div className="updates-sections">
       {sections.map(({ id, title, description, icon: Icon, empty }) => <section className="updates-section" key={id} aria-labelledby={`updates-${id}`}>
           <header><span><Icon size={17} aria-hidden="true" /></span><div><h2 id={`updates-${id}`}>{title}</h2><p>{description}</p></div><b>{stacks[id].length + (id === 'happening' ? visibleCalls.length : 0)}</b></header>

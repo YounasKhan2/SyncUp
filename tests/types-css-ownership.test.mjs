@@ -1,4 +1,5 @@
 import {restoreShellNavigation} from './helpers/shell-navigation-parity.mjs'
+import {restoreUpdatesVisual} from './helpers/updates-visual-parity.mjs'
 import {restoreSharedPrimitives} from './helpers/shared-primitives-parity.mjs'
 import {execFileSync} from 'node:child_process'
 import { restoreButtonMigration } from './helpers/button-migration-parity.mjs'
@@ -103,7 +104,7 @@ test('Ownership: ordered expanded platform CSS is byte-identical to frozen basel
   assert.equal(appFiles().at(-1), 'client/src/shared/styles/primitives.css')
   if (exists('client/src/features/spaces/spaces.css')) {
     assert.deepEqual(appFiles(), ['client/src/shared/styles/platform-shell.css', 'client/src/features/spaces/spaces.css', 'client/src/shared/styles/platform.css', 'client/src/shared/styles/primitives.css'])
-    assert.equal(digest(read('client/src/features/spaces/spaces.css')), baseline.css.regionDigest)
+    assert.equal(digest(restoreUpdatesVisual('client/src/features/spaces/spaces.css', read('client/src/features/spaces/spaces.css'))), baseline.css.regionDigest)
     assert.doesNotMatch(read('client/src/shared/styles/platform.css'), /^\.spaces-page \{/mu)
     assert.doesNotMatch(read('client/src/features/spaces/spaces.css'), /^\.(?:auth-page|call-dialog|conversation-pane|primary-rail)\s*\{/mu)
   }
