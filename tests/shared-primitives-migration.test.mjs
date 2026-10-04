@@ -1,11 +1,12 @@
 import {restoreShellNavigation} from './helpers/shell-navigation-parity.mjs'
+import {restoreConsistencyVisual} from './helpers/consistency-visual-parity.mjs'
 import fs from 'node:fs'
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import {execFileSync} from 'node:child_process'
 import postcss from 'postcss'
 import {buildProof} from './helpers/design-system-wiring-proof.mjs'
-const fixture=JSON.parse(fs.readFileSync('tests/fixtures/shared-primitives-baseline.json','utf8')),read=file=>fs.readFileSync(file,'utf8').replaceAll('\r\n','\n')
+const fixture=JSON.parse(fs.readFileSync('tests/fixtures/shared-primitives-baseline.json','utf8')),read=file=>restoreConsistencyVisual(file,fs.readFileSync(file,'utf8'))
 test('Dialog transfers only six exact declarations and static prefixed utilities',()=>{
  for(const[file,record]of Object.entries(fixture.files)){assert.equal(record.before,execFileSync('git',['show',`${fixture.base}:${file}`],{encoding:'utf8'}));assert.equal(read(file),record.after)}
  const jsx=fixture.files['client/src/shared/components/Dialog.tsx'];assert.equal(jsx.after.replace(' ui:fixed ui:z-overlay ui:grid ui:place-items-center ui:bg-overlay','').replace(' ui:box-border',''),jsx.before)

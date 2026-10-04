@@ -2,10 +2,28 @@
 .ui-button {
   height: 44px; gap: 10px;
   margin-top: 3px; border: 0;
-  font: inherit; font-size: var(--type-body); font-weight: 600; transition: background .15s ease, transform .15s ease;
+  font: inherit; font-size: var(--ds-type-label-size); font-weight: 600; transition: background var(--ds-duration-normal) ease, transform var(--ds-duration-normal) ease;
 }
 .ui-button:hover:not(:disabled) { transform: translateY(-1px); }
 .ui-button span { font-size: var(--type-title-sm); line-height: 1; }
 .ui-icon-button { width: 30px; height: 30px; flex: 0 0 auto; border: 0; border-radius: 7px; font: inherit; font-size: var(--type-title-xs); }
 .ui-dialog-overlay { inset: 0; padding: 20px; }
-.ui-dialog { width: min(430px, 100%); max-height: calc(100svh - 40px); overflow-y: auto; padding: 24px; border: 1px solid var(--color-border); border-radius: 14px; background: var(--color-bg-elevated); box-shadow: 0 18px 50px rgba(17, 38, 28, .18); }
+.ui-dialog { width: min(430px, 100%); max-height: calc(100svh - 40px); overflow-y: auto; padding: 24px; border: 1px solid var(--ds-color-border); border-radius: var(--ds-radius-xl); background: var(--ds-color-elevated); box-shadow: var(--ds-elevation-modal); }
+/* Shared BrandMark and Avatar base contracts; feature overrides remain local. */
+.brand-mark {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  flex: 0 0 auto;
+  border-radius: 13px;
+  background: var(--ds-color-brand-soft);
+}
+.brand-mark-icon { width: 34px; height: 34px; overflow: visible; }
+.brand-mark-bubble-back { fill: var(--ds-color-brand); }
+.brand-mark-bubble-front { fill: var(--ds-color-elevated); stroke: var(--ds-color-brand); stroke-width: 1.5; stroke-linejoin: round; }
+.brand-mark-small { width: 34px; height: 34px; border-radius: 11px; }
+.brand-mark-small svg { width: 29px; height: 29px; }
+:where(.avatar) { width: 31px; height: 31px; flex: 0 0 auto; border-radius: 50%; font-size: var(--ds-type-caption-size); font-weight: 600; }
+.avatar > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.avatar-has-image > span { visibility: hidden; }

@@ -6,8 +6,9 @@ import postcss from 'postcss'
 import * as jsx from 'react/jsx-runtime'
 import {load} from './helpers/foundation-harness.mjs'
 import {restoreAuthVisual,authVisualFiles} from './helpers/auth-visual-parity.mjs'
+import {restoreConsistencyVisual} from './helpers/consistency-visual-parity.mjs'
 const base='90e5a8517f4e58dd8670a2d3e744809b0a031a3e'
-const read=f=>fs.readFileSync(f,'utf8').replaceAll('\r\n','\n'),before=f=>execFileSync('git',['show',`${base}:${f}`],{encoding:'utf8'})
+const read=f=>restoreConsistencyVisual(f,fs.readFileSync(f,'utf8')),before=f=>execFileSync('git',['show',`${base}:${f}`],{encoding:'utf8'})
 const owned=s=>/\.(?:auth-[\w-]+|story-[\w-]+|mobile-brand|form-intro|privacy-note|orbit-one|orbit-two|loading-screen|service-error)(?![\w-])/.test(s)
 test('Auth CSS-only scope freezes every auth, crypto, session, bootstrap, routing, API and server source byte',()=>{
  assert.deepEqual(execFileSync('git',['diff','--name-only',base,'--','client','server','package.json','package-lock.json'],{encoding:'utf8'}).trim().split('\n').sort(),authVisualFiles.sort())

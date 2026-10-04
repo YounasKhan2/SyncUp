@@ -1,0 +1,8 @@
+{
+  "base": "51aa9135f963faea55352ee27ae4c66ae229215c",
+  "files": {
+    "client/src/shared/styles/platform.css": "06c71ac7de1219362c51ae0014e89477c034e51d43ddf6456548d2a7f5a44742",
+    "client/src/shared/styles/platform-shell.css": "2e7300bf5e864ca5f1bc99f20fcf04cd28ec7aa7d17b9f68ff647227db62b6fa",
+    "client/src/shared/styles/primitives.css": "31cd2fd34bac5d9ef35b267f5be0a95a7192fa30b0f2d4b80481678ee4e6a9c5"
+  }
+}
